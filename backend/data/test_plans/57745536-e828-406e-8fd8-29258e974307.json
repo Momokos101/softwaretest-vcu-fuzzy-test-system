@@ -1,0 +1,36 @@
+{
+  "id": "57745536-e828-406e-8fd8-29258e974307",
+  "name": "测试计划-实际测评",
+  "description": "用于实际测评的测试计划",
+  "test_mode": "both",
+  "traditional_config": {
+    "enabled": true,
+    "mutation_rules": [
+      "single_param",
+      "multi_param",
+      "timing_perturb",
+      "repeat"
+    ],
+    "intensity": 5,
+    "max_cases": null
+  },
+  "gan_config": {
+    "enabled": true,
+    "model_version": "v1.0",
+    "sampling_temperature": 1.0,
+    "max_cases": null
+  },
+  "constraint_config": {
+    "dbc_file_path": "test.dbc",
+    "whitelist": [],
+    "blacklist": [],
+    "value_ranges": {},
+    "rate_limit": 100.0,
+    "crc_check": true,
+    "dlc_check": true
+  },
+  "baseline_log_path": null,
+  "created_at": "2025-12-21T17:38:25.555436",
+  "updated_at": "2025-12-21T17:38:25.555436",
+  "status": "draft"
+}
