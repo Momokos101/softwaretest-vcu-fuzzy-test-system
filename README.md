@@ -1,34 +1,81 @@
-# VCU智能模糊测试系统
+# AutoTestDesign — AI-Driven Test Design Tool
 
-基于GAN的唤醒-休眠场景智能模糊测试系统
+An AI-powered automated test design tool that performs requirements analysis, risk assessment, and systematic test case generation, aligned with ISO/IEC/IEEE standards and ISTQB Foundation Level principles.
 
-## 📋 项目简介
+**Target Application**: VCU (Vehicle Control Unit) Wake-Sleep Control Module
 
-本系统为汽车电子硬件在HIL（Hardware-in-the-Loop）或仿真测试环境中的VCU/域控制器，构建一套专注于"唤醒—握手—Ready—休眠"关键流程的双模式智能模糊测试系统。
+---
 
-系统支持传统模糊测试方式与基于GAN的智能模糊测试方式两种模式，可在统一的测试框架下独立运行或进行结果对比。
+## Project Overview
 
-## 🏗️ 系统架构
+AutoTestDesign is the tool. The VCU Wake-Sleep Control Module is the self-chosen target application used to demonstrate the tool's effectiveness.
 
-- **后端**: Python + FastAPI
-- **前端**: React + Vite + TypeScript
-- **GAN模型**: TensorFlow/Keras
-- **数据库**: SQLite
+The tool implements:
 
-## 🚀 快速开始
+| FR | Feature | Status |
+|----|---------|--------|
+| FR 1.0 | Input / Parsing — ingest requirements from CSV, plain text, or direct form input | Implemented |
+| FR 1.1 | Requirement Structuring — parse Input Fields, Data Ranges, Conditions, Expected Actions | Implemented |
+| FR 2.0 | Risk Analysis & Prioritization — assign Risk Score and Priority (High/Medium/Low) | Implemented |
+| FR 3.0 | Black-Box Test Design — Equivalence Partitioning, Boundary Value Analysis, Decision Tables | Implemented |
+| FR 4.0 | White-Box Test Modeling — State Transition Diagram and test sequence generation | Extra credit |
+| FR 5.0 | Test Oracle Generation — synthesize Expected Result from requirement + test data | Extra credit |
+| FR 6.0 | Output & Export — JSON, CSV, Excel with traceability matrix | Implemented |
+| FR 7.0 | Test Suite Optimization — risk-based prioritization and coverage minimization | Extra credit |
 
-### 后端启动
+---
+
+## System Architecture
+
+```
+AutoTestDesign/
+├── backend/          Python + FastAPI — all FR logic and API endpoints
+├── frontend/         React + TypeScript + Tailwind CSS — interactive UI
+├── tests/            pytest test scripts for the VCU target application
+└── docs/             Design plan and project documents
+```
+
+**Tech Stack**
+
+| Layer | Technology |
+|-------|-----------|
+| Backend | Python 3.10+, FastAPI, SQLite |
+| Frontend | React 18, TypeScript, Tailwind CSS, Vite |
+| AI Component | PyTorch GAN model (Conv1D conditional GAN) |
+| Test Execution | pytest, pytest-parametrize |
+| Export | pandas, openpyxl |
+
+---
+
+## Quick Start (New Server Deployment)
+
+### Prerequisites
+
+- Python 3.10 or higher
+- Node.js 18 or higher
+- Git
+
+### 1. Clone the Repository
+
+```bash
+git clone <repository-url>
+cd softwaretest-vcu-fuzzy-test-system
+```
+
+### 2. Backend Setup
 
 ```bash
 cd backend
-pip3 install -r requirements.txt
+python3 -m venv venv
+source venv/bin/activate        # Windows: venv\Scripts\activate
+pip install -r requirements.txt
 python3 run_server.py
 ```
 
-后端服务运行在: http://localhost:8000
-API文档: http://localhost:8000/docs
+Backend runs at: http://localhost:8000  
+API docs: http://localhost:8000/docs
 
-### 前端启动
+### 3. Frontend Setup
 
 ```bash
 cd frontend
@@ -36,51 +83,109 @@ npm install
 npm run dev
 ```
 
-前端服务运行在: http://localhost:3000
+Frontend runs at: http://localhost:3000
 
-## 📦 当前版本
+### 4. One-Command Setup (macOS / Linux)
 
-**版本**: v1.0 - 稳定版本（角色分离重构前）
+```bash
+chmod +x setup.sh
+./setup.sh
+```
 
-**包含功能**:
-- ✅ 完整的后端API服务（22个接口）
-- ✅ 完整的前端界面（所有功能模块）
-- ✅ 前后端已连接
-- ✅ 所有接口支持模拟数据
-- ✅ 测试计划管理
-- ✅ 测试任务管理
-- ✅ 实时监控
-- ✅ 结果分析
-- ✅ 报告生成
-- ✅ 约束管理
+---
 
-## 🔄 版本控制
+## Environment Variables
 
-- **main分支**: 当前稳定版本
-- **feature/role-based-redesign**: 角色分离重构分支（开发中）
+Create a `.env` file in the `backend/` directory:
 
-## 📚 文档
+```env
+API_HOST=0.0.0.0
+API_PORT=8000
+API_RELOAD=true
+```
 
-- [API测试清单](./API_TEST_CHECKLIST.md)
-- [后端API完成报告](./BACKEND_API_COMPLETE.md)
-- [前端重组建议](./FRONTEND_ROLE_BASED_REDESIGN.md)
-- [Git设置指南](./GIT_SETUP.md)
+Create a `.env` file in the `frontend/` directory:
 
-## 👥 角色说明
+```env
+VITE_API_BASE_URL=http://localhost:8000
+```
 
-系统设计支持三种角色：
+---
 
-1. **测试工程师**: 测试执行与分析
-2. **工艺工程师**: 安全与规则管理
-3. **台架维护工程师**: 系统部署与联调
+## Project Structure
 
-当前版本所有功能都在测试工程师界面，角色分离功能正在开发中。
+```
+softwaretest-vcu-fuzzy-test-system/
+├── backend/
+│   ├── api/
+│   │   ├── main.py                   FastAPI app entry point
+│   │   ├── routers/                  API route handlers
+│   │   │   ├── requirements.py       FR 1.0 / 1.1
+│   │   │   ├── risk_analysis.py      FR 2.0
+│   │   │   ├── test_design.py        FR 3.0
+│   │   │   ├── export.py             FR 6.0
+│   │   │   ├── test_plans.py         Test plan management
+│   │   │   ├── test_tasks.py         Test task execution
+│   │   │   ├── reports.py            Report generation
+│   │   │   ├── constraints.py        Constraint management
+│   │   │   ├── monitoring.py         Real-time monitoring
+│   │   │   └── gan.py                GAN model inference
+│   │   ├── services/                 Business logic
+│   │   ├── models/                   Pydantic schemas
+│   │   └── database/                 SQLite access layer
+│   ├── configs/                      VCU model configuration
+│   ├── nn/                           GAN neural network (Conv1D)
+│   ├── data/                         VCU test data (.npy files)
+│   ├── requirements.txt
+│   └── run_server.py
+├── frontend/
+│   ├── src/
+│   │   ├── components/               UI components
+│   │   ├── pages/                    Page-level components
+│   │   ├── services/api.ts           Axios API client
+│   │   └── App.tsx                   Root component + routing
+│   ├── package.json
+│   └── vite.config.ts
+├── tests/
+│   ├── test_e2e.py                   End-to-end tests
+│   ├── test_api_routes.py            API route tests
+│   └── test_baic_integration.py      VCU integration tests
+├── docs/
+│   └── DESIGN_PLAN.md               Full implementation design plan
+├── setup.sh                         One-command setup script
+├── .gitignore
+└── README.md
+```
 
-## 📝 许可证
+---
 
-本项目为课程项目，仅供学习和研究使用。
+## Key Design Decisions
 
-## 📞 联系方式
+- **Target application** is the VCU wake-sleep module — this is what the AutoTestDesign tool is applied to, not the tool itself.
+- All FR modules share a common **requirement ID** as the linking key, enabling end-to-end traceability from requirement → risk score → test cases → export.
+- Every stage supports **interactive review**: users can modify parsed structures, override risk scores, edit or delete generated test cases, and choose export scope.
+- The GAN model generates additional "intelligent" test cases on top of the rule-based EP/BVA/Decision Table cases, giving the tool its "AI-driven" character.
 
-如有问题，请查看项目文档或提交Issue。
+---
 
+## Running Tests
+
+```bash
+# Install test dependencies
+pip install pytest pytest-asyncio httpx
+
+# Run all tests
+pytest tests/
+
+# Run only VCU integration tests
+pytest tests/test_baic_integration.py -v
+
+# Run with coverage report
+pytest tests/ --cov=backend/api --cov-report=html
+```
+
+---
+
+## License
+
+Course project — for educational and research purposes only.

@@ -1,85 +1,84 @@
-# VCU智能模糊测试系统 - 前端
+# AutoTestDesign — Frontend
 
-## 📋 项目说明
+React + TypeScript + Tailwind CSS frontend for the AutoTestDesign tool.
 
-这是基于GAN的唤醒-休眠场景智能模糊测试系统的前端部分。
-
-## 🚀 快速开始
-
-### 1. 安装依赖
+## Setup
 
 ```bash
-cd frontend
 npm install
-# 或
-yarn install
-# 或
-pnpm install
-```
-
-### 2. 启动开发服务器
-
-```bash
 npm run dev
 ```
 
-前端将在 `http://localhost:3000` 启动
+Frontend runs at: http://localhost:3000  
+All `/api` and `/ws` requests are proxied to http://localhost:8000
 
-### 3. 构建生产版本
+## Environment Variables
+
+Create a `.env` file in this directory:
+
+```env
+VITE_API_BASE_URL=http://localhost:8000
+```
+
+## Build for Production
 
 ```bash
-npm run build
+npm run build       # outputs to dist/
+npm run preview     # preview the production build locally
 ```
 
-## 📁 项目结构
+## Tech Stack
+
+| Technology | Role |
+|-----------|------|
+| React 18 | UI framework |
+| TypeScript | Type safety |
+| Tailwind CSS | Styling |
+| Vite | Build tool |
+| Axios | HTTP client |
+| Lucide React | Icons |
+| Sonner | Toast notifications |
+| shadcn/ui | UI component library |
+
+## Source Structure
 
 ```
-frontend/
-├── src/
-│   ├── components/      # 可复用组件
-│   │   └── Layout.jsx    # 布局组件
-│   ├── pages/           # 页面组件
-│   │   ├── HomePage.jsx
-│   │   ├── TestPlanPage.jsx
-│   │   ├── TestTaskPage.jsx
-│   │   ├── MonitoringPage.jsx
-│   │   └── ReportPage.jsx
-│   ├── services/        # API服务
-│   │   └── api.js       # API调用封装
-│   ├── utils/           # 工具函数
-│   │   └── websocket.js # WebSocket管理
-│   ├── styles/          # 样式文件
-│   │   └── index.css
-│   ├── assets/          # 静态资源
-│   ├── App.jsx          # 主应用组件
-│   └── main.jsx         # 入口文件
-├── public/              # 公共资源
-├── package.json
-├── vite.config.js
-└── index.html
+src/
+├── App.tsx                     Root component with view routing
+├── components/
+│   ├── Dashboard.tsx           Overview dashboard
+│   ├── RequirementInput.tsx    FR 1.0/1.1 — import and parse requirements
+│   ├── RiskAnalysis.tsx        FR 2.0 — risk scoring and prioritization
+│   ├── TestCaseDesign.tsx      FR 3.0 — EP/BVA/Decision Table generation
+│   ├── TestManagement.tsx      Test plan and task management
+│   ├── TestMonitoring.tsx      Real-time test monitoring
+│   ├── ResultAnalysis.tsx      Result analysis and charts
+│   ├── ReportCenter.tsx        Report generation and download
+│   ├── ExportCenter.tsx        FR 6.0 — JSON/CSV/Excel export
+│   ├── SystemSettings.tsx      System configuration
+│   ├── Sidebar.tsx             Navigation sidebar
+│   ├── TopNav.tsx              Top navigation bar
+│   └── ui/                     shadcn/ui base components
+├── pages/                      Legacy JSX page components
+├── services/
+│   └── api.ts                  Axios client + all API methods
+├── utils/
+│   └── websocket.ts            WebSocket connection manager
+└── contexts/
+    └── RoleContext.tsx          User role context
 ```
 
-## 🔗 后端API集成
+## Navigation Pages
 
-前端已配置代理，所有 `/api` 请求会自动转发到后端服务器 (`http://localhost:8000`)
-
-## 📝 从Figma获取代码
-
-请参考项目根目录的 `FIGMA_TO_CODE_GUIDE.md` 文件，了解如何从Figma获取设计代码。
-
-## 🎨 技术栈
-
-- **React 18** - UI框架
-- **Vite** - 构建工具
-- **Ant Design 5** - UI组件库
-- **React Router** - 路由管理
-- **Axios** - HTTP客户端
-- **ECharts** - 数据可视化
-
-## 📚 下一步
-
-1. 从Figma导出设计代码
-2. 根据设计稿实现页面组件
-3. 连接后端API
-4. 实现实时监控功能
-
+| View Key | Component | Description |
+|----------|-----------|-------------|
+| `dashboard` | Dashboard | System overview |
+| `requirements` | RequirementInput | Import and parse requirements |
+| `risk-analysis` | RiskAnalysis | Risk scoring |
+| `test-design` | TestCaseDesign | Generate test cases |
+| `tests` | TestManagement | Manage test plans and tasks |
+| `monitoring` | TestMonitoring | Real-time task monitoring |
+| `analysis` | ResultAnalysis | Result charts and anomaly list |
+| `export` | ExportCenter | Export test artifacts |
+| `reports` | ReportCenter | Generated reports |
+| `settings` | SystemSettings | System settings |

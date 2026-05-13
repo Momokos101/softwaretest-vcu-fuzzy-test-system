@@ -43,8 +43,8 @@ export function Sidebar({ currentView, onNavigate }: SidebarProps) {
       {/* Version Info */}
       <div className="absolute bottom-8 left-0 right-0 px-6">
         <div className="bg-white rounded-lg p-4 border border-slate-200 shadow-sm">
-          <div className="text-sm text-slate-700 mb-1">系统版本</div>
-          <div className="text-xs text-slate-500">v2.0 Beta</div>
+          <div className="text-sm text-slate-700 mb-1">AutoTestDesign</div>
+          <div className="text-xs text-slate-500">v1.0</div>
         </div>
       </div>
     </aside>

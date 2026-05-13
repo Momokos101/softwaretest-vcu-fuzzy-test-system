@@ -1,21 +1,87 @@
-# 基于GAN的唤醒-休眠场景智能模糊测试项目
+# AutoTestDesign — Backend
 
----
+FastAPI backend providing all AutoTestDesign tool logic and REST API endpoints.
 
-## 项目简介
+## Setup
 
-本项目为汽车电子硬件在HIL（Hardware-in-the-Loop）或仿真测试环境中的VCU/域控制器，构建一套专注于“唤醒—握手—Ready—休眠”关键流程的双模式智能模糊测试系统。
+```bash
+python3 -m venv venv
+source venv/bin/activate        # Windows: venv\Scripts\activate
+pip install -r requirements.txt
+python3 run_server.py
+```
 
-系统支持传统模糊测试方式与基于GAN的智能模糊测试方式两种模式，可在统一的测试框架下独立运行或进行结果对比。测试过程遵循多重约束条件（如DBC定义、白名单、禁发规则、CRC校验、速率上限等），并配合自动化注入、异常检测与回灌机制，形成一个可复现、可学习、可优化的智能测试闭环。
+- API base: http://localhost:8000
+- Interactive docs: http://localhost:8000/docs
 
-最终系统以前后端分离的Web平台呈现，用户可通过浏览器完成从测试计划创建、测试执行与监控、异常分析到结果复现与报告导出的完整流程。
+## Environment Variables
 
-## 项目目标
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `API_HOST` | `0.0.0.0` | Bind address |
+| `API_PORT` | `8000` | Port number |
+| `API_RELOAD` | `true` | Hot-reload (set `false` in production) |
 
-本项目旨在解决汽车VCU（整车控制器）在“唤醒–握手–Ready–休眠”关键流程的HIL测试中，传统模糊测试方法面临的共性难题：
+## API Routes
 
-- 测试输入随机性过高，导致无效或冗余用例占比大，测试资源浪费严重；
+| Prefix | File | Purpose |
+|--------|------|---------|
+| `/api/requirements` | `routers/requirements.py` | FR 1.0/1.1 — requirement import and parsing |
+| `/api/risk-analysis` | `routers/risk_analysis.py` | FR 2.0 — risk scoring and prioritization |
+| `/api/test-design` | `routers/test_design.py` | FR 3.0 — EP, BVA, Decision Table generation |
+| `/api/export` | `routers/export.py` | FR 6.0 — JSON, CSV, Excel export |
+| `/api/test-plans` | `routers/test_plans.py` | Test plan CRUD |
+| `/api/test-tasks` | `routers/test_tasks.py` | Test task execution |
+| `/api/reports` | `routers/reports.py` | Report generation |
+| `/api/constraints` | `routers/constraints.py` | Constraint management |
+| `/api/monitoring` | `routers/monitoring.py` | Real-time metrics |
+| `/api/gan` | `routers/gan.py` | GAN model inference |
+| `/ws/test-tasks/{id}` | `main.py` | WebSocket real-time push |
 
-- 难以系统化、高效率地触及状态机紊乱、时序竞争、边界条件超限等深层逻辑缺陷。
+## Key Files
 
-团队计划通过基于GAN的生成方法提升测试用例的针对性，同时保障安全与可复现性。
+| File | Purpose |
+|------|---------|
+| `run_server.py` | Server entry point |
+| `setup_model.py` | Download / verify GAN model weights |
+| `find_model.py` | Locate model weights on disk |
+| `download_models.py` | Fetch model weights from remote |
+| `example_usage.py` | Code examples for key services |
+
+## Data Directory
+
+```
+data/
+├── vcu/                  VCU test data (NumPy arrays)
+│   ├── train_voltages.npy
+│   ├── train_labels.npy
+│   ├── test_voltages.npy
+│   ├── test_labels.npy
+│   └── metadata.json
+├── test_plans/           Saved test plan JSON files
+├── reports/              Generated report files
+├── requirements/         Imported requirement JSON files  (created at runtime)
+├── risk_analysis/        Risk analysis result files       (created at runtime)
+└── test_cases/           Generated test case files        (created at runtime)
+```
+
+## VCU Model Configuration
+
+Configuration files are in `configs/`:
+
+| File | Description |
+|------|-------------|
+| `config_vcu_base.py` | Shared constants (voltage ranges, model path) |
+| `config_vcu_data.py` | Database paths, anomaly thresholds |
+| `config_vcu_model.py` | GAN architecture parameters |
+| `config_vcu_train.py` | Training hyperparameters |
+
+Key VCU constants used as test boundaries:
+
+| Constant | Value | Meaning |
+|----------|-------|---------|
+| `CC2_MIN_VOLTAGE` | 4.8 V | Wake-up lower bound |
+| `CC2_MAX_VOLTAGE` | 7.8 V | Wake-up upper bound |
+| `SLEEP_VOLTAGE` | 12.0 V | Sleep trigger voltage |
+| `VEHICLE_STATUS_MIN` | 30 | READY flag clear threshold |
+| `VEHICLE_STATUS_MAX` | 170 | READY flag set threshold |

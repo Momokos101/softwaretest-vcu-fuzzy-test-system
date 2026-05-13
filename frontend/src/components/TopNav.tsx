@@ -1,4 +1,4 @@
-import { User, LogOut, Zap } from 'lucide-react';
+import { Zap } from 'lucide-react';
 
 export function TopNav() {
   return (
@@ -7,20 +7,11 @@ export function TopNav() {
         <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-blue-700 rounded-lg flex items-center justify-center shadow-sm">
           <Zap className="w-5 h-5 text-white" />
         </div>
-        <h1 className="text-xl tracking-wide">IntelliFuzz</h1>
-        <span className="px-3 py-1 bg-blue-50 rounded-full text-xs border border-blue-200 text-blue-700">Pro</span>
+        <h1 className="text-xl tracking-wide">AutoTestDesign</h1>
+        <span className="px-3 py-1 bg-blue-50 rounded-full text-xs border border-blue-200 text-blue-700">VCU Wake-Sleep</span>
       </div>
-      <div className="flex items-center gap-4">
-        <div className="flex items-center gap-3 px-4 py-2 bg-slate-50 rounded-lg border border-slate-200 hover:bg-slate-100 transition-all">
-          <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-blue-700 rounded-full flex items-center justify-center">
-            <User className="w-4 h-4 text-white" />
-          </div>
-          <span className="text-sm text-slate-700">测试工程师</span>
-        </div>
-        <button className="flex items-center gap-2 px-4 py-2 bg-slate-50 rounded-lg border border-slate-200 hover:bg-slate-100 transition-all">
-          <LogOut className="w-4 h-4 text-slate-600" />
-          <span className="text-sm text-slate-700">退出</span>
-        </button>
+      <div className="flex items-center gap-2 text-sm text-slate-500">
+        <span>AI-Driven Test Design Tool</span>
       </div>
     </nav>
   );
