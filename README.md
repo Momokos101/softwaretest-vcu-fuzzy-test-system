@@ -18,10 +18,10 @@ The tool implements:
 | FR 1.1 | Requirement Structuring — parse Input Fields, Data Ranges, Conditions, Expected Actions | Implemented |
 | FR 2.0 | Risk Analysis & Prioritization — assign Risk Score and Priority (High/Medium/Low) | Implemented |
 | FR 3.0 | Black-Box Test Design — Equivalence Partitioning, Boundary Value Analysis, Decision Tables | Implemented |
-| FR 4.0 | White-Box Test Modeling — State Transition Diagram and test sequence generation | Extra credit |
-| FR 5.0 | Test Oracle Generation — synthesize Expected Result from requirement + test data | Extra credit |
+| FR 4.0 | White-Box Test Modeling — State Transition Diagram and test sequence generation | Future extension |
+| FR 5.0 | Test Oracle Generation — synthesize Expected Result from requirement + test data | Partially implemented |
 | FR 6.0 | Output & Export — JSON, CSV, Excel with traceability matrix | Implemented |
-| FR 7.0 | Test Suite Optimization — risk-based prioritization and coverage minimization | Extra credit |
+| FR 7.0 | Test Suite Optimization — risk-based prioritization and coverage minimization | Future extension |
 
 ---
 
@@ -31,9 +31,51 @@ The tool implements:
 AutoTestDesign/
 ├── backend/          Python + FastAPI — all FR logic and API endpoints
 ├── frontend/         React + TypeScript + Tailwind CSS — interactive UI
+├── vcu_simulator/    Python + FastAPI — target VCU behavior simulator
 ├── tests/            pytest test scripts for the VCU target application
 └── docs/             Design plan and project documents
 ```
+
+**Runtime Services**
+
+The demo uses three local services:
+
+| Service | Directory | Command | URL |
+|---------|-----------|---------|-----|
+| VCU Simulator | `vcu_simulator/` | `conda run -n ST uvicorn main:app --host 127.0.0.1 --port 8001` | http://localhost:8001 |
+| AutoTestDesign Backend | `backend/` | `conda run -n ST python run_server.py` | http://localhost:8000 |
+| AutoTestDesign Frontend | `frontend/` | `npm run dev` | http://localhost:3000 |
+
+The backend calls the simulator over HTTP. `VCU_SIMULATOR_URL` can override the default simulator URL (`http://localhost:8001`).
+
+**FR API Endpoints**
+
+| FR | Capability | API |
+|----|------------|-----|
+| FR 1.0 | CSV / text / form requirement import | `POST /api/requirements/import/csv`, `POST /api/requirements/import/text`, `POST /api/requirements/import/form` |
+| FR 1.1 | Requirement structuring and review | `GET /api/requirements`, `PUT /api/requirements/{id}`, `POST /api/requirements/{id}/parse`, `PUT /api/requirements/{id}/parsed` |
+| FR 2.0 | Risk analysis and manual score adjustment | `POST /api/risk-analysis/{id}`, `GET /api/risk-analysis/matrix/data`, `PUT /api/risk-analysis/{id}` |
+| FR 3.0 | EP / BVA / Decision Table generation | `POST /api/test-cases/generate`, `GET /api/test-cases`, `PUT /api/test-cases/{id}` |
+| FR 3.0 / FR 5.0 | Test execution and oracle comparison | `POST /api/test-cases/{id}/execute`, `POST /api/test-cases/execute/batch` |
+| FR 6.0 | JSON / CSV / Excel export | `POST /api/export` |
+
+**Feature Coverage**
+
+- FR 1.0 / 1.1 imports requirements from CSV, free text, and direct form input, then extracts input fields, data ranges, conditions, and actions through deterministic regex rules.
+- FR 2.0 uses the specified weighted risk formula on a 0-10 scale: Criticality 35%, Boundary Sensitivity 25%, Complexity 20%, State Impact 15%, Testability 5%.
+- FR 3.0 generates EP, BVA, and Decision Table cases for the five VCU simulator signals. CC2 BVA uses the required seven points: `4.7 / 4.8 / 4.9 / 6.3 / 7.7 / 7.8 / 7.9`.
+- Test execution calls the VCU simulator `/simulate`, `/simulate/sleep`, and `/simulate/batch` endpoints and compares `test_status` plus `vehicle_state` against the generated oracle.
+- Interactive Review is implemented at every stage: requirement text editing, parsed structure editing, risk score adjustment, and test case editing.
+- FR 6.0 exports requirements, risk results, test cases, execution results, and the traceability matrix to JSON, CSV, or Excel.
+
+**Demo and Submission Materials**
+
+| Material | Path |
+|---|---|
+| Demo VCU requirements CSV | `docs/demo_vcu_requirements.csv` |
+| Member 2 tool developer deliverables | `docs/Member2_Tool_Developer_Deliverables.md` |
+| Prompt and rule design notes | `docs/prompts.md` |
+| VCU simulator API handover | `docs/tasks/simulator_api_for_tool.md` |
 
 **Tech Stack**
 
@@ -66,10 +108,7 @@ cd softwaretest-vcu-fuzzy-test-system
 
 ```bash
 cd backend
-python3 -m venv venv
-source venv/bin/activate        # Windows: venv\Scripts\activate
-pip install -r requirements.txt
-python3 run_server.py
+conda run -n ST python run_server.py
 ```
 
 Backend runs at: http://localhost:8000  
@@ -85,7 +124,16 @@ npm run dev
 
 Frontend runs at: http://localhost:3000
 
-### 4. One-Command Setup (macOS / Linux)
+### 4. VCU Simulator Setup
+
+```bash
+cd vcu_simulator
+conda run -n ST uvicorn main:app --host 127.0.0.1 --port 8001
+```
+
+Simulator API docs: http://localhost:8001/docs
+
+### 5. One-Command Setup (macOS / Linux)
 
 ```bash
 chmod +x setup.sh

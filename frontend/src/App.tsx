@@ -7,6 +7,10 @@ import { ReportCenter } from "./components/ReportCenter";
 import { SystemSettings } from "./components/SystemSettings";
 import { TopNav } from "./components/TopNav";
 import { Sidebar } from "./components/Sidebar";
+import { RequirementInput } from "./components/RequirementInput";
+import { RiskAnalysis } from "./components/RiskAnalysis";
+import { TestCaseDesign } from "./components/TestCaseDesign";
+import { ExportCenter } from "./components/ExportCenter";
 
 export default function App() {
   const [currentView, setCurrentView] = useState<
@@ -16,6 +20,10 @@ export default function App() {
     | "reports"
     | "settings"
     | "monitoring"
+    | "requirements"
+    | "risk-analysis"
+    | "test-design"
+    | "export"
   >("dashboard");
   const [currentTaskId, setCurrentTaskId] = useState<string | null>(null);
 
@@ -54,6 +62,14 @@ export default function App() {
             onBack={() => setCurrentView("dashboard")}
           />
         );
+      case "requirements":
+        return <RequirementInput />;
+      case "risk-analysis":
+        return <RiskAnalysis />;
+      case "test-design":
+        return <TestCaseDesign />;
+      case "export":
+        return <ExportCenter />;
       default:
         return (
           <Dashboard

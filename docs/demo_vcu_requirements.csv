@@ -1,0 +1,11 @@
+id,title,requirement,category,priority
+REQ-001,CC2 Wake Voltage Valid Range,"When CC2 voltage is 4.8V to 7.7V, the VCU shall accept it as a valid wake-up signal and output vehicle_state=170, vehicle_mode=5, ready_flag=1.",Input Validation,High
+REQ-002,CC2 Voltage Below Valid Range,"When CC2 voltage is below 4.8V, the VCU shall output test_status=4, vehicle_state=30, vehicle_mode=2, ready_flag=0.",Input Validation,High
+REQ-003,CC2 Voltage Above Valid Range,"When CC2 voltage exceeds 7.8V and is not the sleep trigger 12.0V, the VCU shall output test_status=4, vehicle_state=30, vehicle_mode=2, ready_flag=0.",Input Validation,High
+REQ-004,Sleep Trigger Voltage,"When CC2 voltage equals 12.0V with sleep command type=2, the VCU shall output test_status=3, vehicle_state=30, vehicle_mode=2, ready_flag=0.",State Transition,High
+REQ-005,CC Voltage Cable Check,"When CC voltage is 0.1V to 3.9V, the VCU shall output test_status=4 and vehicle_state=30 because the cable contact resistance is invalid.",Safety,Medium
+REQ-006,CP Amplitude Interference Check,"When CP amplitude is 9.1V to 12.9V, the VCU shall output test_status=4 and vehicle_state=30 because the CP signal conflicts with the charging protocol.",Safety,Medium
+REQ-007,Supply Voltage Overvoltage Check,"When supply voltage is 9.1V to 15.9V, the VCU shall output test_status=4 and vehicle_state=30 because unexpected external supply or overvoltage is detected.",Safety,Medium
+REQ-008,Network Wake Conflict Check,"When network wake enable state equals 1, the VCU shall output test_status=4 and vehicle_state=30 because network wake conflicts with CC2 wake protocol.",Safety,Medium
+REQ-009,READY Flag Consistency,"When vehicle_state is 170, the VCU shall set ready_flag=1. When vehicle_state is 30, the VCU shall set ready_flag=0.",State Control,High
+REQ-010,Test Duration Compliance,"When a single-signal VCU test is executed, the actual_duration shall be below 120 seconds.",Timing,Low

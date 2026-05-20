@@ -1,8 +1,8 @@
-import { LayoutDashboard, FlaskConical, BarChart3, FileText, Settings } from 'lucide-react';
+import { LayoutDashboard, FlaskConical, BarChart3, FileText, Settings, AlertTriangle, Code2, Download } from 'lucide-react';
 
 interface SidebarProps {
   currentView: string;
-  onNavigate: (view: 'dashboard' | 'tests' | 'analysis' | 'reports' | 'settings') => void;
+  onNavigate: (view: 'dashboard' | 'tests' | 'analysis' | 'reports' | 'settings' | 'monitoring' | 'requirements' | 'risk-analysis' | 'test-design' | 'export') => void;
 }
 
 export function Sidebar({ currentView, onNavigate }: SidebarProps) {
@@ -11,6 +11,10 @@ export function Sidebar({ currentView, onNavigate }: SidebarProps) {
     { id: 'tests', label: '测试管理', icon: FlaskConical },
     { id: 'analysis', label: '结果分析', icon: BarChart3 },
     { id: 'reports', label: '报告中心', icon: FileText },
+    { id: 'requirements', label: '需求管理', icon: FileText },
+    { id: 'risk-analysis', label: '风险分析', icon: AlertTriangle },
+    { id: 'test-design', label: '测试设计', icon: Code2 },
+    { id: 'export', label: '导出中心', icon: Download },
     { id: 'settings', label: '系统配置', icon: Settings },
   ];
 

@@ -124,3 +124,42 @@ export const constraintAPI = {
   getStats: (taskId: string) => api.get(`/api/test-tasks/${taskId}/constraints`),
 }
 
+// AutoTestDesign API
+export const autoTestAPI = {
+  // 需求管理
+  importCSV: (file: File) => {
+    const formData = new FormData()
+    formData.append('file', file)
+    return api.post('/api/requirements/import/csv', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' }
+    })
+  },
+  importText: (text: string) => api.post('/api/requirements/import/text', { raw_text: text }),
+  createRequirement: (data: any) => api.post('/api/requirements/import/form', data),
+  getRequirements: () => api.get('/api/requirements'),
+  getRequirement: (id: string) => api.get(`/api/requirements/${id}`),
+  updateRequirement: (id: string, data: any) => api.put(`/api/requirements/${id}`, data),
+  deleteRequirement: (id: string) => api.delete(`/api/requirements/${id}`),
+  parseRequirement: (id: string) => api.post(`/api/requirements/${id}/parse`),
+  parseAllRequirements: (onlyUnparsed: boolean = true) => api.post('/api/requirements/parse-all', null, { params: { only_unparsed: onlyUnparsed } }),
+  getParsed: (id: string) => api.get(`/api/requirements/${id}/parsed`),
+  updateParsed: (id: string, data: any) => api.put(`/api/requirements/${id}/parsed`, data),
+
+  // 风险分析
+  analyzeRisk: (id: string) => api.post(`/api/risk-analysis/${id}`),
+  getRiskAnalysis: (id: string) => api.get(`/api/risk-analysis/${id}`),
+  adjustRisk: (id: string, dimensions: any) => api.put(`/api/risk-analysis/${id}`, { requirement_id: id, dimensions }),
+  getRiskMatrix: () => api.get('/api/risk-analysis/matrix/data'),
+
+  // 测试用例
+  generateTestCases: (data: any) => api.post('/api/test-cases/generate', data),
+  getTestCases: (reqId?: string) => api.get('/api/test-cases', { params: { requirement_id: reqId } }),
+  getTestCase: (id: string) => api.get(`/api/test-cases/${id}`),
+  updateTestCase: (id: string, data: any) => api.put(`/api/test-cases/${id}`, data),
+  deleteTestCase: (id: string) => api.delete(`/api/test-cases/${id}`),
+  executeTestCase: (id: string) => api.post(`/api/test-cases/${id}/execute`),
+  executeBatch: (ids: string[]) => api.post('/api/test-cases/execute/batch', { test_case_ids: ids }),
+
+  // 导出
+  export: (data: any) => api.post('/api/export', data, { responseType: 'blob' }),
+}

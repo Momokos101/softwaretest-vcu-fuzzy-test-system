@@ -166,5 +166,161 @@ class TestReportResponse(BaseModel):
     generated_at: datetime
     comparison: Optional[MethodComparison] = None
 
+# ========== AutoTestDesign 需求管理模型 ==========
 
+class RequirementSource(str, Enum):
+    """需求来源"""
+    CSV = "csv"
+    TEXT = "text"
+    FORM = "form"
+
+class Requirement(BaseModel):
+    """需求基础模型"""
+    id: str
+    source: RequirementSource
+    raw_text: str = Field(..., description="原始需求文本")
+    created_at: datetime
+    updated_at: datetime
+    parsed: bool = Field(default=False, description="是否已解析")
+
+class RequirementCreate(BaseModel):
+    """创建需求请求"""
+    source: RequirementSource
+    raw_text: str
+
+class RequirementUpdate(BaseModel):
+    """更新需求请求"""
+    raw_text: str
+
+class ParsedRequirement(BaseModel):
+    """解析后的需求"""
+    requirement_id: str
+    input_fields: List[str] = Field(default_factory=list, description="输入字段列表")
+    data_ranges: Dict[str, Dict[str, Any]] = Field(
+        default_factory=dict,
+        description="数据范围，可为 {type: range, min, max} 或 {type: threshold, operator, threshold}"
+    )
+    conditions: List[str] = Field(default_factory=list, description="条件列表")
+    actions: List[str] = Field(default_factory=list, description="动作列表")
+    parse_confidence: float = Field(default=1.0, ge=0.0, le=1.0, description="解析置信度")
+    updated_at: datetime
+
+# ========== AutoTestDesign 风险分析模型 ==========
+
+class RiskDimension(BaseModel):
+    """风险维度评分"""
+    criticality: float = Field(default=5.0, ge=0.0, le=10.0, description="关键性，0-10")
+    boundary_sensitivity: float = Field(default=5.0, ge=0.0, le=10.0, description="边界敏感性，0-10")
+    complexity: float = Field(default=5.0, ge=0.0, le=10.0, description="复杂度，0-10")
+    state_impact: float = Field(default=5.0, ge=0.0, le=10.0, description="状态影响，0-10")
+    testability: float = Field(default=5.0, ge=0.0, le=10.0, description="可测试性，0-10")
+
+class RiskAnalysisResult(BaseModel):
+    """风险分析结果"""
+    requirement_id: str
+    dimensions: RiskDimension
+    total_score: float = Field(..., ge=0.0, le=10.0, description="加权风险总分，0-10")
+    priority: Literal["High", "Medium", "Low"] = Field(..., description="测试优先级")
+    created_at: datetime
+
+class RiskAdjustmentRequest(BaseModel):
+    """风险调整请求"""
+    requirement_id: str
+    dimensions: RiskDimension
+
+# ========== AutoTestDesign 测试用例模型 ==========
+
+class TestTechnique(str, Enum):
+    """测试技术"""
+    EQUIVALENCE_PARTITIONING = "ep"
+    BOUNDARY_VALUE_ANALYSIS = "bva"
+    DECISION_TABLE = "dt"
+
+class TestCaseStatus(str, Enum):
+    """测试用例状态"""
+    PENDING = "pending"
+    PASS = "pass"
+    FAIL = "fail"
+    ERROR = "error"
+
+class TestCase(BaseModel):
+    """测试用例"""
+    id: str
+    requirement_id: str
+    technique: TestTechnique
+    signal_name: str = Field(..., description="信号名称")
+    test_value: float = Field(..., description="测试值")
+    expected_result: Literal["PASS", "FAIL", "SLEEP"] = Field(..., description="预期结果")
+    expected_status: int = Field(..., description="预期仿真器test_status：1=PASS, 3=SLEEP, 4=FAIL")
+    expected_vehicle_state: int = Field(..., description="预期vehicle_state：170=唤醒, 30=休眠/失败")
+    status: TestCaseStatus = Field(default=TestCaseStatus.PENDING)
+    execution_result: Optional[Dict[str, Any]] = None
+    created_at: datetime
+
+class TestCaseCreate(BaseModel):
+    """创建测试用例请求"""
+    requirement_id: str
+    technique: TestTechnique
+    signal_name: str
+    test_value: float
+    expected_result: Literal["PASS", "FAIL", "SLEEP"]
+    expected_status: int
+    expected_vehicle_state: int
+
+class TestCaseUpdate(BaseModel):
+    """更新测试用例请求"""
+    signal_name: Optional[str] = None
+    test_value: Optional[float] = None
+    expected_result: Optional[Literal["PASS", "FAIL", "SLEEP"]] = None
+    expected_status: Optional[int] = None
+    expected_vehicle_state: Optional[int] = None
+
+class TestGenerationRequest(BaseModel):
+    """测试生成请求"""
+    requirement_id: str
+    techniques: List[TestTechnique] = Field(..., description="选择的测试技术")
+    bva_delta: Optional[float] = Field(default=0.1, description="BVA边界偏移量")
+
+# ========== AutoTestDesign 执行结果模型 ==========
+
+class ExecutionResult(BaseModel):
+    """执行结果"""
+    test_case_id: str
+    test_status: int = Field(..., description="1=PASS, 3=SLEEP, 4=FAIL")
+    vehicle_state: int
+    vehicle_mode: int
+    ready_flag: int
+    actual_duration: float
+    detail: str
+    executed_at: datetime
+    match_expected: bool = Field(..., description="是否符合预期")
+
+class BatchExecutionRequest(BaseModel):
+    """批量执行请求"""
+    test_case_ids: List[str]
+
+# ========== AutoTestDesign 导出模型 ==========
+
+class ExportFormat(str, Enum):
+    """导出格式"""
+    JSON = "json"
+    CSV = "csv"
+    EXCEL = "excel"
+
+class ExportScope(BaseModel):
+    """导出范围"""
+    include_requirements: bool = True
+    include_risk_analysis: bool = True
+    include_test_cases: bool = True
+    include_execution_results: bool = True
+    include_ep_cases: bool = True
+    include_bva_cases: bool = True
+    include_dt_cases: bool = True
+    include_traceability_matrix: bool = True
+
+class ExportRequest(BaseModel):
+    """导出请求"""
+    format: ExportFormat
+    scope: ExportScope
+    requirement_ids: Optional[List[str]] = Field(default=None, description="指定需求ID，None表示全部")
 
