@@ -4,7 +4,8 @@
 """
 import sys
 import os
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.join(ROOT_DIR, "backend"))
 
 def test_imports():
     """测试所有模块导入"""
@@ -150,6 +151,5 @@ def main():
 if __name__ == "__main__":
     success = main()
     sys.exit(0 if success else 1)
-
 
 

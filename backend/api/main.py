@@ -11,7 +11,7 @@ import asyncio
 import json
 
 from api.routers import test_plans, test_tasks, reports, constraints, monitoring, gan
-from api.routers import requirements, risk_analysis, test_design, export
+from api.routers import requirements, risk_analysis, test_design, export, autotest_review
 from api.websocket_manager import WebSocketManager
 
 app = FastAPI(
@@ -39,6 +39,7 @@ app.include_router(gan.router, prefix="/api", tags=["GAN测试"])
 app.include_router(requirements.router, prefix="/api", tags=["需求管理"])
 app.include_router(risk_analysis.router, prefix="/api", tags=["风险分析"])
 app.include_router(test_design.router, prefix="/api", tags=["测试设计"])
+app.include_router(autotest_review.router, prefix="/api", tags=["交互式评审"])
 app.include_router(export.router, prefix="/api", tags=["导出"])
 
 # WebSocket管理器
@@ -72,4 +73,3 @@ async def websocket_endpoint(websocket: WebSocket, task_id: str):
 
 if __name__ == "__main__":
     uvicorn.run("api.main:app", host="0.0.0.0", port=8000, reload=True)
-

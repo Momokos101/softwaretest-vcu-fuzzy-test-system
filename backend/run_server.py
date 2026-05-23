@@ -6,6 +6,13 @@ import uvicorn
 import os
 import sys
 
+try:
+    from dotenv import load_dotenv
+
+    load_dotenv()
+except Exception:
+    pass
+
 # 添加项目根目录到Python路径
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
@@ -27,4 +34,3 @@ if __name__ == "__main__":
         reload=reload,
         log_level="info"
     )
-

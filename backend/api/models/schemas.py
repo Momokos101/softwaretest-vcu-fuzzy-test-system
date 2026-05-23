@@ -2,7 +2,7 @@
 Pydantic数据模型定义
 用于API请求和响应的数据验证
 """
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, computed_field
 from typing import Optional, List, Dict, Any, Literal
 from datetime import datetime
 from enum import Enum
@@ -166,75 +166,232 @@ class TestReportResponse(BaseModel):
     generated_at: datetime
     comparison: Optional[MethodComparison] = None
 
-# ========== AutoTestDesign 需求管理模型 ==========
+# ========== AutoTestDesign V2 需求管理模型 ==========
 
 class RequirementSource(str, Enum):
     """需求来源"""
     CSV = "csv"
     TEXT = "text"
     FORM = "form"
+    DEMO = "demo"
+
 
 class Requirement(BaseModel):
-    """需求基础模型"""
+    """AutoTestDesign V2 原始需求。"""
     id: str
     source: RequirementSource
     raw_text: str = Field(..., description="原始需求文本")
+    title: Optional[str] = Field(default=None, description="需求标题")
+    module: Optional[str] = Field(default=None, description="VCU模块，如 A/B/C/D/E")
+    category: Optional[str] = Field(default=None, description="需求分类")
+    priority: Optional[str] = Field(default=None, description="文档或人工标注优先级")
     created_at: datetime
     updated_at: datetime
     parsed: bool = Field(default=False, description="是否已解析")
 
+
 class RequirementCreate(BaseModel):
     """创建需求请求"""
-    source: RequirementSource
+    source: RequirementSource = RequirementSource.FORM
     raw_text: str
+    id: Optional[str] = None
+    title: Optional[str] = None
+    module: Optional[str] = None
+    category: Optional[str] = None
+    priority: Optional[str] = None
+
 
 class RequirementUpdate(BaseModel):
     """更新需求请求"""
+    raw_text: Optional[str] = None
+    title: Optional[str] = None
+    module: Optional[str] = None
+    category: Optional[str] = None
+    priority: Optional[str] = None
+
+
+class RequirementsParseRequest(BaseModel):
+    """批量解析原始需求文本并创建需求。"""
     raw_text: str
+    source: RequirementSource = RequirementSource.TEXT
+    persist: bool = True
+
+
+class InputField(BaseModel):
+    name: str
+    data_type: str = "float"
+    valid_range: Optional[Dict[str, Any]] = None
+    unit: Optional[str] = None
+    has_timing: bool = False
+
+
+class RequirementCondition(BaseModel):
+    type: Literal["timing", "logical", "combined", "threshold", "state", "scenario"] = "logical"
+    description: str
+    threshold: Optional[Any] = None
+
+
+class ExpectedAction(BaseModel):
+    output_field: str
+    expected_value: Any
+    operator: Literal["eq", "gte", "lte", "gt", "lt", "contains"] = "eq"
+
 
 class ParsedRequirement(BaseModel):
-    """解析后的需求"""
+    """LLM 解析后的结构化需求。"""
     requirement_id: str
-    input_fields: List[str] = Field(default_factory=list, description="输入字段列表")
-    data_ranges: Dict[str, Dict[str, Any]] = Field(
-        default_factory=dict,
-        description="数据范围，可为 {type: range, min, max} 或 {type: threshold, operator, threshold}"
-    )
-    conditions: List[str] = Field(default_factory=list, description="条件列表")
-    actions: List[str] = Field(default_factory=list, description="动作列表")
-    parse_confidence: float = Field(default=1.0, ge=0.0, le=1.0, description="解析置信度")
+    title: Optional[str] = None
+    module: Optional[str] = None
+    description: str = ""
+    input_fields: List[InputField] = Field(default_factory=list)
+    conditions: List[RequirementCondition] = Field(default_factory=list)
+    expected_actions: List[ExpectedAction] = Field(default_factory=list)
+    parse_confidence: float = Field(default=1.0, ge=0.0, le=1.0)
+    llm_model: Optional[str] = None
+    elapsed_ms: Optional[float] = None
     updated_at: datetime
 
-# ========== AutoTestDesign 风险分析模型 ==========
+    @computed_field
+    @property
+    def data_ranges(self) -> Dict[str, Dict[str, Any]]:
+        """兼容旧前端：从 input_fields 派生 data_ranges。"""
+        ranges: Dict[str, Dict[str, Any]] = {}
+        for field in self.input_fields:
+            if field.valid_range is not None:
+                ranges[field.name] = field.valid_range
+        return ranges
+
+    @computed_field
+    @property
+    def actions(self) -> List[str]:
+        """兼容旧前端：返回动作描述。"""
+        return [
+            f"{item.output_field} {item.operator} {item.expected_value}"
+            for item in self.expected_actions
+        ]
+
+
+# ========== AutoTestDesign V2 风险分析模型 ==========
 
 class RiskDimension(BaseModel):
-    """风险维度评分"""
-    criticality: float = Field(default=5.0, ge=0.0, le=10.0, description="关键性，0-10")
-    boundary_sensitivity: float = Field(default=5.0, ge=0.0, le=10.0, description="边界敏感性，0-10")
-    complexity: float = Field(default=5.0, ge=0.0, le=10.0, description="复杂度，0-10")
-    state_impact: float = Field(default=5.0, ge=0.0, le=10.0, description="状态影响，0-10")
-    testability: float = Field(default=5.0, ge=0.0, le=10.0, description="可测试性，0-10")
+    """风险维度评分。数值越小风险越高，与 Tech×Business RPN 一致。"""
+    tech_risk: int = Field(default=3, ge=1, le=5)
+    business_risk: int = Field(default=3, ge=1, le=5)
+    safety_impact: Optional[int] = Field(default=None, ge=1, le=5)
+    detectability: Optional[int] = Field(default=None, ge=1, le=5)
+
 
 class RiskAnalysisResult(BaseModel):
-    """风险分析结果"""
+    """ISO 9126 + Chapter 4 RPN 风险分析结果。"""
     requirement_id: str
-    dimensions: RiskDimension
-    total_score: float = Field(..., ge=0.0, le=10.0, description="加权风险总分，0-10")
-    priority: Literal["High", "Medium", "Low"] = Field(..., description="测试优先级")
+    iso9126_characteristic: Literal[
+        "Functionality", "Reliability", "Efficiency", "Maintainability", "Usability", "Portability"
+    ] = "Functionality"
+    tech_risk: int = Field(..., ge=1, le=5)
+    business_risk: int = Field(..., ge=1, le=5)
+    rpn: int = Field(..., ge=1, le=25)
+    extent: Literal["Extensive", "Broad", "Cursory", "Low priority"]
+    reasoning: str
+    llm_model: Optional[str] = None
+    elapsed_ms: Optional[float] = None
     created_at: datetime
 
-class RiskAdjustmentRequest(BaseModel):
-    """风险调整请求"""
-    requirement_id: str
-    dimensions: RiskDimension
+    @computed_field
+    @property
+    def dimensions(self) -> RiskDimension:
+        return RiskDimension(tech_risk=self.tech_risk, business_risk=self.business_risk)
 
-# ========== AutoTestDesign 测试用例模型 ==========
+    @computed_field
+    @property
+    def total_score(self) -> float:
+        """兼容旧前端，按 0-10 风险强度返回。"""
+        return round((26 - self.rpn) / 25 * 10, 2)
+
+    @computed_field
+    @property
+    def priority(self) -> str:
+        if self.rpn <= 5:
+            return "High"
+        if self.rpn <= 10:
+            return "Medium"
+        return "Low"
+
+
+class RiskAdjustmentRequest(BaseModel):
+    """人工覆盖风险评分。"""
+    requirement_id: Optional[str] = None
+    iso9126_characteristic: Optional[str] = None
+    tech_risk: Optional[int] = Field(default=None, ge=1, le=5)
+    business_risk: Optional[int] = Field(default=None, ge=1, le=5)
+    dimensions: Optional[RiskDimension] = None
+    reasoning: Optional[str] = None
+
+
+# ========== AutoTestDesign V2 覆盖项 / 策略 / Prompt ==========
+
+class CoverageItem(BaseModel):
+    id: str
+    requirement_id: str
+    title: str
+    description: str
+    technique: str
+    iso9126_characteristic: Optional[str] = None
+    priority: str = "Medium"
+    created_at: datetime
+    updated_at: datetime
+
+
+class CoverageItemCreate(BaseModel):
+    requirement_id: str
+    title: str
+    description: str
+    technique: str
+    iso9126_characteristic: Optional[str] = None
+    priority: str = "Medium"
+
+
+class CoverageItemUpdate(BaseModel):
+    title: Optional[str] = None
+    description: Optional[str] = None
+    technique: Optional[str] = None
+    iso9126_characteristic: Optional[str] = None
+    priority: Optional[str] = None
+
+
+class TestStrategy(BaseModel):
+    requirement_id: str
+    techniques: List[str] = Field(default_factory=lambda: ["EP", "BVA"])
+    rationale: str = ""
+    updated_at: datetime
+
+
+class StrategyUpdate(BaseModel):
+    techniques: List[str]
+    rationale: Optional[str] = None
+
+
+class PromptTemplate(BaseModel):
+    type: str
+    system_prompt: str
+    user_prompt: str
+    updated_at: datetime
+
+
+class PromptUpdate(BaseModel):
+    system_prompt: Optional[str] = None
+    user_prompt: Optional[str] = None
+
+
+# ========== AutoTestDesign V2 测试用例模型 ==========
 
 class TestTechnique(str, Enum):
     """测试技术"""
-    EQUIVALENCE_PARTITIONING = "ep"
-    BOUNDARY_VALUE_ANALYSIS = "bva"
-    DECISION_TABLE = "dt"
+    EQUIVALENCE_PARTITIONING = "EP"
+    BOUNDARY_VALUE_ANALYSIS = "BVA"
+    DECISION_TABLE = "DT"
+    STATE_TRANSITION = "ST"
+    SCENARIO = "SC"
+
 
 class TestCaseStatus(str, Enum):
     """测试用例状态"""
@@ -243,84 +400,223 @@ class TestCaseStatus(str, Enum):
     FAIL = "fail"
     ERROR = "error"
 
+
+class TestInput(BaseModel):
+    name: str
+    data_type: str = "float"
+    value: Any
+    duration: Optional[float] = None
+    unit: Optional[str] = None
+
+
+class ExpectedOutput(BaseModel):
+    name: str
+    operator: Literal["eq", "gte", "lte", "gt", "lt", "contains"] = "eq"
+    value: Any
+    out_type: int = 1
+    out_range: int = 2
+
+
+class BqErrorOracle(BaseModel):
+    error_type: int
+    out_data: List[Dict[str, Any]] = Field(default_factory=list)
+
+
 class TestCase(BaseModel):
-    """测试用例"""
+    """AutoTestDesign V2 测试用例。"""
     id: str
     requirement_id: str
+    coverage_item_id: Optional[str] = None
+    title: str
     technique: TestTechnique
-    signal_name: str = Field(..., description="信号名称")
-    test_value: float = Field(..., description="测试值")
-    expected_result: Literal["PASS", "FAIL", "SLEEP"] = Field(..., description="预期结果")
-    expected_status: int = Field(..., description="预期仿真器test_status：1=PASS, 3=SLEEP, 4=FAIL")
-    expected_vehicle_state: int = Field(..., description="预期vehicle_state：170=唤醒, 30=休眠/失败")
-    status: TestCaseStatus = Field(default=TestCaseStatus.PENDING)
+    type: int = Field(default=1, description="bq_new type: 1=唤醒/单步, 2=休眠/场景")
+    in_data: List[TestInput] = Field(default_factory=list)
+    expected_results: List[ExpectedOutput] = Field(default_factory=list)
+    error: List[BqErrorOracle] = Field(default_factory=list)
+    est_time: float = 20.0
+    oracle_reasoning: str = ""
+    status: TestCaseStatus = TestCaseStatus.PENDING
     execution_result: Optional[Dict[str, Any]] = None
     created_at: datetime
+    updated_at: datetime
+
+    @computed_field
+    @property
+    def signal_name(self) -> str:
+        return self.in_data[0].name if self.in_data else ""
+
+    @computed_field
+    @property
+    def test_value(self) -> float:
+        if not self.in_data:
+            return 0.0
+        try:
+            return float(self.in_data[0].value)
+        except (TypeError, ValueError):
+            return 0.0
+
+    @computed_field
+    @property
+    def expected_result(self) -> str:
+        result_type = next((item.value for item in self.expected_results if item.name == "result_type"), None)
+        if result_type == "expected":
+            return "PASS"
+        if result_type == "sleep":
+            return "SLEEP"
+        state_value = next(
+            (
+                item.value
+                for item in self.expected_results
+                if item.name in {"vehicle_state", "整车State状态", "vcu_state", "state"}
+            ),
+            None,
+        )
+        if state_value in {11, "11", "state11"}:
+            return "PASS"
+        if state_value in {9, "9", "state09"}:
+            return "SLEEP"
+        return "FAIL"
+
+    @computed_field
+    @property
+    def expected_status(self) -> int:
+        return 1 if self.expected_result == "PASS" else 3 if self.expected_result == "SLEEP" else 4
+
+    @computed_field
+    @property
+    def expected_vehicle_state(self) -> int:
+        value = next((item.value for item in self.expected_results if item.name in {"vehicle_state", "整车State状态"}), None)
+        try:
+            return int(value)
+        except (TypeError, ValueError):
+            return 11 if self.expected_result == "PASS" else 9
+
 
 class TestCaseCreate(BaseModel):
-    """创建测试用例请求"""
     requirement_id: str
+    coverage_item_id: Optional[str] = None
+    title: str
     technique: TestTechnique
-    signal_name: str
-    test_value: float
-    expected_result: Literal["PASS", "FAIL", "SLEEP"]
-    expected_status: int
-    expected_vehicle_state: int
+    type: int = 1
+    in_data: List[TestInput]
+    expected_results: List[ExpectedOutput]
+    error: List[BqErrorOracle] = Field(default_factory=list)
+    est_time: float = 20.0
+    oracle_reasoning: str = ""
+
 
 class TestCaseUpdate(BaseModel):
-    """更新测试用例请求"""
+    title: Optional[str] = None
+    technique: Optional[TestTechnique] = None
+    type: Optional[int] = None
+    in_data: Optional[List[TestInput]] = None
+    expected_results: Optional[List[ExpectedOutput]] = None
+    error: Optional[List[BqErrorOracle]] = None
+    est_time: Optional[float] = None
+    oracle_reasoning: Optional[str] = None
+    # 旧前端兼容字段
     signal_name: Optional[str] = None
     test_value: Optional[float] = None
     expected_result: Optional[Literal["PASS", "FAIL", "SLEEP"]] = None
     expected_status: Optional[int] = None
     expected_vehicle_state: Optional[int] = None
 
-class TestGenerationRequest(BaseModel):
-    """测试生成请求"""
-    requirement_id: str
-    techniques: List[TestTechnique] = Field(..., description="选择的测试技术")
-    bva_delta: Optional[float] = Field(default=0.1, description="BVA边界偏移量")
 
-# ========== AutoTestDesign 执行结果模型 ==========
+class TestGenerationRequest(BaseModel):
+    requirement_id: str
+    techniques: List[str] = Field(..., description="EP/BVA/DT/ST/SC")
+    coverage_item_ids: Optional[List[str]] = None
+    bva_delta: Optional[float] = Field(default=0.1)
+    regenerate: bool = False
+
+
+class BulkTestGenerationRequest(BaseModel):
+    requirement_ids: Optional[List[str]] = None
+    techniques: Optional[List[str]] = None
+    bva_delta: Optional[float] = Field(default=0.1)
+    regenerate: bool = False
+
+
+# ========== AutoTestDesign V2 执行结果模型 ==========
 
 class ExecutionResult(BaseModel):
-    """执行结果"""
     test_case_id: str
-    test_status: int = Field(..., description="1=PASS, 3=SLEEP, 4=FAIL")
-    vehicle_state: int
-    vehicle_mode: int
-    ready_flag: int
-    actual_duration: float
-    detail: str
+    request_payload: Dict[str, Any]
+    actual_output: Dict[str, Any]
+    expected_output: List[ExpectedOutput]
+    match_expected: bool
+    mismatches: List[str] = Field(default_factory=list)
     executed_at: datetime
-    match_expected: bool = Field(..., description="是否符合预期")
+    elapsed_ms: float
+
 
 class BatchExecutionRequest(BaseModel):
-    """批量执行请求"""
-    test_case_ids: List[str]
+    test_case_ids: Optional[List[str]] = None
+    reset_before_run: bool = True
 
-# ========== AutoTestDesign 导出模型 ==========
+
+class ResultsSummary(BaseModel):
+    total: int
+    passed: int
+    failed: int
+    errors: int
+    pass_rate: float
+    coverage_rate: float
+    dtc_counts: Dict[str, int] = Field(default_factory=dict)
+    failure_reasons: Dict[str, int] = Field(default_factory=dict)
+    performance: Dict[str, Any] = Field(default_factory=dict)
+
+
+class ImproveRequest(BaseModel):
+    requirement_ids: Optional[List[str]] = None
+    failed_only: bool = True
+    max_suggestions: int = 10
+
+
+class ImproveSuggestion(BaseModel):
+    id: str
+    requirement_id: str
+    title: str
+    reason: str
+    coverage_item: CoverageItem
+    test_case: Optional[TestCase] = None
+    created_at: datetime
+
+
+class PerformanceMetric(BaseModel):
+    operation: str
+    elapsed_ms: float
+    model: Optional[str] = None
+    created_at: datetime
+    detail: Dict[str, Any] = Field(default_factory=dict)
+
+
+# ========== AutoTestDesign V2 导出模型 ==========
 
 class ExportFormat(str, Enum):
-    """导出格式"""
     JSON = "json"
     CSV = "csv"
     EXCEL = "excel"
 
+
 class ExportScope(BaseModel):
-    """导出范围"""
     include_requirements: bool = True
+    include_parsed_requirements: bool = True
     include_risk_analysis: bool = True
+    include_coverage_items: bool = True
+    include_strategies: bool = True
     include_test_cases: bool = True
     include_execution_results: bool = True
+    include_traceability_matrix: bool = True
+    include_bq_new_cases: bool = True
     include_ep_cases: bool = True
     include_bva_cases: bool = True
     include_dt_cases: bool = True
-    include_traceability_matrix: bool = True
+    include_st_cases: bool = True
+    include_scenario_cases: bool = True
+
 
 class ExportRequest(BaseModel):
-    """导出请求"""
     format: ExportFormat
-    scope: ExportScope
-    requirement_ids: Optional[List[str]] = Field(default=None, description="指定需求ID，None表示全部")
-
+    scope: ExportScope = Field(default_factory=ExportScope)
+    requirement_ids: Optional[List[str]] = Field(default=None)

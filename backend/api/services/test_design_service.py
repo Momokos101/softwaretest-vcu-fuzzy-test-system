@@ -1,285 +1,264 @@
-"""
-测试设计服务。
-根据结构化需求生成 EP / BVA / Decision Table 用例，并使用仿真器约定的
-PASS/FAIL/SLEEP oracle 填充预期结果。
-"""
+"""LLM-backed V2 test case design and CRUD."""
+from __future__ import annotations
+
+import json
 import uuid
 from datetime import datetime
 from typing import List, Optional
 
 from api.models.schemas import (
+    BulkTestGenerationRequest,
+    ExpectedOutput,
     ParsedRequirement,
     TestCase,
+    TestCaseCreate,
     TestCaseStatus,
     TestCaseUpdate,
     TestGenerationRequest,
+    TestInput,
     TestTechnique,
 )
+from api.services import coverage_service, requirement_service
+from api.services.llm_client import llm_client
+from api.services.prompt_service import require_prompt
 
 
 _test_cases: List[TestCase] = []
 
-SIGNAL_RULES = {
-    "CC2电压": {"kind": "valid_range", "min": 4.8, "max": 7.7, "low": 3.0, "high": 9.0},
-    "CC电压值": {"kind": "fail_range", "min": 0.1, "max": 3.9, "low": 0.0, "high": 12.0},
-    "CP幅值": {"kind": "fail_range", "min": 9.1, "max": 12.9, "low": 0.0, "high": 14.0},
-    "供电电压": {"kind": "fail_range", "min": 9.1, "max": 15.9, "low": 0.0, "high": 18.0},
-    "网络唤醒报文使能状态": {"kind": "binary_fail_one", "min": 0.0, "max": 1.0, "low": 0.0, "high": 1.0},
-}
 
+async def generate_test_cases(request: TestGenerationRequest, parsed_req: ParsedRequirement) -> List[TestCase]:
+    coverage_items = [
+        item for item in coverage_service.list_coverage_items(parsed_req.requirement_id)
+        if not request.coverage_item_ids or item.id in request.coverage_item_ids
+    ]
+    strategy = coverage_service.get_strategy(parsed_req.requirement_id)
+    techniques = [_normalize_technique(item) for item in (request.techniques or strategy.techniques)]
 
-def generate_test_cases(request: TestGenerationRequest, parsed_req: ParsedRequirement) -> List[TestCase]:
-    cases: List[TestCase] = []
-    fields = parsed_req.input_fields or list(parsed_req.data_ranges.keys())
-
-    for technique in request.techniques:
-        if technique == TestTechnique.EQUIVALENCE_PARTITIONING:
-            cases.extend(_generate_ep_cases(request.requirement_id, parsed_req, fields))
-        elif technique == TestTechnique.BOUNDARY_VALUE_ANALYSIS:
-            cases.extend(_generate_bva_cases(request.requirement_id, parsed_req, fields, request.bva_delta or 0.1))
-        elif technique == TestTechnique.DECISION_TABLE:
-            cases.extend(_generate_dt_cases(request.requirement_id, parsed_req, fields))
-
+    context = {
+        "requirement": parsed_req.model_dump(mode="json"),
+        "coverage_items": [item.model_dump(mode="json") for item in coverage_items],
+        "strategy": {**strategy.model_dump(mode="json"), "techniques": techniques},
+        "bva_delta": request.bva_delta,
+    }
+    cases = await _generate_from_context(context)
+    if request.regenerate:
+        delete_by_requirement(parsed_req.requirement_id)
     _test_cases.extend(cases)
     return cases
 
 
-def _generate_ep_cases(requirement_id: str, parsed_req: ParsedRequirement, fields: List[str]) -> List[TestCase]:
-    cases: List[TestCase] = []
-    for field in fields:
-        rule = _rule_for(field, parsed_req)
-        if rule["kind"] == "binary_fail_one":
-            cases.append(_make_case(requirement_id, TestTechnique.EQUIVALENCE_PARTITIONING, field, 0.0, "PASS"))
-            cases.append(_make_case(requirement_id, TestTechnique.EQUIVALENCE_PARTITIONING, field, 1.0, "FAIL"))
+async def generate_all_test_cases(request: BulkTestGenerationRequest) -> List[TestCase]:
+    requirement_ids = request.requirement_ids or [req.id for req in requirement_service.get_all_requirements() if req.parsed]
+    generated: list[TestCase] = []
+    for req_id in requirement_ids:
+        parsed = requirement_service.get_parsed_requirement(req_id)
+        if not parsed:
             continue
-        if rule["kind"] == "fail_above":
-            threshold = rule["threshold"]
-            cases.append(_make_case(requirement_id, TestTechnique.EQUIVALENCE_PARTITIONING, field, threshold - 1.0, "PASS"))
-            cases.append(_make_case(requirement_id, TestTechnique.EQUIVALENCE_PARTITIONING, field, threshold + 1.0, "FAIL"))
-            continue
-        if rule["kind"] == "fail_below":
-            threshold = rule["threshold"]
-            cases.append(_make_case(requirement_id, TestTechnique.EQUIVALENCE_PARTITIONING, field, threshold + 1.0, "PASS"))
-            cases.append(_make_case(requirement_id, TestTechnique.EQUIVALENCE_PARTITIONING, field, threshold - 1.0, "FAIL"))
-            continue
-
-        low, high = rule["min"], rule["max"]
-        midpoint = _midpoint(low, high)
-        if rule["kind"] == "valid_range":
-            cases.extend(
-                [
-                    _make_case(requirement_id, TestTechnique.EQUIVALENCE_PARTITIONING, field, midpoint, "PASS"),
-                    _make_case(requirement_id, TestTechnique.EQUIVALENCE_PARTITIONING, field, rule["low"], "FAIL"),
-                    _make_case(requirement_id, TestTechnique.EQUIVALENCE_PARTITIONING, field, rule["high"], "FAIL"),
-                ]
-            )
-        else:
-            cases.extend(
-                [
-                    _make_case(requirement_id, TestTechnique.EQUIVALENCE_PARTITIONING, field, midpoint, "FAIL"),
-                    _make_case(requirement_id, TestTechnique.EQUIVALENCE_PARTITIONING, field, rule["low"], "PASS"),
-                    _make_case(requirement_id, TestTechnique.EQUIVALENCE_PARTITIONING, field, rule["high"], "PASS"),
-                ]
-            )
-    return cases
-
-
-def _generate_bva_cases(
-    requirement_id: str,
-    parsed_req: ParsedRequirement,
-    fields: List[str],
-    delta: float,
-) -> List[TestCase]:
-    cases: List[TestCase] = []
-    for field in fields:
-        rule = _rule_for(field, parsed_req)
-        if rule["kind"] == "binary_fail_one":
-            cases.append(_make_case(requirement_id, TestTechnique.BOUNDARY_VALUE_ANALYSIS, field, 0.0, "PASS"))
-            cases.append(_make_case(requirement_id, TestTechnique.BOUNDARY_VALUE_ANALYSIS, field, 1.0, "FAIL"))
-            continue
-        if rule["kind"] in {"fail_above", "fail_below"}:
-            threshold = rule["threshold"]
-            for value in [threshold - delta, threshold, threshold + delta]:
-                cases.append(
-                    _make_case(
-                        requirement_id,
-                        TestTechnique.BOUNDARY_VALUE_ANALYSIS,
-                        field,
-                        round(value, 2),
-                        _expected_for(rule, value),
-                    )
-                )
-            continue
-
-        low, high = rule["min"], rule["max"]
-        midpoint = _midpoint(low, high)
-        values = [
-            low - delta,
-            low,
-            low + delta,
-            midpoint,
-            high,
-            high + delta,
-            high + 2 * delta,
-        ]
-        for value in values:
-            cases.append(
-                _make_case(
-                    requirement_id,
-                    TestTechnique.BOUNDARY_VALUE_ANALYSIS,
-                    field,
-                    round(value, 2),
-                    _expected_for(rule, value),
-                )
-            )
-    return cases
-
-
-def _generate_dt_cases(requirement_id: str, parsed_req: ParsedRequirement, fields: List[str]) -> List[TestCase]:
-    cases: List[TestCase] = []
-    active_fields = fields or ["CC2电压"]
-
-    for field in active_fields:
-        rule = _rule_for(field, parsed_req)
-        if rule["kind"] == "binary_fail_one":
-            cases.append(_make_case(requirement_id, TestTechnique.DECISION_TABLE, field, 0.0, "PASS"))
-            cases.append(_make_case(requirement_id, TestTechnique.DECISION_TABLE, field, 1.0, "FAIL"))
-            continue
-        if rule["kind"] == "fail_above":
-            threshold = rule["threshold"]
-            cases.append(_make_case(requirement_id, TestTechnique.DECISION_TABLE, field, threshold - 1.0, "PASS"))
-            cases.append(_make_case(requirement_id, TestTechnique.DECISION_TABLE, field, threshold + 1.0, "FAIL"))
-            continue
-        if rule["kind"] == "fail_below":
-            threshold = rule["threshold"]
-            cases.append(_make_case(requirement_id, TestTechnique.DECISION_TABLE, field, threshold + 1.0, "PASS"))
-            cases.append(_make_case(requirement_id, TestTechnique.DECISION_TABLE, field, threshold - 1.0, "FAIL"))
-            continue
-
-        midpoint = _midpoint(rule["min"], rule["max"])
-        cases.append(
-            _make_case(
-                requirement_id,
-                TestTechnique.DECISION_TABLE,
-                field,
-                midpoint,
-                _expected_for(rule, midpoint),
+        techniques = request.techniques or coverage_service.get_strategy(req_id).techniques
+        generated.extend(
+            await generate_test_cases(
+                TestGenerationRequest(
+                    requirement_id=req_id,
+                    techniques=techniques,
+                    bva_delta=request.bva_delta,
+                    regenerate=request.regenerate,
+                ),
+                parsed,
             )
         )
-        cases.append(
-            _make_case(
-                requirement_id,
-                TestTechnique.DECISION_TABLE,
-                field,
-                rule["high"],
-                _expected_for(rule, rule["high"]),
-            )
-        )
+    return generated
 
-    if "CC2电压" in active_fields:
-        cases.append(_make_case(requirement_id, TestTechnique.DECISION_TABLE, "CC2电压", 12.0, "SLEEP"))
 
-    return cases
+def create_test_case(create: TestCaseCreate) -> TestCase:
+    now = datetime.now()
+    case = TestCase(id=str(uuid.uuid4()), created_at=now, updated_at=now, **create.model_dump())
+    _test_cases.append(case)
+    return case
 
 
 def get_all_test_cases(requirement_id: Optional[str] = None) -> List[TestCase]:
     if requirement_id:
-        return [tc for tc in _test_cases if tc.requirement_id == requirement_id]
-    return _test_cases
+        return [case for case in _test_cases if case.requirement_id == requirement_id]
+    return list(_test_cases)
 
 
 def get_test_case(case_id: str) -> Optional[TestCase]:
-    return next((tc for tc in _test_cases if tc.id == case_id), None)
+    return next((case for case in _test_cases if case.id == case_id), None)
 
 
 def update_test_case(case_id: str, update: TestCaseUpdate) -> Optional[TestCase]:
-    tc = get_test_case(case_id)
-    if not tc:
+    case = get_test_case(case_id)
+    if not case:
         return None
 
+    for field in ("title", "technique", "type", "in_data", "expected_results", "error", "est_time", "oracle_reasoning"):
+        value = getattr(update, field)
+        if value is not None:
+            setattr(case, field, value)
+
+    # Compatibility with the old table editor.
     if update.signal_name is not None:
-        tc.signal_name = update.signal_name
+        if case.in_data:
+            case.in_data[0].name = update.signal_name
+        else:
+            case.in_data.append(TestInput(name=update.signal_name, value=update.test_value or 0.0))
     if update.test_value is not None:
-        tc.test_value = update.test_value
+        if case.in_data:
+            case.in_data[0].value = update.test_value
+        else:
+            case.in_data.append(TestInput(name=update.signal_name or "signal", value=update.test_value))
     if update.expected_result is not None:
-        tc.expected_result = update.expected_result
-    if update.expected_status is not None:
-        tc.expected_status = update.expected_status
+        _set_legacy_expected(case, update.expected_result)
     if update.expected_vehicle_state is not None:
-        tc.expected_vehicle_state = update.expected_vehicle_state
-    return tc
+        _upsert_expected(case, "vehicle_state", "eq", update.expected_vehicle_state)
+
+    case.updated_at = datetime.now()
+    return case
 
 
 def delete_test_case(case_id: str) -> bool:
-    global _test_cases
     original_len = len(_test_cases)
-    _test_cases = [tc for tc in _test_cases if tc.id != case_id]
+    _test_cases[:] = [case for case in _test_cases if case.id != case_id]
     return len(_test_cases) < original_len
 
 
-def _rule_for(field: str, parsed_req: ParsedRequirement) -> dict:
-    if field in SIGNAL_RULES:
-        return SIGNAL_RULES[field]
-
-    parsed_range = parsed_req.data_ranges.get(field)
-    if parsed_range:
-        if parsed_range.get("type") == "range" and "min" in parsed_range and "max" in parsed_range:
-            low, high = float(parsed_range["min"]), float(parsed_range["max"])
-            return {"kind": "valid_range", "min": low, "max": high, "low": low - 1.0, "high": high + 1.0}
-        if parsed_range.get("type") == "threshold" and "threshold" in parsed_range:
-            threshold = float(parsed_range["threshold"])
-            operator = parsed_range.get("operator")
-            if operator == ">":
-                return {"kind": "fail_above", "min": threshold - 1.0, "max": threshold, "low": threshold - 1.0, "high": threshold + 1.0, "threshold": threshold}
-            if operator == "<":
-                return {"kind": "fail_below", "min": threshold, "max": threshold + 1.0, "low": threshold - 1.0, "high": threshold + 1.0, "threshold": threshold}
-        if parsed_range.get("type") == "equality" and "value" in parsed_range:
-            value = float(parsed_range["value"])
-            return {"kind": "valid_range", "min": value, "max": value, "low": value - 1.0, "high": value + 1.0}
-
-        # Backward compatibility for manually edited legacy {min,max} JSON.
-        low, high = parsed_range["min"], parsed_range["max"]
-        return {"kind": "valid_range", "min": float(low), "max": float(high), "low": float(low) - 1.0, "high": float(high) + 1.0}
-
-    return {"kind": "valid_range", "min": 0.0, "max": 1.0, "low": -1.0, "high": 2.0}
+def delete_by_requirement(requirement_id: str) -> None:
+    _test_cases[:] = [case for case in _test_cases if case.requirement_id != requirement_id]
 
 
-def _expected_for(rule: dict, value: float) -> str:
-    if rule["kind"] == "valid_range":
-        return "PASS" if rule["min"] <= value <= rule["max"] else "FAIL"
-    if rule["kind"] == "fail_range":
-        return "FAIL" if rule["min"] <= value <= rule["max"] else "PASS"
-    if rule["kind"] == "binary_fail_one":
-        return "FAIL" if value == 1 else "PASS"
-    if rule["kind"] == "fail_above":
-        return "FAIL" if value > rule["threshold"] else "PASS"
-    if rule["kind"] == "fail_below":
-        return "FAIL" if value < rule["threshold"] else "PASS"
-    return "FAIL"
+def mark_execution(case_id: str, execution_result: dict, passed: bool) -> Optional[TestCase]:
+    case = get_test_case(case_id)
+    if not case:
+        return None
+    case.execution_result = execution_result
+    case.status = TestCaseStatus.PASS if passed else TestCaseStatus.FAIL
+    case.updated_at = datetime.now()
+    return case
 
 
-def _make_case(
-    requirement_id: str,
-    technique: TestTechnique,
-    signal_name: str,
-    test_value: float,
-    expected_result: str,
-) -> TestCase:
-    expected_status = {"PASS": 1, "SLEEP": 3, "FAIL": 4}[expected_result]
-    expected_vehicle_state = 170 if expected_result == "PASS" else 30
-    return TestCase(
-        id=str(uuid.uuid4()),
-        requirement_id=requirement_id,
-        technique=technique,
-        signal_name=signal_name,
-        test_value=round(test_value, 2),
-        expected_result=expected_result,
-        expected_status=expected_status,
-        expected_vehicle_state=expected_vehicle_state,
-        status=TestCaseStatus.PENDING,
-        created_at=datetime.now(),
+async def _generate_from_context(context: dict) -> List[TestCase]:
+    prompt = require_prompt("testcase")
+    payload, _, _ = await llm_client.generate_json(
+        operation="testcase.generate",
+        system_prompt=prompt.system_prompt,
+        user_prompt=prompt.user_prompt.format(design_context_json=json.dumps(context, ensure_ascii=False, indent=2)),
+        expected_type="object",
     )
+    raw_cases = payload.get("test_cases")
+    if not isinstance(raw_cases, list):
+        raise ValueError("LLM test case response must include test_cases array")
+
+    now = datetime.now()
+    cases: list[TestCase] = []
+    for item in raw_cases:
+        cases.append(
+            TestCase(
+                id=str(uuid.uuid4()),
+                requirement_id=str(item.get("requirement_id") or context["requirement"]["requirement_id"]),
+                coverage_item_id=item.get("coverage_item_id"),
+                title=item.get("title") or "Generated test case",
+                technique=_technique_enum(item.get("technique")),
+                type=_case_type(item.get("type")),
+                in_data=_normalize_in_data(item.get("in_data") or []),
+                expected_results=_normalize_expected_results(item.get("expected_results") or []),
+                error=item.get("error") or [],
+                est_time=float(item.get("est_time", 20.0)),
+                oracle_reasoning=item.get("oracle_reasoning") or "",
+                created_at=now,
+                updated_at=now,
+            )
+        )
+    return cases
 
 
-def _midpoint(low: float, high: float) -> float:
-    return round(((low + high) / 2) + 1e-9, 1)
+def _normalize_technique(value: str) -> str:
+    return str(value).upper().replace("EQUIVALENCE_PARTITIONING", "EP").replace("BOUNDARY_VALUE_ANALYSIS", "BVA")
+
+
+def _technique_enum(value: object) -> TestTechnique:
+    normalized = _normalize_technique(str(value or "EP"))
+    mapping = {
+        "EP": TestTechnique.EQUIVALENCE_PARTITIONING,
+        "BVA": TestTechnique.BOUNDARY_VALUE_ANALYSIS,
+        "DT": TestTechnique.DECISION_TABLE,
+        "ST": TestTechnique.STATE_TRANSITION,
+        "SC": TestTechnique.SCENARIO,
+        "SCENARIO": TestTechnique.SCENARIO,
+    }
+    return mapping.get(normalized, TestTechnique.EQUIVALENCE_PARTITIONING)
+
+
+def _case_type(value: object) -> int:
+    if value is None:
+        return 1
+    if isinstance(value, int):
+        return value
+    text = str(value).strip().lower()
+    if text in {"2", "type2", "sleep", "negative_sleep", "scenario_sleep"}:
+        return 2
+    return 1
+
+
+def _normalize_in_data(raw_items: list[object]) -> list[dict[str, object]]:
+    items: list[dict[str, object]] = []
+    for raw in raw_items:
+        if isinstance(raw, dict):
+            item = dict(raw)
+            item["name"] = item.get("name") or item.get("signal_name") or item.get("field") or "input"
+            item["data_type"] = item.get("data_type") or "float"
+            item["value"] = item.get("value", item.get("test_value"))
+            items.append(item)
+    return items
+
+
+def _normalize_expected_results(raw_items: list[object]) -> list[dict[str, object]]:
+    allowed_ops = {"eq", "gte", "lte", "gt", "lt", "contains"}
+    aliases = {"=": "eq", "==": "eq", ">=": "gte", "<=": "lte", ">": "gt", "<": "lt"}
+    items: list[dict[str, object]] = []
+    for raw in raw_items:
+        if not isinstance(raw, dict):
+            continue
+        item = dict(raw)
+        item["name"] = item.get("name") or item.get("output_field") or item.get("field") or "result_type"
+        operator = str(item.get("operator") or "eq").strip().lower()
+        item["operator"] = aliases.get(operator, operator if operator in allowed_ops else "eq")
+        item["value"] = item.get("value", item.get("expected_value"))
+        item["out_type"] = _safe_int(item.get("out_type"), default=1)
+        item["out_range"] = _safe_int(item.get("out_range"), default=_out_range_for_operator(str(item["operator"])))
+        items.append(item)
+    return items
+
+
+def _out_range_for_operator(operator: str) -> int:
+    if operator in {"gte", "gt"}:
+        return 1
+    if operator in {"lte", "lt"}:
+        return 3
+    return 2
+
+
+def _safe_int(value: object, default: int) -> int:
+    try:
+        return int(value)  # type: ignore[arg-type]
+    except (TypeError, ValueError):
+        return default
+
+
+def _set_legacy_expected(case: TestCase, expected: str) -> None:
+    if expected == "PASS":
+        _upsert_expected(case, "result_type", "eq", "expected")
+        _upsert_expected(case, "vehicle_state", "eq", 11)
+    elif expected == "SLEEP":
+        _upsert_expected(case, "result_type", "eq", "sleep")
+        _upsert_expected(case, "vehicle_state", "eq", 9)
+    else:
+        _upsert_expected(case, "result_type", "eq", "error")
+
+
+def _upsert_expected(case: TestCase, name: str, operator: str, value: object) -> None:
+    for item in case.expected_results:
+        if item.name == name:
+            item.operator = operator  # type: ignore[assignment]
+            item.value = value
+            return
+    case.expected_results.append(ExpectedOutput(name=name, operator=operator, value=value))  # type: ignore[arg-type]

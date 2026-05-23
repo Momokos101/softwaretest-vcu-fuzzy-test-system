@@ -11,6 +11,7 @@ import { RequirementInput } from "./components/RequirementInput";
 import { RiskAnalysis } from "./components/RiskAnalysis";
 import { TestCaseDesign } from "./components/TestCaseDesign";
 import { ExportCenter } from "./components/ExportCenter";
+import { AutoTestDesignV2 } from "./components/AutoTestDesignV2";
 
 export default function App() {
   const [currentView, setCurrentView] = useState<
@@ -21,6 +22,7 @@ export default function App() {
     | "settings"
     | "monitoring"
     | "requirements"
+    | "autotest-v2"
     | "risk-analysis"
     | "test-design"
     | "export"
@@ -64,6 +66,8 @@ export default function App() {
         );
       case "requirements":
         return <RequirementInput />;
+      case "autotest-v2":
+        return <AutoTestDesignV2 />;
       case "risk-analysis":
         return <RiskAnalysis />;
       case "test-design":

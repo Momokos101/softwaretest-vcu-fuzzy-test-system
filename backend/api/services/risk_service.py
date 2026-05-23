@@ -1,39 +1,79 @@
-"""
-风险分析服务。
-实现任务书指定的5维度加权评分算法，所有维度和总分均使用0-10尺度。
-"""
+"""LLM-backed ISO 9126 + Tech×Business risk analysis."""
+from __future__ import annotations
+
+import json
 from datetime import datetime
 from typing import List, Optional
 
 from api.models.schemas import ParsedRequirement, RiskAnalysisResult, RiskDimension
+from api.services.llm_client import llm_client
+from api.services.prompt_service import require_prompt
 
 
 _risk_results: dict[str, RiskAnalysisResult] = {}
 
-WEIGHTS = {
-    "criticality": 0.35,
-    "boundary_sensitivity": 0.25,
-    "complexity": 0.20,
-    "state_impact": 0.15,
-    "testability": 0.05,
-}
 
-
-def analyze_risk(requirement_id: str, parsed_req: ParsedRequirement) -> RiskAnalysisResult:
-    """自动分析单条需求风险。"""
-    dimensions = _auto_assess_dimensions(parsed_req)
-    result = _build_result(requirement_id, dimensions)
+async def analyze_risk(requirement_id: str, parsed_req: ParsedRequirement) -> RiskAnalysisResult:
+    results = await analyze_risks([parsed_req])
+    if not results:
+        raise ValueError("LLM returned no risk result")
+    result = results[0]
+    result.requirement_id = requirement_id
     _risk_results[requirement_id] = result
     return result
+
+
+async def analyze_risks(parsed_requirements: List[ParsedRequirement]) -> List[RiskAnalysisResult]:
+    prompt = require_prompt("risk")
+    requirements_json = json.dumps([item.model_dump(mode="json") for item in parsed_requirements], ensure_ascii=False, indent=2)
+    payload, model, elapsed_ms = await llm_client.generate_json(
+        operation="risk.analyze",
+        system_prompt=prompt.system_prompt,
+        user_prompt=prompt.user_prompt.format(requirements_json=requirements_json),
+        expected_type="object",
+    )
+    items = payload.get("items")
+    if not isinstance(items, list):
+        raise ValueError("LLM risk response must include items array")
+
+    results = [_to_risk_result(item, model, elapsed_ms) for item in items]
+    for result in results:
+        _risk_results[result.requirement_id] = result
+    return results
 
 
 def get_risk_analysis(requirement_id: str) -> Optional[RiskAnalysisResult]:
     return _risk_results.get(requirement_id)
 
 
-def adjust_risk(requirement_id: str, dimensions: RiskDimension) -> RiskAnalysisResult:
-    """人工覆盖5维分值，用于Interactive Review。"""
-    result = _build_result(requirement_id, dimensions)
+def adjust_risk(
+    requirement_id: str,
+    dimensions: RiskDimension | None = None,
+    *,
+    iso9126_characteristic: str | None = None,
+    tech_risk: int | None = None,
+    business_risk: int | None = None,
+    reasoning: str | None = None,
+) -> RiskAnalysisResult:
+    existing = _risk_results.get(requirement_id)
+    if dimensions:
+        tech_risk = dimensions.tech_risk
+        business_risk = dimensions.business_risk
+    tech = tech_risk or (existing.tech_risk if existing else 3)
+    business = business_risk or (existing.business_risk if existing else 3)
+    rpn = tech * business
+    result = RiskAnalysisResult(
+        requirement_id=requirement_id,
+        iso9126_characteristic=(iso9126_characteristic or (existing.iso9126_characteristic if existing else "Functionality")),  # type: ignore[arg-type]
+        tech_risk=tech,
+        business_risk=business,
+        rpn=rpn,
+        extent=_extent_for_rpn(rpn),
+        reasoning=reasoning or (existing.reasoning if existing else "Manual risk override"),
+        llm_model=existing.llm_model if existing else None,
+        elapsed_ms=existing.elapsed_ms if existing else None,
+        created_at=datetime.now(),
+    )
     _risk_results[requirement_id] = result
     return result
 
@@ -42,49 +82,29 @@ def get_all_risk_results() -> List[RiskAnalysisResult]:
     return list(_risk_results.values())
 
 
-def _build_result(requirement_id: str, dimensions: RiskDimension) -> RiskAnalysisResult:
-    total_score = _calculate_total_score(dimensions)
+def _to_risk_result(item: dict, model: str, elapsed_ms: float) -> RiskAnalysisResult:
+    tech = int(item.get("tech_risk", 3))
+    business = int(item.get("business_risk", 3))
+    rpn = int(item.get("rpn", tech * business))
     return RiskAnalysisResult(
-        requirement_id=requirement_id,
-        dimensions=dimensions,
-        total_score=total_score,
-        priority=_determine_priority(total_score),
+        requirement_id=str(item.get("requirement_id") or item.get("id")),
+        iso9126_characteristic=item.get("iso9126_characteristic", "Functionality"),
+        tech_risk=tech,
+        business_risk=business,
+        rpn=rpn,
+        extent=item.get("extent") or _extent_for_rpn(rpn),
+        reasoning=item.get("reasoning", ""),
+        llm_model=model,
+        elapsed_ms=elapsed_ms,
         created_at=datetime.now(),
     )
 
 
-def _auto_assess_dimensions(parsed_req: ParsedRequirement) -> RiskDimension:
-    text = " ".join(parsed_req.actions + parsed_req.conditions + parsed_req.input_fields)
-
-    criticality = 8.0 if any(keyword in text for keyword in ["唤醒", "休眠", "READY", "ready", "wake", "sleep"]) else 5.0
-    boundary_sensitivity = min(10.0, 4.0 + len(parsed_req.data_ranges) * 2.0)
-    complexity = min(10.0, 3.0 + len(parsed_req.conditions) * 1.5 + max(0, len(parsed_req.input_fields) - 1))
-    state_impact = 8.0 if any(keyword in text for keyword in ["state", "模式", "状态", "READY", "ready"]) else 5.5
-    testability = max(2.0, round(parsed_req.parse_confidence * 10, 1))
-
-    return RiskDimension(
-        criticality=criticality,
-        boundary_sensitivity=boundary_sensitivity,
-        complexity=complexity,
-        state_impact=state_impact,
-        testability=testability,
-    )
-
-
-def _calculate_total_score(dimensions: RiskDimension) -> float:
-    score = (
-        dimensions.criticality * WEIGHTS["criticality"]
-        + dimensions.boundary_sensitivity * WEIGHTS["boundary_sensitivity"]
-        + dimensions.complexity * WEIGHTS["complexity"]
-        + dimensions.state_impact * WEIGHTS["state_impact"]
-        + dimensions.testability * WEIGHTS["testability"]
-    )
-    return round(score, 2)
-
-
-def _determine_priority(score: float) -> str:
-    if score >= 7.0:
-        return "High"
-    if score >= 4.0:
-        return "Medium"
-    return "Low"
+def _extent_for_rpn(rpn: int) -> str:
+    if rpn <= 5:
+        return "Extensive"
+    if rpn <= 10:
+        return "Broad"
+    if rpn <= 15:
+        return "Cursory"
+    return "Low priority"

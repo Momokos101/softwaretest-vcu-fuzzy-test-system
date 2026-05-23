@@ -1,195 +1,115 @@
-"""
-需求解析服务。
-使用可解释的正则规则提取任务书要求的四类结构：
-Input Fields、Data Ranges、Conditions、Actions。
-"""
-import re
+"""LLM-backed requirement parsing for AutoTestDesign V2."""
+from __future__ import annotations
+
 from datetime import datetime
-from typing import Any, Dict, List
+from typing import Any, List
 
 from api.models.schemas import ParsedRequirement
+from api.services.llm_client import llm_client
+from api.services.prompt_service import require_prompt
 
 
-SIGNAL_ALIASES = {
-    "CC2电压": [r"CC2\s*(?:电压|voltage)", r"CC2电压"],
-    "CC电压值": [r"CC\s*(?:电压值|电压|voltage)", r"CC电压值"],
-    "CP幅值": [r"CP\s*(?:幅值|amplitude)", r"CP幅值"],
-    "供电电压": [r"(?:供电电压|supply\s*voltage)"],
-    "网络唤醒报文使能状态": [r"(?:网络唤醒报文使能状态|网络唤醒|network\s*wake(?:\s*enable)?)"],
-}
-
-RANGE_PATTERNS = [
-    re.compile(r"(\d+(?:\.\d+)?)\s*[Vv]?\s+(?:to|至|到|-|~)\s+(\d+(?:\.\d+)?)\s*[Vv]?"),
-    re.compile(r"\[(\d+(?:\.\d+)?)\s*,\s*(\d+(?:\.\d+)?)\]\s*[Vv]?"),
-    re.compile(r"(\d+(?:\.\d+)?)\s*[Vv]?\s*(?:-|~|至|到)\s*(\d+(?:\.\d+)?)\s*[Vv]?"),
-]
-THRESHOLD_PATTERNS = [
-    re.compile(r"(?:exceeds|above|greater than|>|高于|大于|超过)\s*(\d+(?:\.\d+)?)\s*[Vv]?"),
-    re.compile(r"(?:below|drops below|less than|<|低于|小于)\s*(\d+(?:\.\d+)?)\s*[Vv]?"),
-]
-CONDITION_PATTERNS = [
-    re.compile(r"\b(?:when|if|while|during)\b\s+(.+?)(?=\s+(?:the\s+)?(?:VCU\s+)?(?:shall|must|will)\b|[;。；]|$)", re.I),
-    re.compile(r"(?:当|如果|若|在)(.+?)(?:时|情况下|条件下)"),
-]
-ACTION_PATTERNS = [
-    re.compile(r"\b(?:shall|must|will)\s+(.+?)(?:\.|;|$)", re.I),
-    re.compile(r"(?:应|应该|必须|将|需要)\s*([^，。；]+)"),
-    re.compile(r"(?:VCU|系统)\s*(唤醒|休眠|进入[^，。；]*|保持[^，。；]*|输出[^，。；]*)"),
-]
-
-
-def parse_requirement(requirement_id: str, raw_text: str) -> ParsedRequirement:
-    """解析需求文本。"""
-    input_fields = _extract_input_fields(raw_text)
-    data_ranges = _extract_data_ranges(raw_text, input_fields)
-    conditions = _extract_conditions(raw_text)
-    actions = _extract_actions(raw_text)
-
-    structures_found = sum(
-        [bool(input_fields), bool(data_ranges), bool(conditions), bool(actions)]
+async def parse_requirements_from_text(raw_text: str) -> List[ParsedRequirement]:
+    prompt = require_prompt("parse")
+    payload, model, elapsed_ms = await llm_client.generate_json(
+        operation="requirements.parse",
+        system_prompt=prompt.system_prompt,
+        user_prompt=prompt.user_prompt.format(raw_text=raw_text),
+        expected_type="object",
     )
-    confidence = round(structures_found / 4, 2)
+    items = payload.get("requirements")
+    if not isinstance(items, list):
+        raise ValueError("LLM parse response must include requirements array")
+    return [_to_parsed_requirement(item, model, elapsed_ms) for item in items]
 
+
+async def parse_requirement(requirement_id: str, raw_text: str) -> ParsedRequirement:
+    parsed = await parse_requirements_from_text(f"{requirement_id}: {raw_text}")
+    if not parsed:
+        raise ValueError("LLM returned no parsed requirements")
+    item = parsed[0]
+    item.requirement_id = requirement_id
+    return item
+
+
+def _to_parsed_requirement(item: dict[str, Any], model: str, elapsed_ms: float) -> ParsedRequirement:
+    requirement_id = str(item.get("requirement_id") or item.get("id") or "").strip()
+    if not requirement_id:
+        requirement_id = "REQ-UNASSIGNED"
     return ParsedRequirement(
         requirement_id=requirement_id,
-        input_fields=input_fields,
-        data_ranges=data_ranges,
-        conditions=conditions,
-        actions=actions,
-        parse_confidence=confidence,
+        title=item.get("title"),
+        module=item.get("module"),
+        description=item.get("description") or "",
+        input_fields=_normalize_input_fields(item.get("input_fields") or []),
+        conditions=_normalize_conditions(item.get("conditions") or []),
+        expected_actions=_normalize_expected_actions(item.get("expected_actions") or []),
+        parse_confidence=float(item.get("parse_confidence", 1.0)),
+        llm_model=model,
+        elapsed_ms=elapsed_ms,
         updated_at=datetime.now(),
     )
 
 
-def _extract_input_fields(text: str) -> List[str]:
-    fields: List[str] = []
-    for canonical, aliases in SIGNAL_ALIASES.items():
-        if any(re.search(alias, text, re.I) for alias in aliases):
-            fields.append(canonical)
-
-    generic_pattern = re.compile(
-        r"([A-Za-z0-9_一-龥]+(?:电压值|电压|幅值|状态|报文|信号))"
-    )
-    for match in generic_pattern.findall(text):
-        if match not in fields and not re.fullmatch(r"(?:输入|检测|供电)", match):
-            fields.append(match)
-
-    return _unique(fields)
-
-
-def _extract_data_ranges(text: str, fields: List[str]) -> Dict[str, Dict[str, Any]]:
-    ranges: Dict[str, Dict[str, Any]] = {}
-    if not fields:
-        return ranges
-
-    range_matches = _find_ranges(text)
-    if not range_matches:
-        return ranges
-
-    for field in fields:
-        field_pos = _field_position(text, field)
-        chosen = _nearest_range(field_pos, range_matches)
-        if chosen:
-            ranges[field] = chosen
-
-    return ranges
+def _normalize_input_fields(raw_fields: list[Any]) -> list[dict[str, Any]]:
+    fields: list[dict[str, Any]] = []
+    for raw in raw_fields:
+        if isinstance(raw, str):
+            fields.append({"name": raw, "data_type": "float", "valid_range": None, "unit": None, "has_timing": False})
+            continue
+        if not isinstance(raw, dict):
+            continue
+        field = dict(raw)
+        valid_range = field.get("valid_range")
+        if isinstance(valid_range, str):
+            field["valid_range"] = {"expression": valid_range}
+        elif valid_range is not None and not isinstance(valid_range, dict):
+            field["valid_range"] = {"value": valid_range}
+        field.setdefault("data_type", "float")
+        field.setdefault("has_timing", False)
+        fields.append(field)
+    return fields
 
 
-def _find_ranges(text: str) -> List[Dict[str, Any]]:
-    matches: List[Dict[str, Any]] = []
-    for pattern in RANGE_PATTERNS:
-        for match in pattern.finditer(text):
-            low, high = float(match.group(1)), float(match.group(2))
-            matches.append(
-                {
-                    "type": "range",
-                    "min": min(low, high),
-                    "max": max(low, high),
-                    "_position": match.start(),
-                }
-            )
-
-    for index, pattern in enumerate(THRESHOLD_PATTERNS):
-        for match in pattern.finditer(text):
-            value = float(match.group(1))
-            operator = ">" if index == 0 else "<"
-            threshold = {
-                "type": "threshold",
-                "operator": operator,
-                "threshold": value,
-                "exclusive": True,
-                "_position": match.start(),
-            }
-            excluded_values = _extract_excluded_values(text[match.end():])
-            if excluded_values:
-                threshold["excluded_values"] = excluded_values
-            matches.append(threshold)
-
-    for match in re.finditer(r"(?:equals|equal to|=|等于)\s*(\d+(?:\.\d+)?)\s*[Vv]?", text, re.I):
-        value = float(match.group(1))
-        matches.append(
-            {
-                "type": "equality",
-                "operator": "==",
-                "value": value,
-                "_position": match.start(),
-            }
-        )
-
-    return matches
+def _normalize_conditions(raw_conditions: list[Any]) -> list[dict[str, Any]]:
+    allowed = {"timing", "logical", "combined", "threshold", "state", "scenario"}
+    aliases = {
+        "duration": "timing",
+        "time": "timing",
+        "temporal": "timing",
+        "range": "threshold",
+        "value": "threshold",
+        "transition": "state",
+    }
+    conditions: list[dict[str, Any]] = []
+    for raw in raw_conditions:
+        if isinstance(raw, str):
+            conditions.append({"type": "logical", "description": raw, "threshold": None})
+            continue
+        if not isinstance(raw, dict):
+            continue
+        condition = dict(raw)
+        condition_type = str(condition.get("type") or "logical").strip().lower()
+        condition["type"] = aliases.get(condition_type, condition_type if condition_type in allowed else "logical")
+        condition["description"] = condition.get("description") or condition.get("condition") or ""
+        conditions.append(condition)
+    return conditions
 
 
-def _field_position(text: str, field: str) -> int:
-    idx = text.find(field)
-    if idx >= 0:
-        return idx
-
-    for alias in SIGNAL_ALIASES.get(field, []):
-        match = re.search(alias, text, re.I)
-        if match:
-            return match.start()
-    return 0
-
-
-def _nearest_range(field_pos: int, ranges: List[Dict[str, Any]]) -> Dict[str, Any] | None:
-    if not ranges:
-        return None
-    chosen = min(ranges, key=lambda item: abs(item["_position"] - field_pos))
-    return {key: value for key, value in chosen.items() if key != "_position"}
-
-
-def _extract_excluded_values(text_after_threshold: str) -> List[float]:
-    """提取阈值条件后的排除值，例如 not the sleep trigger 12.0V。"""
-    excluded_values: List[float] = []
-    window = text_after_threshold[:120]
-    window = re.split(r",|\b(?:the\s+)?(?:VCU\s+)?(?:shall|must|will)\b", window, maxsplit=1, flags=re.I)[0]
-    if re.search(r"(?:not|except|excluding|不是|除外)", window, re.I):
-        for value in re.findall(r"(\d+(?:\.\d+)?)\s*[Vv]?", window):
-            excluded_values.append(float(value))
-    return excluded_values
-
-
-def _extract_conditions(text: str) -> List[str]:
-    conditions: List[str] = []
-    for pattern in CONDITION_PATTERNS:
-        conditions.extend(match.strip(" ，,") for match in pattern.findall(text))
-    return _unique([c for c in conditions if c])
-
-
-def _extract_actions(text: str) -> List[str]:
-    actions: List[str] = []
-    for pattern in ACTION_PATTERNS:
-        actions.extend(match.strip(" ，,") for match in pattern.findall(text))
-    return _unique([a for a in actions if a])
-
-
-def _unique(items: List[str]) -> List[str]:
-    result: List[str] = []
-    seen = set()
-    for item in items:
-        normalized = item.strip()
-        key = normalized.lower()
-        if normalized and key not in seen:
-            seen.add(key)
-            result.append(normalized)
-    return result
+def _normalize_expected_actions(raw_actions: list[Any]) -> list[dict[str, Any]]:
+    allowed_ops = {"eq", "gte", "lte", "gt", "lt", "contains"}
+    aliases = {"=": "eq", "==": "eq", ">=": "gte", "<=": "lte", ">": "gt", "<": "lt"}
+    actions: list[dict[str, Any]] = []
+    for raw in raw_actions:
+        if isinstance(raw, str):
+            actions.append({"output_field": "detail", "expected_value": raw, "operator": "contains"})
+            continue
+        if not isinstance(raw, dict):
+            continue
+        action = dict(raw)
+        action["output_field"] = action.get("output_field") or action.get("name") or action.get("field") or "detail"
+        action["expected_value"] = action.get("expected_value", action.get("value"))
+        operator = str(action.get("operator") or "eq").strip().lower()
+        action["operator"] = aliases.get(operator, operator if operator in allowed_ops else "eq")
+        actions.append(action)
+    return actions

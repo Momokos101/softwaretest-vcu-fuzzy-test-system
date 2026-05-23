@@ -1,138 +1,154 @@
-"""
-VCU仿真器HTTP客户端。
-默认调用真实仿真器 http://localhost:8001，与 Member 1 交接文档保持一致。
-"""
+"""HTTP client for the V2 VCU simulator API."""
+from __future__ import annotations
+
 import os
+import time
 from datetime import datetime
 from typing import Any, List
 
 import httpx
 
 from api.models.schemas import ExecutionResult, TestCase, TestCaseStatus
+from api.services import performance_service, test_design_service
 
 
 class SimulatorClient:
     def __init__(self, base_url: str | None = None):
         self.base_url = (base_url or os.getenv("VCU_SIMULATOR_URL") or "http://localhost:8001").rstrip("/")
 
-    async def health(self) -> dict[str, Any]:
-        async with httpx.AsyncClient(timeout=5.0, trust_env=False) as client:
-            response = await client.get(f"{self.base_url}/health")
-            response.raise_for_status()
-            return response.json()
-
-    async def simulate(self, signal_name: str, value: float, data_type: str = "float") -> dict[str, Any]:
+    async def reset(self, clear_dtc: bool = False) -> dict[str, Any]:
         async with httpx.AsyncClient(timeout=10.0, trust_env=False) as client:
-            response = await client.post(
-                f"{self.base_url}/simulate",
-                json={"signal_name": signal_name, "value": value, "data_type": data_type},
-            )
+            response = await client.post(f"{self.base_url}/reset", json={"clear_dtc": clear_dtc})
             response.raise_for_status()
             return response.json()
 
-    async def simulate_sleep(self) -> dict[str, Any]:
+    async def state(self) -> dict[str, Any]:
         async with httpx.AsyncClient(timeout=10.0, trust_env=False) as client:
-            response = await client.post(
-                f"{self.base_url}/simulate/sleep",
-                json={
-                    "cc2_voltage": 12.0,
-                    "cc_voltage": 12.0,
-                    "cp_amplitude": 0.0,
-                    "supply_voltage": 0.0,
-                    "network_wake_enable": 0.0,
-                },
-            )
+            response = await client.get(f"{self.base_url}/state")
             response.raise_for_status()
             return response.json()
 
-    async def simulate_batch(self, test_cases: List[TestCase]) -> List[dict[str, Any]]:
-        payload = [
-            {"signal_name": tc.signal_name, "value": tc.test_value, "data_type": "float"}
-            for tc in test_cases
-            if tc.expected_result != "SLEEP"
-        ]
-        results: List[dict[str, Any]] = []
-        if payload:
-            async with httpx.AsyncClient(timeout=30.0, trust_env=False) as client:
-                response = await client.post(f"{self.base_url}/simulate/batch", json=payload)
-                response.raise_for_status()
-                results = response.json()
-        return results
+    async def config(self) -> dict[str, Any]:
+        async with httpx.AsyncClient(timeout=10.0, trust_env=False) as client:
+            response = await client.get(f"{self.base_url}/config")
+            response.raise_for_status()
+            return response.json()
+
+    async def dtc(self) -> list[dict[str, Any]]:
+        async with httpx.AsyncClient(timeout=10.0, trust_env=False) as client:
+            response = await client.get(f"{self.base_url}/dtc")
+            response.raise_for_status()
+            data = response.json()
+            return data if isinstance(data, list) else data.get("dtcs", [])
+
+    async def performance(self) -> dict[str, Any]:
+        async with httpx.AsyncClient(timeout=10.0, trust_env=False) as client:
+            response = await client.get(f"{self.base_url}/performance")
+            response.raise_for_status()
+            return response.json()
+
+    async def simulate(self, test_case: TestCase) -> dict[str, Any]:
+        payload = _case_to_payload(test_case)
+        async with httpx.AsyncClient(timeout=30.0, trust_env=False) as client:
+            response = await client.post(f"{self.base_url}/simulate", json=payload)
+            response.raise_for_status()
+            return response.json()
 
     async def execute_test_case(self, test_case: TestCase) -> ExecutionResult:
-        if test_case.expected_result == "SLEEP":
-            data = await self.simulate_sleep()
-        else:
-            data = await self.simulate(test_case.signal_name, test_case.test_value)
-        return _build_execution_result(test_case, data)
+        started = time.perf_counter()
+        actual = await self.simulate(test_case)
+        elapsed_ms = (time.perf_counter() - started) * 1000
+        passed, mismatches = _compare_expected(actual, test_case)
+        performance_service.record(
+            "simulator.execute",
+            elapsed_ms,
+            detail={"test_case_id": test_case.id, "requirement_id": test_case.requirement_id},
+        )
+        return ExecutionResult(
+            test_case_id=test_case.id,
+            request_payload=_case_to_payload(test_case),
+            actual_output=actual,
+            expected_output=test_case.expected_results,
+            match_expected=passed,
+            mismatches=mismatches,
+            executed_at=datetime.now(),
+            elapsed_ms=round(elapsed_ms, 2),
+        )
 
 
 simulator_client = SimulatorClient()
 
 
 async def execute_single(test_case: TestCase) -> TestCase:
-    """执行单个测试用例并原位更新状态。"""
     try:
         result = await simulator_client.execute_test_case(test_case)
-        _apply_result(test_case, result)
+        return _apply_result(test_case, result)
     except Exception as exc:
         test_case.status = TestCaseStatus.ERROR
         test_case.execution_result = {
             "error": str(exc),
-            "detail": f"仿真器调用失败，请确认 {simulator_client.base_url} 已启动",
+            "detail": f"V2 simulator call failed. Check {simulator_client.base_url}",
             "match_expected": False,
             "executed_at": datetime.now().isoformat(),
         }
+        return test_case
+
+
+async def execute_batch(test_cases: List[TestCase], reset_before_run: bool = True) -> List[TestCase]:
+    if reset_before_run:
+        await simulator_client.reset(clear_dtc=False)
+    results = []
+    for case in test_cases:
+        results.append(await execute_single(case))
+    return results
+
+
+def _apply_result(test_case: TestCase, result: ExecutionResult) -> TestCase:
+    test_case.execution_result = result.model_dump(mode="json")
+    test_case.status = TestCaseStatus.PASS if result.match_expected else TestCaseStatus.FAIL
+    test_case.updated_at = datetime.now()
     return test_case
 
 
-async def execute_batch(test_cases: List[TestCase]) -> List[TestCase]:
-    """批量执行。含SLEEP用例时单独调用休眠接口，其余优先使用/simulate/batch。"""
-    regular_cases = [tc for tc in test_cases if tc.expected_result != "SLEEP"]
-    sleep_cases = [tc for tc in test_cases if tc.expected_result == "SLEEP"]
-
-    try:
-        batch_results = await simulator_client.simulate_batch(regular_cases)
-        for test_case, data in zip(regular_cases, batch_results):
-            _apply_result(test_case, _build_execution_result(test_case, data))
-    except Exception:
-        for test_case in regular_cases:
-            await execute_single(test_case)
-
-    for test_case in sleep_cases:
-        await execute_single(test_case)
-
-    return test_cases
-
-
-def _build_execution_result(test_case: TestCase, data: dict[str, Any]) -> ExecutionResult:
-    return ExecutionResult(
-        test_case_id=test_case.id,
-        test_status=data["test_status"],
-        vehicle_state=data["vehicle_state"],
-        vehicle_mode=data["vehicle_mode"],
-        ready_flag=data["ready_flag"],
-        actual_duration=data.get("actual_duration", 0.0),
-        detail=data.get("detail", ""),
-        executed_at=datetime.now(),
-        match_expected=(
-            data["test_status"] == test_case.expected_status
-            and data["vehicle_state"] == test_case.expected_vehicle_state
-        ),
-    )
-
-
-def _apply_result(test_case: TestCase, result: ExecutionResult) -> None:
-    test_case.execution_result = {
-        "test_status": result.test_status,
-        "vehicle_state": result.vehicle_state,
-        "vehicle_mode": result.vehicle_mode,
-        "ready_flag": result.ready_flag,
-        "actual_duration": result.actual_duration,
-        "detail": result.detail,
-        "expected_status": test_case.expected_status,
-        "expected_vehicle_state": test_case.expected_vehicle_state,
-        "match_expected": result.match_expected,
-        "executed_at": result.executed_at.isoformat(),
+def _case_to_payload(test_case: TestCase) -> dict[str, Any]:
+    return {
+        "type": test_case.type,
+        "in_data": [item.model_dump(mode="json", exclude_none=True) for item in test_case.in_data],
+        "expected_results": [item.model_dump(mode="json") for item in test_case.expected_results],
+        "error": [item.model_dump(mode="json") for item in test_case.error],
+        "est_time": test_case.est_time,
+        "requirement_id": test_case.requirement_id,
+        "test_case_id": test_case.id,
     }
-    test_case.status = TestCaseStatus.PASS if result.match_expected else TestCaseStatus.FAIL
+
+
+def _compare_expected(actual: dict[str, Any], test_case: TestCase) -> tuple[bool, list[str]]:
+    mismatches: list[str] = []
+    for expected in test_case.expected_results:
+        actual_value = actual.get(expected.name)
+        if not _matches(actual_value, expected.operator, expected.value):
+            mismatches.append(
+                f"{expected.name}: expected {expected.operator} {expected.value}, actual {actual_value}"
+            )
+    return not mismatches, mismatches
+
+
+def _matches(actual: Any, operator: str, expected: Any) -> bool:
+    if operator == "eq":
+        return actual == expected
+    if operator == "contains":
+        return isinstance(actual, list | str | dict) and expected in actual
+    try:
+        actual_num = float(actual)
+        expected_num = float(expected)
+    except (TypeError, ValueError):
+        return False
+    if operator == "gte":
+        return actual_num >= expected_num
+    if operator == "lte":
+        return actual_num <= expected_num
+    if operator == "gt":
+        return actual_num > expected_num
+    if operator == "lt":
+        return actual_num < expected_num
+    return False

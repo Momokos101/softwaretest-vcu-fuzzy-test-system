@@ -127,10 +127,19 @@ export const constraintAPI = {
 // AutoTestDesign API
 export const autoTestAPI = {
   // 需求管理
+  parseRawRequirements: (rawText: string, persist: boolean = true) => api.post('/api/requirements/parse', { raw_text: rawText, source: 'text', persist }),
+  loadDemo: (replace: boolean = false) => api.get('/api/requirements/demo', { params: { replace } }),
   importCSV: (file: File) => {
     const formData = new FormData()
     formData.append('file', file)
     return api.post('/api/requirements/import/csv', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' }
+    })
+  },
+  uploadCSV: (file: File) => {
+    const formData = new FormData()
+    formData.append('file', file)
+    return api.post('/api/requirements/upload-csv', formData, {
       headers: { 'Content-Type': 'multipart/form-data' }
     })
   },
@@ -150,16 +159,36 @@ export const autoTestAPI = {
   getRiskAnalysis: (id: string) => api.get(`/api/risk-analysis/${id}`),
   adjustRisk: (id: string, dimensions: any) => api.put(`/api/risk-analysis/${id}`, { requirement_id: id, dimensions }),
   getRiskMatrix: () => api.get('/api/risk-analysis/matrix/data'),
+  analyzeAllRisks: () => api.post('/api/risk-analysis/analyze-all'),
+
+  // 覆盖项与策略
+  generateCoverageItems: (requirementIds?: string[]) => api.post('/api/coverage-items/generate', requirementIds || null),
+  getCoverageItems: (reqId?: string) => api.get('/api/coverage-items', { params: { requirement_id: reqId } }),
+  createCoverageItem: (data: any) => api.post('/api/coverage-items', data),
+  updateCoverageItem: (id: string, data: any) => api.put(`/api/coverage-items/${id}`, data),
+  deleteCoverageItem: (id: string) => api.delete(`/api/coverage-items/${id}`),
+  getStrategy: (reqId: string) => api.get(`/api/strategies/${reqId}`),
+  updateStrategy: (reqId: string, data: any) => api.put(`/api/strategies/${reqId}`, data),
+  regenerateStrategy: (reqId: string) => api.post(`/api/strategies/${reqId}/regenerate`),
+  getPrompts: () => api.get('/api/prompts'),
+  getPrompt: (type: string) => api.get(`/api/prompts/${type}`),
+  updatePrompt: (type: string, data: any) => api.put(`/api/prompts/${type}`, data),
 
   // 测试用例
   generateTestCases: (data: any) => api.post('/api/test-cases/generate', data),
+  generateAllTestCases: (data: any) => api.post('/api/test-cases/generate-all', data),
   getTestCases: (reqId?: string) => api.get('/api/test-cases', { params: { requirement_id: reqId } }),
   getTestCase: (id: string) => api.get(`/api/test-cases/${id}`),
   updateTestCase: (id: string, data: any) => api.put(`/api/test-cases/${id}`, data),
   deleteTestCase: (id: string) => api.delete(`/api/test-cases/${id}`),
   executeTestCase: (id: string) => api.post(`/api/test-cases/${id}/execute`),
   executeBatch: (ids: string[]) => api.post('/api/test-cases/execute/batch', { test_case_ids: ids }),
+  execute: (ids?: string[]) => api.post('/api/execute', { test_case_ids: ids || null, reset_before_run: true }),
+  getResultsSummary: () => api.get('/api/results/summary'),
+  improve: (data: any) => api.post('/api/improve', data),
+  getPerformance: () => api.get('/api/performance'),
 
   // 导出
   export: (data: any) => api.post('/api/export', data, { responseType: 'blob' }),
+  exportByFormat: (format: string) => api.get(`/api/export/${format}`, { responseType: 'blob' }),
 }
