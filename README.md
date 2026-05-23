@@ -64,7 +64,7 @@ The backend calls the simulator over HTTP. `VCU_SIMULATOR_URL` can override the 
 - FR 1.0 / 1.1 imports requirements from CSV, free text, and direct form input, then extracts input fields, data ranges, conditions, and actions through deterministic regex rules.
 - FR 2.0 uses the specified weighted risk formula on a 0-10 scale: Criticality 35%, Boundary Sensitivity 25%, Complexity 20%, State Impact 15%, Testability 5%.
 - FR 3.0 generates EP, BVA, and Decision Table cases for the five VCU simulator signals. CC2 BVA uses the required seven points: `4.7 / 4.8 / 4.9 / 6.3 / 7.7 / 7.8 / 7.9`.
-- Test execution calls the VCU simulator `/simulate`, `/simulate/sleep`, and `/simulate/batch` endpoints and compares `test_status` plus `vehicle_state` against the generated oracle.
+- Test execution calls the VCU simulator `/simulate`, `/simulate/sleep`, and `/simulate/batch` endpoints and compares `result_type`, `test_status`, and V2 `vehicle_state` (`9/10/11`) against the generated oracle.
 - Interactive Review is implemented at every stage: requirement text editing, parsed structure editing, risk score adjustment, and test case editing.
 - FR 6.0 exports requirements, risk results, test cases, execution results, and the traceability matrix to JSON, CSV, or Excel.
 

@@ -29,7 +29,7 @@ def print_error(msg: str):
 def print_info(msg: str):
     print(f"{Colors.YELLOW}→ {msg}{Colors.END}")
 
-def test_health_check():
+def run_health_check():
     """测试健康检查"""
     print_test("1. 健康检查")
     try:
@@ -44,7 +44,7 @@ def test_health_check():
         print_error(f"无法连接到后端: {str(e)}")
         return False
 
-def test_test_plans():
+def run_test_plans():
     """测试测试计划API"""
     print_test("2. 测试计划API")
     
@@ -83,7 +83,7 @@ def test_test_plans():
         print_error(f"创建计划失败: {r.status_code} - {r.text[:100]}")
         return None
 
-def test_test_tasks(plan_id: str):
+def run_test_tasks(plan_id: str):
     """测试测试任务API"""
     print_test("3. 测试任务API")
     
@@ -167,7 +167,7 @@ def test_test_tasks(plan_id: str):
     
     return task_id
 
-def test_gan_api():
+def run_gan_api():
     """测试GAN API"""
     print_test("4. GAN API")
     
@@ -212,7 +212,7 @@ def test_gan_api():
     else:
         print_error(f"转换失败: {r.status_code}")
 
-def test_report_api(task_id: str):
+def run_report_api(task_id: str):
     """测试报告API"""
     print_test("5. 报告API")
     
@@ -234,7 +234,7 @@ def test_report_api(task_id: str):
         print_info(f"  传统测试异常率: {comparison['traditional']['anomaly_rate']*100:.2f}%")
         print_info(f"  GAN测试异常率: {comparison['gan']['anomaly_rate']*100:.2f}%")
 
-def test_error_handling():
+def run_error_handling():
     """测试错误处理"""
     print_test("6. 错误处理")
     
@@ -264,30 +264,30 @@ def main():
     print(f"{'='*60}{Colors.END}\n")
     
     # 测试健康检查
-    if not test_health_check():
+    if not run_health_check():
         print_error("后端服务未运行，请先启动后端服务")
         return
     
     # 测试测试计划
-    plan_id = test_test_plans()
+    plan_id = run_test_plans()
     if not plan_id:
         print_error("无法创建测试计划，测试终止")
         return
     
     # 测试测试任务
-    task_id = test_test_tasks(plan_id)
+    task_id = run_test_tasks(plan_id)
     if not task_id:
         print_error("无法创建测试任务，测试终止")
         return
     
     # 测试GAN API
-    test_gan_api()
+    run_gan_api()
     
     # 测试报告API
-    test_report_api(task_id)
+    run_report_api(task_id)
     
     # 测试错误处理
-    test_error_handling()
+    run_error_handling()
     
     # 总结
     print(f"\n{Colors.GREEN}{'='*60}")
@@ -299,4 +299,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

@@ -1,7 +1,7 @@
-# VCU仿真器 API 接口说明文档
+# VCU仿真器 API 接口说明文档（V2）
 
-> 面向：Member 2（工具开发者）  
-> 用途：AutoTestDesign Tool 后端中 `simulator_client.py` 对接仿真器所需的完整接口规范  
+> 面向：Member 2（工具开发者）
+> 用途：AutoTestDesign Tool 后端中 `simulator_client.py` 对接 VCU V2 仿真器
 > 仿真器地址：`http://localhost:8001`
 
 ---
@@ -11,21 +11,39 @@
 | 端点 | 方法 | 用途 |
 |------|------|------|
 | `/health` | GET | 健康检查，确认仿真器已启动 |
-| `/signals` | GET | 获取5个信号的边界说明 |
-| `/simulate` | POST | 单信号测试（主要接口） |
-| `/simulate/sleep` | POST | 休眠测试（固定5信号组合） |
-| `/simulate/batch` | POST | 批量测试（数组输入） |
-| `/reset` | POST | 重置状态机 |
+| `/signals` | GET | 获取 V2 输入信号说明 |
+| `/simulate` | POST | 统一仿真入口，支持唤醒/休眠/保护/功耗监控 |
+| `/simulate/sleep` | POST | 休眠快捷测试，自动发送 h1/h2/h3 |
+| `/simulate/batch` | POST | 批量执行 `/simulate` 请求 |
+| `/reset` | POST | 重置状态机；可清除 DTC |
+| `/state` | GET | 查询当前 VCU 状态 |
+| `/config` | GET/PUT | 查询或修改 V2 阈值配置 |
+| `/dtc` | GET | 查询 DTC 记录 |
+| `/performance` | GET | 查询 actual_duration 统计 |
 
 ---
 
-## 1. GET /health — 健康检查
+## 状态与结果编码
 
-**用途**：工具后端启动时调用，确认仿真器服务正常。
+| 字段 | V2 含义 |
+|------|---------|
+| `vehicle_state=9` | state09，休眠 |
+| `vehicle_state=10` | state10，初始化/卡死 |
+| `vehicle_state=11` | state11，正常运行 |
+| `test_status=1` | PASS，预期唤醒成功 |
+| `test_status=3` | SLEEP，预期休眠成功 |
+| `test_status=4` | FAIL，错误输入、保护状态、bus_off 或卡死 |
+| `result_type=expected` | 行为符合当前输入预期 |
+| `result_type=error` | 输入无效、条件不足或故障触发 |
 
-**请求**：无请求体
+保护状态请优先查看 `state_name`：`fault_protection` 或 `undervoltage_shutdown`。
 
-**响应示例**：
+---
+
+## 1. GET /health
+
+响应示例：
+
 ```json
 {
   "status": "ok",
@@ -35,183 +53,171 @@
 }
 ```
 
-**curl 示例**：
-```bash
-curl http://localhost:8001/health
-```
-
 ---
 
-## 2. GET /signals — 获取信号边界说明
+## 2. POST /simulate
 
-**用途**：工具前端"信号参考"页面或测试用例生成时调用，获取5个信号的有效/无效区间。
+### 唤醒输入字段
 
-**响应字段**：
+| 唤醒编号 | 字段 | 触发条件 | 备注 |
+|---------|------|----------|------|
+| w1 | `supply_voltage` + `duration_ms` | `supply_voltage > 9.0` 且 `duration_ms >= 10` | 过压/欠压/去抖适用 |
+| w2 | `can_msg_id` | `0x400 <= can_msg_id <= 0x47F` | bus_off 时不唤醒 |
+| w3 | `cp_voltage` | `cp_voltage > 9.0` | 无时序要求 |
+| w4 | `cc_voltage` | `cc_voltage < 4.4` | 无时序要求 |
+| w5 | `cc2_voltage` | `cc2_voltage < cc2_ubr_threshold` | 默认阈值 4.4 |
+| w6 | `hood_voltage` + `duration_ms` | `hood_voltage > 4.0` 且 `duration_ms >= 10` | 去抖适用 |
+| w7 | `door_voltage` + `duration_ms` | `door_voltage < 1.0` 且 `duration_ms >= 10` | 去抖适用 |
 
-| 字段 | 类型 | 说明 |
-|------|------|------|
-| `signal_name` | string | 信号名称 |
-| `physical_meaning` | string | 物理含义 |
-| `pass_condition` | string | PASS条件描述 |
-| `fail_condition` | string | FAIL条件描述 |
-| `data_type` | string | `float` 或 `int` |
-| `note` | string（可选） | 附加说明（如db_15批次差异） |
+### 休眠输入字段
 
-**curl 示例**：
-```bash
-curl http://localhost:8001/signals
+休眠必须同时满足：
+
+```json
+{
+  "VCUO_bDIAG_VCUIdle_flg": 1,
+  "VCUO_bDIAG_AuthComplete_flg": 1,
+  "can_stopped": true
+}
 ```
 
----
+### 兼容输入
 
-## 3. POST /simulate — 单信号测试（主接口）
-
-**用途**：AutoTestDesign Tool 执行每一条测试用例时调用。每次发送一个信号，获取VCU判定结果。
-
-### 请求体
-
-| 字段 | 类型 | 必填 | 说明 |
-|------|------|------|------|
-| `signal_name` | string | 是 | 5种信号之一（见下方枚举） |
-| `value` | float | 是 | 该信号的测试值 |
-| `data_type` | string | 否 | `"float"`（默认）或 `"int"` |
-
-**合法 signal_name 枚举（必须完全一致，含中文）**：
-- `CC2电压`
-- `CC电压值`
-- `CP幅值`
-- `供电电压`
-- `网络唤醒报文使能状态`
+仍支持旧字段 `signal_name` + `value`，但会被转换成 V2 字段。新代码优先使用上面的 V2 字段。
 
 ### 响应体
 
-| 字段 | 类型 | 含义 | 可能值 |
-|------|------|------|--------|
-| `test_status` | int | 测试结果 | `1`=PASS, `3`=SLEEP, `4`=FAIL |
-| `vehicle_state` | int | 整车State状态 | `170`=唤醒, `30`=休眠/失败 |
-| `vehicle_mode` | int | 整车模式 | `5`=唤醒模式, `2`=休眠模式 |
-| `ready_flag` | int | READY标志位 | `1`=允许, `0`=禁止 |
-| `bms_wake_cmd` | int | BMS低压唤醒指令 | 恒定 `1` |
-| `mcu_wake_cmd` | int | MCU低压唤醒指令 | 恒定 `1` |
-| `battery_voltage` | float | 蓄电池电压 | 恒定 `12.92` |
-| `actual_duration` | float | 模拟测试时长（秒） | ~100.3~100.6 |
-| `detail` | string | 判定详情说明 | 可读文本 |
-
-### 判定结果速查表
-
-| signal_name | 输入值范围 | test_status | vehicle_state |
-|-------------|-----------|-------------|---------------|
-| CC2电压 | [4.8, 7.7]V | 1 (PASS) | 170 |
-| CC2电压 | 12.0V | 3 (SLEEP) | 30 |
-| CC2电压 | 7.8V 或其他越界 | 4 (FAIL) | 30 |
-| CC电压值 | [0.1, 3.9]V | 4 (FAIL) | 30 |
-| CC电压值 | 其他 | 1 (PASS) | 170 |
-| CP幅值 | [9.1, 12.9]V | 4 (FAIL) | 30 |
-| CP幅值 | 其他（含0V） | 1 (PASS) | 170 |
-| 供电电压 | [9.1, 15.9]V | 4 (FAIL) | 30 |
-| 供电电压 | 其他（含0V） | 1 (PASS) | 170 |
-| 网络唤醒报文使能状态 | 1 | 4 (FAIL) | 30 |
-| 网络唤醒报文使能状态 | 0 | 1 (PASS) | 170 |
+```json
+{
+  "vehicle_state": 11,
+  "vehicle_mode": 5,
+  "power_current": 0.05,
+  "bus_message_flag": 1,
+  "pdcu_wake_reason": 1,
+  "actual_duration": 14.7,
+  "result_type": "expected",
+  "power_alarm_flag": 0,
+  "bus_off_flag": 0,
+  "active_dtcs": [],
+  "signal_guard_result": {"valid": true, "fault_type": null, "reason": "信号有效"},
+  "detail": "供电电压=9.3V > 9V，持续15ms >= 10ms，Module B校验通过，唤醒成功",
+  "state_name": "state11",
+  "test_status": 1,
+  "ready_flag": 1,
+  "bms_wake_cmd": 1,
+  "mcu_wake_cmd": 1,
+  "battery_voltage": 12.92
+}
+```
 
 ### curl 示例
 
-**正常唤醒（期望 PASS）**：
 ```bash
 curl -X POST http://localhost:8001/simulate \
   -H "Content-Type: application/json" \
-  -d '{"signal_name": "CC2电压", "value": 6.3, "data_type": "float"}'
+  -d '{"supply_voltage": 9.3, "duration_ms": 15}'
 ```
-期望响应：`test_status=1, vehicle_state=170, ready_flag=1`
 
-**越界失败（期望 FAIL）**：
+期望：`test_status=1, vehicle_state=11, pdcu_wake_reason=1`。
+
 ```bash
 curl -X POST http://localhost:8001/simulate \
   -H "Content-Type: application/json" \
-  -d '{"signal_name": "CC2电压", "value": 9.0, "data_type": "float"}'
+  -d '{"supply_voltage": 9.3, "duration_ms": 4}'
 ```
-期望响应：`test_status=4, vehicle_state=30, ready_flag=0`
+
+期望：`test_status=4, vehicle_state=9, signal_guard_result.fault_type=debounce_rejected`。
 
 ---
 
-## 4. POST /simulate/sleep — 休眠测试
+## 3. POST /simulate/sleep
 
-**用途**：测试VCU在固定5信号组合下进入休眠状态的行为。
-
-### 请求体（所有字段均有默认值，可直接发送 `{}`）
-
-| 字段 | 类型 | 默认值 | 说明 |
-|------|------|--------|------|
-| `cc2_voltage` | float | 12.0 | CC2电压，休眠触发固定值 |
-| `cc_voltage` | float | 12.0 | CC电压值 |
-| `cp_amplitude` | float | 0.0 | CP幅值 |
-| `supply_voltage` | float | 0.0 | 供电电压 |
-| `network_wake_enable` | float | 0.0 | 网络唤醒使能 |
-
-### curl 示例
+快捷休眠接口。请求体字段均可省略，接口会发送 h1/h2/h3。
 
 ```bash
 curl -X POST http://localhost:8001/simulate/sleep \
   -H "Content-Type: application/json" \
-  -d '{"cc2_voltage":12.0,"cc_voltage":12.0,"cp_amplitude":0.0,"supply_voltage":0.0,"network_wake_enable":0.0}'
+  -d '{}'
 ```
-期望响应：`test_status=3, vehicle_state=30, vehicle_mode=2, ready_flag=0`
+
+期望：`test_status=3, vehicle_state=9, state_name=state09, ready_flag=0`。
 
 ---
 
-## 5. POST /simulate/batch — 批量测试
+## 4. POST /simulate/batch
 
-**用途**：一次发送多个测试用例，减少HTTP往返次数。
+传入 `SimulateRequest` 数组，最多 500 条：
 
-### 请求体
-
-传入 `SimulateRequest` 数组，最多500条：
 ```json
 [
-  {"signal_name": "CC2电压", "value": 4.8},
-  {"signal_name": "CC2电压", "value": 4.9},
-  {"signal_name": "CC电压值", "value": 2.0},
-  {"signal_name": "网络唤醒报文使能状态", "value": 1}
+  {"supply_voltage": 9.3, "duration_ms": 15},
+  {"can_msg_id": 1024},
+  {"cp_voltage": 8.0}
 ]
 ```
 
-### 响应
+响应为结果数组，顺序与输入一致。兼容字段 `signal_name` 和 `input_value` 会随结果返回。
 
-返回结果数组，每条额外包含 `signal_name` 和 `input_value` 字段，顺序与输入一致。
+---
 
-### curl 示例
+## 5. POST /reset
 
 ```bash
-curl -X POST http://localhost:8001/simulate/batch \
+curl -X POST 'http://localhost:8001/reset?clear_dtc=true'
+```
+
+`clear_dtc=true` 时，所有 DTC 状态置为 `cleared`。
+
+---
+
+## 6. GET/PUT /config
+
+`GET /config` 返回所有 V2 阈值。`PUT /config` 支持局部更新，更新后立即影响仿真逻辑。
+
+示例：
+
+```bash
+curl -X PUT http://localhost:8001/config \
   -H "Content-Type: application/json" \
-  -d '[{"signal_name":"CC2电压","value":4.8},{"signal_name":"CC2电压","value":9.0}]'
+  -d '{"config":{"guard":{"overvoltage_threshold":15.0},"can":{"bus_off_threshold":3},"power":{"run_alarm_threshold_a":0.1}}}'
 ```
+
+主要配置段：
+
+| 配置段 | 说明 |
+|--------|------|
+| `wake` | w1-w7 唤醒阈值 |
+| `guard` | 过压、欠压、去抖阈值 |
+| `can` | CAN ID 范围和 bus_off 阈值 |
+| `power` | 运行/休眠/卡死功耗阈值 |
+| `timing` | type1/type2 时长和快速循环卡死阈值 |
 
 ---
 
-## 6. POST /reset — 重置状态机
+## 7. GET /dtc
 
-**用途**：仿真器当前为无状态设计，此接口保留用于未来有状态扩展。
+返回所有 DTC，包含：
 
-```bash
-curl -X POST http://localhost:8001/reset
+```json
+[
+  {
+    "code": "DTC_001",
+    "count": 1,
+    "first_seen": "2026-05-22T01:00:00",
+    "last_seen": "2026-05-22T01:00:01",
+    "status": "active",
+    "reason": "连续快速唤醒-休眠导致 state10 卡死"
+  }
+]
 ```
-响应：`{"success": true, "message": "仿真器状态已重置（当前为无状态模式）"}`
-
----
-
-## 错误响应
-
-| HTTP状态码 | 场景 | 示例 |
-|-----------|------|------|
-| 422 | 字段校验失败（signal_name非法、缺少必填字段） | `{"detail": [{"msg": "..."}]}` |
-| 400 | 业务逻辑错误（批量数组为空、超过500条） | `{"detail": "请求数组不能为空"}` |
 
 ---
 
 ## 快速对接检查清单
 
 - [ ] `GET /health` 返回 `status=ok`
-- [ ] `POST /simulate` CC2=6.3V → `test_status=1, vehicle_state=170`
-- [ ] `POST /simulate` CC2=9.0V → `test_status=4, vehicle_state=30`
-- [ ] `POST /simulate/sleep` → `test_status=3, vehicle_state=30`
+- [ ] `POST /simulate` supply=9.3V + duration=15ms → `test_status=1, vehicle_state=11`
+- [ ] `POST /simulate` supply=9.3V + duration=4ms → `test_status=4`
+- [ ] `POST /simulate/sleep` → `test_status=3, vehicle_state=9`
 - [ ] `POST /simulate/batch` 数组返回顺序与输入一致
+- [ ] `PUT /config` 后阈值变化能影响后续结果

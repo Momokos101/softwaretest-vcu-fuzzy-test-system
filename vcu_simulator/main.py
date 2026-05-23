@@ -8,7 +8,8 @@ import uvicorn
 
 from models import (
     SimulateRequest, SleepRequest, SimulateResponse,
-    HealthResponse, SignalInfo, ResetResponse,
+    HealthResponse, SignalInfo, ResetResponse, StateResponse,
+    ConfigResponse, ConfigUpdateRequest, PerformanceResponse,
 )
 from simulator import VCUSimulator
 from constants import VALID_SIGNAL_NAMES, DB15_NOTE
@@ -17,7 +18,7 @@ app = FastAPI(
     title="VCU行为仿真器",
     description=(
         "VCU唤醒-休眠控制模块行为仿真器（端口8001）。"
-        "模拟真实BAIC VCU HIL测试逻辑，支持5种输入信号的单次测试、休眠测试和批量测试。"
+        "按PROJECT_PLAN_V2实现5模块VCU状态机，支持唤醒、休眠、CAN、DTC和功耗监控。"
     ),
     version="1.0.0",
 )
@@ -46,19 +47,12 @@ def health_check():
 @app.post("/simulate", response_model=SimulateResponse, tags=["测试"])
 def simulate(req: SimulateRequest):
     """
-    单信号测试（对应真实数据库 type=1，strategy=0/1）。
+    V2统一仿真入口。
 
-    每次发送一个信号（名称+值），仿真器判断该信号是否在有效区间内，
-    返回对应的VCU状态（PASS/FAIL/SLEEP）。
-
-    **5种合法信号名称：**
-    - CC2电压
-    - CC电压值
-    - CP幅值
-    - 供电电压
-    - 网络唤醒报文使能状态
+    支持7路唤醒、3路休眠条件、Module B输入保护、Module C CAN管理、
+    Module D DTC记录和Module E功耗监控。旧版signal_name/value字段保留兼容。
     """
-    result = _simulator.simulate(signal_name=req.signal_name, value=req.value)
+    result = _simulator.simulate(**req.model_dump())
     return SimulateResponse(**result)
 
 
@@ -67,9 +61,9 @@ def simulate_sleep(req: SleepRequest):
     """
     休眠测试（对应真实数据库 type=2，strategy=-3）。
 
-    固定5信号组合：CC2=12.0V触发休眠。
+    快捷发送 V2 休眠条件 h1/h2/h3。
     所有字段均有默认值，可直接发送空JSON `{}`。
-    预期响应：test_status=3, vehicle_state=30, vehicle_mode=2。
+    预期响应：test_status=3, vehicle_state=9, state_name=state09, vehicle_mode=2。
     """
     result = _simulator.simulate_sleep(
         cc2_voltage=req.cc2_voltage,
@@ -92,7 +86,7 @@ def simulate_batch(requests: list[SimulateRequest]):
     if len(requests) > 500:
         raise HTTPException(status_code=400, detail="单次批量测试最多500条")
 
-    raw = [{"signal_name": r.signal_name, "value": r.value} for r in requests]
+    raw = [r.model_dump() for r in requests]
     results = _simulator.simulate_batch(raw)
     return results
 
@@ -105,52 +99,97 @@ def get_signals():
     """
     return [
         SignalInfo(
-            signal_name="CC2电压",
-            physical_meaning="AC充电唤醒电压，充电枪插入时由充电桩提供的主唤醒信号",
-            pass_condition="[4.8V, 7.7V]（vehicle_state=170，正常唤醒）",
-            fail_condition="<4.8V 或 >7.8V（vehicle_state=30）；7.8V为灰色边界统一判FAIL",
-            data_type="float",
-            note=f"特殊值：12.0V → 触发休眠(status=3)。{DB15_NOTE}",
-        ),
-        SignalInfo(
-            signal_name="CC电压值",
-            physical_meaning="充电枪CC接触电压，反映线缆接触电阻是否正常",
-            pass_condition=">4.0V（正常接线或无充电枪）",
-            fail_condition="[0.1V, 3.9V]（接触不良/错误线阻，vehicle_state=30）",
-            data_type="float",
-        ),
-        SignalInfo(
-            signal_name="CP幅值",
-            physical_meaning="控制导引信号幅值，AC充电协议握手信号",
-            pass_condition="0.0V（待机状态，无充电协议通信）",
-            fail_condition="[9.1V, 12.9V]（协议冲突或幅值异常，vehicle_state=30）",
-            data_type="float",
-        ),
-        SignalInfo(
             signal_name="供电电压",
-            physical_meaning="外部交流供电电压，正常充电时应无额外供电",
-            pass_condition="0.0V（无外部供电，正常状态）",
-            fail_condition="[9.1V, 15.9V]（意外供电/过压，vehicle_state=30）",
+            physical_meaning="w1硬线供电唤醒信号",
+            pass_condition=">9.0V 且 duration_ms >= 10，vehicle_state=11",
+            fail_condition="<=9.0V不唤醒；>16.0V过压保护；<6.0V欠压关断",
             data_type="float",
         ),
         SignalInfo(
-            signal_name="网络唤醒报文使能状态",
-            physical_meaning="网络远程唤醒使能标志，控制是否允许通过CAN网络远程唤醒VCU",
-            pass_condition="0（未使能，不干扰CC2充电唤醒）",
-            fail_condition="1（已使能，与CC2唤醒协议冲突，vehicle_state=30）",
+            signal_name="CAN网络报文",
+            physical_meaning="w2 CAN网络唤醒报文ID",
+            pass_condition="can_msg_id ∈ [0x400, 0x47F]，vehicle_state=11",
+            fail_condition="超出范围静默丢弃；bus_off时不唤醒",
             data_type="int",
+        ),
+        SignalInfo(
+            signal_name="CP信号",
+            physical_meaning="w3 CP信号",
+            pass_condition="cp_voltage > 9.0V，vehicle_state=11",
+            fail_condition="<=9.0V不唤醒",
+            data_type="float",
+        ),
+        SignalInfo(
+            signal_name="CC信号",
+            physical_meaning="w4 CC信号",
+            pass_condition="cc_voltage < 4.4V，vehicle_state=11",
+            fail_condition=">=4.4V不唤醒",
+            data_type="float",
+        ),
+        SignalInfo(
+            signal_name="CC2信号",
+            physical_meaning="w5 CC2 UBR电压下降沿",
+            pass_condition="cc2_voltage < ubr_threshold，vehicle_state=11",
+            fail_condition=">=ubr_threshold不唤醒",
+            data_type="float",
+        ),
+        SignalInfo(
+            signal_name="口盖信号",
+            physical_meaning="w6口盖唤醒信号",
+            pass_condition="hood_voltage > 4.0V 且 duration_ms >= 10，vehicle_state=11",
+            fail_condition="值或时序不足不唤醒；duration_ms < 5视为噪声",
+            data_type="float",
+        ),
+        SignalInfo(
+            signal_name="门板信号",
+            physical_meaning="w7门板唤醒信号",
+            pass_condition="door_voltage < 1.0V 且 duration_ms >= 10，vehicle_state=11",
+            fail_condition="值或时序不足不唤醒；duration_ms < 5视为噪声",
+            data_type="float",
         ),
     ]
 
 
 @app.post("/reset", response_model=ResetResponse, tags=["系统"])
-def reset():
+def reset(clear_dtc: bool = False):
     """
-    重置仿真器状态机。
-    当前仿真器为无状态设计（每次请求独立判定），
-    此端点保留用于未来有状态扩展，现在始终返回成功。
+    重置仿真器状态机到state09。clear_dtc=true时将所有DTC置为cleared。
     """
-    return ResetResponse(success=True, message="仿真器状态已重置（当前为无状态模式）")
+    _simulator.reset(clear_dtc=clear_dtc)
+    message = "仿真器状态已重置到state09"
+    if clear_dtc:
+        message += "，DTC已清除"
+    return ResetResponse(success=True, message=message)
+
+
+@app.get("/state", response_model=StateResponse, tags=["系统"])
+def get_state():
+    """查询当前VCU状态。"""
+    return StateResponse(**_simulator.get_state())
+
+
+@app.get("/config", response_model=ConfigResponse, tags=["系统"])
+def get_config():
+    """查询所有V2阈值配置。"""
+    return ConfigResponse(config=_simulator.get_config())
+
+
+@app.put("/config", response_model=ConfigResponse, tags=["系统"])
+def update_config(req: ConfigUpdateRequest):
+    """局部更新V2阈值配置。"""
+    return ConfigResponse(config=_simulator.update_config(req.config))
+
+
+@app.get("/dtc", tags=["诊断"])
+def get_dtc():
+    """查询所有DTC，包含active和cleared记录。"""
+    return _simulator.dtc_manager.get_all()
+
+
+@app.get("/performance", response_model=PerformanceResponse, tags=["系统"])
+def get_performance():
+    """查询actual_duration统计。"""
+    return PerformanceResponse(**_simulator.get_performance())
 
 
 if __name__ == "__main__":

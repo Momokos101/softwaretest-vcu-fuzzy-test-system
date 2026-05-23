@@ -5,7 +5,7 @@
 SIGNAL_RULES = {
     "CC2电压": {
         # CC2电压：AC充电唤醒电压，主唤醒信号
-        # db_2确认：4.8V → vehicle_state=170（VCU成功唤醒）
+        # db_2确认：4.8V在旧版BAIC数据口径中表示成功唤醒
         # 4DB一致：7.7V为稳定上界；db_15异常批次扩展至8.1V
         "valid_min": 4.8,
         "valid_max": 7.7,
@@ -72,3 +72,61 @@ DB15_NOTE = (
     "含7.8V/7.9V/8.0V/8.1V的PASS记录。"
     "仿真器采用主流4DB配置：valid=[4.8, 7.7]V。"
 )
+
+# V2 state-machine constants from PROJECT_PLAN_V2.md
+STATE_SLEEP = 9
+STATE_INIT = 10
+STATE_RUN = 11
+STATE_FAULT_PROTECTION = "fault_protection"
+STATE_UNDERVOLTAGE_SHUTDOWN = "undervoltage_shutdown"
+
+V2_WAKE_THRESHOLDS = {
+    "supply_voltage": 9.0,
+    "supply_duration_ms": 10,
+    "cp_voltage": 9.0,
+    "cc_voltage": 4.4,
+    "cc2_ubr_threshold": 4.4,
+    "hood_voltage": 4.0,
+    "hood_duration_ms": 10,
+    "door_voltage": 1.0,
+    "door_duration_ms": 10,
+}
+
+V2_CAN_CONFIG = {
+    "valid_id_min": 0x400,
+    "valid_id_max": 0x47F,
+    "bus_off_threshold": 255,
+}
+
+V2_GUARD_CONFIG = {
+    "overvoltage_threshold": 16.0,
+    "undervoltage_threshold": 6.0,
+    "debounce_min_ms": 5,
+}
+
+V2_POWER_CONFIG = {
+    "run_expected_current_a": 0.05,
+    "run_alarm_threshold_a": 0.2,
+    "run_alarm_duration_ms": 500,
+    "sleep_expected_current_a": 0.01,
+    "sleep_alarm_threshold_a": 0.05,
+    "stuck_current_a": 0.25,
+}
+
+V2_TIMING_CONFIG = {
+    "type1_max_duration": 20.0,
+    "type2_max_duration": 60.0,
+    "type1_nominal_duration": 14.7,
+    "type2_nominal_duration": 42.0,
+    "stuck_est_time": 20.0,
+    "rapid_cycle_interval_s": 1.0,
+    "rapid_cycle_threshold": 3,
+}
+
+V2_CONFIG = {
+    "wake": V2_WAKE_THRESHOLDS,
+    "can": V2_CAN_CONFIG,
+    "guard": V2_GUARD_CONFIG,
+    "power": V2_POWER_CONFIG,
+    "timing": V2_TIMING_CONFIG,
+}

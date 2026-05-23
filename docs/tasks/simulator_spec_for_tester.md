@@ -1,175 +1,156 @@
-# VCU仿真器说明文档
+# VCU 仿真器说明文档（V2）
 
 > 面向：Member 3（测试执行者）  
-> 用途：了解测试对象的完整规格，以便设计测试计划和编写测试用例
+> 用途：了解 VCU V2 被测对象规格，以便设计测试计划、测试用例和追踪矩阵。
 
 ---
 
-## 1. 仿真器是什么
+## 1. 被测对象概述
 
-VCU仿真器是一个模拟汽车整车控制器（VCU）唤醒-休眠行为的软件程序。
+VCU 仿真器是一个 Software-in-the-Loop 被测目标应用，模拟整车控制器在唤醒、初始化、正常运行、休眠和故障保护中的行为。它通过 FastAPI 暴露 REST 接口，供 AutoTestDesign Tool 执行测试用例。
 
-**为什么用仿真器而不是真实硬件**：汽车行业在接入真实台架（HIL）前，标准流程是先对SIL（Software In the Loop）仿真模型进行测试。仿真器的所有边界值均来自5个真实BAIC VCU HIL测试数据库（db_10 / db_11 / db_15 / db / db_2，共**9615条**测试记录），具备充分的真实数据依据。
+仿真器地址：`http://localhost:8001`
 
-**仿真器地址**：`http://localhost:8001`（独立FastAPI服务，需先启动）
+核心状态：
 
-**启动方式**：
-```bash
-cd vcu_simulator
-pip install -r requirements.txt
-python main.py
-```
-
----
-
-## 2. 5个输入信号详细说明
-
-### 2.1 信号总览表
-
-| 信号名 | 物理含义 | 数据类型 | PASS区间 | FAIL区间 | 特殊值 |
-|--------|---------|---------|---------|---------|--------|
-| **CC2电压** | AC充电唤醒电压，充电桩提供的主唤醒信号 | float (V) | [4.8, 7.7]V | <4.8V 或 >7.8V | 12.0V→休眠, 7.8V→灰色边界 |
-| **CC电压值** | 充电枪CC接触电压，检测线缆接触电阻 | float (V) | >4.0V（或0） | [0.1, 3.9]V | — |
-| **CP幅值** | AC充电协议控制导引信号幅值 | float (V) | 0.0V（待机） | [9.1, 12.9]V | — |
-| **供电电压** | 外部交流供电电压 | float (V) | 0.0V（无供电） | [9.1, 15.9]V | — |
-| **网络唤醒报文使能状态** | 网络远程唤醒使能标志 | int (0/1) | 0（未使能） | 1（使能冲突） | — |
-
-### 2.2 各信号物理背景
-
-**CC2电压（最重要的信号）**  
-当充电枪插入时，充电桩会通过CC2线提供一个约6~7V的直流电压，VCU检测到这个电压后判断"有充电枪插入→唤醒"。如果这个电压不在正常范围内，说明充电枪或充电桩有问题。12V是特殊指令，代表"请进入休眠"。
-
-**CC电压值**  
-充电枪内部有一根CC（Charge Connection）线，通过线缆电阻来告诉VCU充电枪是否正确连接。电阻偏低（对应电压0.1~3.9V）说明接触不良或用错了充电线。
-
-**CP幅值**  
-CP（Control Pilot）是AC充电协议的握手信号，正常待机时应该是0V。如果检测到9~13V的CP信号，说明协议通信出现了冲突或异常。
-
-**供电电压**  
-正常充电时VCU不应检测到外部AC供电。如果检测到9~16V的供电，说明有意外的电源接入，可能是过压故障。
-
-**网络唤醒报文使能状态**  
-VCU可以通过CAN网络被远程唤醒，但这个功能启用时（值=1）会和充电唤醒信号产生冲突，所以充电测试时应保持禁用（值=0）。
+| 状态 | 输出 | 含义 |
+|------|------|------|
+| `state09` | `vehicle_state=9` | 休眠 |
+| `state10` | `vehicle_state=10` | 初始化，或快速循环后卡死 |
+| `state11` | `vehicle_state=11` | 正常运行 |
+| `fault_protection` | `state_name=fault_protection` | 过压保护 |
+| `undervoltage_shutdown` | `state_name=undervoltage_shutdown` | 欠压关断 |
 
 ---
 
-## 3. 所有输出字段含义
+## 2. 模块划分
 
-### 3.1 test_status（测试结果码）
-
-| 值 | 含义 | 对应真实数据库 strategy |
-|----|------|----------------------|
-| `1` | **PASS** — 信号在有效区间，VCU正常唤醒 | strategy=0 |
-| `3` | **SLEEP** — 接收到休眠指令，VCU正常进入休眠 | strategy=-3 |
-| `4` | **FAIL** — 信号异常，VCU检测到故障 | strategy=1 |
-
-### 3.2 vehicle_state（整车State状态）
-
-| 值 | 含义 |
-|----|------|
-| `170` | 唤醒状态（VCU正常工作，可进行充电） |
-| `30` | 休眠/故障状态（含正常休眠和故障两种情况，由test_status区分） |
-
-> **注意**：真实数据库中还有state=12和state=46，但这些是与输入电压无关的偶发异常态（如硬件瞬态），无法通过特定信号值可靠触发，**仿真器不模拟这两个值**。
-
-### 3.3 vehicle_mode（整车模式）
-
-| 值 | 含义 |
-|----|------|
-| `5` | 唤醒模式（对应 test_status=1） |
-| `2` | 休眠模式（对应 test_status=3 或 4） |
-
-### 3.4 ready_flag（动力防盗允许READY标志位）
-
-| 值 | 含义 | 与vehicle_state的关系 |
-|----|------|----------------------|
-| `1` | 允许就绪 | vehicle_state=170 时恒为1 |
-| `0` | 禁止就绪 | vehicle_state=30 时恒为0 |
-
-> **REQ-009约束**：ready_flag 与 vehicle_state 必须始终保持一致。
-
-### 3.5 恒定输出字段
-
-以下字段在所有测试场景中值固定不变（来自真实数据库统计）：
-
-| 字段 | 恒定值 | 说明 |
-|------|--------|------|
-| `bms_wake_cmd` | 1 | BMS低压唤醒指令 |
-| `mcu_wake_cmd` | 1 | MCU低压唤醒指令 |
-| `battery_voltage` | 12.92V | 蓄电池电压 |
-| `actual_duration` | ~100.3~100.6s | 模拟测试时长（基于真实HIL均值） |
+| 模块 | 名称 | 测试重点 |
+|------|------|----------|
+| Module A | 电源状态管理 | 7 路唤醒、3 条休眠条件、state10 卡死 |
+| Module B | 信号有效性保护 | 过压、欠压、去抖 |
+| Module C | CAN 总线通信管理 | CAN ID 过滤、bus_off |
+| Module D | 诊断与故障管理 | DTC_001/002/003 记录、查询、清除 |
+| Module E | 功耗监控 | 运行功耗告警、休眠功耗合规 |
 
 ---
 
-## 4. 三个重要真实数据发现
+## 3. 输入条件
 
-这三点是从5个真实数据库分析中得到的关键修正，**在设计测试用例时必须准确理解**：
+### 3.1 唤醒条件 w1~w7
 
-### 发现1：CC2=4.8V 能成功唤醒VCU（BVA下界）
+| 编号 | 输入字段 | 触发条件 | 期望 |
+|------|----------|----------|------|
+| w1 | `supply_voltage` + `duration_ms` | `supply_voltage > 9.0` 且 `duration_ms >= 10` | `state11`, `pdcu_wake_reason=1` |
+| w2 | `can_msg_id` | `0x400 <= can_msg_id <= 0x47F` | `state11`, `pdcu_wake_reason=2` |
+| w3 | `cp_voltage` | `cp_voltage > 9.0` | `state11`, `pdcu_wake_reason=3` |
+| w4 | `cc_voltage` | `cc_voltage < 4.4` | `state11`, `pdcu_wake_reason=4` |
+| w5 | `cc2_voltage` | `cc2_voltage < cc2_ubr_threshold` | `state11`, `pdcu_wake_reason=5` |
+| w6 | `hood_voltage` + `duration_ms` | `hood_voltage > 4.0` 且 `duration_ms >= 10` | `state11`, `pdcu_wake_reason=6` |
+| w7 | `door_voltage` + `duration_ms` | `door_voltage < 1.0` 且 `duration_ms >= 10` | `state11`, `pdcu_wake_reason=7` |
 
-- **数据来源**：db_2.db 中 CC2=4.8V 的6条记录
-- **数据库记录**：test_status=4（因为这批被标注为 strategy=1 的异常注入测试，框架期望FAIL，VCU实际输出了PASS，所以框架判"异常"）
-- **VCU实际行为**：CC2=4.8V → vehicle_state=**170**（VCU硬件成功唤醒）
-- **仿真器结论**：CC2=4.8V → 返回 `test_status=1, vehicle_state=170`（PASS）
-- **测试设计意义**：4.8V 是真实BVA下界，测试用例中 4.8V应为PASS，4.7V应为FAIL
+### 3.2 休眠条件 h1~h3
 
-### 发现2：休眠测试需要5个信号全部固定
+休眠必须三个条件同时满足：
 
-- **数据来源**：3308条 strategy=-3 记录，type=2
-- **规律**：休眠测试不是单信号测试，而是固定5信号组合同时发送：
-  - CC2=12.0V（休眠触发值）
-  - CC=12.0V，CP=0.0V，Supply=0.0V，NetWake=0.0
-- **仿真器结论**：使用专用 `POST /simulate/sleep` 接口，响应 `test_status=3`
-- **测试设计意义**：休眠测试必须用 `/simulate/sleep`，不能用 `/simulate` 单信号接口发CC2=12.0V来模拟
+| 编号 | 输入字段 | 条件 | 说明 |
+|------|----------|------|------|
+| h1 | `VCUO_bDIAG_VCUIdle_flg` | `=1` | VCU 空闲 |
+| h2 | `VCUO_bDIAG_AuthComplete_flg` | `=1` | 认证完成 |
+| h3 | `can_stopped` | `true` | CAN 0x400~0x47F 停发 |
 
-### 发现3：db_15 CC2有效上界扩展至8.1V（批次配置差异）
-
-- **数据来源**：db_15.db，939条strategy=0的PASS记录
-- **规律**：db_15中7.8V/7.9V/8.0V/8.1V均有PASS记录，与其他4个DB（最大7.7V）不同
-- **原因**：db_15代表不同VCU固件版本或硬件批次，有效区间扩展到[4.9, 8.1]V
-- **仿真器结论**：采用主流配置（4DB一致）：valid=[4.8, 7.7]V，7.8V统一判FAIL
-- **测试设计意义**：7.8V是灰色边界测试用例，仿真器判FAIL，但真实世界中存在PASS的可能性
+正式休眠测试必须通过 `/simulate` 输入 h1/h2/h3。`/simulate/sleep` 是兼容/演示快捷接口，不用于正式覆盖统计。
 
 ---
 
-## 5. 10条VCU需求（完整版）
+## 4. 输出字段
 
-| ID | Title | Description | Category | 优先级 |
-|----|-------|-------------|----------|--------|
-| REQ-001 | CC2 Wake Voltage Valid Range | System shall accept CC2 voltage in [4.8V, 7.7V] as valid wake-up signal and output vehicle_state=170, vehicle_mode=5, ready_flag=1. Value 7.8V is a boundary case observed to FAIL in majority of real tests. | Input Validation | High |
-| REQ-002 | CC2 Voltage Below Valid Range | System shall output test_status=4, vehicle_state=30, vehicle_mode=2, ready_flag=0 when CC2 voltage is below 4.8V. All 35 real test records with CC2 < 4.8V confirm vehicle_state=30. | Input Validation | High |
-| REQ-003 | CC2 Voltage Above Valid Range | System shall output test_status=4, vehicle_state=30, vehicle_mode=2, ready_flag=0 when CC2 voltage exceeds 7.8V and is not the sleep trigger 12.0V. Real data: 37/38 records confirm state=30. | Input Validation | High |
-| REQ-004 | Sleep Trigger Voltage | System shall output test_status=3, vehicle_state=30, vehicle_mode=2, ready_flag=0 when CC2 voltage equals exactly 12.0V with sleep command (type=2). | State Transition | High |
-| REQ-005 | CC Voltage Cable Check | System shall output test_status=4, vehicle_state=30 when CC电压值 is in range [0.1V, 3.9V], indicating invalid cable contact resistance. | Safety | Medium |
-| REQ-006 | CP Amplitude Interference Check | System shall output test_status=4, vehicle_state=30 when CP幅值 is in range [9.1V, 12.9V], indicating CP signal conflict or protocol anomaly. | Safety | Medium |
-| REQ-007 | Supply Voltage Overvoltage Check | System shall output test_status=4, vehicle_state=30 when 供电电压 is in range [9.1V, 15.9V], indicating unexpected external supply or overvoltage. | Safety | Medium |
-| REQ-008 | Network Wake Conflict Check | System shall output test_status=4, vehicle_state=30 when 网络唤醒报文使能状态=1 conflicts with CC2 wake protocol. Normal state is 0 (disabled). | Safety | Medium |
-| REQ-009 | READY Flag Consistency | When vehicle_state=170 system shall set ready_flag=1. When vehicle_state=30 system shall set ready_flag=0. These two fields must always be consistent. | State Control | High |
-| REQ-010 | Test Duration Compliance | Each single-signal test shall complete within 120 seconds. Based on real HIL data, actual_duration averages approximately 100 seconds. | Timing | Low |
+| 字段 | 含义 |
+|------|------|
+| `vehicle_state` | 9/10/11 主状态编码 |
+| `state_name` | `state09/state10/state11/fault_protection/undervoltage_shutdown` |
+| `vehicle_mode` | 5=运行，2=休眠/故障 |
+| `power_current` | 当前功耗电流 |
+| `bus_message_flag` | state11 正常通信为 1；state09、欠压、bus_off 为 0 |
+| `pdcu_wake_reason` | 1~7 对应 w1~w7，0 表示无唤醒 |
+| `actual_duration` | 模拟执行时长 |
+| `result_type` | `expected` 或 `error` |
+| `power_alarm_flag` | 功耗告警 |
+| `bus_off_flag` | CAN bus_off 标志 |
+| `active_dtcs` | 当前 active DTC 列表 |
+| `signal_guard_result` | Module B 校验结果 |
+| `test_status` | 兼容字段：1=PASS，3=SLEEP，4=FAIL |
 
 ---
 
-## 6. 测试接口快速参考
+## 5. V2 需求列表（24 条）
+
+| ID | 模块 | 标题 | 期望行为 |
+|----|------|------|----------|
+| REQ-001 | A | 硬线供电唤醒 | `supply_voltage > 9V` 且 `duration_ms >= 10` 时唤醒 |
+| REQ-002 | A/C | CAN 网络唤醒 | `can_msg_id` 在 `[0x400,0x47F]` 内时唤醒 |
+| REQ-003 | A | CP 信号唤醒 | `cp_voltage > 9V` 时唤醒 |
+| REQ-004 | A | CC 信号唤醒 | `cc_voltage < 4.4V` 时唤醒 |
+| REQ-005 | A | CC2 信号唤醒 | `cc2_voltage < ubr_threshold` 时唤醒 |
+| REQ-006 | A | 口盖信号唤醒 | `hood_voltage > 4V` 且 `duration_ms >= 10` 时唤醒 |
+| REQ-007 | A | 门板信号唤醒 | `door_voltage < 1V` 且 `duration_ms >= 10` 时唤醒 |
+| REQ-008 | A | 休眠条件 h1 | h1 是休眠必要条件 |
+| REQ-009 | A | 休眠条件 h2 | h2 是休眠必要条件 |
+| REQ-010 | A/C | 休眠条件 h3 | h3 是休眠必要条件 |
+| REQ-011 | A | 三条件同时休眠 | h1 AND h2 AND h3 同时满足才进入 state09 |
+| REQ-012 | A/D | state10 卡死检测 | 快速唤醒-休眠循环触发卡死并记录 DTC_001 |
+| REQ-013 | A | 输出一致性 | state11 时 `bus_message_flag=1`；state09 时为 0 |
+| REQ-014 | A | 响应时序 | type1 `actual_duration <= 20s`；type2 `<= 60s` |
+| REQ-015 | B | 过压保护 | `supply_voltage > 16V` 进入 `fault_protection` |
+| REQ-016 | B | 欠压保护 | `supply_voltage < 6V` 进入 `undervoltage_shutdown` |
+| REQ-017 | B | 信号去抖 | w1/w6/w7 `duration_ms < 5` 视为噪声 |
+| REQ-018 | C | CAN ID 过滤 | 只处理 `[0x400,0x47F]`，越界不唤醒 |
+| REQ-019 | C | CAN bus_off | `error_counter > 255` 后 `bus_off_flag=1` |
+| REQ-020 | D | DTC 生成 | 卡死、过压、欠压分别写入 DTC_001/002/003 |
+| REQ-021 | D | DTC 查询 | `GET /dtc` 返回代码、状态、次数、时间戳 |
+| REQ-022 | D | DTC 清除 | `POST /reset?clear_dtc=true` 将 DTC 置为 cleared |
+| REQ-023 | E | 功耗告警 | state11 下高电流持续超阈值后告警 |
+| REQ-024 | E | 休眠功耗合规 | state09 下 `power_current <= 0.01A` |
+
+---
+
+## 6. 推荐测试设计
+
+| 测试套件 | 技术 | 覆盖重点 |
+|----------|------|----------|
+| Suite A | EP | 7 路唤醒的有效/无效类 |
+| Suite B | BVA | 9V、10ms、4V、1V、6V、16V、5ms 等边界 |
+| Suite C | Decision Table | h1/h2/h3 组合 |
+| Suite D | State Transition | state09/state10/state11/保护状态 |
+| Suite E | Scenario + Sequence | 快速循环触发 state10 卡死 |
+| Suite F | EP + BVA | Module B 过压/欠压/去抖 |
+| Suite G | EP + BVA + Decision Table | CAN ID 边界和 bus_off |
+| Suite H | State + CRUD | DTC 生命周期 |
+| Suite I | BVA | 功耗阈值 |
+| Suite J | Performance Testing | `actual_duration` 时序合规 |
+
+这组设计对应课程中的等价类、边界值、决策表、状态转移、场景测试、风险驱动测试和非功能测试。
+
+---
+
+## 7. 快速验证示例
 
 ```bash
-# 启动仿真器（必须先完成）
-cd vcu_simulator && python main.py
-
-# 正常唤醒测试
+# 唤醒
 curl -X POST http://localhost:8001/simulate \
   -H "Content-Type: application/json" \
-  -d '{"signal_name": "CC2电压", "value": 6.3}'
-# 期望: test_status=1, vehicle_state=170, ready_flag=1
+  -d '{"supply_voltage":9.3,"duration_ms":15}'
 
-# 越界FAIL测试
+# 正式休眠
 curl -X POST http://localhost:8001/simulate \
   -H "Content-Type: application/json" \
-  -d '{"signal_name": "CC2电压", "value": 9.0}'
-# 期望: test_status=4, vehicle_state=30, ready_flag=0
+  -d '{"VCUO_bDIAG_VCUIdle_flg":1,"VCUO_bDIAG_AuthComplete_flg":1,"can_stopped":true}'
 
-# 休眠测试
-curl -X POST http://localhost:8001/simulate/sleep \
+# 过压保护
+curl -X POST http://localhost:8001/simulate \
   -H "Content-Type: application/json" \
-  -d '{}'
-# 期望: test_status=3, vehicle_state=30, vehicle_mode=2
+  -d '{"supply_voltage":16.5,"duration_ms":15}'
+
+# 查询 DTC
+curl http://localhost:8001/dtc
 ```

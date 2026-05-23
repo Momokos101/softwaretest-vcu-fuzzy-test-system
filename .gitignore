@@ -46,6 +46,7 @@ build/
 *.sqlite3
 data/test_system.db
 data/test_plans/
+data/reports/
 *.h5
 model_weights/
 
@@ -98,4 +99,3 @@ coverage.xml
 .mypy_cache/
 .dmypy.json
 dmypy.json
-

@@ -1,159 +1,147 @@
-# Member 1 交接文档 — VCU仿真器开发者
+# Member 1 交接文档 — VCU 仿真器开发者（V2）
 
-**交接日期**：2026-05  
-**交接人**：Member 1（VCU仿真器开发者）  
+**交接日期**：2026-05
+**交接人**：Member 1（VCU 仿真器开发者）
 **接收方**：Member 2（工具开发者）、Member 3（测试执行者）、Member 5（文档统筹）
 
 ---
 
-## 一、我做了什么（一句话）
+## 一、我做了什么
 
-我建了一个"假的VCU芯片"程序，让整个测试工具有真实的测试对象可以打。
+我完成了一个符合 `PROJECT_PLAN_V2.md` 的 VCU 行为仿真器。它是 AutoTestDesign Tool 的被测目标应用，用于演示从需求、风险分析、测试设计、测试执行到结果追踪的完整软件测试流程。
+
+当前仿真器不再以旧版 `vehicle_state=170/30` 作为主语义，而是采用 V2 状态机：
+
+| 状态 | 含义 |
+|------|------|
+| `state09` / `vehicle_state=9` | 休眠 |
+| `state10` / `vehicle_state=10` | 初始化，或快速循环后卡死 |
+| `state11` / `vehicle_state=11` | 正常运行 |
+| `fault_protection` | 过压保护 |
+| `undervoltage_shutdown` | 欠压关断 |
+
+旧字段 `test_status`、`ready_flag`、`battery_voltage` 等仍保留，是为了兼容后端已有调用；新开发和测试应优先使用 V2 字段。
 
 ---
 
 ## 二、交付物清单
 
-### 代码（全部在 `vcu_simulator/` 目录）
+### 代码
 
 | 文件 | 说明 |
 |------|------|
-| `vcu_simulator/main.py` | FastAPI服务入口，端口8001，注册全部6个API端点 |
-| `vcu_simulator/simulator.py` | 核心判定逻辑：VCUSimulator类，5信号PASS/FAIL/SLEEP判定 |
-| `vcu_simulator/models.py` | 请求/响应数据模型，含字段合法性校验 |
-| `vcu_simulator/constants.py` | 5个信号的边界常量（来自5个真实数据库，共9615条记录） |
-| `vcu_simulator/requirements.txt` | 依赖：fastapi, uvicorn, pydantic |
+| `vcu_simulator/main.py` | FastAPI 服务入口，端口 8001，注册 V2 API |
+| `vcu_simulator/simulator.py` | Module A 状态机核心逻辑 |
+| `vcu_simulator/models.py` | V2 请求/响应模型，保留兼容字段 |
+| `vcu_simulator/constants.py` | V2 阈值配置和兼容常量 |
+| `vcu_simulator/modules/signal_guard.py` | Module B：过压、欠压、去抖 |
+| `vcu_simulator/modules/can_manager.py` | Module C：CAN ID 过滤、bus_off |
+| `vcu_simulator/modules/dtc_manager.py` | Module D：DTC 记录、查询、清除 |
+| `vcu_simulator/modules/power_monitor.py` | Module E：功耗告警、休眠功耗合规 |
+| `tests/test_vcu_simulator_v2.py` | V2 仿真器测试 |
 
 ### 文档
 
 | 文件 | 面向 | 内容 |
 |------|------|------|
-| `docs/tasks/simulator_api_for_tool.md` | **Member 2** | 全部API端点的URL、字段说明、curl示例、对接检查清单 |
-| `docs/tasks/simulator_spec_for_tester.md` | **Member 3** | 5信号物理含义、所有输出值含义、10条需求、3个真实数据发现 |
-| `docs/Risk_Analysis_Report.md` | **Member 5** | 7章风险分析报告（Artifact 2），含需求列表、评分表、风险矩阵、测试优先级、Test Items附录 |
+| `docs/tasks/simulator_api_for_tool.md` | Member 2 | V2 API、字段、curl 示例、对接检查清单 |
+| `docs/tasks/simulator_spec_for_tester.md` | Member 3 | V2 被测对象说明、24 条需求、测试关注点 |
+| `docs/Risk_Analysis_Report.md` | Member 4/5 | V2 风险分析报告，按 ISO 9126 和 RPN 组织 |
+| `docs/local_plans/vcu_simulator_v2_modification_plan.md` | 本地记录 | 仿真器 V2 修改计划 |
 
 ---
 
 ## 三、启动方式
 
 ```bash
-# 进入仿真器目录
 cd vcu_simulator
-
-# 首次运行：建虚拟环境并安装依赖
 python3 -m venv .venv
-source .venv/bin/activate      # Windows: .venv\Scripts\activate
+source .venv/bin/activate
 pip install -r requirements.txt
-
-# 启动（之后每次直接这一条）
 python main.py
-# 服务运行在 http://localhost:8001
-# Swagger文档在 http://localhost:8001/docs
 ```
+
+服务地址：`http://localhost:8001`
+Swagger 文档：`http://localhost:8001/docs`
 
 ---
 
-## 四、API速查（Member 2 重点看）
-
-仿真器地址：`http://localhost:8001`
+## 四、API 速查
 
 | 端点 | 方法 | 用途 |
 |------|------|------|
 | `/health` | GET | 健康检查 |
-| `/signals` | GET | 5个信号的边界说明 |
-| `/simulate` | POST | **主接口**：单信号测试 |
-| `/simulate/sleep` | POST | 休眠测试（固定5信号组合） |
-| `/simulate/batch` | POST | 批量测试（数组） |
-| `/reset` | POST | 重置状态机 |
+| `/signals` | GET | 获取 V2 输入信号说明 |
+| `/simulate` | POST | 正式 V2 仿真入口，覆盖唤醒/休眠/保护/CAN/功耗 |
+| `/simulate/sleep` | POST | 兼容/演示用休眠快捷接口 |
+| `/simulate/batch` | POST | 批量执行 `/simulate` |
+| `/reset` | POST | 重置状态机，`clear_dtc=true` 时清除 DTC |
+| `/state` | GET | 查询当前 VCU 状态 |
+| `/config` | GET/PUT | 查询或修改阈值配置 |
+| `/dtc` | GET | 查询 DTC 记录 |
+| `/performance` | GET | 查询 `actual_duration` 统计 |
 
-**最常用的请求格式**：
+**重要约定**：
+
+- 正式测试休眠条件时，使用 `/simulate` 的 h1/h2/h3 字段。
+- `/simulate/sleep` 只是兼容旧版和演示用的快捷接口，不作为 h1/h2/h3 需求覆盖的正式证据。
+
+---
+
+## 五、正式休眠接口说明
+
+V2 休眠条件为：
+
+| 条件 | 字段 | 含义 |
+|------|------|------|
+| h1 | `VCUO_bDIAG_VCUIdle_flg=1` | VCU 空闲 |
+| h2 | `VCUO_bDIAG_AuthComplete_flg=1` | 认证流程完成 |
+| h3 | `can_stopped=true` | CAN 0x400~0x47F 停发 |
+
+正式休眠测试请求：
+
 ```bash
-# 单信号测试
 curl -X POST http://localhost:8001/simulate \
   -H "Content-Type: application/json" \
-  -d '{"signal_name": "CC2电压", "value": 6.3}'
-
-# 返回
-{
-  "test_status": 1,       # 1=PASS, 3=SLEEP, 4=FAIL
-  "vehicle_state": 170,   # 170=唤醒, 30=休眠/故障
-  "vehicle_mode": 5,      # 5=唤醒模式, 2=休眠模式
-  "ready_flag": 1,        # 1=允许, 0=禁止
-  ...
-}
+  -d '{"VCUO_bDIAG_VCUIdle_flg":1,"VCUO_bDIAG_AuthComplete_flg":1,"can_stopped":true}'
 ```
 
-**5个合法的 signal_name**（字段名必须完全一致，含中文）：
-- `CC2电压`
-- `CC电压值`
-- `CP幅值`
-- `供电电压`
-- `网络唤醒报文使能状态`
+期望：`vehicle_state=9, state_name=state09, test_status=3`。
 
 ---
 
-## 五、判定逻辑速查（Member 3 重点看）
+## 六、验证结果
 
-| signal_name | 输入值 | test_status | vehicle_state |
-|-------------|--------|-------------|---------------|
-| CC2电压 | [4.8, 7.7]V | 1 (PASS) | 170 |
-| CC2电压 | 12.0V | 3 (SLEEP) | 30 |
-| CC2电压 | 7.8V 或其他越界 | 4 (FAIL) | 30 |
-| CC电压值 | [0.1, 3.9]V | 4 (FAIL) | 30 |
-| CC电压值 | 其他 | 1 (PASS) | 170 |
-| CP幅值 | [9.1, 12.9]V | 4 (FAIL) | 30 |
-| CP幅值 | 其他（含0V） | 1 (PASS) | 170 |
-| 供电电压 | [9.1, 15.9]V | 4 (FAIL) | 30 |
-| 供电电压 | 其他（含0V） | 1 (PASS) | 170 |
-| 网络唤醒报文使能状态 | 1 | 4 (FAIL) | 30 |
-| 网络唤醒报文使能状态 | 0 | 1 (PASS) | 170 |
+本地已通过：
 
-> **重要**：CC2=7.8V 是灰色边界，仿真器统一返回 FAIL（主流4个DB行为）
-
----
-
-## 六、验证结果（已通过）
-
-以下场景均经过本地curl验证，结果全部正确：
-
-- ✓ 正常唤醒（CC2=6.3V → status=1, state=170）
-- ✓ 越界FAIL（CC2=9.0V → status=4, state=30）
-- ✓ 休眠测试（/simulate/sleep → status=3, state=30）
-- ✓ BVA下界（CC2=4.8V → PASS）
-- ✓ BVA下界-1（CC2=4.7V → FAIL）
-- ✓ BVA上界（CC2=7.7V → PASS）
-- ✓ 灰色边界（CC2=7.8V → FAIL）
-- ✓ 全部4个其他信号的PASS/FAIL场景
-- ✓ 批量测试接口（/simulate/batch）
-- ✓ 非法信号名校验（HTTP 422）
-- ✓ /signals 端点返回5个信号说明
-- ✓ /reset 端点
-
----
-
-## 七、注意事项
-
-1. **仿真器必须先启动**，Member 2 的工具后端才能调用 `/simulate`。建议 Member 2 在 `simulator_client.py` 中先用 `GET /health` 确认连通性再发测试请求。
-
-2. **vcu_simulator/.venv/** 已加入 .gitignore（或应加入），不需要提交虚拟环境。
-
-3. **db_15 批次差异**：真实数据中 db_15 的 CC2 有效上界是 8.1V（与其他4个DB不同）。仿真器采用主流配置 [4.8, 7.7]V。如果 Member 3 设计了 CC2=7.9V 的 PASS 用例，仿真器会返回 FAIL，这是正常的——那是测试 db_15 批次差异的用例，应在报告中特别标注。
-
-4. **state=12 / state=46 不在仿真器中**：这两个状态存在于真实数据库，但它们是与输入电压无关的偶发硬件异常态，无法通过特定信号值可靠触发，仿真器不模拟。
-
----
-
-## 八、文档对接关系图
-
+```bash
+vcu_simulator/.venv/bin/python -m unittest tests/test_vcu_simulator_v2.py
 ```
-Member 1（我）
-    │
-    ├──→ Member 2：simulator_api_for_tool.md
-    │         （接口格式、字段名、curl示例、对接检查清单）
-    │
-    ├──→ Member 3：simulator_spec_for_tester.md
-    │         （信号物理含义、输出值含义、10条需求、3个数据发现）
-    │
-    └──→ Member 5：Risk_Analysis_Report.md
-              （Artifact 2，7章，含 Test Items 附录）
+
+结果：
+
+```text
+Ran 15 tests
+OK
 ```
+
+覆盖点包括：
+
+- 7 路唤醒 w1~w7
+- 休眠 h1/h2/h3 必要且充分条件
+- 过压、欠压、去抖
+- CAN ID 边界和 bus_off
+- DTC 记录、查询、清除
+- 功耗告警和休眠功耗合规
+- 快速唤醒-休眠循环导致 state10 卡死
+- `/config` 阈值更新后影响仿真结果
+
+---
+
+## 七、交接注意事项
+
+1. Member 2 对接时，以 `docs/tasks/simulator_api_for_tool.md` 为准。
+2. Member 3 设计测试时，以 `docs/tasks/simulator_spec_for_tester.md` 和 `PROJECT_PLAN_V2.md` 的 24 条需求为准。
+3. 不要再把旧版 `vehicle_state=170/30` 作为新测试的主 oracle。
+4. `/simulate/sleep` 是快捷接口，不用于正式需求覆盖统计。
+5. GAN 接口缺少 `model_weights/vcu` 是独立问题，不属于 VCU 仿真器 V2 的完成范围。
