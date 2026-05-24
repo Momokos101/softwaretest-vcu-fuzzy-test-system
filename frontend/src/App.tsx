@@ -1,73 +1,23 @@
 import { useState } from "react";
-import { Dashboard } from "./components/Dashboard";
-import { TestMonitoring } from "./components/TestMonitoring";
-import { TestManagement } from "./components/TestManagement";
-import { ResultAnalysis } from "./components/ResultAnalysis";
-import { ReportCenter } from "./components/ReportCenter";
-import { SystemSettings } from "./components/SystemSettings";
-import { TopNav } from "./components/TopNav";
-import { Sidebar } from "./components/Sidebar";
+import { AutoTestDesignV2 } from "./components/AutoTestDesignV2";
+import { ExportCenter } from "./components/ExportCenter";
 import { RequirementInput } from "./components/RequirementInput";
 import { RiskAnalysis } from "./components/RiskAnalysis";
 import { TestCaseDesign } from "./components/TestCaseDesign";
-import { ExportCenter } from "./components/ExportCenter";
-import { AutoTestDesignV2 } from "./components/AutoTestDesignV2";
+import { TopNav } from "./components/TopNav";
+import { Sidebar } from "./components/Sidebar";
+
+type View = "autotest-v2" | "requirements" | "risk-analysis" | "test-design" | "export";
 
 export default function App() {
-  const [currentView, setCurrentView] = useState<
-    | "dashboard"
-    | "tests"
-    | "analysis"
-    | "reports"
-    | "settings"
-    | "monitoring"
-    | "requirements"
-    | "autotest-v2"
-    | "risk-analysis"
-    | "test-design"
-    | "export"
-  >("dashboard");
-  const [currentTaskId, setCurrentTaskId] = useState<string | null>(null);
+  const [currentView, setCurrentView] = useState<View>("autotest-v2");
 
   const renderView = () => {
     switch (currentView) {
-      case "dashboard":
-        return (
-          <Dashboard
-            onCreateTest={() => setCurrentView("tests")}
-            onViewMonitoring={(taskId: string) => {
-              setCurrentTaskId(taskId);
-              setCurrentView("monitoring");
-            }}
-          />
-        );
-      case "tests":
-        return (
-          <TestManagement
-            onCreateTest={() => setCurrentView("tests")}
-            onViewMonitoring={(taskId: string) => {
-              setCurrentTaskId(taskId);
-              setCurrentView("monitoring");
-            }}
-          />
-        );
-      case "analysis":
-        return <ResultAnalysis taskId={currentTaskId || undefined} />;
-      case "reports":
-        return <ReportCenter />;
-      case "settings":
-        return <SystemSettings />;
-      case "monitoring":
-        return (
-          <TestMonitoring
-            taskId={currentTaskId || ""}
-            onBack={() => setCurrentView("dashboard")}
-          />
-        );
-      case "requirements":
-        return <RequirementInput />;
       case "autotest-v2":
         return <AutoTestDesignV2 />;
+      case "requirements":
+        return <RequirementInput />;
       case "risk-analysis":
         return <RiskAnalysis />;
       case "test-design":
@@ -75,26 +25,15 @@ export default function App() {
       case "export":
         return <ExportCenter />;
       default:
-        return (
-          <Dashboard
-            onCreateTest={() => setCurrentView("tests")}
-            onViewMonitoring={(taskId: string) => {
-              setCurrentTaskId(taskId);
-              setCurrentView("monitoring");
-            }}
-          />
-        );
+        return <AutoTestDesignV2 />;
     }
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50/30 to-slate-50/30">
       <TopNav />
-      <div className="flex">
-        <Sidebar
-          currentView={currentView}
-          onNavigate={setCurrentView}
-        />
+      <div className="flex pt-[56px]">
+        <Sidebar currentView={currentView} onNavigate={setCurrentView} />
         <main className="flex-1 ml-[240px]">
           {renderView()}
         </main>

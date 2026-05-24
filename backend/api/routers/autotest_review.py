@@ -126,7 +126,10 @@ async def execute(request: BatchExecutionRequest):
         cases = [case for case in cases if case.id in selected]
     if not cases:
         raise HTTPException(status_code=404, detail="No test cases found")
-    return await simulator_client.execute_batch(cases, reset_before_run=request.reset_before_run)
+    try:
+        return await simulator_client.execute_batch(cases, reset_before_run=request.reset_before_run)
+    except Exception as exc:
+        raise HTTPException(status_code=503, detail=str(exc)) from exc
 
 
 @router.get("/results/summary", response_model=ResultsSummary)

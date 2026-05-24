@@ -11,6 +11,8 @@ from api.models.schemas import (
     RequirementCreate,
     RequirementsParseRequest,
     RequirementUpdate,
+    RiskAdjustmentRequest,
+    RiskAnalysisResult,
 )
 from api.services import requirement_service
 
@@ -116,6 +118,23 @@ async def get_parsed(req_id: str):
     if not parsed:
         raise HTTPException(status_code=404, detail="Parsed requirement not found")
     return parsed
+
+
+@router.put("/requirements/{req_id}/risk", response_model=RiskAnalysisResult)
+async def adjust_risk_via_requirement(req_id: str, request: RiskAdjustmentRequest):
+    """Plan V2 §3.7: PUT /api/requirements/{id}/risk — manual risk override."""
+    from api.services import risk_service
+
+    if not requirement_service.get_requirement(req_id):
+        raise HTTPException(status_code=404, detail="Requirement not found")
+    return risk_service.adjust_risk(
+        req_id,
+        request.dimensions,
+        iso9126_characteristic=request.iso9126_characteristic,
+        tech_risk=request.tech_risk,
+        business_risk=request.business_risk,
+        reasoning=request.reasoning,
+    )
 
 
 @router.put("/requirements/{req_id}/parsed", response_model=ParsedRequirement)

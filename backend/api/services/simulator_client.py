@@ -18,7 +18,8 @@ class SimulatorClient:
 
     async def reset(self, clear_dtc: bool = False) -> dict[str, Any]:
         async with httpx.AsyncClient(timeout=10.0, trust_env=False) as client:
-            response = await client.post(f"{self.base_url}/reset", json={"clear_dtc": clear_dtc})
+            # VCU simulator /reset uses a query param, not a JSON body
+            response = await client.post(f"{self.base_url}/reset", params={"clear_dtc": clear_dtc})
             response.raise_for_status()
             return response.json()
 
@@ -96,7 +97,13 @@ async def execute_single(test_case: TestCase) -> TestCase:
 
 async def execute_batch(test_cases: List[TestCase], reset_before_run: bool = True) -> List[TestCase]:
     if reset_before_run:
-        await simulator_client.reset(clear_dtc=False)
+        try:
+            await simulator_client.reset(clear_dtc=False)
+        except Exception as exc:
+            raise Exception(
+                f"VCU 仿真器连接失败 ({simulator_client.base_url})。"
+                f"请先启动仿真器: cd vcu_simulator && python main.py。错误: {exc}"
+            ) from exc
     results = []
     for case in test_cases:
         results.append(await execute_single(case))

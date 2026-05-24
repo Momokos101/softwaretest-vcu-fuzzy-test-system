@@ -1,22 +1,20 @@
-import { LayoutDashboard, FlaskConical, BarChart3, FileText, Settings, AlertTriangle, Code2, Download, Workflow } from 'lucide-react';
+import React from 'react';
+import { FileText, AlertTriangle, Code2, Download, Workflow } from 'lucide-react';
+
+type View = 'autotest-v2' | 'requirements' | 'risk-analysis' | 'test-design' | 'export';
 
 interface SidebarProps {
   currentView: string;
-  onNavigate: (view: 'dashboard' | 'tests' | 'analysis' | 'reports' | 'settings' | 'monitoring' | 'requirements' | 'autotest-v2' | 'risk-analysis' | 'test-design' | 'export') => void;
+  onNavigate: (view: View) => void;
 }
 
 export function Sidebar({ currentView, onNavigate }: SidebarProps) {
-  const menuItems = [
-    { id: 'dashboard', label: '概览', icon: LayoutDashboard },
-    { id: 'tests', label: '测试管理', icon: FlaskConical },
-    { id: 'analysis', label: '结果分析', icon: BarChart3 },
-    { id: 'reports', label: '报告中心', icon: FileText },
+  const menuItems: { id: View; label: string; icon: React.ElementType }[] = [
     { id: 'autotest-v2', label: 'V2向导', icon: Workflow },
     { id: 'requirements', label: '需求管理', icon: FileText },
     { id: 'risk-analysis', label: '风险分析', icon: AlertTriangle },
     { id: 'test-design', label: '测试设计', icon: Code2 },
     { id: 'export', label: '导出中心', icon: Download },
-    { id: 'settings', label: '系统配置', icon: Settings },
   ];
 
   return (
@@ -28,7 +26,7 @@ export function Sidebar({ currentView, onNavigate }: SidebarProps) {
           return (
             <button
               key={item.id}
-              onClick={() => onNavigate(item.id as any)}
+              onClick={() => onNavigate(item.id)}
               className={`w-full text-left px-4 py-3 mb-1.5 flex items-center gap-3 rounded-lg transition-all duration-200 relative group ${
                 isActive
                   ? 'bg-blue-600 text-white shadow-md'
@@ -46,7 +44,7 @@ export function Sidebar({ currentView, onNavigate }: SidebarProps) {
       </nav>
       
       {/* Version Info */}
-      <div className="absolute bottom-8 left-0 right-0 px-6">
+      <div className="absolute bottom-16 left-0 right-0 px-6">
         <div className="bg-white rounded-lg p-4 border border-slate-200 shadow-sm">
           <div className="text-sm text-slate-700 mb-1">AutoTestDesign</div>
           <div className="text-xs text-slate-500">v2.0</div>
