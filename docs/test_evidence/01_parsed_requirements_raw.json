@@ -1,0 +1,787 @@
+[
+  {
+    "requirement_id": "REQ-001",
+    "title": "硬线供电唤醒 w1",
+    "module": "Module A 电源状态管理",
+    "description": "供电电压 voltage > 9.0V 持续 duration ≥ 10ms 时唤醒 VCU。",
+    "input_fields": [
+      {
+        "name": "voltage",
+        "data_type": "float",
+        "valid_range": {
+          "expression": "0-36"
+        },
+        "unit": "V",
+        "has_timing": false
+      },
+      {
+        "name": "duration_ms",
+        "data_type": "integer",
+        "valid_range": {
+          "expression": "0-10000"
+        },
+        "unit": "ms",
+        "has_timing": true
+      }
+    ],
+    "conditions": [
+      {
+        "type": "threshold",
+        "description": "voltage > 9.0V",
+        "threshold": 9.0
+      },
+      {
+        "type": "timing",
+        "description": "duration_ms >= 10",
+        "threshold": 10
+      }
+    ],
+    "expected_actions": [
+      {
+        "output_field": "vehicle_state",
+        "expected_value": 11,
+        "operator": "eq"
+      },
+      {
+        "output_field": "pdcu_wake_reason",
+        "expected_value": 1,
+        "operator": "eq"
+      },
+      {
+        "output_field": "result_type",
+        "expected_value": "expected",
+        "operator": "eq"
+      }
+    ],
+    "parse_confidence": 0.95,
+    "llm_model": "qwen3.7-max",
+    "elapsed_ms": 80585.29720804654,
+    "updated_at": "2026-05-24T20:46:48.481363",
+    "data_ranges": {
+      "voltage": {
+        "expression": "0-36"
+      },
+      "duration_ms": {
+        "expression": "0-10000"
+      }
+    },
+    "actions": [
+      "vehicle_state eq 11",
+      "pdcu_wake_reason eq 1",
+      "result_type eq expected"
+    ]
+  },
+  {
+    "requirement_id": "REQ-002",
+    "title": "CAN 网络唤醒 w2",
+    "module": "Module A 电源状态管理",
+    "description": "CAN 总线收到 ID ∈ [0x400, 0x47F] 范围的报文时唤醒。",
+    "input_fields": [
+      {
+        "name": "can_msg_id",
+        "data_type": "integer",
+        "valid_range": {
+          "expression": "0x000-0x7FF"
+        },
+        "unit": "N/A",
+        "has_timing": false
+      }
+    ],
+    "conditions": [
+      {
+        "type": "threshold",
+        "description": "0x400 <= can_msg_id <= 0x47F",
+        "threshold": "0x400-0x47F"
+      }
+    ],
+    "expected_actions": [
+      {
+        "output_field": "vehicle_state",
+        "expected_value": 11,
+        "operator": "eq"
+      },
+      {
+        "output_field": "pdcu_wake_reason",
+        "expected_value": 2,
+        "operator": "eq"
+      }
+    ],
+    "parse_confidence": 0.95,
+    "llm_model": "qwen3.7-max",
+    "elapsed_ms": 80585.29720804654,
+    "updated_at": "2026-05-24T20:46:48.481551",
+    "data_ranges": {
+      "can_msg_id": {
+        "expression": "0x000-0x7FF"
+      }
+    },
+    "actions": [
+      "vehicle_state eq 11",
+      "pdcu_wake_reason eq 2"
+    ]
+  },
+  {
+    "requirement_id": "REQ-003",
+    "title": "CP 信号唤醒 w3",
+    "module": "Module A 电源状态管理",
+    "description": "CP（Control Pilot）幅值上升沿 > 9V 触发唤醒。",
+    "input_fields": [
+      {
+        "name": "cp_voltage",
+        "data_type": "float",
+        "valid_range": {
+          "expression": "0-15"
+        },
+        "unit": "V",
+        "has_timing": false
+      }
+    ],
+    "conditions": [
+      {
+        "type": "threshold",
+        "description": "cp_voltage > 9.0V",
+        "threshold": 9.0
+      }
+    ],
+    "expected_actions": [
+      {
+        "output_field": "vehicle_state",
+        "expected_value": 11,
+        "operator": "eq"
+      },
+      {
+        "output_field": "pdcu_wake_reason",
+        "expected_value": 3,
+        "operator": "eq"
+      }
+    ],
+    "parse_confidence": 0.95,
+    "llm_model": "qwen3.7-max",
+    "elapsed_ms": 80585.29720804654,
+    "updated_at": "2026-05-24T20:46:48.481578",
+    "data_ranges": {
+      "cp_voltage": {
+        "expression": "0-15"
+      }
+    },
+    "actions": [
+      "vehicle_state eq 11",
+      "pdcu_wake_reason eq 3"
+    ]
+  },
+  {
+    "requirement_id": "REQ-004",
+    "title": "CC 信号唤醒 w4",
+    "module": "Module A 电源状态管理",
+    "description": "CC（Charging Control）电压下降至 < 4.4V 时触发唤醒。",
+    "input_fields": [
+      {
+        "name": "cc_voltage",
+        "data_type": "float",
+        "valid_range": {
+          "expression": "0-15"
+        },
+        "unit": "V",
+        "has_timing": false
+      }
+    ],
+    "conditions": [
+      {
+        "type": "threshold",
+        "description": "cc_voltage < 4.4V",
+        "threshold": 4.4
+      }
+    ],
+    "expected_actions": [
+      {
+        "output_field": "vehicle_state",
+        "expected_value": 11,
+        "operator": "eq"
+      },
+      {
+        "output_field": "pdcu_wake_reason",
+        "expected_value": 4,
+        "operator": "eq"
+      }
+    ],
+    "parse_confidence": 0.95,
+    "llm_model": "qwen3.7-max",
+    "elapsed_ms": 80585.29720804654,
+    "updated_at": "2026-05-24T20:46:48.481608",
+    "data_ranges": {
+      "cc_voltage": {
+        "expression": "0-15"
+      }
+    },
+    "actions": [
+      "vehicle_state eq 11",
+      "pdcu_wake_reason eq 4"
+    ]
+  },
+  {
+    "requirement_id": "REQ-005",
+    "title": "CC2 信号唤醒 w5",
+    "module": "Module A 电源状态管理",
+    "description": "CC2 UBR 电压下降沿（< ubr_threshold, 默认 4.4V）触发唤醒。",
+    "input_fields": [
+      {
+        "name": "cc2_voltage",
+        "data_type": "float",
+        "valid_range": {
+          "expression": "0-15"
+        },
+        "unit": "V",
+        "has_timing": false
+      },
+      {
+        "name": "ubr_threshold",
+        "data_type": "float",
+        "valid_range": {
+          "expression": "0-15"
+        },
+        "unit": "V",
+        "has_timing": false
+      }
+    ],
+    "conditions": [
+      {
+        "type": "threshold",
+        "description": "cc2_voltage < ubr_threshold",
+        "threshold": 4.4
+      }
+    ],
+    "expected_actions": [
+      {
+        "output_field": "vehicle_state",
+        "expected_value": 11,
+        "operator": "eq"
+      },
+      {
+        "output_field": "pdcu_wake_reason",
+        "expected_value": 5,
+        "operator": "eq"
+      }
+    ],
+    "parse_confidence": 0.95,
+    "llm_model": "qwen3.7-max",
+    "elapsed_ms": 80585.29720804654,
+    "updated_at": "2026-05-24T20:46:48.481631",
+    "data_ranges": {
+      "cc2_voltage": {
+        "expression": "0-15"
+      },
+      "ubr_threshold": {
+        "expression": "0-15"
+      }
+    },
+    "actions": [
+      "vehicle_state eq 11",
+      "pdcu_wake_reason eq 5"
+    ]
+  },
+  {
+    "requirement_id": "REQ-006",
+    "title": "口盖信号唤醒 w6",
+    "module": "Module A 电源状态管理",
+    "description": "口盖（Hood）电压 > 4V 持续 ≥ 10ms 触发唤醒。",
+    "input_fields": [
+      {
+        "name": "hood_voltage",
+        "data_type": "float",
+        "valid_range": {
+          "expression": "0-15"
+        },
+        "unit": "V",
+        "has_timing": false
+      },
+      {
+        "name": "duration_ms",
+        "data_type": "integer",
+        "valid_range": {
+          "expression": "0-10000"
+        },
+        "unit": "ms",
+        "has_timing": true
+      }
+    ],
+    "conditions": [
+      {
+        "type": "threshold",
+        "description": "hood_voltage > 4.0V",
+        "threshold": 4.0
+      },
+      {
+        "type": "timing",
+        "description": "duration_ms >= 10",
+        "threshold": 10
+      }
+    ],
+    "expected_actions": [
+      {
+        "output_field": "vehicle_state",
+        "expected_value": 11,
+        "operator": "eq"
+      },
+      {
+        "output_field": "pdcu_wake_reason",
+        "expected_value": 6,
+        "operator": "eq"
+      }
+    ],
+    "parse_confidence": 0.95,
+    "llm_model": "qwen3.7-max",
+    "elapsed_ms": 80585.29720804654,
+    "updated_at": "2026-05-24T20:46:48.481664",
+    "data_ranges": {
+      "hood_voltage": {
+        "expression": "0-15"
+      },
+      "duration_ms": {
+        "expression": "0-10000"
+      }
+    },
+    "actions": [
+      "vehicle_state eq 11",
+      "pdcu_wake_reason eq 6"
+    ]
+  },
+  {
+    "requirement_id": "REQ-007",
+    "title": "门板信号唤醒 w7",
+    "module": "Module A 电源状态管理",
+    "description": "门板（Door）电压 < 1V 持续 ≥ 10ms 触发唤醒。",
+    "input_fields": [
+      {
+        "name": "door_voltage",
+        "data_type": "float",
+        "valid_range": {
+          "expression": "0-15"
+        },
+        "unit": "V",
+        "has_timing": false
+      },
+      {
+        "name": "duration_ms",
+        "data_type": "integer",
+        "valid_range": {
+          "expression": "0-10000"
+        },
+        "unit": "ms",
+        "has_timing": true
+      }
+    ],
+    "conditions": [
+      {
+        "type": "threshold",
+        "description": "door_voltage < 1.0V",
+        "threshold": 1.0
+      },
+      {
+        "type": "timing",
+        "description": "duration_ms >= 10",
+        "threshold": 10
+      }
+    ],
+    "expected_actions": [
+      {
+        "output_field": "vehicle_state",
+        "expected_value": 11,
+        "operator": "eq"
+      },
+      {
+        "output_field": "pdcu_wake_reason",
+        "expected_value": 7,
+        "operator": "eq"
+      }
+    ],
+    "parse_confidence": 0.95,
+    "llm_model": "qwen3.7-max",
+    "elapsed_ms": 80585.29720804654,
+    "updated_at": "2026-05-24T20:46:48.481706",
+    "data_ranges": {
+      "door_voltage": {
+        "expression": "0-15"
+      },
+      "duration_ms": {
+        "expression": "0-10000"
+      }
+    },
+    "actions": [
+      "vehicle_state eq 11",
+      "pdcu_wake_reason eq 7"
+    ]
+  },
+  {
+    "requirement_id": "REQ-008",
+    "title": "休眠条件 h1",
+    "module": "Module A 电源状态管理",
+    "description": "VCUIdle_flg = 1 是进入休眠的必要条件之一。",
+    "input_fields": [
+      {
+        "name": "VCUO_bDIAG_VCUIdle_flg",
+        "data_type": "boolean",
+        "valid_range": {
+          "expression": "0-1"
+        },
+        "unit": "N/A",
+        "has_timing": false
+      }
+    ],
+    "conditions": [
+      {
+        "type": "state",
+        "description": "VCUO_bDIAG_VCUIdle_flg == 1",
+        "threshold": 1
+      }
+    ],
+    "expected_actions": [
+      {
+        "output_field": "sleep_sub_condition_1",
+        "expected_value": 1,
+        "operator": "eq"
+      }
+    ],
+    "parse_confidence": 0.9,
+    "llm_model": "qwen3.7-max",
+    "elapsed_ms": 80585.29720804654,
+    "updated_at": "2026-05-24T20:46:48.481731",
+    "data_ranges": {
+      "VCUO_bDIAG_VCUIdle_flg": {
+        "expression": "0-1"
+      }
+    },
+    "actions": [
+      "sleep_sub_condition_1 eq 1"
+    ]
+  },
+  {
+    "requirement_id": "REQ-009",
+    "title": "休眠条件 h2",
+    "module": "Module A 电源状态管理",
+    "description": "AuthComplete_flg = 1 是进入休眠的必要条件之一。",
+    "input_fields": [
+      {
+        "name": "VCUO_bDIAG_AuthComplete_flg",
+        "data_type": "boolean",
+        "valid_range": {
+          "expression": "0-1"
+        },
+        "unit": "N/A",
+        "has_timing": false
+      }
+    ],
+    "conditions": [
+      {
+        "type": "state",
+        "description": "VCUO_bDIAG_AuthComplete_flg == 1",
+        "threshold": 1
+      }
+    ],
+    "expected_actions": [
+      {
+        "output_field": "sleep_sub_condition_2",
+        "expected_value": 1,
+        "operator": "eq"
+      }
+    ],
+    "parse_confidence": 0.9,
+    "llm_model": "qwen3.7-max",
+    "elapsed_ms": 80585.29720804654,
+    "updated_at": "2026-05-24T20:46:48.481750",
+    "data_ranges": {
+      "VCUO_bDIAG_AuthComplete_flg": {
+        "expression": "0-1"
+      }
+    },
+    "actions": [
+      "sleep_sub_condition_2 eq 1"
+    ]
+  },
+  {
+    "requirement_id": "REQ-010",
+    "title": "休眠条件 h3",
+    "module": "Module A 电源状态管理",
+    "description": "CAN 0x400 ~ 0x47F 报文停止发送是进入休眠的必要条件之一。",
+    "input_fields": [
+      {
+        "name": "can_bus_idle",
+        "data_type": "boolean",
+        "valid_range": {
+          "expression": "0-1"
+        },
+        "unit": "N/A",
+        "has_timing": true
+      }
+    ],
+    "conditions": [
+      {
+        "type": "state",
+        "description": "在指定时间窗口内 CAN 总线无 0x400~0x47F 报文",
+        "threshold": 1
+      }
+    ],
+    "expected_actions": [
+      {
+        "output_field": "sleep_sub_condition_3",
+        "expected_value": 1,
+        "operator": "eq"
+      }
+    ],
+    "parse_confidence": 0.9,
+    "llm_model": "qwen3.7-max",
+    "elapsed_ms": 80585.29720804654,
+    "updated_at": "2026-05-24T20:46:48.481768",
+    "data_ranges": {
+      "can_bus_idle": {
+        "expression": "0-1"
+      }
+    },
+    "actions": [
+      "sleep_sub_condition_3 eq 1"
+    ]
+  },
+  {
+    "requirement_id": "REQ-011",
+    "title": "三条件同时才休眠",
+    "module": "Module A 电源状态管理",
+    "description": "h1 AND h2 AND h3 三条件同时满足时，VCU 才进入 state09 休眠；任一条件不满足，VCU 维持当前状态。",
+    "input_fields": [
+      {
+        "name": "h1",
+        "data_type": "boolean",
+        "valid_range": {
+          "expression": "0-1"
+        },
+        "unit": "N/A",
+        "has_timing": false
+      },
+      {
+        "name": "h2",
+        "data_type": "boolean",
+        "valid_range": {
+          "expression": "0-1"
+        },
+        "unit": "N/A",
+        "has_timing": false
+      },
+      {
+        "name": "h3",
+        "data_type": "boolean",
+        "valid_range": {
+          "expression": "0-1"
+        },
+        "unit": "N/A",
+        "has_timing": false
+      }
+    ],
+    "conditions": [
+      {
+        "type": "logical",
+        "description": "h1 == 1 AND h2 == 1 AND h3 == True",
+        "threshold": 1
+      }
+    ],
+    "expected_actions": [
+      {
+        "output_field": "vehicle_state",
+        "expected_value": 9,
+        "operator": "eq"
+      }
+    ],
+    "parse_confidence": 0.95,
+    "llm_model": "qwen3.7-max",
+    "elapsed_ms": 80585.29720804654,
+    "updated_at": "2026-05-24T20:46:48.481797",
+    "data_ranges": {
+      "h1": {
+        "expression": "0-1"
+      },
+      "h2": {
+        "expression": "0-1"
+      },
+      "h3": {
+        "expression": "0-1"
+      }
+    },
+    "actions": [
+      "vehicle_state eq 9"
+    ]
+  },
+  {
+    "requirement_id": "REQ-012",
+    "title": "卡死缺陷检测（已知缺陷）",
+    "module": "Module A 电源状态管理",
+    "description": "连续 3 次以上快速唤醒-休眠循环（相邻间隔 < 1s）会导致 VCU 卡死在 state10 初始化状态，actual_duration 超过 stuck_est_time × 2，必须能被检测并触发 DTC_001。",
+    "input_fields": [
+      {
+        "name": "consecutive_wake_sleep_cycles",
+        "data_type": "integer",
+        "valid_range": {
+          "expression": "0-100"
+        },
+        "unit": "N/A",
+        "has_timing": false
+      },
+      {
+        "name": "interval",
+        "data_type": "float",
+        "valid_range": {
+          "expression": "0-10"
+        },
+        "unit": "s",
+        "has_timing": true
+      }
+    ],
+    "conditions": [
+      {
+        "type": "threshold",
+        "description": "consecutive_wake_sleep_cycles >= 3 AND interval < 1s",
+        "threshold": 3
+      }
+    ],
+    "expected_actions": [
+      {
+        "output_field": "vehicle_state",
+        "expected_value": 10,
+        "operator": "eq"
+      },
+      {
+        "output_field": "result_type",
+        "expected_value": "stuck",
+        "operator": "eq"
+      },
+      {
+        "output_field": "active_dtcs",
+        "expected_value": "DTC_001",
+        "operator": "contains"
+      }
+    ],
+    "parse_confidence": 0.95,
+    "llm_model": "qwen3.7-max",
+    "elapsed_ms": 80585.29720804654,
+    "updated_at": "2026-05-24T20:46:48.481832",
+    "data_ranges": {
+      "consecutive_wake_sleep_cycles": {
+        "expression": "0-100"
+      },
+      "interval": {
+        "expression": "0-10"
+      }
+    },
+    "actions": [
+      "vehicle_state eq 10",
+      "result_type eq stuck",
+      "active_dtcs contains DTC_001"
+    ]
+  },
+  {
+    "requirement_id": "REQ-013",
+    "title": "输出字段一致性",
+    "module": "Module A 电源状态管理",
+    "description": "state11（正常运行）时 bus_message_flag = 1；state09（休眠）时 bus_message_flag = 0。",
+    "input_fields": [
+      {
+        "name": "vehicle_state",
+        "data_type": "integer",
+        "valid_range": {
+          "expression": "0-255"
+        },
+        "unit": "N/A",
+        "has_timing": false
+      }
+    ],
+    "conditions": [
+      {
+        "type": "state",
+        "description": "state == 11 or state == 9",
+        "threshold": 11
+      }
+    ],
+    "expected_actions": [
+      {
+        "output_field": "bus_message_flag",
+        "expected_value": 1,
+        "operator": "eq"
+      },
+      {
+        "output_field": "bus_message_flag",
+        "expected_value": 0,
+        "operator": "eq"
+      }
+    ],
+    "parse_confidence": 0.9,
+    "llm_model": "qwen3.7-max",
+    "elapsed_ms": 80585.29720804654,
+    "updated_at": "2026-05-24T20:46:48.481850",
+    "data_ranges": {
+      "vehicle_state": {
+        "expression": "0-255"
+      }
+    },
+    "actions": [
+      "bus_message_flag eq 1",
+      "bus_message_flag eq 0"
+    ]
+  },
+  {
+    "requirement_id": "REQ-014",
+    "title": "响应时序合规",
+    "module": "Module A 电源状态管理",
+    "description": "type1（单信号唤醒）actual_duration ≤ 20s；type2（多信号休眠）actual_duration ≤ 60s。",
+    "input_fields": [
+      {
+        "name": "test_case_type",
+        "data_type": "integer",
+        "valid_range": {
+          "expression": "1-2"
+        },
+        "unit": "N/A",
+        "has_timing": false
+      },
+      {
+        "name": "actual_duration",
+        "data_type": "float",
+        "valid_range": {
+          "expression": "0-100"
+        },
+        "unit": "s",
+        "has_timing": true
+      }
+    ],
+    "conditions": [
+      {
+        "type": "state",
+        "description": "test_case_type == 1 or 2",
+        "threshold": 1
+      }
+    ],
+    "expected_actions": [
+      {
+        "output_field": "actual_duration",
+        "expected_value": 20.0,
+        "operator": "lte"
+      },
+      {
+        "output_field": "actual_duration",
+        "expected_value": 60.0,
+        "operator": "lte"
+      }
+    ],
+    "parse_confidence": 0.9,
+    "llm_model": "qwen3.7-max",
+    "elapsed_ms": 80585.29720804654,
+    "updated_at": "2026-05-24T20:46:48.481867",
+    "data_ranges": {
+      "test_case_type": {
+        "expression": "1-2"
+      },
+      "actual_duration": {
+        "expression": "0-100"
+      }
+    },
+    "actions": [
+      "actual_duration lte 20.0",
+      "actual_duration lte 60.0"
+    ]
+  }
+]

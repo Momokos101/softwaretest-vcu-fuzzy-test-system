@@ -1,0 +1,49 @@
+{
+  "requirement_id": "REQ-005",
+  "title": "CC2 信号唤醒 w5",
+  "module": "Module A 电源状态管理",
+  "description": "CC2 UBR 电压下降沿（< ubr_threshold, 默认 4.4V）触发唤醒。",
+  "input_fields": [
+    {
+      "name": "cc2_voltage",
+      "data_type": "float",
+      "valid_range": {
+        "expression": "0-15"
+      },
+      "unit": "V",
+      "has_timing": false
+    }
+  ],
+  "conditions": [
+    {
+      "type": "threshold",
+      "description": "cc2_voltage < ubr_threshold",
+      "threshold": 4.4
+    }
+  ],
+  "expected_actions": [
+    {
+      "output_field": "vehicle_state",
+      "expected_value": 11,
+      "operator": "eq"
+    },
+    {
+      "output_field": "pdcu_wake_reason",
+      "expected_value": 5,
+      "operator": "eq"
+    }
+  ],
+  "parse_confidence": 0.95,
+  "llm_model": "qwen3.7-max",
+  "elapsed_ms": 80585.29720804654,
+  "updated_at": "2026-05-24T21:30:54.035754",
+  "data_ranges": {
+    "cc2_voltage": {
+      "expression": "0-15"
+    }
+  },
+  "actions": [
+    "vehicle_state eq 11",
+    "pdcu_wake_reason eq 5"
+  ]
+}

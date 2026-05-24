@@ -1,0 +1,134 @@
+{
+  "REQ-006": {
+    "requirement_id": "REQ-006",
+    "title": "口盖信号唤醒 w6",
+    "module": "Module A 电源状态管理",
+    "description": "口盖（Hood）电压 > 4V 持续 ≥ 10ms 触发唤醒。",
+    "input_fields": [
+      {
+        "name": "hood_voltage",
+        "data_type": "float",
+        "valid_range": {
+          "expression": "0-15"
+        },
+        "unit": "V",
+        "has_timing": true
+      },
+      {
+        "name": "duration_ms",
+        "data_type": "integer",
+        "valid_range": {
+          "expression": "0-10000"
+        },
+        "unit": "ms",
+        "has_timing": true
+      }
+    ],
+    "conditions": [
+      {
+        "type": "threshold",
+        "description": "hood_voltage > 4.0V",
+        "threshold": 4.0
+      },
+      {
+        "type": "timing",
+        "description": "duration_ms >= 10",
+        "threshold": 10
+      }
+    ],
+    "expected_actions": [
+      {
+        "output_field": "vehicle_state",
+        "expected_value": 11,
+        "operator": "eq"
+      },
+      {
+        "output_field": "pdcu_wake_reason",
+        "expected_value": 6,
+        "operator": "eq"
+      }
+    ],
+    "parse_confidence": 0.95,
+    "llm_model": "qwen3.7-max",
+    "elapsed_ms": 80585.29720804654,
+    "updated_at": "2026-05-24T21:30:54.039347",
+    "data_ranges": {
+      "hood_voltage": {
+        "expression": "0-15"
+      },
+      "duration_ms": {
+        "expression": "0-10000"
+      }
+    },
+    "actions": [
+      "vehicle_state eq 11",
+      "pdcu_wake_reason eq 6"
+    ]
+  },
+  "REQ-007": {
+    "requirement_id": "REQ-007",
+    "title": "门板信号唤醒 w7",
+    "module": "Module A 电源状态管理",
+    "description": "门板（Door）电压 < 1V 持续 ≥ 10ms 触发唤醒。",
+    "input_fields": [
+      {
+        "name": "door_voltage",
+        "data_type": "float",
+        "valid_range": {
+          "expression": "0-15"
+        },
+        "unit": "V",
+        "has_timing": true
+      },
+      {
+        "name": "duration_ms",
+        "data_type": "integer",
+        "valid_range": {
+          "expression": "0-10000"
+        },
+        "unit": "ms",
+        "has_timing": true
+      }
+    ],
+    "conditions": [
+      {
+        "type": "threshold",
+        "description": "door_voltage < 1.0V",
+        "threshold": 1.0
+      },
+      {
+        "type": "timing",
+        "description": "duration_ms >= 10",
+        "threshold": 10
+      }
+    ],
+    "expected_actions": [
+      {
+        "output_field": "vehicle_state",
+        "expected_value": 11,
+        "operator": "eq"
+      },
+      {
+        "output_field": "pdcu_wake_reason",
+        "expected_value": 7,
+        "operator": "eq"
+      }
+    ],
+    "parse_confidence": 0.95,
+    "llm_model": "qwen3.7-max",
+    "elapsed_ms": 80585.29720804654,
+    "updated_at": "2026-05-24T21:30:54.041946",
+    "data_ranges": {
+      "door_voltage": {
+        "expression": "0-15"
+      },
+      "duration_ms": {
+        "expression": "0-10000"
+      }
+    },
+    "actions": [
+      "vehicle_state eq 11",
+      "pdcu_wake_reason eq 7"
+    ]
+  }
+}

@@ -125,13 +125,19 @@ export function RequirementInput() {
 
   const saveParsed = async (id: string) => {
     const editable = editingParsed[id];
-    const parsed = {
-      ...parsedById[id],
-      input_fields: splitLines(editable.input_fields),
-      conditions: splitLines(editable.conditions),
-      actions: splitLines(editable.actions),
-      data_ranges: JSON.parse(editable.data_ranges || '{}'),
-    };
+    let parsed;
+    try {
+      parsed = {
+        ...parsedById[id],
+        input_fields: JSON.parse(editable.input_fields || '[]'),
+        conditions: JSON.parse(editable.conditions || '[]'),
+        actions: splitLines(editable.actions),
+        data_ranges: JSON.parse(editable.data_ranges || '{}'),
+      };
+    } catch (err) {
+      alert(`保存失败：Input Fields / Conditions / Data Ranges 必须是合法 JSON。\n\n${err instanceof Error ? err.message : String(err)}`);
+      return;
+    }
     const saved = await autoTestAPI.updateParsed(id, parsed);
     setParsedById((current) => ({ ...current, [id]: saved }));
     setEditingParsed((current) => ({ ...current, [id]: toEditableParsed(saved) }));
@@ -265,9 +271,9 @@ function ParsedEditor({ title, value, onChange }: { title: string; value: string
 
 function toEditableParsed(parsed: any) {
   return {
-    input_fields: (parsed.input_fields || []).join('\n'),
+    input_fields: JSON.stringify(parsed.input_fields || [], null, 2),
     data_ranges: JSON.stringify(parsed.data_ranges || {}, null, 2),
-    conditions: (parsed.conditions || []).join('\n'),
+    conditions: JSON.stringify(parsed.conditions || [], null, 2),
     actions: (parsed.actions || []).join('\n'),
   };
 }

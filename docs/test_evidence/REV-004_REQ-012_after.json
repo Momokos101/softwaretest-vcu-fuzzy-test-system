@@ -1,0 +1,72 @@
+{
+  "requirement_id": "REQ-012",
+  "title": "卡死缺陷检测（已知缺陷）",
+  "module": "Module A 电源状态管理",
+  "description": "连续 3 次以上快速唤醒-休眠循环（相邻间隔 < 1s）会导致 VCU 卡死在 state10 初始化状态，actual_duration 超过 stuck_est_time × 2，必须能被检测并触发 DTC_001。",
+  "input_fields": [
+    {
+      "name": "consecutive_wake_sleep_cycles",
+      "data_type": "integer",
+      "valid_range": {
+        "expression": "0-100"
+      },
+      "unit": "N/A",
+      "has_timing": false
+    },
+    {
+      "name": "interval",
+      "data_type": "float",
+      "valid_range": {
+        "expression": "0-10"
+      },
+      "unit": "s",
+      "has_timing": true
+    }
+  ],
+  "conditions": [
+    {
+      "type": "threshold",
+      "description": "consecutive_wake_sleep_cycles >= 3 (rapid cycling count)",
+      "threshold": 3
+    },
+    {
+      "type": "timing",
+      "description": "interval < 1.0s between adjacent wake-sleep cycles",
+      "threshold": 1.0
+    }
+  ],
+  "expected_actions": [
+    {
+      "output_field": "vehicle_state",
+      "expected_value": 10,
+      "operator": "eq"
+    },
+    {
+      "output_field": "result_type",
+      "expected_value": "stuck",
+      "operator": "eq"
+    },
+    {
+      "output_field": "active_dtcs",
+      "expected_value": "DTC_001",
+      "operator": "contains"
+    }
+  ],
+  "parse_confidence": 0.95,
+  "llm_model": "qwen3.7-max",
+  "elapsed_ms": 80585.29720804654,
+  "updated_at": "2026-05-24T21:30:54.048789",
+  "data_ranges": {
+    "consecutive_wake_sleep_cycles": {
+      "expression": "0-100"
+    },
+    "interval": {
+      "expression": "0-10"
+    }
+  },
+  "actions": [
+    "vehicle_state eq 10",
+    "result_type eq stuck",
+    "active_dtcs contains DTC_001"
+  ]
+}

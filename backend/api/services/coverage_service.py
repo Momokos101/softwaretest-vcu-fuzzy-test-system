@@ -22,7 +22,30 @@ _coverage_items: dict[str, CoverageItem] = {}
 _strategies: dict[str, TestStrategy] = {}
 
 
-async def generate_coverage_items(parsed_requirements: List[ParsedRequirement]) -> List[CoverageItem]:
+async def generate_coverage_items(
+    parsed_requirements: List[ParsedRequirement],
+    mode: str = "dedupe",
+) -> List[CoverageItem]:
+    """Generate coverage items from LLM.
+
+    mode:
+      - "dedupe" (default, safe): skip LLM items whose (requirement_id, title)
+        already exists; idempotent under repeated clicks.
+      - "replace": delete all existing items for the affected requirement_ids
+        BEFORE generating; useful when user wants a fresh LLM regenerate.
+      - "append": legacy behavior — always append; allows duplicates.
+    """
+    if mode not in ("dedupe", "replace", "append"):
+        raise ValueError(f"invalid mode {mode!r}; expected dedupe|replace|append")
+
+    affected_req_ids = {p.requirement_id for p in parsed_requirements}
+
+    if mode == "replace":
+        # Drop existing items for affected REQs before generating
+        to_remove = [k for k, v in _coverage_items.items() if v.requirement_id in affected_req_ids]
+        for k in to_remove:
+            del _coverage_items[k]
+
     prompt = require_prompt("coverage")
     requirements_json = json.dumps([item.model_dump(mode="json") for item in parsed_requirements], ensure_ascii=False, indent=2)
     payload, _, _ = await llm_client.generate_json(
@@ -34,6 +57,13 @@ async def generate_coverage_items(parsed_requirements: List[ParsedRequirement]) 
     raw_items = payload.get("items")
     if not isinstance(raw_items, list):
         raise ValueError("LLM coverage response must include items array")
+
+    if mode == "dedupe":
+        existing_keys = {(v.requirement_id, v.title) for v in _coverage_items.values()}
+        raw_items = [
+            r for r in raw_items
+            if (str(r.get("requirement_id")), r.get("title") or "Coverage Item") not in existing_keys
+        ]
 
     items = [
         create_coverage_item(

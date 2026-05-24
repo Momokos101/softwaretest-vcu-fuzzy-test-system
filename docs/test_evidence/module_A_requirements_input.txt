@@ -1,0 +1,107 @@
+VCU Behavior Simulator — Module A 电源状态管理（Power State Management）
+需求基线 14 条 — 来源：docs/PROJECT_PLAN_V2.md §2.8
+此文件作为 AutoTestDesign 工具 FR 1.0 / 1.1 阶段的"原始需求文本"输入，
+逐字照抄 PROJECT_PLAN_V2 §2.8 表，不可改写、不可删减。
+================================================================
+
+REQ-001 硬线供电唤醒 w1
+描述：供电电压 voltage > 9.0V 持续 duration ≥ 10ms 时唤醒 VCU。
+输入信号：供电电压（V，浮点），duration_ms（ms，整数）
+触发条件：voltage > 9.0V AND duration_ms >= 10
+期望动作：vehicle_state = 11；pdcu_wake_reason = 1；result_type = expected
+风险等级：High
+
+REQ-002 CAN 网络唤醒 w2
+描述：CAN 总线收到 ID ∈ [0x400, 0x47F] 范围的报文时唤醒。
+输入信号：can_msg_id（整数，0x000 ~ 0x7FF 11位标识符）
+触发条件：0x400 <= can_msg_id <= 0x47F
+期望动作：vehicle_state = 11；pdcu_wake_reason = 2
+风险等级：High
+
+REQ-003 CP 信号唤醒 w3
+描述：CP（Control Pilot）幅值上升沿 > 9V 触发唤醒。
+输入信号：cp_voltage（V，浮点）
+触发条件：cp_voltage > 9.0V
+期望动作：vehicle_state = 11；pdcu_wake_reason = 3
+风险等级：Medium
+
+REQ-004 CC 信号唤醒 w4
+描述：CC（Charging Control）电压下降至 < 4.4V 时触发唤醒。
+输入信号：cc_voltage（V，浮点）
+触发条件：cc_voltage < 4.4V
+期望动作：vehicle_state = 11；pdcu_wake_reason = 4
+风险等级：Medium
+
+REQ-005 CC2 信号唤醒 w5
+描述：CC2 UBR 电压下降沿（< ubr_threshold, 默认 4.4V）触发唤醒。
+输入信号：cc2_voltage（V，浮点），ubr_threshold（V，可配置）
+触发条件：cc2_voltage < ubr_threshold
+期望动作：vehicle_state = 11；pdcu_wake_reason = 5
+风险等级：Medium
+
+REQ-006 口盖信号唤醒 w6
+描述：口盖（Hood）电压 > 4V 持续 ≥ 10ms 触发唤醒。
+输入信号：hood_voltage（V，浮点），duration_ms（ms，整数）
+触发条件：hood_voltage > 4.0V AND duration_ms >= 10
+期望动作：vehicle_state = 11；pdcu_wake_reason = 6
+风险等级：Low
+
+REQ-007 门板信号唤醒 w7
+描述：门板（Door）电压 < 1V 持续 ≥ 10ms 触发唤醒。
+输入信号：door_voltage（V，浮点），duration_ms（ms，整数）
+触发条件：door_voltage < 1.0V AND duration_ms >= 10
+期望动作：vehicle_state = 11；pdcu_wake_reason = 7
+风险等级：Low
+
+REQ-008 休眠条件 h1
+描述：VCUIdle_flg = 1 是进入休眠的必要条件之一。
+输入信号：VCUO_bDIAG_VCUIdle_flg（布尔）
+触发条件：VCUO_bDIAG_VCUIdle_flg == 1
+期望动作：满足休眠子条件 1（与 h2、h3 联合判断）
+风险等级：High
+
+REQ-009 休眠条件 h2
+描述：AuthComplete_flg = 1 是进入休眠的必要条件之一。
+输入信号：VCUO_bDIAG_AuthComplete_flg（布尔）
+触发条件：VCUO_bDIAG_AuthComplete_flg == 1
+期望动作：满足休眠子条件 2
+风险等级：High
+
+REQ-010 休眠条件 h3
+描述：CAN 0x400 ~ 0x47F 报文停止发送是进入休眠的必要条件之一。
+输入信号：CAN 报文流（无报文 = True）
+触发条件：在指定时间窗口内 CAN 总线无 0x400~0x47F 报文
+期望动作：满足休眠子条件 3
+风险等级：High
+
+REQ-011 三条件同时才休眠
+描述：h1 AND h2 AND h3 三条件同时满足时，VCU 才进入 state09 休眠；任一条件不满足，VCU 维持当前状态。
+输入信号：h1, h2, h3（三个布尔条件的组合）
+触发条件：h1 == 1 AND h2 == 1 AND h3 == True
+期望动作：vehicle_state = 9（仅当三条件全满足时）；否则维持原状态（state11 或 state10）
+风险等级：High
+
+REQ-012 卡死缺陷检测（已知缺陷）
+描述：连续 3 次以上快速唤醒-休眠循环（相邻间隔 < 1s）会导致 VCU 卡死在 state10 初始化状态，actual_duration 超过 stuck_est_time × 2，必须能被检测并触发 DTC_001。
+输入信号：唤醒-休眠序列（间隔 < 1s 重复 ≥ 3 次）
+触发条件：consecutive_wake_sleep_cycles >= 3 AND interval < 1s
+期望动作：vehicle_state 卡在 10；result_type = "stuck"；actual_duration > stuck_est_time × 2；active_dtcs 必须包含 "DTC_001"
+风险等级：High（最高优先级，RPN=1）
+缺陷来源：北汽客户原始需求文档 0319.pdf 真实工程缺陷
+
+REQ-013 输出字段一致性
+描述：state11（正常运行）时 bus_message_flag = 1；state09（休眠）时 bus_message_flag = 0。
+输入信号：当前 vehicle_state
+触发条件：state == 11 → bus_message_flag must be 1；state == 9 → bus_message_flag must be 0
+期望动作：响应体中 bus_message_flag 与 vehicle_state 保持一致
+风险等级：Medium
+
+REQ-014 响应时序合规
+描述：type1（单信号唤醒）actual_duration ≤ 20s；type2（多信号休眠）actual_duration ≤ 60s。
+输入信号：测试用例 type 字段（1 或 2）
+触发条件：响应字段 actual_duration
+期望动作：type1 actual_duration <= 20.0s；type2 actual_duration <= 60.0s
+风险等级：Medium
+
+================================================================
+End of Module A baseline requirements (14 entries)

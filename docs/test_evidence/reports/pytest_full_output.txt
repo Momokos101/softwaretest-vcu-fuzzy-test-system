@@ -1,0 +1,144 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.14.3, pytest-9.0.3, pluggy-1.6.0 -- /opt/homebrew/opt/python@3.14/bin/python3.14
+cachedir: .pytest_cache
+rootdir: /Users/hby/Documents/GitHub/softwaretest-vcu-fuzzy-test-system
+plugins: cov-7.1.0, anyio-4.13.0
+collecting ... collected 116 items
+
+tests/test_vcu_simulator_v2.py::VCUSimulatorV2Test::test_all_wake_reasons 
+tests/test_vcu_simulator_v2.py::VCUSimulatorV2Test::test_all_wake_reasons PASSED [  0%]
+tests/test_vcu_simulator_v2.py::VCUSimulatorV2Test::test_bus_off_blocks_can_wake PASSED [  1%]
+tests/test_vcu_simulator_v2.py::VCUSimulatorV2Test::test_can_id_boundaries PASSED [  2%]
+tests/test_vcu_simulator_v2.py::VCUSimulatorV2Test::test_config_update_changes_can_thresholds PASSED [  3%]
+tests/test_vcu_simulator_v2.py::VCUSimulatorV2Test::test_config_update_changes_guard_thresholds PASSED [  4%]
+tests/test_vcu_simulator_v2.py::VCUSimulatorV2Test::test_config_update_changes_power_thresholds PASSED [  5%]
+tests/test_vcu_simulator_v2.py::VCUSimulatorV2Test::test_debounce_rejects_short_timing_signal PASSED [  6%]
+tests/test_vcu_simulator_v2.py::VCUSimulatorV2Test::test_dtc_clear_marks_records_cleared PASSED [  6%]
+tests/test_vcu_simulator_v2.py::VCUSimulatorV2Test::test_error_result_maps_to_fail_status PASSED [  7%]
+tests/test_vcu_simulator_v2.py::VCUSimulatorV2Test::test_overvoltage_and_undervoltage_log_dtcs PASSED [  8%]
+tests/test_vcu_simulator_v2.py::VCUSimulatorV2Test::test_power_alarm_and_sleep_power_compliance PASSED [  9%]
+tests/test_vcu_simulator_v2.py::VCUSimulatorV2Test::test_simulate_sleep_v2_state PASSED [ 10%]
+tests/test_vcu_simulator_v2.py::VCUSimulatorV2Test::test_sleep_requires_all_three_conditions PASSED [ 11%]
+tests/test_vcu_simulator_v2.py::VCUSimulatorV2Test::test_stuck_detection_after_rapid_cycles PASSED [ 12%]
+tests/test_vcu_simulator_v2.py::VCUSimulatorV2Test::test_supply_voltage_wake PASSED [ 12%]
+tests/test_suite_a_ep.py::SuiteA_EP::test_TC_A_001_w1_valid_class PASSED [ 13%]
+tests/test_suite_a_ep.py::SuiteA_EP::test_TC_A_002_w1_invalid_value_class PASSED [ 14%]
+tests/test_suite_a_ep.py::SuiteA_EP::test_TC_A_003_w1_invalid_timing_class PASSED [ 15%]
+tests/test_suite_a_ep.py::SuiteA_EP::test_TC_A_004_w2_valid_class PASSED [ 16%]
+tests/test_suite_a_ep.py::SuiteA_EP::test_TC_A_005_w2_invalid_low_class PASSED [ 17%]
+tests/test_suite_a_ep.py::SuiteA_EP::test_TC_A_006_w2_invalid_high_class PASSED [ 18%]
+tests/test_suite_a_ep.py::SuiteA_EP::test_TC_A_007_w3_valid_class PASSED [ 18%]
+tests/test_suite_a_ep.py::SuiteA_EP::test_TC_A_008_w3_invalid_low_class PASSED [ 19%]
+tests/test_suite_a_ep.py::SuiteA_EP::test_TC_A_009_w3_on_boundary_class PASSED [ 20%]
+tests/test_suite_a_ep.py::SuiteA_EP::test_TC_A_010_w4_valid_class PASSED [ 21%]
+tests/test_suite_a_ep.py::SuiteA_EP::test_TC_A_011_w4_invalid_high_class PASSED [ 22%]
+tests/test_suite_a_ep.py::SuiteA_EP::test_TC_A_012_w4_on_boundary_class PASSED [ 23%]
+tests/test_suite_a_ep.py::SuiteA_EP::test_TC_A_013_w5_valid_class PASSED [ 24%]
+tests/test_suite_a_ep.py::SuiteA_EP::test_TC_A_014_w5_invalid_high_class PASSED [ 25%]
+tests/test_suite_a_ep.py::SuiteA_EP::test_TC_A_015_w5_on_boundary_class PASSED [ 25%]
+tests/test_suite_a_ep.py::SuiteA_EP::test_TC_A_016_w6_valid_class PASSED [ 26%]
+tests/test_suite_a_ep.py::SuiteA_EP::test_TC_A_017_w6_invalid_value_class PASSED [ 27%]
+tests/test_suite_a_ep.py::SuiteA_EP::test_TC_A_018_w6_invalid_timing_class PASSED [ 28%]
+tests/test_suite_a_ep.py::SuiteA_EP::test_TC_A_019_w7_valid_class PASSED [ 29%]
+tests/test_suite_a_ep.py::SuiteA_EP::test_TC_A_020_w7_invalid_value_class PASSED [ 30%]
+tests/test_suite_a_ep.py::SuiteA_EP::test_TC_A_021_w7_invalid_timing_class PASSED [ 31%]
+tests/test_suite_b_bva.py::SuiteB_BVA::test_TC_B_001_supply_below_9v PASSED [ 31%]
+tests/test_suite_b_bva.py::SuiteB_BVA::test_TC_B_002_supply_on_9v PASSED [ 32%]
+tests/test_suite_b_bva.py::SuiteB_BVA::test_TC_B_003_supply_above_9v PASSED [ 33%]
+tests/test_suite_b_bva.py::SuiteB_BVA::test_TC_B_004_timing_below_10ms PASSED [ 34%]
+tests/test_suite_b_bva.py::SuiteB_BVA::test_TC_B_005_timing_on_10ms PASSED [ 35%]
+tests/test_suite_b_bva.py::SuiteB_BVA::test_TC_B_006_timing_above_10ms PASSED [ 36%]
+tests/test_suite_b_bva.py::SuiteB_BVA::test_TC_B_007_hood_below_4v PASSED [ 37%]
+tests/test_suite_b_bva.py::SuiteB_BVA::test_TC_B_008_hood_on_4v PASSED   [ 37%]
+tests/test_suite_b_bva.py::SuiteB_BVA::test_TC_B_009_hood_above_4v PASSED [ 38%]
+tests/test_suite_b_bva.py::SuiteB_BVA::test_TC_B_010_door_above_1v PASSED [ 39%]
+tests/test_suite_b_bva.py::SuiteB_BVA::test_TC_B_011_door_on_1v PASSED   [ 40%]
+tests/test_suite_b_bva.py::SuiteB_BVA::test_TC_B_012_door_below_1v PASSED [ 41%]
+tests/test_suite_b_bva.py::SuiteB_BVA::test_TC_B_013_overvoltage_below_16v PASSED [ 42%]
+tests/test_suite_b_bva.py::SuiteB_BVA::test_TC_B_014_overvoltage_on_16v PASSED [ 43%]
+tests/test_suite_b_bva.py::SuiteB_BVA::test_TC_B_015_overvoltage_above_16v PASSED [ 43%]
+tests/test_suite_b_bva.py::SuiteB_BVA::test_TC_B_016_undervoltage_above_6v PASSED [ 44%]
+tests/test_suite_b_bva.py::SuiteB_BVA::test_TC_B_017_undervoltage_on_6v PASSED [ 45%]
+tests/test_suite_b_bva.py::SuiteB_BVA::test_TC_B_018_undervoltage_below_6v PASSED [ 46%]
+tests/test_suite_b_bva.py::SuiteB_BVA::test_TC_B_019_debounce_below_5ms PASSED [ 47%]
+tests/test_suite_b_bva.py::SuiteB_BVA::test_TC_B_020_debounce_on_5ms PASSED [ 48%]
+tests/test_suite_b_bva.py::SuiteB_BVA::test_TC_B_021_debounce_above_5ms PASSED [ 49%]
+tests/test_suite_b_bva.py::SuiteB_BVA::test_TC_B_022_can_id_below_range PASSED [ 50%]
+tests/test_suite_b_bva.py::SuiteB_BVA::test_TC_B_023_can_id_low_boundary PASSED [ 50%]
+tests/test_suite_b_bva.py::SuiteB_BVA::test_TC_B_024_can_id_high_boundary PASSED [ 51%]
+tests/test_suite_c_decision_table.py::SuiteC_DecisionTable::test_TC_C_001_none_satisfied PASSED [ 52%]
+tests/test_suite_c_decision_table.py::SuiteC_DecisionTable::test_TC_C_002_only_h3 PASSED [ 53%]
+tests/test_suite_c_decision_table.py::SuiteC_DecisionTable::test_TC_C_003_only_h2 PASSED [ 54%]
+tests/test_suite_c_decision_table.py::SuiteC_DecisionTable::test_TC_C_004_h2_and_h3_only PASSED [ 55%]
+tests/test_suite_c_decision_table.py::SuiteC_DecisionTable::test_TC_C_005_only_h1 PASSED [ 56%]
+tests/test_suite_c_decision_table.py::SuiteC_DecisionTable::test_TC_C_006_h1_and_h3_only PASSED [ 56%]
+tests/test_suite_c_decision_table.py::SuiteC_DecisionTable::test_TC_C_007_h1_and_h2_only PASSED [ 57%]
+tests/test_suite_c_decision_table.py::SuiteC_DecisionTable::test_TC_C_008_all_three_satisfied PASSED [ 58%]
+tests/test_suite_d_state_transition.py::SuiteD_StateTransition::test_TC_D_001_sleep_to_run_normal_wake PASSED [ 59%]
+tests/test_suite_d_state_transition.py::SuiteD_StateTransition::test_TC_D_002_run_to_sleep_all_conditions PASSED [ 60%]
+tests/test_suite_d_state_transition.py::SuiteD_StateTransition::test_TC_D_003_sleep_to_fault_overvoltage PASSED [ 61%]
+tests/test_suite_d_state_transition.py::SuiteD_StateTransition::test_TC_D_004_fault_to_sleep_via_reset PASSED [ 62%]
+tests/test_suite_d_state_transition.py::SuiteD_StateTransition::test_TC_D_005_sleep_to_undervoltage PASSED [ 62%]
+tests/test_suite_d_state_transition.py::SuiteD_StateTransition::test_TC_D_006_undervoltage_to_sleep_via_reset PASSED [ 63%]
+tests/test_suite_d_state_transition.py::SuiteD_StateTransition::test_TC_D_007_rapid_cycles_trigger_stuck PASSED [ 64%]
+tests/test_suite_d_state_transition.py::SuiteD_StateTransition::test_TC_D_008_run_stays_run_when_sleep_rejected PASSED [ 65%]
+tests/test_suite_d_state_transition.py::SuiteD_StateTransition::test_TC_D_009_wake_blocked_when_in_fault PASSED [ 66%]
+tests/test_suite_d_state_transition.py::SuiteD_StateTransition::test_TC_D_010_sleep_state_output_consistency PASSED [ 67%]
+tests/test_suite_d_state_transition.py::SuiteD_StateTransition::test_TC_D_011_run_state_output_consistency PASSED [ 68%]
+tests/test_suite_d_state_transition.py::SuiteD_StateTransition::test_TC_D_012_reset_clears_rapid_cycle_counter PASSED [ 68%]
+tests/test_suite_d_state_transition.py::SuiteD_StateTransition::test_TC_D_013_dtc_001_on_stuck PASSED [ 69%]
+tests/test_suite_d_state_transition.py::SuiteD_StateTransition::test_TC_D_014_dtc_002_on_overvoltage PASSED [ 70%]
+tests/test_suite_d_state_transition.py::SuiteD_StateTransition::test_TC_D_015_dtc_003_on_undervoltage PASSED [ 71%]
+tests/test_suite_e_stuck.py::SuiteE_StuckScenario::test_TC_E_001_single_cycle_no_stuck PASSED [ 72%]
+tests/test_suite_e_stuck.py::SuiteE_StuckScenario::test_TC_E_002_two_cycles_not_yet_stuck PASSED [ 73%]
+tests/test_suite_e_stuck.py::SuiteE_StuckScenario::test_TC_E_003_three_cycles_stuck_triggered PASSED [ 74%]
+tests/test_suite_e_stuck.py::SuiteE_StuckScenario::test_TC_E_004_dtc_001_written_on_stuck PASSED [ 75%]
+tests/test_suite_e_stuck.py::SuiteE_StuckScenario::test_TC_E_005_actual_duration_exceeds_threshold PASSED [ 75%]
+tests/test_suite_e_stuck.py::SuiteE_StuckScenario::test_TC_E_006_power_alarm_flag_on_stuck PASSED [ 76%]
+tests/test_suite_e_stuck.py::SuiteE_StuckScenario::test_TC_E_007_reset_recovers_from_stuck PASSED [ 77%]
+tests/test_suite_e_stuck.py::SuiteE_StuckScenario::test_TC_E_008_stuck_reproducible_after_reset PASSED [ 78%]
+tests/test_suite_e_stuck.py::SuiteE_StuckScenario::test_TC_E_009_slow_cycles_no_stuck PASSED [ 79%]
+tests/test_suite_e_stuck.py::SuiteE_StuckScenario::test_TC_E_010_dtc_cleared_after_reset PASSED [ 80%]
+tests/test_coverage_gaps.py::CoverageGapTests::test_get_performance_after_simulations PASSED [ 81%]
+tests/test_coverage_gaps.py::CoverageGapTests::test_legacy_can_network_signal_name PASSED [ 81%]
+tests/test_coverage_gaps.py::CoverageGapTests::test_legacy_cc2_signal_name PASSED [ 82%]
+tests/test_coverage_gaps.py::CoverageGapTests::test_legacy_cc_signal_name PASSED [ 83%]
+tests/test_coverage_gaps.py::CoverageGapTests::test_legacy_cp_signal_name PASSED [ 84%]
+tests/test_coverage_gaps.py::CoverageGapTests::test_legacy_door_signal_name PASSED [ 85%]
+tests/test_coverage_gaps.py::CoverageGapTests::test_legacy_hood_signal_name PASSED [ 86%]
+tests/test_coverage_gaps.py::CoverageGapTests::test_legacy_supply_voltage_signal_name PASSED [ 87%]
+tests/test_coverage_gaps.py::CoverageGapTests::test_simulate_batch_basic PASSED [ 87%]
+tests/test_coverage_gaps.py::CoverageGapTests::test_simulate_batch_preserves_signal_name PASSED [ 88%]
+tests/test_coverage_gaps.py::CoverageGapTests::test_simulate_with_no_wake_signal PASSED [ 89%]
+tests/test_coverage_gaps.py::CoverageGapTests::test_stuck_state_default_current PASSED [ 90%]
+tests/test_integration_http.py::IntegrationPath1_ModB_to_ModA::test_INT_001_overvoltage_blocks_state_transition PASSED [ 91%]
+tests/test_integration_http.py::IntegrationPath1_ModB_to_ModA::test_INT_002_undervoltage_blocks_state_transition PASSED [ 92%]
+tests/test_integration_http.py::IntegrationPath1_ModB_to_ModA::test_INT_003_debounce_does_not_change_state PASSED [ 93%]
+tests/test_integration_http.py::IntegrationPath1_ModB_to_ModA::test_INT_004_normal_signal_passes_guard_after_reset PASSED [ 93%]
+tests/test_integration_http.py::IntegrationPath2_ModA_to_ModD::test_INT_005_dtc_001_written_on_stuck PASSED [ 94%]
+tests/test_integration_http.py::IntegrationPath2_ModA_to_ModD::test_INT_006_dtc_001_status_is_active PASSED [ 95%]
+tests/test_integration_http.py::IntegrationPath2_ModA_to_ModD::test_INT_007_reset_clears_dtc_001 PASSED [ 96%]
+tests/test_integration_http.py::IntegrationPath2_ModA_to_ModD::test_INT_008_dtc_002_on_overvoltage PASSED [ 97%]
+tests/test_integration_http.py::IntegrationPath3_ModA_to_ModE::test_INT_009_sleep_power_compliant PASSED [ 98%]
+tests/test_integration_http.py::IntegrationPath3_ModA_to_ModE::test_INT_010_sleep_power_non_compliant_triggers_alarm PASSED [ 99%]
+tests/test_integration_http.py::IntegrationPath3_ModA_to_ModE::test_INT_011_get_state_reflects_live_state PASSED [100%]
+
+================================ tests coverage ================================
+_______________ coverage: platform darwin, python 3.14.3-final-0 _______________
+
+Name                                     Stmts   Miss Branch BrPart  Cover   Missing
+------------------------------------------------------------------------------------
+vcu_simulator/constants.py                  21      0      0      0   100%
+vcu_simulator/main.py                       59     59      8      0     0%   1-196
+vcu_simulator/models.py                     66     66      4      0     0%   1-117
+vcu_simulator/modules/__init__.py            0      0      0      0   100%
+vcu_simulator/modules/can_manager.py        23      0      6      1    97%   24->exit
+vcu_simulator/modules/dtc_manager.py        19      0      4      0   100%
+vcu_simulator/modules/power_monitor.py      28      1      8      2    92%   16, 24->29
+vcu_simulator/modules/signal_guard.py       15      0      6      0   100%
+vcu_simulator/simulator.py                 226      3    108      4    98%   304, 333, 358, 384->exit
+------------------------------------------------------------------------------------
+TOTAL                                      457    129    144      7    75%
+Coverage HTML written to dir htmlcov
+Coverage XML written to file coverage.xml
+==================== 116 passed, 7 subtests passed in 4.87s ====================

@@ -1,0 +1,78 @@
+{
+  "requirement_id": "REQ-011",
+  "title": "三条件同时才休眠",
+  "module": "Module A 电源状态管理",
+  "description": "h1 AND h2 AND h3 三条件同时满足时，VCU 才进入 state09 休眠；任一条件不满足，VCU 维持当前状态。",
+  "input_fields": [
+    {
+      "name": "h1",
+      "data_type": "boolean",
+      "valid_range": {
+        "expression": "0-1"
+      },
+      "unit": "N/A",
+      "has_timing": false
+    },
+    {
+      "name": "h2",
+      "data_type": "boolean",
+      "valid_range": {
+        "expression": "0-1"
+      },
+      "unit": "N/A",
+      "has_timing": false
+    },
+    {
+      "name": "h3",
+      "data_type": "boolean",
+      "valid_range": {
+        "expression": "0-1"
+      },
+      "unit": "N/A",
+      "has_timing": false
+    }
+  ],
+  "conditions": [
+    {
+      "type": "logical",
+      "description": "(h1 AND h2 AND h3) ALL satisfied → enter state09 sleep",
+      "threshold": 1
+    },
+    {
+      "type": "logical",
+      "description": "ANY of (h1,h2,h3) is False → MAINTAIN current state (state10 or state11), do NOT enter state09",
+      "threshold": 0
+    }
+  ],
+  "expected_actions": [
+    {
+      "output_field": "vehicle_state",
+      "expected_value": 9,
+      "operator": "eq"
+    },
+    {
+      "output_field": "vehicle_state",
+      "expected_value": 9,
+      "operator": "gt"
+    }
+  ],
+  "parse_confidence": 0.95,
+  "llm_model": "qwen3.7-max",
+  "elapsed_ms": 80585.29720804654,
+  "updated_at": "2026-05-24T21:31:47.826142",
+  "data_ranges": {
+    "h1": {
+      "expression": "0-1"
+    },
+    "h2": {
+      "expression": "0-1"
+    },
+    "h3": {
+      "expression": "0-1"
+    }
+  },
+  "actions": [
+    "vehicle_state eq 9",
+    "vehicle_state gt 9"
+  ]
+}

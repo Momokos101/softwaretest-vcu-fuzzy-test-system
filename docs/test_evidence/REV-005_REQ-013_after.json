@@ -1,0 +1,54 @@
+{
+  "requirement_id": "REQ-013",
+  "title": "输出字段一致性",
+  "module": "Module A 电源状态管理",
+  "description": "state11（正常运行）时 bus_message_flag = 1；state09（休眠）时 bus_message_flag = 0。",
+  "input_fields": [
+    {
+      "name": "vehicle_state",
+      "data_type": "integer",
+      "valid_range": {
+        "expression": "0-255"
+      },
+      "unit": "N/A",
+      "has_timing": false
+    }
+  ],
+  "conditions": [
+    {
+      "type": "state",
+      "description": "WHEN vehicle_state == 11 (normal running)",
+      "threshold": 11
+    },
+    {
+      "type": "state",
+      "description": "WHEN vehicle_state == 9 (sleeping)",
+      "threshold": 9
+    }
+  ],
+  "expected_actions": [
+    {
+      "output_field": "bus_message_flag",
+      "expected_value": 1,
+      "operator": "eq"
+    },
+    {
+      "output_field": "bus_message_flag",
+      "expected_value": 0,
+      "operator": "eq"
+    }
+  ],
+  "parse_confidence": 0.9,
+  "llm_model": "qwen3.7-max",
+  "elapsed_ms": 80585.29720804654,
+  "updated_at": "2026-05-24T21:30:54.051317",
+  "data_ranges": {
+    "vehicle_state": {
+      "expression": "0-255"
+    }
+  },
+  "actions": [
+    "bus_message_flag eq 1",
+    "bus_message_flag eq 0"
+  ]
+}

@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { AlertTriangle, CheckCircle, Download, FileText, Gauge, Layers3, ListChecks, Play, RefreshCw, Save, Sparkles, Upload } from 'lucide-react';
+import { AlertTriangle, CheckCircle, Download, FileText, Gauge, Layers3, ListChecks, Pencil, Play, Plus, RefreshCw, Save, Sparkles, Trash2, Upload, X } from 'lucide-react';
 import { autoTestAPI } from '../services/api';
 
 const steps = [
@@ -32,6 +32,12 @@ export function AutoTestDesignV2() {
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
   const csvInputRef = useRef<HTMLInputElement>(null);
+
+  // Coverage Items CRUD form state
+  const [showCoverageForm, setShowCoverageForm] = useState(false);
+  const [editingCoverageId, setEditingCoverageId] = useState<string | null>(null);
+  const emptyCoverageForm = { requirement_id: '', title: '', description: '', technique: 'EP', iso9126_characteristic: 'Functionality', priority: 'Medium' };
+  const [coverageForm, setCoverageForm] = useState(emptyCoverageForm);
 
   useEffect(() => {
     void loadAll();
@@ -88,6 +94,48 @@ export function AutoTestDesignV2() {
     } finally {
       setLoading(false);
     }
+  };
+
+  const openAddCoverageForm = () => {
+    setEditingCoverageId(null);
+    setCoverageForm({ ...emptyCoverageForm, requirement_id: selectedReqId || (requirements[0]?.id ?? '') });
+    setShowCoverageForm(true);
+  };
+
+  const openEditCoverageForm = (item: any) => {
+    setEditingCoverageId(item.id);
+    setCoverageForm({
+      requirement_id: item.requirement_id || '',
+      title: item.title || '',
+      description: item.description || '',
+      technique: item.technique || 'EP',
+      iso9126_characteristic: item.iso9126_characteristic || 'Functionality',
+      priority: item.priority || 'Medium',
+    });
+    setShowCoverageForm(true);
+  };
+
+  const closeCoverageForm = () => {
+    setShowCoverageForm(false);
+    setEditingCoverageId(null);
+    setCoverageForm(emptyCoverageForm);
+  };
+
+  const saveCoverageItem = async () => {
+    if (!coverageForm.requirement_id.trim() || !coverageForm.title.trim()) {
+      setMessage('requirement_id 和 title 必填');
+      return;
+    }
+    const action = editingCoverageId
+      ? () => autoTestAPI.updateCoverageItem(editingCoverageId, coverageForm)
+      : () => autoTestAPI.createCoverageItem(coverageForm);
+    await run(action, editingCoverageId ? 'Coverage Item 已更新' : 'Coverage Item 已创建');
+    closeCoverageForm();
+  };
+
+  const deleteCoverageItem = async (item: any) => {
+    if (!window.confirm(`确认删除 Coverage Item？\n\n${item.requirement_id} | ${item.title}\n\n此操作不可撤销。`)) return;
+    await run(() => autoTestAPI.deleteCoverageItem(item.id), 'Coverage Item 已删除');
   };
 
   const addSuggestionToCoverage = async (suggestion: any) => {
@@ -200,10 +248,123 @@ export function AutoTestDesignV2() {
       {activeStep === 'coverage' && (
         <section className="bg-white border rounded-lg p-6">
           <div className="flex justify-between items-center mb-4">
-            <h2 className="text-lg font-semibold">Coverage Items</h2>
-            <button disabled={loading} onClick={() => run(() => autoTestAPI.generateCoverageItems(), '覆盖项已生成')} className="px-3 py-2 bg-blue-600 text-white rounded disabled:bg-slate-400">生成覆盖项</button>
+            <div>
+              <h2 className="text-lg font-semibold">Coverage Items</h2>
+              <div className="text-sm text-slate-500">共 {coverage.length} 条</div>
+            </div>
+            <div className="flex gap-2">
+              <button disabled={loading || showCoverageForm} onClick={openAddCoverageForm} className="px-3 py-2 bg-green-600 text-white rounded inline-flex items-center gap-2 disabled:bg-slate-400">
+                <Plus className="w-4 h-4" />添加
+              </button>
+              <button
+                disabled={loading}
+                onClick={() => {
+                  const existing = coverage.length;
+                  const choice = existing === 0
+                    ? 'dedupe'
+                    : window.prompt(
+                        `当前已有 ${existing} 条 Coverage Items。\n\n请选择生成模式：\n  • dedupe  — 只追加 LLM 新建议中尚未存在的项（推荐，幂等安全）\n  • replace — 删除现有所有 CI 后重新生成（破坏性）\n  • append  — 直接追加 LLM 输出（会产生重复，仅诊断用途）\n\n请输入 dedupe / replace / append：`,
+                        'dedupe',
+                      );
+                  if (!choice) return;
+                  const mode = choice as 'dedupe' | 'replace' | 'append';
+                  if (!['dedupe', 'replace', 'append'].includes(mode)) {
+                    setMessage(`无效模式：${choice}（应为 dedupe / replace / append）`);
+                    return;
+                  }
+                  if (mode === 'replace' && !window.confirm(`确认要删除现有 ${existing} 条 Coverage Items 后重新生成？此操作不可撤销。`)) return;
+                  void run(() => autoTestAPI.generateCoverageItems(undefined, mode), `覆盖项已生成（mode=${mode}）`);
+                }}
+                className="px-3 py-2 bg-blue-600 text-white rounded disabled:bg-slate-400"
+              >生成覆盖项</button>
+            </div>
           </div>
-          <DataTable rows={coverage} columns={['requirement_id', 'title', 'technique', 'priority', 'description']} />
+
+          {showCoverageForm && (
+            <div className="mb-4 border rounded p-4 bg-slate-50">
+              <div className="flex justify-between items-center mb-3">
+                <h3 className="font-semibold">{editingCoverageId ? '编辑 Coverage Item' : '新增 Coverage Item'}</h3>
+                <button onClick={closeCoverageForm} className="p-1 hover:bg-slate-200 rounded"><X className="w-4 h-4" /></button>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <label className="block">
+                  <span className="block text-sm font-medium mb-1">Requirement ID *</span>
+                  <select value={coverageForm.requirement_id} onChange={(e) => setCoverageForm({ ...coverageForm, requirement_id: e.target.value })} className="w-full p-2 border rounded">
+                    {requirements.map((req) => <option key={req.id} value={req.id}>{req.id} {req.title}</option>)}
+                  </select>
+                </label>
+                <label className="block">
+                  <span className="block text-sm font-medium mb-1">Technique</span>
+                  <select value={coverageForm.technique} onChange={(e) => setCoverageForm({ ...coverageForm, technique: e.target.value })} className="w-full p-2 border rounded">
+                    {['EP', 'BVA', 'DT', 'ST', 'SC'].map((t) => <option key={t} value={t}>{t}</option>)}
+                  </select>
+                </label>
+                <label className="block md:col-span-2">
+                  <span className="block text-sm font-medium mb-1">Title *</span>
+                  <input value={coverageForm.title} onChange={(e) => setCoverageForm({ ...coverageForm, title: e.target.value })} className="w-full p-2 border rounded" placeholder="简短描述这个覆盖目标" />
+                </label>
+                <label className="block md:col-span-2">
+                  <span className="block text-sm font-medium mb-1">Description</span>
+                  <textarea value={coverageForm.description} onChange={(e) => setCoverageForm({ ...coverageForm, description: e.target.value })} className="w-full h-20 p-2 border rounded" />
+                </label>
+                <label className="block">
+                  <span className="block text-sm font-medium mb-1">ISO 9126 Characteristic</span>
+                  <select value={coverageForm.iso9126_characteristic} onChange={(e) => setCoverageForm({ ...coverageForm, iso9126_characteristic: e.target.value })} className="w-full p-2 border rounded">
+                    {['Functionality', 'Reliability', 'Efficiency', 'Maintainability', 'Portability', 'Usability'].map((c) => <option key={c} value={c}>{c}</option>)}
+                  </select>
+                </label>
+                <label className="block">
+                  <span className="block text-sm font-medium mb-1">Priority</span>
+                  <select value={coverageForm.priority} onChange={(e) => setCoverageForm({ ...coverageForm, priority: e.target.value })} className="w-full p-2 border rounded">
+                    {['High', 'Medium', 'Low'].map((p) => <option key={p} value={p}>{p}</option>)}
+                  </select>
+                </label>
+              </div>
+              <div className="flex gap-2 mt-3">
+                <button disabled={loading} onClick={saveCoverageItem} className="px-3 py-2 bg-blue-600 text-white rounded disabled:bg-slate-400">{editingCoverageId ? '保存修改' : '创建'}</button>
+                <button disabled={loading} onClick={closeCoverageForm} className="px-3 py-2 border rounded">取消</button>
+              </div>
+            </div>
+          )}
+
+          <div className="overflow-x-auto border rounded">
+            <table className="w-full text-sm">
+              <thead className="bg-slate-50">
+                <tr>
+                  <th className="p-2 text-left font-medium">requirement_id</th>
+                  <th className="p-2 text-left font-medium">title</th>
+                  <th className="p-2 text-left font-medium">technique</th>
+                  <th className="p-2 text-left font-medium">priority</th>
+                  <th className="p-2 text-left font-medium">iso9126</th>
+                  <th className="p-2 text-left font-medium">description</th>
+                  <th className="p-2 text-left font-medium w-32">操作</th>
+                </tr>
+              </thead>
+              <tbody>
+                {coverage.map((item, index) => (
+                  <tr key={item.id || `${item.requirement_id}-${index}`} className="border-t hover:bg-slate-50">
+                    <td className="p-2 align-top font-mono text-xs">{item.requirement_id || '-'}</td>
+                    <td className="p-2 align-top max-w-[260px]">{item.title || '-'}</td>
+                    <td className="p-2 align-top"><span className="px-1.5 py-0.5 text-xs bg-blue-100 text-blue-700 rounded">{item.technique || '-'}</span></td>
+                    <td className="p-2 align-top">{item.priority || '-'}</td>
+                    <td className="p-2 align-top text-xs">{item.iso9126_characteristic || '-'}</td>
+                    <td className="p-2 align-top max-w-[360px] truncate text-xs text-slate-600">{item.description || '-'}</td>
+                    <td className="p-2 align-top whitespace-nowrap">
+                      <button onClick={() => openEditCoverageForm(item)} disabled={loading} className="p-1.5 text-blue-600 hover:bg-blue-50 rounded disabled:opacity-50" title="编辑">
+                        <Pencil className="w-4 h-4" />
+                      </button>
+                      <button onClick={() => deleteCoverageItem(item)} disabled={loading} className="p-1.5 text-red-600 hover:bg-red-50 rounded disabled:opacity-50 ml-1" title="删除">
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+                {coverage.length === 0 && (
+                  <tr><td colSpan={7} className="p-6 text-center text-slate-500">暂无 Coverage Items，点上方"添加"或"生成覆盖项"创建</td></tr>
+                )}
+              </tbody>
+            </table>
+          </div>
         </section>
       )}
 

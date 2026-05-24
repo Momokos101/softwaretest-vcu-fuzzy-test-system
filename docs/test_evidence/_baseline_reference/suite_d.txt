@@ -1,0 +1,27 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.14.3, pytest-9.0.3, pluggy-1.6.0 -- /opt/homebrew/opt/python@3.14/bin/python3.14
+cachedir: .pytest_cache
+metadata: {'Python': '3.14.3', 'Platform': 'macOS-15.6.1-arm64-arm-64bit-Mach-O', 'Packages': {'pytest': '9.0.3', 'pluggy': '1.6.0'}, 'Plugins': {'cov': '7.1.0', 'metadata': '3.1.1', 'html': '4.2.0', 'anyio': '4.13.0'}}
+rootdir: /Users/hby/Documents/GitHub/softwaretest-vcu-fuzzy-test-system
+plugins: cov-7.1.0, metadata-3.1.1, html-4.2.0, anyio-4.13.0
+collecting ... collected 15 items
+
+tests/test_suite_d_state_transition.py::SuiteD_StateTransition::test_TC_D_001_sleep_to_run_normal_wake PASSED [  6%]
+tests/test_suite_d_state_transition.py::SuiteD_StateTransition::test_TC_D_002_run_to_sleep_all_conditions PASSED [ 13%]
+tests/test_suite_d_state_transition.py::SuiteD_StateTransition::test_TC_D_003_sleep_to_fault_overvoltage PASSED [ 20%]
+tests/test_suite_d_state_transition.py::SuiteD_StateTransition::test_TC_D_004_fault_to_sleep_via_reset PASSED [ 26%]
+tests/test_suite_d_state_transition.py::SuiteD_StateTransition::test_TC_D_005_sleep_to_undervoltage PASSED [ 33%]
+tests/test_suite_d_state_transition.py::SuiteD_StateTransition::test_TC_D_006_undervoltage_to_sleep_via_reset PASSED [ 40%]
+tests/test_suite_d_state_transition.py::SuiteD_StateTransition::test_TC_D_007_rapid_cycles_trigger_stuck PASSED [ 46%]
+tests/test_suite_d_state_transition.py::SuiteD_StateTransition::test_TC_D_008_run_stays_run_when_sleep_rejected PASSED [ 53%]
+tests/test_suite_d_state_transition.py::SuiteD_StateTransition::test_TC_D_009_wake_blocked_when_in_fault PASSED [ 60%]
+tests/test_suite_d_state_transition.py::SuiteD_StateTransition::test_TC_D_010_sleep_state_output_consistency PASSED [ 66%]
+tests/test_suite_d_state_transition.py::SuiteD_StateTransition::test_TC_D_011_run_state_output_consistency PASSED [ 73%]
+tests/test_suite_d_state_transition.py::SuiteD_StateTransition::test_TC_D_012_reset_clears_rapid_cycle_counter PASSED [ 80%]
+tests/test_suite_d_state_transition.py::SuiteD_StateTransition::test_TC_D_013_dtc_001_on_stuck PASSED [ 86%]
+tests/test_suite_d_state_transition.py::SuiteD_StateTransition::test_TC_D_014_dtc_002_on_overvoltage PASSED [ 93%]
+tests/test_suite_d_state_transition.py::SuiteD_StateTransition::test_TC_D_015_dtc_003_on_undervoltage PASSED [100%]
+
+- generated xml file: /Users/hby/Documents/GitHub/softwaretest-vcu-fuzzy-test-system/docs/test_evidence/pytest_output/suite_d.xml -
+- Generated html report: file:///Users/hby/Documents/GitHub/softwaretest-vcu-fuzzy-test-system/docs/test_evidence/pytest_output/suite_d_report.html -
+============================== 15 passed in 0.02s ==============================

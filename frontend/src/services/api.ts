@@ -101,7 +101,8 @@ export const autoTestAPI = {
   analyzeAllRisks: () => api.post('/api/risk-analysis/analyze-all'),
 
   // 覆盖项与策略
-  generateCoverageItems: (requirementIds?: string[]) => api.post('/api/coverage-items/generate', requirementIds || null),
+  generateCoverageItems: (requirementIds?: string[], mode: 'dedupe' | 'replace' | 'append' = 'dedupe') =>
+    api.post(`/api/coverage-items/generate?mode=${mode}`, requirementIds || null),
   getCoverageItems: (reqId?: string) => api.get('/api/coverage-items', { params: { requirement_id: reqId } }),
   createCoverageItem: (data: any) => api.post('/api/coverage-items', data),
   updateCoverageItem: (id: string, data: any) => api.put(`/api/coverage-items/${id}`, data),

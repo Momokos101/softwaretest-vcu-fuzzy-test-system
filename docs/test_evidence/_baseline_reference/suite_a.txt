@@ -1,0 +1,33 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.14.3, pytest-9.0.3, pluggy-1.6.0 -- /opt/homebrew/opt/python@3.14/bin/python3.14
+cachedir: .pytest_cache
+metadata: {'Python': '3.14.3', 'Platform': 'macOS-15.6.1-arm64-arm-64bit-Mach-O', 'Packages': {'pytest': '9.0.3', 'pluggy': '1.6.0'}, 'Plugins': {'cov': '7.1.0', 'metadata': '3.1.1', 'html': '4.2.0', 'anyio': '4.13.0'}}
+rootdir: /Users/hby/Documents/GitHub/softwaretest-vcu-fuzzy-test-system
+plugins: cov-7.1.0, metadata-3.1.1, html-4.2.0, anyio-4.13.0
+collecting ... collected 21 items
+
+tests/test_suite_a_ep.py::SuiteA_EP::test_TC_A_001_w1_valid_class PASSED [  4%]
+tests/test_suite_a_ep.py::SuiteA_EP::test_TC_A_002_w1_invalid_value_class PASSED [  9%]
+tests/test_suite_a_ep.py::SuiteA_EP::test_TC_A_003_w1_invalid_timing_class PASSED [ 14%]
+tests/test_suite_a_ep.py::SuiteA_EP::test_TC_A_004_w2_valid_class PASSED [ 19%]
+tests/test_suite_a_ep.py::SuiteA_EP::test_TC_A_005_w2_invalid_low_class PASSED [ 23%]
+tests/test_suite_a_ep.py::SuiteA_EP::test_TC_A_006_w2_invalid_high_class PASSED [ 28%]
+tests/test_suite_a_ep.py::SuiteA_EP::test_TC_A_007_w3_valid_class PASSED [ 33%]
+tests/test_suite_a_ep.py::SuiteA_EP::test_TC_A_008_w3_invalid_low_class PASSED [ 38%]
+tests/test_suite_a_ep.py::SuiteA_EP::test_TC_A_009_w3_on_boundary_class PASSED [ 42%]
+tests/test_suite_a_ep.py::SuiteA_EP::test_TC_A_010_w4_valid_class PASSED [ 47%]
+tests/test_suite_a_ep.py::SuiteA_EP::test_TC_A_011_w4_invalid_high_class PASSED [ 52%]
+tests/test_suite_a_ep.py::SuiteA_EP::test_TC_A_012_w4_on_boundary_class PASSED [ 57%]
+tests/test_suite_a_ep.py::SuiteA_EP::test_TC_A_013_w5_valid_class PASSED [ 61%]
+tests/test_suite_a_ep.py::SuiteA_EP::test_TC_A_014_w5_invalid_high_class PASSED [ 66%]
+tests/test_suite_a_ep.py::SuiteA_EP::test_TC_A_015_w5_on_boundary_class PASSED [ 71%]
+tests/test_suite_a_ep.py::SuiteA_EP::test_TC_A_016_w6_valid_class PASSED [ 76%]
+tests/test_suite_a_ep.py::SuiteA_EP::test_TC_A_017_w6_invalid_value_class PASSED [ 80%]
+tests/test_suite_a_ep.py::SuiteA_EP::test_TC_A_018_w6_invalid_timing_class PASSED [ 85%]
+tests/test_suite_a_ep.py::SuiteA_EP::test_TC_A_019_w7_valid_class PASSED [ 90%]
+tests/test_suite_a_ep.py::SuiteA_EP::test_TC_A_020_w7_invalid_value_class PASSED [ 95%]
+tests/test_suite_a_ep.py::SuiteA_EP::test_TC_A_021_w7_invalid_timing_class PASSED [100%]
+
+- generated xml file: /Users/hby/Documents/GitHub/softwaretest-vcu-fuzzy-test-system/docs/test_evidence/pytest_output/suite_a.xml -
+- Generated html report: file:///Users/hby/Documents/GitHub/softwaretest-vcu-fuzzy-test-system/docs/test_evidence/pytest_output/suite_a_report.html -
+============================== 21 passed in 0.02s ==============================

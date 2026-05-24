@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from typing import List, Optional
 
-from fastapi import APIRouter, Body, HTTPException
+from fastapi import APIRouter, Body, HTTPException, Query
 
 from api.models.schemas import (
     BatchExecutionRequest,
@@ -33,7 +33,17 @@ router = APIRouter()
 
 
 @router.post("/coverage-items/generate", response_model=List[CoverageItem])
-async def generate_coverage_items(requirement_ids: Optional[List[str]] = Body(default=None)):
+async def generate_coverage_items(
+    requirement_ids: Optional[List[str]] = Body(default=None),
+    mode: str = Query(default="dedupe", pattern="^(dedupe|replace|append)$"),
+):
+    """Generate coverage items via LLM.
+
+    Query param `mode` (default `dedupe`):
+      - dedupe : skip LLM items whose (requirement_id, title) already exist (idempotent)
+      - replace: delete existing items for affected REQs first, then generate fresh
+      - append : legacy append-only behavior (allows duplicates)
+    """
     from api.services import requirement_service
 
     parsed = requirement_service.get_all_parsed_requirements()
@@ -42,7 +52,7 @@ async def generate_coverage_items(requirement_ids: Optional[List[str]] = Body(de
     if not parsed:
         raise HTTPException(status_code=404, detail="No parsed requirements found")
     try:
-        return await coverage_service.generate_coverage_items(parsed)
+        return await coverage_service.generate_coverage_items(parsed, mode=mode)
     except ValueError as exc:
         raise HTTPException(status_code=502, detail=str(exc)) from exc
 

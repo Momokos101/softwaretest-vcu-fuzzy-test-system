@@ -1,0 +1,44 @@
+=== Date ===
+2026年 5月24日 星期日 20时04分22秒 CST
+
+=== OS ===
+Darwin youzhabingqilindeMacBook-Air.local 24.6.0 Darwin Kernel Version 24.6.0: Mon Jul 14 11:30:40 PDT 2025; root:xnu-11417.140.69~1/RELEASE_ARM64_T8132 arm64
+
+=== Python ===
+Python 3.14.3
+
+=== pytest ===
+pytest 9.0.3
+
+=== Git branch ===
+main
+=== Git commit ===
+a8564d14784fc89f6aa18c84e5c42bd4d522dbc8
+=== Git status (short) ===
+ D docs/demo_vcu_requirements.csv
+ D tests/test_api_routes.py
+ D tests/test_autotest_v2_services.py
+ D tests/test_baic_integration.py
+ D tests/test_e2e.py
+?? ".~oject Requirement Specification.docx"
+?? docs/Artifact4_Step_By_Step_Test_Plan.md
+?? docs/bq_new/
+?? docs/test_evidence/
+?? tests/pytest_full_output.txt
+?? tests/test_coverage_gaps.py
+?? tests/test_integration_http.py
+?? tests/test_suite_a_ep.py
+?? tests/test_suite_b_bva.py
+?? tests/test_suite_c_decision_table.py
+?? tests/test_suite_d_state_transition.py
+?? tests/test_suite_e_stuck.py
+
+=== Key deps ===
+coverage==7.14.0
+fastapi==0.136.3
+httpx==0.28.1
+pydantic_core==2.46.4
+pydantic==2.13.4
+pytest-cov==7.1.0
+pytest==9.0.3
+uvicorn==0.47.0

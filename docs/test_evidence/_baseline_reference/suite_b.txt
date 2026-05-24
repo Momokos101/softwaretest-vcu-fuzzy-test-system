@@ -1,0 +1,36 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.14.3, pytest-9.0.3, pluggy-1.6.0 -- /opt/homebrew/opt/python@3.14/bin/python3.14
+cachedir: .pytest_cache
+metadata: {'Python': '3.14.3', 'Platform': 'macOS-15.6.1-arm64-arm-64bit-Mach-O', 'Packages': {'pytest': '9.0.3', 'pluggy': '1.6.0'}, 'Plugins': {'cov': '7.1.0', 'metadata': '3.1.1', 'html': '4.2.0', 'anyio': '4.13.0'}}
+rootdir: /Users/hby/Documents/GitHub/softwaretest-vcu-fuzzy-test-system
+plugins: cov-7.1.0, metadata-3.1.1, html-4.2.0, anyio-4.13.0
+collecting ... collected 24 items
+
+tests/test_suite_b_bva.py::SuiteB_BVA::test_TC_B_001_supply_below_9v PASSED [  4%]
+tests/test_suite_b_bva.py::SuiteB_BVA::test_TC_B_002_supply_on_9v PASSED [  8%]
+tests/test_suite_b_bva.py::SuiteB_BVA::test_TC_B_003_supply_above_9v PASSED [ 12%]
+tests/test_suite_b_bva.py::SuiteB_BVA::test_TC_B_004_timing_below_10ms PASSED [ 16%]
+tests/test_suite_b_bva.py::SuiteB_BVA::test_TC_B_005_timing_on_10ms PASSED [ 20%]
+tests/test_suite_b_bva.py::SuiteB_BVA::test_TC_B_006_timing_above_10ms PASSED [ 25%]
+tests/test_suite_b_bva.py::SuiteB_BVA::test_TC_B_007_hood_below_4v PASSED [ 29%]
+tests/test_suite_b_bva.py::SuiteB_BVA::test_TC_B_008_hood_on_4v PASSED   [ 33%]
+tests/test_suite_b_bva.py::SuiteB_BVA::test_TC_B_009_hood_above_4v PASSED [ 37%]
+tests/test_suite_b_bva.py::SuiteB_BVA::test_TC_B_010_door_above_1v PASSED [ 41%]
+tests/test_suite_b_bva.py::SuiteB_BVA::test_TC_B_011_door_on_1v PASSED   [ 45%]
+tests/test_suite_b_bva.py::SuiteB_BVA::test_TC_B_012_door_below_1v PASSED [ 50%]
+tests/test_suite_b_bva.py::SuiteB_BVA::test_TC_B_013_overvoltage_below_16v PASSED [ 54%]
+tests/test_suite_b_bva.py::SuiteB_BVA::test_TC_B_014_overvoltage_on_16v PASSED [ 58%]
+tests/test_suite_b_bva.py::SuiteB_BVA::test_TC_B_015_overvoltage_above_16v PASSED [ 62%]
+tests/test_suite_b_bva.py::SuiteB_BVA::test_TC_B_016_undervoltage_above_6v PASSED [ 66%]
+tests/test_suite_b_bva.py::SuiteB_BVA::test_TC_B_017_undervoltage_on_6v PASSED [ 70%]
+tests/test_suite_b_bva.py::SuiteB_BVA::test_TC_B_018_undervoltage_below_6v PASSED [ 75%]
+tests/test_suite_b_bva.py::SuiteB_BVA::test_TC_B_019_debounce_below_5ms PASSED [ 79%]
+tests/test_suite_b_bva.py::SuiteB_BVA::test_TC_B_020_debounce_on_5ms PASSED [ 83%]
+tests/test_suite_b_bva.py::SuiteB_BVA::test_TC_B_021_debounce_above_5ms PASSED [ 87%]
+tests/test_suite_b_bva.py::SuiteB_BVA::test_TC_B_022_can_id_below_range PASSED [ 91%]
+tests/test_suite_b_bva.py::SuiteB_BVA::test_TC_B_023_can_id_low_boundary PASSED [ 95%]
+tests/test_suite_b_bva.py::SuiteB_BVA::test_TC_B_024_can_id_high_boundary PASSED [100%]
+
+- generated xml file: /Users/hby/Documents/GitHub/softwaretest-vcu-fuzzy-test-system/docs/test_evidence/pytest_output/suite_b.xml -
+- Generated html report: file:///Users/hby/Documents/GitHub/softwaretest-vcu-fuzzy-test-system/docs/test_evidence/pytest_output/suite_b_report.html -
+============================== 24 passed in 0.02s ==============================
