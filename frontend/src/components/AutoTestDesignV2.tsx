@@ -1,5 +1,5 @@
-import { useEffect, useMemo, useState } from 'react';
-import { AlertTriangle, Download, FileText, Gauge, Layers3, ListChecks, Play, RefreshCw, Save, Sparkles } from 'lucide-react';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { AlertTriangle, CheckCircle, Download, FileText, Gauge, Layers3, ListChecks, Play, RefreshCw, Save, Sparkles, Upload } from 'lucide-react';
 import { autoTestAPI } from '../services/api';
 
 const steps = [
@@ -27,8 +27,11 @@ export function AutoTestDesignV2() {
   const [selectedReqId, setSelectedReqId] = useState('');
   const [strategy, setStrategy] = useState<any>({ techniques: ['EP', 'BVA'], rationale: '' });
   const [selectedPrompt, setSelectedPrompt] = useState<any>(null);
+  const [suggestions, setSuggestions] = useState<any[]>([]);
+  const [addedIds, setAddedIds] = useState<Set<string>>(new Set());
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
+  const csvInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     void loadAll();
@@ -49,6 +52,13 @@ export function AutoTestDesignV2() {
     [requirements, selectedReqId],
   );
 
+  const handleCSVUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+    await run(() => autoTestAPI.uploadCSV(file), `CSV 已导入：${file.name}`);
+    if (csvInputRef.current) csvInputRef.current.value = '';
+  };
+
   const run = async (action: () => Promise<any>, done: string) => {
     setLoading(true);
     setMessage('');
@@ -63,6 +73,37 @@ export function AutoTestDesignV2() {
     }
   };
 
+  const runImprove = async () => {
+    setLoading(true);
+    setMessage('');
+    setSuggestions([]);
+    setAddedIds(new Set());
+    try {
+      const result = await autoTestAPI.improve({ failed_only: true, max_suggestions: 10 }) as unknown as any[];
+      setSuggestions(result);
+      setMessage(`已生成 ${result.length} 条改进建议`);
+      await loadAll();
+    } catch (error: any) {
+      setMessage(error?.message || '操作失败');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const addSuggestionToCoverage = async (suggestion: any) => {
+    const ci = suggestion.coverage_item;
+    await autoTestAPI.createCoverageItem({
+      requirement_id: ci.requirement_id,
+      title: ci.title,
+      description: ci.description,
+      technique: ci.technique,
+      iso9126_characteristic: ci.iso9126_characteristic,
+      priority: ci.priority ?? 'Medium',
+    });
+    setAddedIds((prev) => new Set(prev).add(suggestion.id));
+    await loadAll();
+  };
+
   const loadAll = async () => {
     const [reqs, riskRows, coverageRows, testRows, promptRows] = await Promise.all([
       autoTestAPI.getRequirements().catch(() => []),
@@ -71,12 +112,13 @@ export function AutoTestDesignV2() {
       autoTestAPI.getTestCases().catch(() => []),
       autoTestAPI.getPrompts().catch(() => []),
     ]);
-    setRequirements(reqs as any[]);
-    setRisks(riskRows as any[]);
-    setCoverage(coverageRows as any[]);
-    setCases(testRows as any[]);
-    setPrompts(promptRows as any[]);
-    if (!selectedPrompt && (promptRows as any[])[0]) setSelectedPrompt((promptRows as any[])[0]);
+    setRequirements(reqs as unknown as any[]);
+    setRisks(riskRows as unknown as any[]);
+    setCoverage(coverageRows as unknown as any[]);
+    setCases(testRows as unknown as any[]);
+    setPrompts(promptRows as unknown as any[]);
+    const rows = promptRows as unknown as any[];
+    if (!selectedPrompt && rows[0]) setSelectedPrompt(rows[0]);
   };
 
   const loadResults = async () => {
@@ -85,11 +127,11 @@ export function AutoTestDesignV2() {
       autoTestAPI.getPerformance(),
     ]);
     setSummary(resultSummary);
-    setPerformance(perf as any[]);
+    setPerformance(perf as unknown as any[]);
   };
 
   const exportFile = async (format: string) => {
-    const blob = await autoTestAPI.exportByFormat(format) as Blob;
+    const blob = await autoTestAPI.exportByFormat(format) as unknown as Blob;
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
@@ -144,9 +186,13 @@ export function AutoTestDesignV2() {
           <div className="flex flex-wrap gap-2 mb-4">
             <button disabled={loading} onClick={() => run(() => autoTestAPI.loadDemo(true), '已加载 V2 24 条 Demo 需求')} className="px-3 py-2 bg-blue-600 text-white rounded disabled:bg-slate-400">加载 V2 Demo</button>
             <button disabled={loading || !rawText.trim()} onClick={() => run(() => autoTestAPI.parseRawRequirements(rawText), 'LLM 解析完成')} className="px-3 py-2 bg-green-600 text-white rounded disabled:bg-slate-400">解析文本</button>
+            <label className={`px-3 py-2 border rounded inline-flex items-center gap-2 cursor-pointer ${loading ? 'opacity-50 pointer-events-none' : 'hover:bg-slate-50'}`}>
+              <Upload className="w-4 h-4" />上传 CSV
+              <input ref={csvInputRef} type="file" accept=".csv" className="hidden" onChange={handleCSVUpload} disabled={loading} />
+            </label>
             <button disabled={loading || requirements.length === 0} onClick={() => run(() => autoTestAPI.parseAllRequirements(false), '全部需求已重新解析')} className="px-3 py-2 border rounded disabled:bg-slate-100">重新解析全部</button>
           </div>
-          <textarea value={rawText} onChange={(event) => setRawText(event.target.value)} className="w-full h-36 p-3 border rounded mb-4" placeholder="粘贴 VCU 需求文本" />
+          <textarea value={rawText} onChange={(event) => setRawText(event.target.value)} className="w-full h-36 p-3 border rounded mb-4" placeholder={"粘贴 VCU 需求文本（方式一）\n或点击「上传 CSV」导入（方式二）\n或点击「加载 V2 Demo」使用演示数据（方式三）"} />
           <RequirementTable requirements={requirements} risks={risks} />
         </section>
       )}
@@ -220,8 +266,51 @@ export function AutoTestDesignV2() {
 
       {activeStep === 'improve' && (
         <section className="bg-white border rounded-lg p-6">
-          <button disabled={loading} onClick={() => run(() => autoTestAPI.improve({ failed_only: true, max_suggestions: 10 }), '第二轮改进建议已生成')} className="px-3 py-2 bg-blue-600 text-white rounded disabled:bg-slate-400 mb-4">生成改进建议</button>
-          <DataTable rows={coverage.filter((item) => item.priority === 'High')} columns={['requirement_id', 'title', 'technique', 'priority', 'description']} />
+          <div className="flex items-center gap-3 mb-4">
+            <button disabled={loading} onClick={runImprove} className="px-3 py-2 bg-blue-600 text-white rounded disabled:bg-slate-400">生成改进建议</button>
+            <span className="text-sm text-slate-500">基于失败用例触发第二轮变异，发现新边界和卡死场景</span>
+          </div>
+
+          {suggestions.length > 0 && (
+            <div className="mb-6">
+              <h3 className="text-base font-semibold mb-3">改进建议（点击"添加"将其加入 Coverage Items）</h3>
+              <div className="space-y-3">
+                {suggestions.map((s) => {
+                  const added = addedIds.has(s.id);
+                  return (
+                    <div key={s.id} className={`border rounded p-4 ${added ? 'border-green-300 bg-green-50' : ''}`}>
+                      <div className="flex justify-between items-start gap-4">
+                        <div className="flex-1">
+                          <div className="flex items-center gap-2 mb-1">
+                            <span className="text-xs font-mono text-slate-500">{s.requirement_id}</span>
+                            <span className="text-xs bg-slate-100 px-1.5 py-0.5 rounded">{s.coverage_item?.technique}</span>
+                            <span className="text-xs bg-yellow-100 text-yellow-800 px-1.5 py-0.5 rounded">{s.coverage_item?.priority}</span>
+                          </div>
+                          <div className="font-medium text-sm">{s.title}</div>
+                          <div className="text-xs text-slate-600 mt-1">{s.reason}</div>
+                          {s.coverage_item?.description && (
+                            <div className="text-xs text-slate-500 mt-1">{s.coverage_item.description}</div>
+                          )}
+                        </div>
+                        <button
+                          disabled={added || loading}
+                          onClick={() => addSuggestionToCoverage(s)}
+                          className={`shrink-0 px-3 py-1.5 rounded text-sm inline-flex items-center gap-1.5 ${added ? 'bg-green-600 text-white' : 'bg-blue-600 text-white hover:bg-blue-700 disabled:bg-slate-400'}`}
+                        >
+                          {added ? <><CheckCircle className="w-4 h-4" />已添加</> : '添加到 Coverage'}
+                        </button>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+
+          <div>
+            <h3 className="text-base font-semibold mb-3">当前高优先级 Coverage Items</h3>
+            <DataTable rows={coverage.filter((item) => item.priority === 'High')} columns={['requirement_id', 'title', 'technique', 'priority', 'description']} />
+          </div>
         </section>
       )}
     </div>

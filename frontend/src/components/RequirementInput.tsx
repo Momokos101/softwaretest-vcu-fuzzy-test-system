@@ -21,9 +21,14 @@ export function RequirementInput() {
   }, []);
 
   const loadRequirements = async () => {
-    const reqs = (await autoTestAPI.getRequirements()) as any[];
-    setRequirements(reqs);
-    setEditingRaw(Object.fromEntries(reqs.map((req) => [req.id, req.raw_text])));
+    try {
+      const raw = await autoTestAPI.getRequirements();
+      const reqs = Array.isArray(raw) ? raw : [];
+      setRequirements(reqs);
+      setEditingRaw(Object.fromEntries(reqs.map((req) => [req.id, req.raw_text])));
+    } catch {
+      // backend unreachable — keep empty state
+    }
   };
 
   const importCSV = async (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -95,7 +100,7 @@ export function RequirementInput() {
   };
 
   const parseAll = async (onlyUnparsed = true) => {
-    const parsedList = (await autoTestAPI.parseAllRequirements(onlyUnparsed)) as any[];
+    const parsedList = await autoTestAPI.parseAllRequirements(onlyUnparsed) as unknown as any[];
     setParsedById(Object.fromEntries(parsedList.map((parsed) => [parsed.requirement_id, parsed])));
     setEditingParsed(Object.fromEntries(parsedList.map((parsed) => [parsed.requirement_id, toEditableParsed(parsed)])));
     setExpanded((current) => ({

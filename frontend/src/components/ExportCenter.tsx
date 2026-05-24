@@ -19,7 +19,7 @@ export function ExportCenter() {
   const handleExport = async () => {
     setLoading(true);
     try {
-      const blob = await autoTestAPI.export({ format, scope }) as Blob;
+      const blob = await autoTestAPI.export({ format, scope }) as unknown as Blob;
 
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');

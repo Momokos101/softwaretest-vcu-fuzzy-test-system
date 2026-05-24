@@ -63,67 +63,6 @@ api.interceptors.response.use(
 
 export default api
 
-// API方法
-export const testPlanAPI = {
-  // 获取所有测试计划
-  getAll: () => api.get('/api/test-plans'),
-  // 获取单个测试计划
-  getById: (id: string) => api.get(`/api/test-plans/${id}`),
-  // 创建测试计划
-  create: (data: any) => api.post('/api/test-plans', data),
-  // 更新测试计划
-  update: (id: string, data: any) => api.put(`/api/test-plans/${id}`, data),
-  // 删除测试计划
-  delete: (id: string) => api.delete(`/api/test-plans/${id}`),
-}
-
-export const testTaskAPI = {
-  // 获取所有测试任务
-  getAll: () => api.get('/api/test-tasks'),
-  // 获取单个测试任务
-  getById: (id: string) => api.get(`/api/test-tasks/${id}`),
-  // 创建测试任务
-  create: (data: any) => api.post('/api/test-tasks', data),
-  // 启动任务
-  start: (id: string) => api.post(`/api/test-tasks/${id}/start`),
-  // 暂停任务
-  pause: (id: string) => api.post(`/api/test-tasks/${id}/pause`),
-  // 停止任务
-  stop: (id: string) => api.post(`/api/test-tasks/${id}/stop`),
-  // 获取异常列表
-  getAnomalies: (id: string, options?: any) => api.get(`/api/test-tasks/${id}/anomalies`, { params: options }),
-  // 获取监控指标
-  getMetrics: (id: string, limit?: number) => api.get(`/api/test-tasks/${id}/metrics`, { params: { limit } }),
-}
-
-export const ganAPI = {
-  // 生成单个测试用例
-  generate: (data: any) => api.post('/api/gan/generate', data),
-  // 批量生成
-  generateBatch: (data: any) => api.post('/api/gan/generate/batch', data),
-  // 格式转换
-  convert: (data: any) => api.post('/api/gan/convert', data),
-}
-
-export const reportAPI = {
-  // 生成报告
-  generate: (taskId: string) => api.post(`/api/test-tasks/${taskId}/report`),
-  // 下载报告（返回blob）
-  download: (taskId: string, format: string = 'pdf') => {
-    return api.get(`/api/test-tasks/${taskId}/report/download`, {
-      params: { format },
-      responseType: 'blob', // 指定响应类型为blob
-    });
-  },
-  // 获取方法对比
-  getComparison: (taskId: string) => api.get(`/api/test-tasks/${taskId}/report/comparison`),
-}
-
-export const constraintAPI = {
-  // 获取约束统计
-  getStats: (taskId: string) => api.get(`/api/test-tasks/${taskId}/constraints`),
-}
-
 // AutoTestDesign API
 export const autoTestAPI = {
   // 需求管理
@@ -157,7 +96,7 @@ export const autoTestAPI = {
   // 风险分析
   analyzeRisk: (id: string) => api.post(`/api/risk-analysis/${id}`),
   getRiskAnalysis: (id: string) => api.get(`/api/risk-analysis/${id}`),
-  adjustRisk: (id: string, dimensions: any) => api.put(`/api/risk-analysis/${id}`, { requirement_id: id, dimensions }),
+  adjustRisk: (id: string, data: { tech_risk: number; business_risk: number; iso9126_characteristic?: string; reasoning?: string }) => api.put(`/api/risk-analysis/${id}`, data),
   getRiskMatrix: () => api.get('/api/risk-analysis/matrix/data'),
   analyzeAllRisks: () => api.post('/api/risk-analysis/analyze-all'),
 
