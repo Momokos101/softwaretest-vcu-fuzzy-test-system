@@ -3,9 +3,14 @@ from datetime import datetime
 from typing import Any, List
 
 from api.models.schemas import PerformanceMetric
+from api.services import _persist
 
 
-_metrics: List[PerformanceMetric] = []
+_metrics: List[PerformanceMetric] = _persist.load_list("performance", PerformanceMetric)
+
+
+def _save() -> None:
+    _persist.save_list("performance", _metrics)
 
 
 def record(operation: str, elapsed_ms: float, model: str | None = None, detail: dict[str, Any] | None = None) -> PerformanceMetric:
@@ -17,6 +22,7 @@ def record(operation: str, elapsed_ms: float, model: str | None = None, detail: 
         created_at=datetime.now(),
     )
     _metrics.append(metric)
+    _save()
     return metric
 
 

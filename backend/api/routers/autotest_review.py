@@ -130,16 +130,26 @@ async def update_prompt(prompt_type: str, request: PromptUpdate):
 
 @router.post("/execute", response_model=List[TestCase])
 async def execute(request: BatchExecutionRequest):
-    cases = test_design_service.get_all_test_cases()
-    if request.test_case_ids:
-        selected = set(request.test_case_ids)
-        cases = [case for case in cases if case.id in selected]
-    if not cases:
+    """Execute the design test cases by running the real pytest suite
+    (tests/test_suite_from_design.py) and feeding results back per case.
+
+    The frontend "执行全部" calls this. We run pytest (which executes the 96
+    reviewed design cases against the VCU via the input adapter), parse the
+    JUnit XML, and mark each tool test case pass/fail by its uuid. This makes
+    the Results tab reflect the genuine pytest execution.
+    """
+    import asyncio
+
+    from api.services import pytest_runner
+
+    if not test_design_service.get_all_test_cases():
         raise HTTPException(status_code=404, detail="No test cases found")
     try:
-        return await simulator_client.execute_batch(cases, reset_before_run=request.reset_before_run)
+        loop = asyncio.get_event_loop()
+        await loop.run_in_executor(None, pytest_runner.run_and_mark)
     except Exception as exc:
-        raise HTTPException(status_code=503, detail=str(exc)) from exc
+        raise HTTPException(status_code=503, detail=f"pytest execution failed: {exc}") from exc
+    return test_design_service.get_all_test_cases()
 
 
 @router.get("/results/summary", response_model=ResultsSummary)

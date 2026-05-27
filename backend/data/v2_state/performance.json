@@ -1,0 +1,530 @@
+[
+  {
+    "operation": "llm.reasoning_stream",
+    "elapsed_ms": 0.0,
+    "model": "qwen3.7-max",
+    "created_at": "2026-05-25T13:43:08.417129",
+    "detail": {
+      "enabled": true
+    }
+  },
+  {
+    "operation": "risk.analyze",
+    "elapsed_ms": 75444.35,
+    "model": "qwen3.7-max",
+    "created_at": "2026-05-25T13:43:08.418268",
+    "detail": {}
+  },
+  {
+    "operation": "llm.reasoning_stream",
+    "elapsed_ms": 0.0,
+    "model": "qwen3.7-max",
+    "created_at": "2026-05-25T18:37:19.676899",
+    "detail": {
+      "enabled": true
+    }
+  },
+  {
+    "operation": "testcase.generate",
+    "elapsed_ms": 113401.27,
+    "model": "qwen3.7-max",
+    "created_at": "2026-05-25T18:37:19.678270",
+    "detail": {}
+  },
+  {
+    "operation": "llm.reasoning_stream",
+    "elapsed_ms": 0.0,
+    "model": "qwen3.7-max",
+    "created_at": "2026-05-25T18:38:39.810280",
+    "detail": {
+      "enabled": true
+    }
+  },
+  {
+    "operation": "testcase.generate",
+    "elapsed_ms": 80131.45,
+    "model": "qwen3.7-max",
+    "created_at": "2026-05-25T18:38:39.810877",
+    "detail": {}
+  },
+  {
+    "operation": "llm.reasoning_stream",
+    "elapsed_ms": 0.0,
+    "model": "qwen3.7-max",
+    "created_at": "2026-05-25T18:39:45.269075",
+    "detail": {
+      "enabled": true
+    }
+  },
+  {
+    "operation": "testcase.generate",
+    "elapsed_ms": 65457.86,
+    "model": "qwen3.7-max",
+    "created_at": "2026-05-25T18:39:45.269613",
+    "detail": {}
+  },
+  {
+    "operation": "llm.reasoning_stream",
+    "elapsed_ms": 0.0,
+    "model": "qwen3.7-max",
+    "created_at": "2026-05-25T18:40:48.186582",
+    "detail": {
+      "enabled": true
+    }
+  },
+  {
+    "operation": "testcase.generate",
+    "elapsed_ms": 62917.2,
+    "model": "qwen3.7-max",
+    "created_at": "2026-05-25T18:40:48.187578",
+    "detail": {}
+  },
+  {
+    "operation": "llm.reasoning_stream",
+    "elapsed_ms": 0.0,
+    "model": "qwen3.7-max",
+    "created_at": "2026-05-25T18:41:51.274488",
+    "detail": {
+      "enabled": true
+    }
+  },
+  {
+    "operation": "testcase.generate",
+    "elapsed_ms": 63086.83,
+    "model": "qwen3.7-max",
+    "created_at": "2026-05-25T18:41:51.275319",
+    "detail": {}
+  },
+  {
+    "operation": "llm.reasoning_stream",
+    "elapsed_ms": 0.0,
+    "model": "qwen3.7-max",
+    "created_at": "2026-05-25T18:42:57.041338",
+    "detail": {
+      "enabled": true
+    }
+  },
+  {
+    "operation": "testcase.generate",
+    "elapsed_ms": 65765.5,
+    "model": "qwen3.7-max",
+    "created_at": "2026-05-25T18:42:57.041573",
+    "detail": {}
+  },
+  {
+    "operation": "llm.reasoning_stream",
+    "elapsed_ms": 0.0,
+    "model": "qwen3.7-max",
+    "created_at": "2026-05-25T18:44:18.948492",
+    "detail": {
+      "enabled": true
+    }
+  },
+  {
+    "operation": "testcase.generate",
+    "elapsed_ms": 81908.08,
+    "model": "qwen3.7-max",
+    "created_at": "2026-05-25T18:44:18.949553",
+    "detail": {}
+  },
+  {
+    "operation": "llm.reasoning_stream",
+    "elapsed_ms": 0.0,
+    "model": "qwen3.7-max",
+    "created_at": "2026-05-25T18:45:06.214221",
+    "detail": {
+      "enabled": true
+    }
+  },
+  {
+    "operation": "testcase.generate",
+    "elapsed_ms": 47263.93,
+    "model": "qwen3.7-max",
+    "created_at": "2026-05-25T18:45:06.214692",
+    "detail": {}
+  },
+  {
+    "operation": "llm.reasoning_stream",
+    "elapsed_ms": 0.0,
+    "model": "qwen3.7-max",
+    "created_at": "2026-05-25T18:45:54.062988",
+    "detail": {
+      "enabled": true
+    }
+  },
+  {
+    "operation": "testcase.generate",
+    "elapsed_ms": 47849.45,
+    "model": "qwen3.7-max",
+    "created_at": "2026-05-25T18:45:54.064485",
+    "detail": {}
+  },
+  {
+    "operation": "llm.reasoning_stream",
+    "elapsed_ms": 0.0,
+    "model": "qwen3.7-max",
+    "created_at": "2026-05-25T18:46:49.315098",
+    "detail": {
+      "enabled": true
+    }
+  },
+  {
+    "operation": "testcase.generate",
+    "elapsed_ms": 55249.4,
+    "model": "qwen3.7-max",
+    "created_at": "2026-05-25T18:46:49.315519",
+    "detail": {}
+  },
+  {
+    "operation": "llm.reasoning_stream",
+    "elapsed_ms": 0.0,
+    "model": "qwen3.7-max",
+    "created_at": "2026-05-25T18:48:01.827727",
+    "detail": {
+      "enabled": true
+    }
+  },
+  {
+    "operation": "testcase.generate",
+    "elapsed_ms": 72512.26,
+    "model": "qwen3.7-max",
+    "created_at": "2026-05-25T18:48:01.828295",
+    "detail": {}
+  },
+  {
+    "operation": "llm.reasoning_stream",
+    "elapsed_ms": 0.0,
+    "model": "qwen3.7-max",
+    "created_at": "2026-05-25T18:49:36.320619",
+    "detail": {
+      "enabled": true
+    }
+  },
+  {
+    "operation": "testcase.generate",
+    "elapsed_ms": 94492.31,
+    "model": "qwen3.7-max",
+    "created_at": "2026-05-25T18:49:36.321462",
+    "detail": {}
+  },
+  {
+    "operation": "llm.reasoning_stream",
+    "elapsed_ms": 0.0,
+    "model": "qwen3.7-max",
+    "created_at": "2026-05-25T18:50:48.159056",
+    "detail": {
+      "enabled": true
+    }
+  },
+  {
+    "operation": "testcase.generate",
+    "elapsed_ms": 71836.78,
+    "model": "qwen3.7-max",
+    "created_at": "2026-05-25T18:50:48.159403",
+    "detail": {}
+  },
+  {
+    "operation": "llm.reasoning_stream",
+    "elapsed_ms": 0.0,
+    "model": "qwen3.7-max",
+    "created_at": "2026-05-25T18:52:18.418253",
+    "detail": {
+      "enabled": true
+    }
+  },
+  {
+    "operation": "testcase.generate",
+    "elapsed_ms": 90258.92,
+    "model": "qwen3.7-max",
+    "created_at": "2026-05-25T18:52:18.418742",
+    "detail": {}
+  },
+  {
+    "operation": "llm.reasoning_stream",
+    "elapsed_ms": 0.0,
+    "model": "qwen3.7-max",
+    "created_at": "2026-05-25T19:25:56.276547",
+    "detail": {
+      "enabled": true
+    }
+  },
+  {
+    "operation": "testcase.generate",
+    "elapsed_ms": 86102.71,
+    "model": "qwen3.7-max",
+    "created_at": "2026-05-25T19:25:56.281142",
+    "detail": {}
+  },
+  {
+    "operation": "llm.reasoning_stream",
+    "elapsed_ms": 0.0,
+    "model": "qwen3.7-max",
+    "created_at": "2026-05-26T10:13:14.977702",
+    "detail": {
+      "enabled": true
+    }
+  },
+  {
+    "operation": "testcase.generate",
+    "elapsed_ms": 44373.93,
+    "model": "qwen3.7-max",
+    "created_at": "2026-05-26T10:13:14.979884",
+    "detail": {}
+  },
+  {
+    "operation": "llm.reasoning_stream",
+    "elapsed_ms": 0.0,
+    "model": "qwen3.7-max",
+    "created_at": "2026-05-26T10:13:59.906836",
+    "detail": {
+      "enabled": true
+    }
+  },
+  {
+    "operation": "testcase.generate",
+    "elapsed_ms": 44922.85,
+    "model": "qwen3.7-max",
+    "created_at": "2026-05-26T10:13:59.909223",
+    "detail": {}
+  },
+  {
+    "operation": "llm.reasoning_stream",
+    "elapsed_ms": 0.0,
+    "model": "qwen3.7-max",
+    "created_at": "2026-05-26T10:14:34.925761",
+    "detail": {
+      "enabled": true
+    }
+  },
+  {
+    "operation": "testcase.generate",
+    "elapsed_ms": 35010.46,
+    "model": "qwen3.7-max",
+    "created_at": "2026-05-26T10:14:34.928549",
+    "detail": {}
+  },
+  {
+    "operation": "llm.reasoning_stream",
+    "elapsed_ms": 0.0,
+    "model": "qwen3.7-max",
+    "created_at": "2026-05-26T13:14:00.131865",
+    "detail": {
+      "enabled": true
+    }
+  },
+  {
+    "operation": "testcase.generate",
+    "elapsed_ms": 124615.1,
+    "model": "qwen3.7-max",
+    "created_at": "2026-05-26T13:14:00.135315",
+    "detail": {}
+  },
+  {
+    "operation": "llm.reasoning_stream",
+    "elapsed_ms": 0.0,
+    "model": "qwen3.7-max",
+    "created_at": "2026-05-26T13:15:15.006316",
+    "detail": {
+      "enabled": true
+    }
+  },
+  {
+    "operation": "testcase.generate",
+    "elapsed_ms": 74861.98,
+    "model": "qwen3.7-max",
+    "created_at": "2026-05-26T13:15:15.009770",
+    "detail": {}
+  },
+  {
+    "operation": "llm.reasoning_stream",
+    "elapsed_ms": 0.0,
+    "model": "qwen3.7-max",
+    "created_at": "2026-05-26T13:16:25.403242",
+    "detail": {
+      "enabled": true
+    }
+  },
+  {
+    "operation": "testcase.generate",
+    "elapsed_ms": 70386.37,
+    "model": "qwen3.7-max",
+    "created_at": "2026-05-26T13:16:25.407556",
+    "detail": {}
+  },
+  {
+    "operation": "llm.reasoning_stream",
+    "elapsed_ms": 0.0,
+    "model": "qwen3.7-max",
+    "created_at": "2026-05-26T13:17:31.085316",
+    "detail": {
+      "enabled": true
+    }
+  },
+  {
+    "operation": "testcase.generate",
+    "elapsed_ms": 65668.63,
+    "model": "qwen3.7-max",
+    "created_at": "2026-05-26T13:17:31.089621",
+    "detail": {}
+  },
+  {
+    "operation": "llm.reasoning_stream",
+    "elapsed_ms": 0.0,
+    "model": "qwen3.7-max",
+    "created_at": "2026-05-26T13:18:42.636110",
+    "detail": {
+      "enabled": true
+    }
+  },
+  {
+    "operation": "testcase.generate",
+    "elapsed_ms": 71538.19,
+    "model": "qwen3.7-max",
+    "created_at": "2026-05-26T13:18:42.639692",
+    "detail": {}
+  },
+  {
+    "operation": "llm.reasoning_stream",
+    "elapsed_ms": 0.0,
+    "model": "qwen3.7-max",
+    "created_at": "2026-05-26T13:20:20.717767",
+    "detail": {
+      "enabled": true
+    }
+  },
+  {
+    "operation": "testcase.generate",
+    "elapsed_ms": 98066.24,
+    "model": "qwen3.7-max",
+    "created_at": "2026-05-26T13:20:20.721278",
+    "detail": {}
+  },
+  {
+    "operation": "llm.reasoning_stream",
+    "elapsed_ms": 0.0,
+    "model": "qwen3.7-max",
+    "created_at": "2026-05-26T13:21:49.691935",
+    "detail": {
+      "enabled": true
+    }
+  },
+  {
+    "operation": "testcase.generate",
+    "elapsed_ms": 88956.52,
+    "model": "qwen3.7-max",
+    "created_at": "2026-05-26T13:21:49.694289",
+    "detail": {}
+  },
+  {
+    "operation": "llm.reasoning_stream",
+    "elapsed_ms": 0.0,
+    "model": "qwen3.7-max",
+    "created_at": "2026-05-26T13:22:56.526338",
+    "detail": {
+      "enabled": true
+    }
+  },
+  {
+    "operation": "testcase.generate",
+    "elapsed_ms": 66820.04,
+    "model": "qwen3.7-max",
+    "created_at": "2026-05-26T13:22:56.531011",
+    "detail": {}
+  },
+  {
+    "operation": "llm.reasoning_stream",
+    "elapsed_ms": 0.0,
+    "model": "qwen3.7-max",
+    "created_at": "2026-05-26T13:23:42.261287",
+    "detail": {
+      "enabled": true
+    }
+  },
+  {
+    "operation": "testcase.generate",
+    "elapsed_ms": 45715.1,
+    "model": "qwen3.7-max",
+    "created_at": "2026-05-26T13:23:42.263959",
+    "detail": {}
+  },
+  {
+    "operation": "llm.reasoning_stream",
+    "elapsed_ms": 0.0,
+    "model": "qwen3.7-max",
+    "created_at": "2026-05-26T13:24:54.912421",
+    "detail": {
+      "enabled": true
+    }
+  },
+  {
+    "operation": "testcase.generate",
+    "elapsed_ms": 72643.75,
+    "model": "qwen3.7-max",
+    "created_at": "2026-05-26T13:24:54.917220",
+    "detail": {}
+  },
+  {
+    "operation": "llm.reasoning_stream",
+    "elapsed_ms": 0.0,
+    "model": "qwen3.7-max",
+    "created_at": "2026-05-26T13:26:36.511363",
+    "detail": {
+      "enabled": true
+    }
+  },
+  {
+    "operation": "testcase.generate",
+    "elapsed_ms": 101583.8,
+    "model": "qwen3.7-max",
+    "created_at": "2026-05-26T13:26:36.515114",
+    "detail": {}
+  },
+  {
+    "operation": "llm.reasoning_stream",
+    "elapsed_ms": 0.0,
+    "model": "qwen3.7-max",
+    "created_at": "2026-05-26T13:28:14.726325",
+    "detail": {
+      "enabled": true
+    }
+  },
+  {
+    "operation": "testcase.generate",
+    "elapsed_ms": 98196.46,
+    "model": "qwen3.7-max",
+    "created_at": "2026-05-26T13:28:14.729373",
+    "detail": {}
+  },
+  {
+    "operation": "llm.reasoning_stream",
+    "elapsed_ms": 0.0,
+    "model": "qwen3.7-max",
+    "created_at": "2026-05-26T13:29:42.693427",
+    "detail": {
+      "enabled": true
+    }
+  },
+  {
+    "operation": "testcase.generate",
+    "elapsed_ms": 87955.93,
+    "model": "qwen3.7-max",
+    "created_at": "2026-05-26T13:29:42.697332",
+    "detail": {}
+  },
+  {
+    "operation": "llm.reasoning_stream",
+    "elapsed_ms": 0.0,
+    "model": "qwen3.7-max",
+    "created_at": "2026-05-26T13:31:45.701179",
+    "detail": {
+      "enabled": true
+    }
+  },
+  {
+    "operation": "testcase.generate",
+    "elapsed_ms": 122998.51,
+    "model": "qwen3.7-max",
+    "created_at": "2026-05-26T13:31:45.707286",
+    "detail": {}
+  }
+]

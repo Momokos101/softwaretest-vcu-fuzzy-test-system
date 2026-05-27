@@ -1,0 +1,5278 @@
+[
+  {
+    "case_id": "f9b1ff34-e035-42bc-91e7-a932873111a3",
+    "requirement_id": "REQ-001",
+    "technique": "EP",
+    "title": "EP_正常唤醒_vehicle_state_eq_11",
+    "input": {
+      "voltage": 12.0,
+      "duration_ms": 50
+    },
+    "expected": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 11
+      },
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "expected"
+      }
+    ],
+    "actual_output": {
+      "vehicle_state": 11,
+      "vehicle_mode": 5,
+      "power_current": 0.05,
+      "bus_message_flag": 1,
+      "pdcu_wake_reason": 1,
+      "actual_duration": 14.7,
+      "result_type": "expected",
+      "power_alarm_flag": 0,
+      "bus_off_flag": 0,
+      "active_dtcs": [],
+      "signal_guard_result": {
+        "valid": true,
+        "fault_type": null,
+        "reason": "信号有效"
+      },
+      "detail": "供电电压=12.0V > 9V，持续50ms >= 10ms，Module B校验通过，唤醒成功",
+      "state_name": "state11",
+      "test_status": 1,
+      "ready_flag": 1,
+      "bms_wake_cmd": 1,
+      "mcu_wake_cmd": 1,
+      "battery_voltage": 12.92
+    },
+    "passed": true,
+    "mismatches": []
+  },
+  {
+    "case_id": "96efed00-fb6d-44c8-89c3-fee9dc144519",
+    "requirement_id": "REQ-001",
+    "technique": "EP",
+    "title": "EP_未满足唤醒条件_vehicle_state_eq_9",
+    "input": {
+      "voltage": 5.0,
+      "duration_ms": 50
+    },
+    "expected": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 9
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 0
+      },
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "error"
+      }
+    ],
+    "actual_output": {
+      "vehicle_state": 9,
+      "vehicle_mode": 2,
+      "power_current": 0.01,
+      "bus_message_flag": 0,
+      "pdcu_wake_reason": 0,
+      "actual_duration": 14.7,
+      "result_type": "error",
+      "power_alarm_flag": 0,
+      "bus_off_flag": 0,
+      "active_dtcs": [
+        "DTC_003"
+      ],
+      "signal_guard_result": {
+        "valid": false,
+        "fault_type": "undervoltage",
+        "reason": "供电电压 5.0V 低于欠压阈值 6.0V"
+      },
+      "detail": "欠压保护触发，关闭CAN通信并进入 undervoltage_shutdown",
+      "state_name": "undervoltage_shutdown",
+      "test_status": 4,
+      "ready_flag": 0,
+      "bms_wake_cmd": 1,
+      "mcu_wake_cmd": 1,
+      "battery_voltage": 12.92
+    },
+    "passed": true,
+    "mismatches": []
+  },
+  {
+    "case_id": "93e1c973-5da5-44a3-859e-53eda9b584e9",
+    "requirement_id": "REQ-001",
+    "technique": "EP",
+    "title": "EP_硬线唤醒_pdcu_wake_reason_eq_1",
+    "input": {
+      "voltage": 12.0,
+      "duration_ms": 20
+    },
+    "expected": [
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 1
+      },
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 11
+      }
+    ],
+    "actual_output": {
+      "vehicle_state": 11,
+      "vehicle_mode": 5,
+      "power_current": 0.05,
+      "bus_message_flag": 1,
+      "pdcu_wake_reason": 1,
+      "actual_duration": 14.7,
+      "result_type": "expected",
+      "power_alarm_flag": 0,
+      "bus_off_flag": 0,
+      "active_dtcs": [],
+      "signal_guard_result": {
+        "valid": true,
+        "fault_type": null,
+        "reason": "信号有效"
+      },
+      "detail": "供电电压=12.0V > 9V，持续20ms >= 10ms，Module B校验通过，唤醒成功",
+      "state_name": "state11",
+      "test_status": 1,
+      "ready_flag": 1,
+      "bms_wake_cmd": 1,
+      "mcu_wake_cmd": 1,
+      "battery_voltage": 12.92
+    },
+    "passed": true,
+    "mismatches": []
+  },
+  {
+    "case_id": "68011a5e-6278-4037-ab44-98b4501cd085",
+    "requirement_id": "REQ-001",
+    "technique": "EP",
+    "title": "EP_无唤醒_pdcu_wake_reason_eq_0",
+    "input": {
+      "voltage": 8.0,
+      "duration_ms": 20
+    },
+    "expected": [
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 0
+      },
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 9
+      }
+    ],
+    "actual_output": {
+      "vehicle_state": 9,
+      "vehicle_mode": 2,
+      "power_current": 0.01,
+      "bus_message_flag": 0,
+      "pdcu_wake_reason": 0,
+      "actual_duration": 14.7,
+      "result_type": "error",
+      "power_alarm_flag": 0,
+      "bus_off_flag": 0,
+      "active_dtcs": [],
+      "signal_guard_result": {
+        "valid": true,
+        "fault_type": null,
+        "reason": "信号有效"
+      },
+      "detail": "供电电压=8.0V未超过9V",
+      "state_name": "state09",
+      "test_status": 4,
+      "ready_flag": 0,
+      "bms_wake_cmd": 1,
+      "mcu_wake_cmd": 1,
+      "battery_voltage": 12.92
+    },
+    "passed": true,
+    "mismatches": []
+  },
+  {
+    "case_id": "bcb9c9d8-dec6-44cc-a4e1-94bd061b0e4f",
+    "requirement_id": "REQ-001",
+    "technique": "EP",
+    "title": "EP_SIL环境基线验证_正常唤醒",
+    "input": {
+      "voltage": 12.0,
+      "duration_ms": 20
+    },
+    "expected": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 11
+      },
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "expected"
+      },
+      {
+        "name": "actual_duration",
+        "operator": "lte",
+        "value": 20
+      }
+    ],
+    "actual_output": {
+      "vehicle_state": 11,
+      "vehicle_mode": 5,
+      "power_current": 0.05,
+      "bus_message_flag": 1,
+      "pdcu_wake_reason": 1,
+      "actual_duration": 14.7,
+      "result_type": "expected",
+      "power_alarm_flag": 0,
+      "bus_off_flag": 0,
+      "active_dtcs": [],
+      "signal_guard_result": {
+        "valid": true,
+        "fault_type": null,
+        "reason": "信号有效"
+      },
+      "detail": "供电电压=12.0V > 9V，持续20ms >= 10ms，Module B校验通过，唤醒成功",
+      "state_name": "state11",
+      "test_status": 1,
+      "ready_flag": 1,
+      "bms_wake_cmd": 1,
+      "mcu_wake_cmd": 1,
+      "battery_voltage": 12.92
+    },
+    "passed": true,
+    "mismatches": []
+  },
+  {
+    "case_id": "b26ff8b5-3ec7-4ad0-9930-858c3e2fd355",
+    "requirement_id": "REQ-008",
+    "technique": "EP",
+    "title": "EP-VCUIdle_flg为1时满足休眠条件",
+    "input": {
+      "VCUO_bDIAG_VCUIdle_flg": 1
+    },
+    "expected": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 9
+      },
+      {
+        "name": "bus_message_flag",
+        "operator": "eq",
+        "value": 0
+      },
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "expected"
+      }
+    ],
+    "actual_output": {
+      "vehicle_state": 9,
+      "vehicle_mode": 2,
+      "power_current": 0.01,
+      "bus_message_flag": 0,
+      "pdcu_wake_reason": 0,
+      "actual_duration": 42.0,
+      "result_type": "expected",
+      "power_alarm_flag": 0,
+      "bus_off_flag": 0,
+      "active_dtcs": [],
+      "signal_guard_result": {
+        "valid": true,
+        "fault_type": null,
+        "reason": "信号有效"
+      },
+      "detail": "h1/h2/h3同时满足，VCU进入state09休眠",
+      "state_name": "state09",
+      "test_status": 3,
+      "ready_flag": 0,
+      "bms_wake_cmd": 1,
+      "mcu_wake_cmd": 1,
+      "battery_voltage": 12.92
+    },
+    "passed": true,
+    "mismatches": []
+  },
+  {
+    "case_id": "0d9216bf-1d37-4363-8dbb-fdeab383d21f",
+    "requirement_id": "REQ-008",
+    "technique": "EP",
+    "title": "EP-VCUIdle_flg为0时不满足休眠条件",
+    "input": {
+      "VCUO_bDIAG_VCUIdle_flg": 0
+    },
+    "expected": [
+      {
+        "name": "vehicle_state",
+        "operator": "ne",
+        "value": 9
+      },
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "error"
+      }
+    ],
+    "actual_output": {
+      "vehicle_state": 11,
+      "vehicle_mode": 5,
+      "power_current": 0.05,
+      "bus_message_flag": 1,
+      "pdcu_wake_reason": 0,
+      "actual_duration": 42.0,
+      "result_type": "error",
+      "power_alarm_flag": 0,
+      "bus_off_flag": 0,
+      "active_dtcs": [],
+      "signal_guard_result": {
+        "valid": true,
+        "fault_type": null,
+        "reason": "信号有效"
+      },
+      "detail": "休眠条件不完整（缺少h1），状态保持不变",
+      "state_name": "state11",
+      "test_status": 4,
+      "ready_flag": 1,
+      "bms_wake_cmd": 1,
+      "mcu_wake_cmd": 1,
+      "battery_voltage": 12.92
+    },
+    "passed": true,
+    "mismatches": []
+  },
+  {
+    "case_id": "415392c6-07bf-4666-aab5-4bba498f05f3",
+    "requirement_id": "REQ-009",
+    "technique": "EP",
+    "title": "EP-AuthComplete_flg为1时满足休眠条件h2",
+    "input": {
+      "VCUO_bDIAG_AuthComplete_flg": 1
+    },
+    "expected": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 9
+      },
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "expected"
+      },
+      {
+        "name": "bus_message_flag",
+        "operator": "eq",
+        "value": 0
+      }
+    ],
+    "actual_output": {
+      "vehicle_state": 9,
+      "vehicle_mode": 2,
+      "power_current": 0.01,
+      "bus_message_flag": 0,
+      "pdcu_wake_reason": 0,
+      "actual_duration": 42.0,
+      "result_type": "expected",
+      "power_alarm_flag": 0,
+      "bus_off_flag": 0,
+      "active_dtcs": [],
+      "signal_guard_result": {
+        "valid": true,
+        "fault_type": null,
+        "reason": "信号有效"
+      },
+      "detail": "h1/h2/h3同时满足，VCU进入state09休眠",
+      "state_name": "state09",
+      "test_status": 3,
+      "ready_flag": 0,
+      "bms_wake_cmd": 1,
+      "mcu_wake_cmd": 1,
+      "battery_voltage": 12.92
+    },
+    "passed": true,
+    "mismatches": []
+  },
+  {
+    "case_id": "ac4b8699-0a3e-4122-96ea-63c23b72c94f",
+    "requirement_id": "REQ-010",
+    "technique": "EP",
+    "title": "EP-休眠条件h3满足(CAN总线空闲)",
+    "input": {
+      "can_bus_idle": 1
+    },
+    "expected": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 9
+      },
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "expected"
+      },
+      {
+        "name": "bus_message_flag",
+        "operator": "eq",
+        "value": 0
+      }
+    ],
+    "actual_output": {
+      "vehicle_state": 9,
+      "vehicle_mode": 2,
+      "power_current": 0.01,
+      "bus_message_flag": 0,
+      "pdcu_wake_reason": 0,
+      "actual_duration": 42.0,
+      "result_type": "expected",
+      "power_alarm_flag": 0,
+      "bus_off_flag": 0,
+      "active_dtcs": [],
+      "signal_guard_result": {
+        "valid": true,
+        "fault_type": null,
+        "reason": "信号有效"
+      },
+      "detail": "h1/h2/h3同时满足，VCU进入state09休眠",
+      "state_name": "state09",
+      "test_status": 3,
+      "ready_flag": 0,
+      "bms_wake_cmd": 1,
+      "mcu_wake_cmd": 1,
+      "battery_voltage": 12.92
+    },
+    "passed": true,
+    "mismatches": []
+  },
+  {
+    "case_id": "2cba1c5d-078c-421e-a4a8-ef0f910f0de8",
+    "requirement_id": "REQ-010",
+    "technique": "EP",
+    "title": "EP-休眠条件h3不满足(CAN总线非空闲)",
+    "input": {
+      "can_bus_idle": 0
+    },
+    "expected": [
+      {
+        "name": "vehicle_state",
+        "operator": "ne",
+        "value": 9
+      },
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "error"
+      }
+    ],
+    "actual_output": {
+      "vehicle_state": 11,
+      "vehicle_mode": 5,
+      "power_current": 0.05,
+      "bus_message_flag": 1,
+      "pdcu_wake_reason": 0,
+      "actual_duration": 42.0,
+      "result_type": "error",
+      "power_alarm_flag": 0,
+      "bus_off_flag": 0,
+      "active_dtcs": [],
+      "signal_guard_result": {
+        "valid": true,
+        "fault_type": null,
+        "reason": "信号有效"
+      },
+      "detail": "休眠条件不完整（缺少h3），状态保持不变",
+      "state_name": "state11",
+      "test_status": 4,
+      "ready_flag": 1,
+      "bms_wake_cmd": 1,
+      "mcu_wake_cmd": 1,
+      "battery_voltage": 12.92
+    },
+    "passed": true,
+    "mismatches": []
+  },
+  {
+    "case_id": "003eea21-1e6f-4c47-9c9a-d04a39661103",
+    "requirement_id": "REQ-003",
+    "technique": "EP",
+    "title": "EP_CP信号有效电压12.0V触发唤醒",
+    "input": {
+      "cp_voltage": 12.0
+    },
+    "expected": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 11
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 3
+      },
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "expected"
+      }
+    ],
+    "actual_output": {
+      "vehicle_state": 11,
+      "vehicle_mode": 5,
+      "power_current": 0.05,
+      "bus_message_flag": 1,
+      "pdcu_wake_reason": 3,
+      "actual_duration": 14.7,
+      "result_type": "expected",
+      "power_alarm_flag": 0,
+      "bus_off_flag": 0,
+      "active_dtcs": [],
+      "signal_guard_result": {
+        "valid": true,
+        "fault_type": null,
+        "reason": "信号有效"
+      },
+      "detail": "CP信号=12.0V > 9V，Module B校验通过，唤醒成功",
+      "state_name": "state11",
+      "test_status": 1,
+      "ready_flag": 1,
+      "bms_wake_cmd": 1,
+      "mcu_wake_cmd": 1,
+      "battery_voltage": 12.92
+    },
+    "passed": true,
+    "mismatches": []
+  },
+  {
+    "case_id": "046f4995-3fe0-4bdc-9109-292b49705ecb",
+    "requirement_id": "REQ-003",
+    "technique": "EP",
+    "title": "EP_CP信号无效电压5.0V不唤醒",
+    "input": {
+      "cp_voltage": 5.0
+    },
+    "expected": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 9
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 0
+      },
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "error"
+      }
+    ],
+    "actual_output": {
+      "vehicle_state": 9,
+      "vehicle_mode": 2,
+      "power_current": 0.01,
+      "bus_message_flag": 0,
+      "pdcu_wake_reason": 0,
+      "actual_duration": 14.7,
+      "result_type": "error",
+      "power_alarm_flag": 0,
+      "bus_off_flag": 0,
+      "active_dtcs": [],
+      "signal_guard_result": {
+        "valid": true,
+        "fault_type": null,
+        "reason": "信号有效"
+      },
+      "detail": "CP信号=5.0V未超过9V",
+      "state_name": "state09",
+      "test_status": 4,
+      "ready_flag": 0,
+      "bms_wake_cmd": 1,
+      "mcu_wake_cmd": 1,
+      "battery_voltage": 12.92
+    },
+    "passed": true,
+    "mismatches": []
+  },
+  {
+    "case_id": "16517744-16c7-4476-919f-a0830671002f",
+    "requirement_id": "REQ-002",
+    "technique": "EP",
+    "title": "EP: 有效等价类(范围内中间值0x440)成功唤醒",
+    "input": {
+      "can_msg_id": 1088
+    },
+    "expected": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 11
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 2
+      },
+      {
+        "name": "bus_message_flag",
+        "operator": "eq",
+        "value": 1
+      },
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "expected"
+      }
+    ],
+    "actual_output": {
+      "vehicle_state": 11,
+      "vehicle_mode": 5,
+      "power_current": 0.05,
+      "bus_message_flag": 1,
+      "pdcu_wake_reason": 2,
+      "actual_duration": 14.7,
+      "result_type": "expected",
+      "power_alarm_flag": 0,
+      "bus_off_flag": 0,
+      "active_dtcs": [],
+      "signal_guard_result": {
+        "valid": true,
+        "fault_type": null,
+        "reason": "信号有效"
+      },
+      "detail": "ID 0x440 在有效范围内，触发唤醒，Module B校验通过，唤醒成功",
+      "state_name": "state11",
+      "test_status": 1,
+      "ready_flag": 1,
+      "bms_wake_cmd": 1,
+      "mcu_wake_cmd": 1,
+      "battery_voltage": 12.92
+    },
+    "passed": true,
+    "mismatches": []
+  },
+  {
+    "case_id": "c7d71344-e830-4cfa-94ec-3f28b799550b",
+    "requirement_id": "REQ-002",
+    "technique": "EP",
+    "title": "EP: 无效等价类(小于0x400的0x200)不唤醒",
+    "input": {
+      "can_msg_id": 512
+    },
+    "expected": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 9
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 0
+      },
+      {
+        "name": "bus_message_flag",
+        "operator": "eq",
+        "value": 0
+      },
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "error"
+      }
+    ],
+    "actual_output": {
+      "vehicle_state": 9,
+      "vehicle_mode": 2,
+      "power_current": 0.01,
+      "bus_message_flag": 0,
+      "pdcu_wake_reason": 0,
+      "actual_duration": 14.7,
+      "result_type": "error",
+      "power_alarm_flag": 0,
+      "bus_off_flag": 0,
+      "active_dtcs": [],
+      "signal_guard_result": {
+        "valid": true,
+        "fault_type": null,
+        "reason": "信号有效"
+      },
+      "detail": "ID 0x200 超出有效范围",
+      "state_name": "state09",
+      "test_status": 4,
+      "ready_flag": 0,
+      "bms_wake_cmd": 1,
+      "mcu_wake_cmd": 1,
+      "battery_voltage": 12.92
+    },
+    "passed": true,
+    "mismatches": []
+  },
+  {
+    "case_id": "aec8ac6e-3168-4c3e-9f3c-54def8243338",
+    "requirement_id": "REQ-002",
+    "technique": "EP",
+    "title": "EP: 无效等价类(大于0x47F的0x600)不唤醒",
+    "input": {
+      "can_msg_id": 1536
+    },
+    "expected": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 9
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 0
+      },
+      {
+        "name": "bus_message_flag",
+        "operator": "eq",
+        "value": 0
+      },
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "error"
+      }
+    ],
+    "actual_output": {
+      "vehicle_state": 9,
+      "vehicle_mode": 2,
+      "power_current": 0.01,
+      "bus_message_flag": 0,
+      "pdcu_wake_reason": 0,
+      "actual_duration": 14.7,
+      "result_type": "error",
+      "power_alarm_flag": 0,
+      "bus_off_flag": 0,
+      "active_dtcs": [],
+      "signal_guard_result": {
+        "valid": true,
+        "fault_type": null,
+        "reason": "信号有效"
+      },
+      "detail": "ID 0x600 超出有效范围",
+      "state_name": "state09",
+      "test_status": 4,
+      "ready_flag": 0,
+      "bms_wake_cmd": 1,
+      "mcu_wake_cmd": 1,
+      "battery_voltage": 12.92
+    },
+    "passed": true,
+    "mismatches": []
+  },
+  {
+    "case_id": "3fc01f56-10dc-43aa-b076-9026912f6a3b",
+    "requirement_id": "REQ-004",
+    "technique": "EP",
+    "title": "EP_CC电压有效等价类唤醒测试",
+    "input": {
+      "cc_voltage": 2.0
+    },
+    "expected": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 11
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 4
+      },
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "expected"
+      },
+      {
+        "name": "bus_message_flag",
+        "operator": "eq",
+        "value": 1
+      }
+    ],
+    "actual_output": {
+      "vehicle_state": 11,
+      "vehicle_mode": 5,
+      "power_current": 0.05,
+      "bus_message_flag": 1,
+      "pdcu_wake_reason": 4,
+      "actual_duration": 14.7,
+      "result_type": "expected",
+      "power_alarm_flag": 0,
+      "bus_off_flag": 0,
+      "active_dtcs": [],
+      "signal_guard_result": {
+        "valid": true,
+        "fault_type": null,
+        "reason": "信号有效"
+      },
+      "detail": "CC信号=2.0V < 4.4V，Module B校验通过，唤醒成功",
+      "state_name": "state11",
+      "test_status": 1,
+      "ready_flag": 1,
+      "bms_wake_cmd": 1,
+      "mcu_wake_cmd": 1,
+      "battery_voltage": 12.92
+    },
+    "passed": true,
+    "mismatches": []
+  },
+  {
+    "case_id": "80095a4f-737b-4c47-9a5f-76405a02b599",
+    "requirement_id": "REQ-004",
+    "technique": "EP",
+    "title": "EP_CC电压无效等价类不唤醒测试",
+    "input": {
+      "cc_voltage": 10.0
+    },
+    "expected": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 9
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 0
+      },
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "error"
+      },
+      {
+        "name": "bus_message_flag",
+        "operator": "eq",
+        "value": 0
+      }
+    ],
+    "actual_output": {
+      "vehicle_state": 9,
+      "vehicle_mode": 2,
+      "power_current": 0.01,
+      "bus_message_flag": 0,
+      "pdcu_wake_reason": 0,
+      "actual_duration": 14.7,
+      "result_type": "error",
+      "power_alarm_flag": 0,
+      "bus_off_flag": 0,
+      "active_dtcs": [],
+      "signal_guard_result": {
+        "valid": true,
+        "fault_type": null,
+        "reason": "信号有效"
+      },
+      "detail": "CC信号=10.0V未低于4.4V",
+      "state_name": "state09",
+      "test_status": 4,
+      "ready_flag": 0,
+      "bms_wake_cmd": 1,
+      "mcu_wake_cmd": 1,
+      "battery_voltage": 12.92
+    },
+    "passed": true,
+    "mismatches": []
+  },
+  {
+    "case_id": "9358d3f5-e999-4e4c-bbef-4f0d013aa3ff",
+    "requirement_id": "REQ-005",
+    "technique": "EP",
+    "title": "EP_CC2电压有效等价类唤醒测试",
+    "input": {
+      "cc2_voltage": 2.0
+    },
+    "expected": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 11
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 5
+      },
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "expected"
+      },
+      {
+        "name": "bus_message_flag",
+        "operator": "eq",
+        "value": 1
+      }
+    ],
+    "actual_output": {
+      "vehicle_state": 11,
+      "vehicle_mode": 5,
+      "power_current": 0.05,
+      "bus_message_flag": 1,
+      "pdcu_wake_reason": 5,
+      "actual_duration": 14.7,
+      "result_type": "expected",
+      "power_alarm_flag": 0,
+      "bus_off_flag": 0,
+      "active_dtcs": [],
+      "signal_guard_result": {
+        "valid": true,
+        "fault_type": null,
+        "reason": "信号有效"
+      },
+      "detail": "CC2信号=2.0V < UBR阈值4.4V，Module B校验通过，唤醒成功",
+      "state_name": "state11",
+      "test_status": 1,
+      "ready_flag": 1,
+      "bms_wake_cmd": 1,
+      "mcu_wake_cmd": 1,
+      "battery_voltage": 12.92
+    },
+    "passed": true,
+    "mismatches": []
+  },
+  {
+    "case_id": "feeff67e-560a-4c1c-acfa-891fcb51e8f7",
+    "requirement_id": "REQ-005",
+    "technique": "EP",
+    "title": "EP_CC2电压无效等价类不唤醒测试",
+    "input": {
+      "cc2_voltage": 10.0
+    },
+    "expected": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 9
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 0
+      },
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "error"
+      },
+      {
+        "name": "bus_message_flag",
+        "operator": "eq",
+        "value": 0
+      }
+    ],
+    "actual_output": {
+      "vehicle_state": 9,
+      "vehicle_mode": 2,
+      "power_current": 0.01,
+      "bus_message_flag": 0,
+      "pdcu_wake_reason": 0,
+      "actual_duration": 14.7,
+      "result_type": "error",
+      "power_alarm_flag": 0,
+      "bus_off_flag": 0,
+      "active_dtcs": [],
+      "signal_guard_result": {
+        "valid": true,
+        "fault_type": null,
+        "reason": "信号有效"
+      },
+      "detail": "CC2信号=10.0V未低于UBR阈值",
+      "state_name": "state09",
+      "test_status": 4,
+      "ready_flag": 0,
+      "bms_wake_cmd": 1,
+      "mcu_wake_cmd": 1,
+      "battery_voltage": 12.92
+    },
+    "passed": true,
+    "mismatches": []
+  },
+  {
+    "case_id": "b783cc48-224f-4059-a899-a1c60687093f",
+    "requirement_id": "REQ-007",
+    "technique": "EP",
+    "title": "EP: 门板电压与时间均在有效等价类触发唤醒",
+    "input": {
+      "door_voltage": 0.5,
+      "duration_ms": 50
+    },
+    "expected": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 11
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 7
+      },
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "expected"
+      },
+      {
+        "name": "bus_message_flag",
+        "operator": "eq",
+        "value": 1
+      },
+      {
+        "name": "actual_duration",
+        "operator": "lte",
+        "value": 20
+      }
+    ],
+    "actual_output": {
+      "vehicle_state": 11,
+      "vehicle_mode": 5,
+      "power_current": 0.05,
+      "bus_message_flag": 1,
+      "pdcu_wake_reason": 7,
+      "actual_duration": 14.7,
+      "result_type": "expected",
+      "power_alarm_flag": 0,
+      "bus_off_flag": 0,
+      "active_dtcs": [],
+      "signal_guard_result": {
+        "valid": true,
+        "fault_type": null,
+        "reason": "信号有效"
+      },
+      "detail": "门板信号=0.5V < 1V，持续50ms >= 10ms，Module B校验通过，唤醒成功",
+      "state_name": "state11",
+      "test_status": 1,
+      "ready_flag": 1,
+      "bms_wake_cmd": 1,
+      "mcu_wake_cmd": 1,
+      "battery_voltage": 12.92
+    },
+    "passed": true,
+    "mismatches": []
+  },
+  {
+    "case_id": "41705132-0232-47b5-94ca-7ab532be0867",
+    "requirement_id": "REQ-007",
+    "technique": "EP",
+    "title": "EP: 门板电压在无效等价类不触发唤醒",
+    "input": {
+      "door_voltage": 5.0,
+      "duration_ms": 50
+    },
+    "expected": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 9
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 0
+      },
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "error"
+      },
+      {
+        "name": "bus_message_flag",
+        "operator": "eq",
+        "value": 0
+      }
+    ],
+    "actual_output": {
+      "vehicle_state": 9,
+      "vehicle_mode": 2,
+      "power_current": 0.01,
+      "bus_message_flag": 0,
+      "pdcu_wake_reason": 0,
+      "actual_duration": 14.7,
+      "result_type": "error",
+      "power_alarm_flag": 0,
+      "bus_off_flag": 0,
+      "active_dtcs": [],
+      "signal_guard_result": {
+        "valid": true,
+        "fault_type": null,
+        "reason": "信号有效"
+      },
+      "detail": "门板信号未同时满足电压和时序条件",
+      "state_name": "state09",
+      "test_status": 4,
+      "ready_flag": 0,
+      "bms_wake_cmd": 1,
+      "mcu_wake_cmd": 1,
+      "battery_voltage": 12.92
+    },
+    "passed": true,
+    "mismatches": []
+  },
+  {
+    "case_id": "513fbf5f-dc12-4371-abc3-c53ffd23afd8",
+    "requirement_id": "REQ-007",
+    "technique": "EP",
+    "title": "EP: 门板时间在无效等价类不触发唤醒",
+    "input": {
+      "door_voltage": 0.5,
+      "duration_ms": 5
+    },
+    "expected": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 9
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 0
+      },
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "error"
+      },
+      {
+        "name": "bus_message_flag",
+        "operator": "eq",
+        "value": 0
+      }
+    ],
+    "actual_output": {
+      "vehicle_state": 9,
+      "vehicle_mode": 2,
+      "power_current": 0.01,
+      "bus_message_flag": 0,
+      "pdcu_wake_reason": 0,
+      "actual_duration": 14.7,
+      "result_type": "error",
+      "power_alarm_flag": 0,
+      "bus_off_flag": 0,
+      "active_dtcs": [],
+      "signal_guard_result": {
+        "valid": true,
+        "fault_type": null,
+        "reason": "信号有效"
+      },
+      "detail": "门板信号未同时满足电压和时序条件",
+      "state_name": "state09",
+      "test_status": 4,
+      "ready_flag": 0,
+      "bms_wake_cmd": 1,
+      "mcu_wake_cmd": 1,
+      "battery_voltage": 12.92
+    },
+    "passed": true,
+    "mismatches": []
+  },
+  {
+    "case_id": "966ce13d-9047-46d0-8d9a-a16b937e9a0b",
+    "requirement_id": "REQ-013",
+    "technique": "EP",
+    "title": "EP-有效等价类-vehicle_state为11",
+    "input": {
+      "vehicle_state": 11
+    },
+    "expected": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 11
+      },
+      {
+        "name": "bus_message_flag",
+        "operator": "eq",
+        "value": 1
+      },
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "expected"
+      }
+    ],
+    "actual_output": {
+      "vehicle_state": 11,
+      "vehicle_mode": 5,
+      "power_current": 0.05,
+      "bus_message_flag": 1,
+      "pdcu_wake_reason": 1,
+      "actual_duration": 14.7,
+      "result_type": "expected",
+      "power_alarm_flag": 0,
+      "bus_off_flag": 0,
+      "active_dtcs": [],
+      "signal_guard_result": {
+        "valid": true,
+        "fault_type": null,
+        "reason": "信号有效"
+      },
+      "detail": "供电电压=9.3V > 9V，持续15ms >= 10ms，Module B校验通过，唤醒成功",
+      "state_name": "state11",
+      "test_status": 1,
+      "ready_flag": 1,
+      "bms_wake_cmd": 1,
+      "mcu_wake_cmd": 1,
+      "battery_voltage": 12.92
+    },
+    "passed": true,
+    "mismatches": []
+  },
+  {
+    "case_id": "4dac6c7e-1d45-4942-95aa-8ce0b2e3d67f",
+    "requirement_id": "REQ-013",
+    "technique": "EP",
+    "title": "EP-有效等价类-vehicle_state为9",
+    "input": {
+      "vehicle_state": 9
+    },
+    "expected": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 9
+      },
+      {
+        "name": "bus_message_flag",
+        "operator": "eq",
+        "value": 0
+      },
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "expected"
+      }
+    ],
+    "actual_output": {
+      "vehicle_state": 9,
+      "vehicle_mode": 2,
+      "power_current": 0.01,
+      "bus_message_flag": 0,
+      "pdcu_wake_reason": 0,
+      "actual_duration": 42.0,
+      "result_type": "expected",
+      "power_alarm_flag": 0,
+      "bus_off_flag": 0,
+      "active_dtcs": [],
+      "signal_guard_result": {
+        "valid": true,
+        "fault_type": null,
+        "reason": "信号有效"
+      },
+      "detail": "h1/h2/h3同时满足，VCU进入state09休眠",
+      "state_name": "state09",
+      "test_status": 3,
+      "ready_flag": 0,
+      "bms_wake_cmd": 1,
+      "mcu_wake_cmd": 1,
+      "battery_voltage": 12.92
+    },
+    "passed": true,
+    "mismatches": []
+  },
+  {
+    "case_id": "b6a3f6f6-fb9d-4a7e-8455-7aefa3e37bfb",
+    "requirement_id": "REQ-006",
+    "technique": "EP",
+    "title": "EP-有效等价类：电压和时间均满足唤醒条件",
+    "input": {
+      "hood_voltage": 5.0,
+      "duration_ms": 20
+    },
+    "expected": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 11
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 6
+      },
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "expected"
+      },
+      {
+        "name": "bus_message_flag",
+        "operator": "eq",
+        "value": 1
+      }
+    ],
+    "actual_output": {
+      "vehicle_state": 11,
+      "vehicle_mode": 5,
+      "power_current": 0.05,
+      "bus_message_flag": 1,
+      "pdcu_wake_reason": 6,
+      "actual_duration": 14.7,
+      "result_type": "expected",
+      "power_alarm_flag": 0,
+      "bus_off_flag": 0,
+      "active_dtcs": [],
+      "signal_guard_result": {
+        "valid": true,
+        "fault_type": null,
+        "reason": "信号有效"
+      },
+      "detail": "口盖信号=5.0V > 4V，持续20ms >= 10ms，Module B校验通过，唤醒成功",
+      "state_name": "state11",
+      "test_status": 1,
+      "ready_flag": 1,
+      "bms_wake_cmd": 1,
+      "mcu_wake_cmd": 1,
+      "battery_voltage": 12.92
+    },
+    "passed": true,
+    "mismatches": []
+  },
+  {
+    "case_id": "b7b68d68-4271-42ed-a73e-b8c6fb4146ba",
+    "requirement_id": "REQ-006",
+    "technique": "EP",
+    "title": "EP-无效等价类：电压不满足唤醒条件",
+    "input": {
+      "hood_voltage": 3.0,
+      "duration_ms": 20
+    },
+    "expected": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 9
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 0
+      },
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "error"
+      },
+      {
+        "name": "bus_message_flag",
+        "operator": "eq",
+        "value": 0
+      }
+    ],
+    "actual_output": {
+      "vehicle_state": 9,
+      "vehicle_mode": 2,
+      "power_current": 0.01,
+      "bus_message_flag": 0,
+      "pdcu_wake_reason": 0,
+      "actual_duration": 14.7,
+      "result_type": "error",
+      "power_alarm_flag": 0,
+      "bus_off_flag": 0,
+      "active_dtcs": [],
+      "signal_guard_result": {
+        "valid": true,
+        "fault_type": null,
+        "reason": "信号有效"
+      },
+      "detail": "口盖信号未同时满足电压和时序条件",
+      "state_name": "state09",
+      "test_status": 4,
+      "ready_flag": 0,
+      "bms_wake_cmd": 1,
+      "mcu_wake_cmd": 1,
+      "battery_voltage": 12.92
+    },
+    "passed": true,
+    "mismatches": []
+  },
+  {
+    "case_id": "c496b5ac-7a79-4947-9f5b-15a276de914c",
+    "requirement_id": "REQ-006",
+    "technique": "EP",
+    "title": "EP-无效等价类：持续时间不满足唤醒条件",
+    "input": {
+      "hood_voltage": 5.0,
+      "duration_ms": 5
+    },
+    "expected": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 9
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 0
+      },
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "error"
+      },
+      {
+        "name": "bus_message_flag",
+        "operator": "eq",
+        "value": 0
+      }
+    ],
+    "actual_output": {
+      "vehicle_state": 9,
+      "vehicle_mode": 2,
+      "power_current": 0.01,
+      "bus_message_flag": 0,
+      "pdcu_wake_reason": 0,
+      "actual_duration": 14.7,
+      "result_type": "error",
+      "power_alarm_flag": 0,
+      "bus_off_flag": 0,
+      "active_dtcs": [],
+      "signal_guard_result": {
+        "valid": true,
+        "fault_type": null,
+        "reason": "信号有效"
+      },
+      "detail": "口盖信号未同时满足电压和时序条件",
+      "state_name": "state09",
+      "test_status": 4,
+      "ready_flag": 0,
+      "bms_wake_cmd": 1,
+      "mcu_wake_cmd": 1,
+      "battery_voltage": 12.92
+    },
+    "passed": true,
+    "mismatches": []
+  },
+  {
+    "case_id": "aed53778-f0ff-476a-99df-9c8c561d0f80",
+    "requirement_id": "REQ-001",
+    "technique": "BVA",
+    "title": "BVA_有效边界_电压9.1V_持续11ms",
+    "input": {
+      "voltage": 9.1,
+      "duration_ms": 11
+    },
+    "expected": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 11
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 1
+      },
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "expected"
+      },
+      {
+        "name": "actual_duration",
+        "operator": "lte",
+        "value": 20
+      }
+    ],
+    "actual_output": {
+      "vehicle_state": 11,
+      "vehicle_mode": 5,
+      "power_current": 0.05,
+      "bus_message_flag": 1,
+      "pdcu_wake_reason": 1,
+      "actual_duration": 14.7,
+      "result_type": "expected",
+      "power_alarm_flag": 0,
+      "bus_off_flag": 0,
+      "active_dtcs": [],
+      "signal_guard_result": {
+        "valid": true,
+        "fault_type": null,
+        "reason": "信号有效"
+      },
+      "detail": "供电电压=9.1V > 9V，持续11ms >= 10ms，Module B校验通过，唤醒成功",
+      "state_name": "state11",
+      "test_status": 1,
+      "ready_flag": 1,
+      "bms_wake_cmd": 1,
+      "mcu_wake_cmd": 1,
+      "battery_voltage": 12.92
+    },
+    "passed": true,
+    "mismatches": []
+  },
+  {
+    "case_id": "867cfe89-3604-418d-b9f6-ff2c153115d6",
+    "requirement_id": "REQ-001",
+    "technique": "BVA",
+    "title": "BVA_无效边界_电压9.0V_持续10ms",
+    "input": {
+      "voltage": 9.0,
+      "duration_ms": 10
+    },
+    "expected": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 9
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 0
+      },
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "error"
+      }
+    ],
+    "actual_output": {
+      "vehicle_state": 9,
+      "vehicle_mode": 2,
+      "power_current": 0.01,
+      "bus_message_flag": 0,
+      "pdcu_wake_reason": 0,
+      "actual_duration": 14.7,
+      "result_type": "error",
+      "power_alarm_flag": 0,
+      "bus_off_flag": 0,
+      "active_dtcs": [],
+      "signal_guard_result": {
+        "valid": true,
+        "fault_type": null,
+        "reason": "信号有效"
+      },
+      "detail": "供电电压=9.0V未超过9V",
+      "state_name": "state09",
+      "test_status": 4,
+      "ready_flag": 0,
+      "bms_wake_cmd": 1,
+      "mcu_wake_cmd": 1,
+      "battery_voltage": 12.92
+    },
+    "passed": true,
+    "mismatches": []
+  },
+  {
+    "case_id": "06483b58-494f-49a5-842e-059302abb3d1",
+    "requirement_id": "REQ-001",
+    "technique": "BVA",
+    "title": "BVA_无效边界_电压9.1V_持续9ms",
+    "input": {
+      "voltage": 9.1,
+      "duration_ms": 9
+    },
+    "expected": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 9
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 0
+      },
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "error"
+      }
+    ],
+    "actual_output": {
+      "vehicle_state": 9,
+      "vehicle_mode": 2,
+      "power_current": 0.01,
+      "bus_message_flag": 0,
+      "pdcu_wake_reason": 0,
+      "actual_duration": 14.7,
+      "result_type": "error",
+      "power_alarm_flag": 0,
+      "bus_off_flag": 0,
+      "active_dtcs": [],
+      "signal_guard_result": {
+        "valid": true,
+        "fault_type": null,
+        "reason": "信号有效"
+      },
+      "detail": "供电电压=9.1V满足值条件，但持续时间不足",
+      "state_name": "state09",
+      "test_status": 4,
+      "ready_flag": 0,
+      "bms_wake_cmd": 1,
+      "mcu_wake_cmd": 1,
+      "battery_voltage": 12.92
+    },
+    "passed": true,
+    "mismatches": []
+  },
+  {
+    "case_id": "ed33fefd-df50-4c13-a738-8276e0a10699",
+    "requirement_id": "REQ-001",
+    "technique": "BVA",
+    "title": "BVA: 电压8.9V (invalid-too-low 无效过低) 不触发唤醒",
+    "input": {
+      "voltage": 8.9,
+      "duration_ms": 10
+    },
+    "expected": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 9
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 0
+      },
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "error"
+      }
+    ],
+    "actual_output": {
+      "vehicle_state": 9,
+      "vehicle_mode": 2,
+      "power_current": 0.01,
+      "bus_message_flag": 0,
+      "pdcu_wake_reason": 0,
+      "actual_duration": 14.7,
+      "result_type": "error",
+      "power_alarm_flag": 0,
+      "bus_off_flag": 0,
+      "active_dtcs": [],
+      "signal_guard_result": {
+        "valid": true,
+        "fault_type": null,
+        "reason": "信号有效"
+      },
+      "detail": "供电电压=8.9V未超过9V",
+      "state_name": "state09",
+      "test_status": 4,
+      "ready_flag": 0,
+      "bms_wake_cmd": 1,
+      "mcu_wake_cmd": 1,
+      "battery_voltage": 12.92
+    },
+    "passed": true,
+    "mismatches": []
+  },
+  {
+    "case_id": "ae1c553c-2f93-491e-95cf-d429ec31d404",
+    "requirement_id": "REQ-010",
+    "technique": "BVA",
+    "title": "BVA-休眠条件h3时间窗口下边界(不满足)",
+    "input": {
+      "can_bus_idle": 0
+    },
+    "expected": [
+      {
+        "name": "vehicle_state",
+        "operator": "ne",
+        "value": 9
+      },
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "error"
+      }
+    ],
+    "actual_output": {
+      "vehicle_state": 11,
+      "vehicle_mode": 5,
+      "power_current": 0.05,
+      "bus_message_flag": 1,
+      "pdcu_wake_reason": 0,
+      "actual_duration": 42.0,
+      "result_type": "error",
+      "power_alarm_flag": 0,
+      "bus_off_flag": 0,
+      "active_dtcs": [],
+      "signal_guard_result": {
+        "valid": true,
+        "fault_type": null,
+        "reason": "信号有效"
+      },
+      "detail": "休眠条件不完整（缺少h3），状态保持不变",
+      "state_name": "state11",
+      "test_status": 4,
+      "ready_flag": 1,
+      "bms_wake_cmd": 1,
+      "mcu_wake_cmd": 1,
+      "battery_voltage": 12.92
+    },
+    "passed": true,
+    "mismatches": []
+  },
+  {
+    "case_id": "7aacb8c9-a8df-4880-9f4d-bdf9b4ad6057",
+    "requirement_id": "REQ-010",
+    "technique": "BVA",
+    "title": "BVA-休眠条件h3时间窗口标称值(满足)",
+    "input": {
+      "can_bus_idle": 1
+    },
+    "expected": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 9
+      },
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "expected"
+      }
+    ],
+    "actual_output": {
+      "vehicle_state": 9,
+      "vehicle_mode": 2,
+      "power_current": 0.01,
+      "bus_message_flag": 0,
+      "pdcu_wake_reason": 0,
+      "actual_duration": 42.0,
+      "result_type": "expected",
+      "power_alarm_flag": 0,
+      "bus_off_flag": 0,
+      "active_dtcs": [],
+      "signal_guard_result": {
+        "valid": true,
+        "fault_type": null,
+        "reason": "信号有效"
+      },
+      "detail": "h1/h2/h3同时满足，VCU进入state09休眠",
+      "state_name": "state09",
+      "test_status": 3,
+      "ready_flag": 0,
+      "bms_wake_cmd": 1,
+      "mcu_wake_cmd": 1,
+      "battery_voltage": 12.92
+    },
+    "passed": true,
+    "mismatches": []
+  },
+  {
+    "case_id": "2d16734e-cc60-4ada-aa2a-4e8f377707b6",
+    "requirement_id": "REQ-003",
+    "technique": "BVA",
+    "title": "BVA_CP信号电压8.9V不唤醒",
+    "input": {
+      "cp_voltage": 8.9
+    },
+    "expected": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 9
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 0
+      },
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "error"
+      }
+    ],
+    "actual_output": {
+      "vehicle_state": 9,
+      "vehicle_mode": 2,
+      "power_current": 0.01,
+      "bus_message_flag": 0,
+      "pdcu_wake_reason": 0,
+      "actual_duration": 14.7,
+      "result_type": "error",
+      "power_alarm_flag": 0,
+      "bus_off_flag": 0,
+      "active_dtcs": [],
+      "signal_guard_result": {
+        "valid": true,
+        "fault_type": null,
+        "reason": "信号有效"
+      },
+      "detail": "CP信号=8.9V未超过9V",
+      "state_name": "state09",
+      "test_status": 4,
+      "ready_flag": 0,
+      "bms_wake_cmd": 1,
+      "mcu_wake_cmd": 1,
+      "battery_voltage": 12.92
+    },
+    "passed": true,
+    "mismatches": []
+  },
+  {
+    "case_id": "08398f11-0889-4e8a-8351-da74a0daacf7",
+    "requirement_id": "REQ-003",
+    "technique": "BVA",
+    "title": "BVA_CP信号电压9.0V不唤醒",
+    "input": {
+      "cp_voltage": 9.0
+    },
+    "expected": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 9
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 0
+      },
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "error"
+      }
+    ],
+    "actual_output": {
+      "vehicle_state": 9,
+      "vehicle_mode": 2,
+      "power_current": 0.01,
+      "bus_message_flag": 0,
+      "pdcu_wake_reason": 0,
+      "actual_duration": 14.7,
+      "result_type": "error",
+      "power_alarm_flag": 0,
+      "bus_off_flag": 0,
+      "active_dtcs": [],
+      "signal_guard_result": {
+        "valid": true,
+        "fault_type": null,
+        "reason": "信号有效"
+      },
+      "detail": "CP信号=9.0V未超过9V",
+      "state_name": "state09",
+      "test_status": 4,
+      "ready_flag": 0,
+      "bms_wake_cmd": 1,
+      "mcu_wake_cmd": 1,
+      "battery_voltage": 12.92
+    },
+    "passed": true,
+    "mismatches": []
+  },
+  {
+    "case_id": "3db545bb-c36b-4bb8-b962-5f8944115d54",
+    "requirement_id": "REQ-003",
+    "technique": "BVA",
+    "title": "BVA_CP信号电压9.1V触发唤醒",
+    "input": {
+      "cp_voltage": 9.1
+    },
+    "expected": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 11
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 3
+      },
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "expected"
+      },
+      {
+        "name": "bus_message_flag",
+        "operator": "eq",
+        "value": 1
+      }
+    ],
+    "actual_output": {
+      "vehicle_state": 11,
+      "vehicle_mode": 5,
+      "power_current": 0.05,
+      "bus_message_flag": 1,
+      "pdcu_wake_reason": 3,
+      "actual_duration": 14.7,
+      "result_type": "expected",
+      "power_alarm_flag": 0,
+      "bus_off_flag": 0,
+      "active_dtcs": [],
+      "signal_guard_result": {
+        "valid": true,
+        "fault_type": null,
+        "reason": "信号有效"
+      },
+      "detail": "CP信号=9.1V > 9V，Module B校验通过，唤醒成功",
+      "state_name": "state11",
+      "test_status": 1,
+      "ready_flag": 1,
+      "bms_wake_cmd": 1,
+      "mcu_wake_cmd": 1,
+      "battery_voltage": 12.92
+    },
+    "passed": true,
+    "mismatches": []
+  },
+  {
+    "case_id": "7c884e48-d585-45c2-8436-ac8f3d4b12d8",
+    "requirement_id": "REQ-002",
+    "technique": "BVA",
+    "title": "BVA: CAN报文ID下边界外(0x3FF)不唤醒",
+    "input": {
+      "can_msg_id": 1023
+    },
+    "expected": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 9
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 0
+      },
+      {
+        "name": "bus_message_flag",
+        "operator": "eq",
+        "value": 0
+      },
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "error"
+      }
+    ],
+    "actual_output": {
+      "vehicle_state": 9,
+      "vehicle_mode": 2,
+      "power_current": 0.01,
+      "bus_message_flag": 0,
+      "pdcu_wake_reason": 0,
+      "actual_duration": 14.7,
+      "result_type": "error",
+      "power_alarm_flag": 0,
+      "bus_off_flag": 0,
+      "active_dtcs": [],
+      "signal_guard_result": {
+        "valid": true,
+        "fault_type": null,
+        "reason": "信号有效"
+      },
+      "detail": "ID 0x3FF 超出有效范围",
+      "state_name": "state09",
+      "test_status": 4,
+      "ready_flag": 0,
+      "bms_wake_cmd": 1,
+      "mcu_wake_cmd": 1,
+      "battery_voltage": 12.92
+    },
+    "passed": true,
+    "mismatches": []
+  },
+  {
+    "case_id": "866ea05a-a8f0-408c-84a8-b4ffcf8bada3",
+    "requirement_id": "REQ-002",
+    "technique": "BVA",
+    "title": "BVA: CAN报文ID下边界(0x400)成功唤醒",
+    "input": {
+      "can_msg_id": 1024
+    },
+    "expected": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 11
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 2
+      },
+      {
+        "name": "bus_message_flag",
+        "operator": "eq",
+        "value": 1
+      },
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "expected"
+      }
+    ],
+    "actual_output": {
+      "vehicle_state": 11,
+      "vehicle_mode": 5,
+      "power_current": 0.05,
+      "bus_message_flag": 1,
+      "pdcu_wake_reason": 2,
+      "actual_duration": 14.7,
+      "result_type": "expected",
+      "power_alarm_flag": 0,
+      "bus_off_flag": 0,
+      "active_dtcs": [],
+      "signal_guard_result": {
+        "valid": true,
+        "fault_type": null,
+        "reason": "信号有效"
+      },
+      "detail": "ID 0x400 在有效范围内，触发唤醒，Module B校验通过，唤醒成功",
+      "state_name": "state11",
+      "test_status": 1,
+      "ready_flag": 1,
+      "bms_wake_cmd": 1,
+      "mcu_wake_cmd": 1,
+      "battery_voltage": 12.92
+    },
+    "passed": true,
+    "mismatches": []
+  },
+  {
+    "case_id": "a80270da-4f28-40f1-be25-8f8d93715bab",
+    "requirement_id": "REQ-002",
+    "technique": "BVA",
+    "title": "BVA: CAN报文ID上边界(0x47F)成功唤醒",
+    "input": {
+      "can_msg_id": 1151
+    },
+    "expected": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 11
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 2
+      },
+      {
+        "name": "bus_message_flag",
+        "operator": "eq",
+        "value": 1
+      },
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "expected"
+      }
+    ],
+    "actual_output": {
+      "vehicle_state": 11,
+      "vehicle_mode": 5,
+      "power_current": 0.05,
+      "bus_message_flag": 1,
+      "pdcu_wake_reason": 2,
+      "actual_duration": 14.7,
+      "result_type": "expected",
+      "power_alarm_flag": 0,
+      "bus_off_flag": 0,
+      "active_dtcs": [],
+      "signal_guard_result": {
+        "valid": true,
+        "fault_type": null,
+        "reason": "信号有效"
+      },
+      "detail": "ID 0x47F 在有效范围内，触发唤醒，Module B校验通过，唤醒成功",
+      "state_name": "state11",
+      "test_status": 1,
+      "ready_flag": 1,
+      "bms_wake_cmd": 1,
+      "mcu_wake_cmd": 1,
+      "battery_voltage": 12.92
+    },
+    "passed": true,
+    "mismatches": []
+  },
+  {
+    "case_id": "47c3e760-7752-4508-a9f6-8eb4e5d54c8f",
+    "requirement_id": "REQ-002",
+    "technique": "BVA",
+    "title": "BVA: CAN报文ID上边界外(0x480)不唤醒",
+    "input": {
+      "can_msg_id": 1152
+    },
+    "expected": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 9
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 0
+      },
+      {
+        "name": "bus_message_flag",
+        "operator": "eq",
+        "value": 0
+      },
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "error"
+      }
+    ],
+    "actual_output": {
+      "vehicle_state": 9,
+      "vehicle_mode": 2,
+      "power_current": 0.01,
+      "bus_message_flag": 0,
+      "pdcu_wake_reason": 0,
+      "actual_duration": 14.7,
+      "result_type": "error",
+      "power_alarm_flag": 0,
+      "bus_off_flag": 0,
+      "active_dtcs": [],
+      "signal_guard_result": {
+        "valid": true,
+        "fault_type": null,
+        "reason": "信号有效"
+      },
+      "detail": "ID 0x480 超出有效范围",
+      "state_name": "state09",
+      "test_status": 4,
+      "ready_flag": 0,
+      "bms_wake_cmd": 1,
+      "mcu_wake_cmd": 1,
+      "battery_voltage": 12.92
+    },
+    "passed": true,
+    "mismatches": []
+  },
+  {
+    "case_id": "e3b2dea4-a040-48c9-a1a9-ff174cf4def2",
+    "requirement_id": "REQ-004",
+    "technique": "BVA",
+    "title": "BVA_CC电压4.3V唤醒测试",
+    "input": {
+      "cc_voltage": 4.3
+    },
+    "expected": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 11
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 4
+      },
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "expected"
+      },
+      {
+        "name": "bus_message_flag",
+        "operator": "eq",
+        "value": 1
+      }
+    ],
+    "actual_output": {
+      "vehicle_state": 11,
+      "vehicle_mode": 5,
+      "power_current": 0.05,
+      "bus_message_flag": 1,
+      "pdcu_wake_reason": 4,
+      "actual_duration": 14.7,
+      "result_type": "expected",
+      "power_alarm_flag": 0,
+      "bus_off_flag": 0,
+      "active_dtcs": [],
+      "signal_guard_result": {
+        "valid": true,
+        "fault_type": null,
+        "reason": "信号有效"
+      },
+      "detail": "CC信号=4.3V < 4.4V，Module B校验通过，唤醒成功",
+      "state_name": "state11",
+      "test_status": 1,
+      "ready_flag": 1,
+      "bms_wake_cmd": 1,
+      "mcu_wake_cmd": 1,
+      "battery_voltage": 12.92
+    },
+    "passed": true,
+    "mismatches": []
+  },
+  {
+    "case_id": "cde914db-73e0-4b98-9dd1-f2565695bdda",
+    "requirement_id": "REQ-004",
+    "technique": "BVA",
+    "title": "BVA_CC电压4.4V不唤醒测试",
+    "input": {
+      "cc_voltage": 4.4
+    },
+    "expected": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 9
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 0
+      },
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "error"
+      },
+      {
+        "name": "bus_message_flag",
+        "operator": "eq",
+        "value": 0
+      }
+    ],
+    "actual_output": {
+      "vehicle_state": 9,
+      "vehicle_mode": 2,
+      "power_current": 0.01,
+      "bus_message_flag": 0,
+      "pdcu_wake_reason": 0,
+      "actual_duration": 14.7,
+      "result_type": "error",
+      "power_alarm_flag": 0,
+      "bus_off_flag": 0,
+      "active_dtcs": [],
+      "signal_guard_result": {
+        "valid": true,
+        "fault_type": null,
+        "reason": "信号有效"
+      },
+      "detail": "CC信号=4.4V未低于4.4V",
+      "state_name": "state09",
+      "test_status": 4,
+      "ready_flag": 0,
+      "bms_wake_cmd": 1,
+      "mcu_wake_cmd": 1,
+      "battery_voltage": 12.92
+    },
+    "passed": true,
+    "mismatches": []
+  },
+  {
+    "case_id": "addb86e7-d431-453d-b575-4bb15e44e841",
+    "requirement_id": "REQ-004",
+    "technique": "BVA",
+    "title": "BVA_CC电压4.5V不唤醒测试",
+    "input": {
+      "cc_voltage": 4.5
+    },
+    "expected": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 9
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 0
+      },
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "error"
+      },
+      {
+        "name": "bus_message_flag",
+        "operator": "eq",
+        "value": 0
+      }
+    ],
+    "actual_output": {
+      "vehicle_state": 9,
+      "vehicle_mode": 2,
+      "power_current": 0.01,
+      "bus_message_flag": 0,
+      "pdcu_wake_reason": 0,
+      "actual_duration": 14.7,
+      "result_type": "error",
+      "power_alarm_flag": 0,
+      "bus_off_flag": 0,
+      "active_dtcs": [],
+      "signal_guard_result": {
+        "valid": true,
+        "fault_type": null,
+        "reason": "信号有效"
+      },
+      "detail": "CC信号=4.5V未低于4.4V",
+      "state_name": "state09",
+      "test_status": 4,
+      "ready_flag": 0,
+      "bms_wake_cmd": 1,
+      "mcu_wake_cmd": 1,
+      "battery_voltage": 12.92
+    },
+    "passed": true,
+    "mismatches": []
+  },
+  {
+    "case_id": "5897c745-f18e-4120-aa5f-ea67bdaf401d",
+    "requirement_id": "REQ-005",
+    "technique": "BVA",
+    "title": "BVA_CC2电压4.3V边界唤醒测试",
+    "input": {
+      "cc2_voltage": 4.3
+    },
+    "expected": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 11
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 5
+      },
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "expected"
+      },
+      {
+        "name": "bus_message_flag",
+        "operator": "eq",
+        "value": 1
+      }
+    ],
+    "actual_output": {
+      "vehicle_state": 11,
+      "vehicle_mode": 5,
+      "power_current": 0.05,
+      "bus_message_flag": 1,
+      "pdcu_wake_reason": 5,
+      "actual_duration": 14.7,
+      "result_type": "expected",
+      "power_alarm_flag": 0,
+      "bus_off_flag": 0,
+      "active_dtcs": [],
+      "signal_guard_result": {
+        "valid": true,
+        "fault_type": null,
+        "reason": "信号有效"
+      },
+      "detail": "CC2信号=4.3V < UBR阈值4.4V，Module B校验通过，唤醒成功",
+      "state_name": "state11",
+      "test_status": 1,
+      "ready_flag": 1,
+      "bms_wake_cmd": 1,
+      "mcu_wake_cmd": 1,
+      "battery_voltage": 12.92
+    },
+    "passed": true,
+    "mismatches": []
+  },
+  {
+    "case_id": "c73c1bff-473f-4c7d-bbeb-36001e444e49",
+    "requirement_id": "REQ-005",
+    "technique": "BVA",
+    "title": "BVA_CC2电压4.4V边界不唤醒测试",
+    "input": {
+      "cc2_voltage": 4.4
+    },
+    "expected": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 9
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 0
+      },
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "error"
+      },
+      {
+        "name": "bus_message_flag",
+        "operator": "eq",
+        "value": 0
+      }
+    ],
+    "actual_output": {
+      "vehicle_state": 9,
+      "vehicle_mode": 2,
+      "power_current": 0.01,
+      "bus_message_flag": 0,
+      "pdcu_wake_reason": 0,
+      "actual_duration": 14.7,
+      "result_type": "error",
+      "power_alarm_flag": 0,
+      "bus_off_flag": 0,
+      "active_dtcs": [],
+      "signal_guard_result": {
+        "valid": true,
+        "fault_type": null,
+        "reason": "信号有效"
+      },
+      "detail": "CC2信号=4.4V未低于UBR阈值",
+      "state_name": "state09",
+      "test_status": 4,
+      "ready_flag": 0,
+      "bms_wake_cmd": 1,
+      "mcu_wake_cmd": 1,
+      "battery_voltage": 12.92
+    },
+    "passed": true,
+    "mismatches": []
+  },
+  {
+    "case_id": "8adc3c01-d079-44c7-bda6-3810fc94def9",
+    "requirement_id": "REQ-005",
+    "technique": "BVA",
+    "title": "BVA_CC2电压4.5V边界不唤醒测试",
+    "input": {
+      "cc2_voltage": 4.5
+    },
+    "expected": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 9
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 0
+      },
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "error"
+      },
+      {
+        "name": "bus_message_flag",
+        "operator": "eq",
+        "value": 0
+      }
+    ],
+    "actual_output": {
+      "vehicle_state": 9,
+      "vehicle_mode": 2,
+      "power_current": 0.01,
+      "bus_message_flag": 0,
+      "pdcu_wake_reason": 0,
+      "actual_duration": 14.7,
+      "result_type": "error",
+      "power_alarm_flag": 0,
+      "bus_off_flag": 0,
+      "active_dtcs": [],
+      "signal_guard_result": {
+        "valid": true,
+        "fault_type": null,
+        "reason": "信号有效"
+      },
+      "detail": "CC2信号=4.5V未低于UBR阈值",
+      "state_name": "state09",
+      "test_status": 4,
+      "ready_flag": 0,
+      "bms_wake_cmd": 1,
+      "mcu_wake_cmd": 1,
+      "battery_voltage": 12.92
+    },
+    "passed": true,
+    "mismatches": []
+  },
+  {
+    "case_id": "9f9986b7-af42-4c4a-ab18-bee017d8a71c",
+    "requirement_id": "REQ-007",
+    "technique": "BVA",
+    "title": "BVA: 门板电压下边界有效且时间下边界有效触发唤醒",
+    "input": {
+      "door_voltage": 0.9,
+      "duration_ms": 10
+    },
+    "expected": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 11
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 7
+      },
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "expected"
+      },
+      {
+        "name": "bus_message_flag",
+        "operator": "eq",
+        "value": 1
+      },
+      {
+        "name": "actual_duration",
+        "operator": "lte",
+        "value": 20
+      }
+    ],
+    "actual_output": {
+      "vehicle_state": 11,
+      "vehicle_mode": 5,
+      "power_current": 0.05,
+      "bus_message_flag": 1,
+      "pdcu_wake_reason": 7,
+      "actual_duration": 14.7,
+      "result_type": "expected",
+      "power_alarm_flag": 0,
+      "bus_off_flag": 0,
+      "active_dtcs": [],
+      "signal_guard_result": {
+        "valid": true,
+        "fault_type": null,
+        "reason": "信号有效"
+      },
+      "detail": "门板信号=0.9V < 1V，持续10ms >= 10ms，Module B校验通过，唤醒成功",
+      "state_name": "state11",
+      "test_status": 1,
+      "ready_flag": 1,
+      "bms_wake_cmd": 1,
+      "mcu_wake_cmd": 1,
+      "battery_voltage": 12.92
+    },
+    "passed": true,
+    "mismatches": []
+  },
+  {
+    "case_id": "cf712a11-7ae7-4714-99bb-a554e432bb0d",
+    "requirement_id": "REQ-007",
+    "technique": "BVA",
+    "title": "BVA: 门板电压上边界无效且时间下边界有效不触发唤醒",
+    "input": {
+      "door_voltage": 1.0,
+      "duration_ms": 10
+    },
+    "expected": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 9
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 0
+      },
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "error"
+      },
+      {
+        "name": "bus_message_flag",
+        "operator": "eq",
+        "value": 0
+      }
+    ],
+    "actual_output": {
+      "vehicle_state": 9,
+      "vehicle_mode": 2,
+      "power_current": 0.01,
+      "bus_message_flag": 0,
+      "pdcu_wake_reason": 0,
+      "actual_duration": 14.7,
+      "result_type": "error",
+      "power_alarm_flag": 0,
+      "bus_off_flag": 0,
+      "active_dtcs": [],
+      "signal_guard_result": {
+        "valid": true,
+        "fault_type": null,
+        "reason": "信号有效"
+      },
+      "detail": "门板信号未同时满足电压和时序条件",
+      "state_name": "state09",
+      "test_status": 4,
+      "ready_flag": 0,
+      "bms_wake_cmd": 1,
+      "mcu_wake_cmd": 1,
+      "battery_voltage": 12.92
+    },
+    "passed": true,
+    "mismatches": []
+  },
+  {
+    "case_id": "b910cdb6-5b83-4e73-a769-09327576aef9",
+    "requirement_id": "REQ-007",
+    "technique": "BVA",
+    "title": "BVA: 门板电压下边界有效且时间上边界无效不触发唤醒",
+    "input": {
+      "door_voltage": 0.9,
+      "duration_ms": 9
+    },
+    "expected": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 9
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 0
+      },
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "error"
+      },
+      {
+        "name": "bus_message_flag",
+        "operator": "eq",
+        "value": 0
+      }
+    ],
+    "actual_output": {
+      "vehicle_state": 9,
+      "vehicle_mode": 2,
+      "power_current": 0.01,
+      "bus_message_flag": 0,
+      "pdcu_wake_reason": 0,
+      "actual_duration": 14.7,
+      "result_type": "error",
+      "power_alarm_flag": 0,
+      "bus_off_flag": 0,
+      "active_dtcs": [],
+      "signal_guard_result": {
+        "valid": true,
+        "fault_type": null,
+        "reason": "信号有效"
+      },
+      "detail": "门板信号未同时满足电压和时序条件",
+      "state_name": "state09",
+      "test_status": 4,
+      "ready_flag": 0,
+      "bms_wake_cmd": 1,
+      "mcu_wake_cmd": 1,
+      "battery_voltage": 12.92
+    },
+    "passed": true,
+    "mismatches": []
+  },
+  {
+    "case_id": "62a5c989-54e7-4cd1-88aa-9cb39c0ea4eb",
+    "requirement_id": "REQ-014",
+    "technique": "BVA",
+    "title": "type1单信号唤醒时序边界19.9s合规测试",
+    "input": {
+      "test_case_type": 1,
+      "actual_duration": 19.9
+    },
+    "expected": [
+      {
+        "name": "actual_duration",
+        "operator": "lte",
+        "value": 20.0
+      },
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "expected"
+      },
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 11
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 1
+      },
+      {
+        "name": "bus_message_flag",
+        "operator": "eq",
+        "value": 1
+      }
+    ],
+    "actual_output": {
+      "vehicle_state": 11,
+      "vehicle_mode": 5,
+      "power_current": 0.05,
+      "bus_message_flag": 1,
+      "pdcu_wake_reason": 1,
+      "actual_duration": 14.7,
+      "result_type": "expected",
+      "power_alarm_flag": 0,
+      "bus_off_flag": 0,
+      "active_dtcs": [],
+      "signal_guard_result": {
+        "valid": true,
+        "fault_type": null,
+        "reason": "信号有效"
+      },
+      "detail": "供电电压=9.3V > 9V，持续15ms >= 10ms，Module B校验通过，唤醒成功",
+      "state_name": "state11",
+      "test_status": 1,
+      "ready_flag": 1,
+      "bms_wake_cmd": 1,
+      "mcu_wake_cmd": 1,
+      "battery_voltage": 12.92
+    },
+    "passed": true,
+    "mismatches": []
+  },
+  {
+    "case_id": "124fba9a-73aa-43d2-bca4-2c78a3090c96",
+    "requirement_id": "REQ-014",
+    "technique": "BVA",
+    "title": "type1单信号唤醒时序边界20.0s合规测试",
+    "input": {
+      "test_case_type": 1,
+      "actual_duration": 20.0
+    },
+    "expected": [
+      {
+        "name": "actual_duration",
+        "operator": "lte",
+        "value": 20.0
+      },
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "expected"
+      },
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 11
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 1
+      },
+      {
+        "name": "bus_message_flag",
+        "operator": "eq",
+        "value": 1
+      }
+    ],
+    "actual_output": {
+      "vehicle_state": 11,
+      "vehicle_mode": 5,
+      "power_current": 0.05,
+      "bus_message_flag": 1,
+      "pdcu_wake_reason": 1,
+      "actual_duration": 14.7,
+      "result_type": "expected",
+      "power_alarm_flag": 0,
+      "bus_off_flag": 0,
+      "active_dtcs": [],
+      "signal_guard_result": {
+        "valid": true,
+        "fault_type": null,
+        "reason": "信号有效"
+      },
+      "detail": "供电电压=9.3V > 9V，持续15ms >= 10ms，Module B校验通过，唤醒成功",
+      "state_name": "state11",
+      "test_status": 1,
+      "ready_flag": 1,
+      "bms_wake_cmd": 1,
+      "mcu_wake_cmd": 1,
+      "battery_voltage": 12.92
+    },
+    "passed": true,
+    "mismatches": []
+  },
+  {
+    "case_id": "901926bf-467f-44f2-830f-f4e4e349d1d9",
+    "requirement_id": "REQ-014",
+    "technique": "BVA",
+    "title": "type1单信号唤醒时序边界20.1s不合规测试",
+    "input": {
+      "test_case_type": 1,
+      "actual_duration": 20.1
+    },
+    "expected": [
+      {
+        "name": "actual_duration",
+        "operator": "gt",
+        "value": 20
+      },
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 10
+      },
+      {
+        "name": "active_dtcs",
+        "operator": "contains",
+        "value": "DTC_001"
+      }
+    ],
+    "actual_output": {
+      "vehicle_state": 10,
+      "vehicle_mode": 2,
+      "power_current": 0.25,
+      "bus_message_flag": 0,
+      "pdcu_wake_reason": 1,
+      "actual_duration": 41.0,
+      "result_type": "error",
+      "power_alarm_flag": 1,
+      "bus_off_flag": 0,
+      "active_dtcs": [
+        "DTC_001"
+      ],
+      "signal_guard_result": {
+        "valid": true,
+        "fault_type": null,
+        "reason": "信号有效"
+      },
+      "detail": "供电电压=9.3V > 9V，持续15ms >= 10ms；触发state10卡死缺陷，actual_duration超过估计时间2倍",
+      "state_name": "state10",
+      "test_status": 4,
+      "ready_flag": 0,
+      "bms_wake_cmd": 1,
+      "mcu_wake_cmd": 1,
+      "battery_voltage": 12.92
+    },
+    "passed": true,
+    "mismatches": []
+  },
+  {
+    "case_id": "30970747-568e-4769-a0d8-0a912bb1a3d3",
+    "requirement_id": "REQ-014",
+    "technique": "BVA",
+    "title": "type2多信号休眠时序边界59.9s合规测试",
+    "input": {
+      "test_case_type": 2,
+      "actual_duration": 59.9
+    },
+    "expected": [
+      {
+        "name": "actual_duration",
+        "operator": "lte",
+        "value": 60.0
+      },
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "expected"
+      },
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 9
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 0
+      },
+      {
+        "name": "bus_message_flag",
+        "operator": "eq",
+        "value": 0
+      }
+    ],
+    "actual_output": {
+      "vehicle_state": 9,
+      "vehicle_mode": 2,
+      "power_current": 0.01,
+      "bus_message_flag": 0,
+      "pdcu_wake_reason": 0,
+      "actual_duration": 42.0,
+      "result_type": "expected",
+      "power_alarm_flag": 0,
+      "bus_off_flag": 0,
+      "active_dtcs": [],
+      "signal_guard_result": {
+        "valid": true,
+        "fault_type": null,
+        "reason": "信号有效"
+      },
+      "detail": "h1/h2/h3同时满足，VCU进入state09休眠",
+      "state_name": "state09",
+      "test_status": 3,
+      "ready_flag": 0,
+      "bms_wake_cmd": 1,
+      "mcu_wake_cmd": 1,
+      "battery_voltage": 12.92
+    },
+    "passed": true,
+    "mismatches": []
+  },
+  {
+    "case_id": "886b8539-4e1c-4305-8be3-af84d40ff518",
+    "requirement_id": "REQ-014",
+    "technique": "BVA",
+    "title": "type2多信号休眠时序边界60.0s合规测试",
+    "input": {
+      "test_case_type": 2,
+      "actual_duration": 60.0
+    },
+    "expected": [
+      {
+        "name": "actual_duration",
+        "operator": "lte",
+        "value": 60.0
+      },
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "expected"
+      },
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 9
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 0
+      },
+      {
+        "name": "bus_message_flag",
+        "operator": "eq",
+        "value": 0
+      }
+    ],
+    "actual_output": {
+      "vehicle_state": 9,
+      "vehicle_mode": 2,
+      "power_current": 0.01,
+      "bus_message_flag": 0,
+      "pdcu_wake_reason": 0,
+      "actual_duration": 42.0,
+      "result_type": "expected",
+      "power_alarm_flag": 0,
+      "bus_off_flag": 0,
+      "active_dtcs": [],
+      "signal_guard_result": {
+        "valid": true,
+        "fault_type": null,
+        "reason": "信号有效"
+      },
+      "detail": "h1/h2/h3同时满足，VCU进入state09休眠",
+      "state_name": "state09",
+      "test_status": 3,
+      "ready_flag": 0,
+      "bms_wake_cmd": 1,
+      "mcu_wake_cmd": 1,
+      "battery_voltage": 12.92
+    },
+    "passed": true,
+    "mismatches": []
+  },
+  {
+    "case_id": "6d2ee7ab-2bea-42ac-8eb3-6a3a8056b809",
+    "requirement_id": "REQ-006",
+    "technique": "BVA",
+    "title": "BVA-电压下边界外：3.9V",
+    "input": {
+      "hood_voltage": 3.9,
+      "duration_ms": 10
+    },
+    "expected": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 9
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 0
+      },
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "error"
+      },
+      {
+        "name": "bus_message_flag",
+        "operator": "eq",
+        "value": 0
+      }
+    ],
+    "actual_output": {
+      "vehicle_state": 9,
+      "vehicle_mode": 2,
+      "power_current": 0.01,
+      "bus_message_flag": 0,
+      "pdcu_wake_reason": 0,
+      "actual_duration": 14.7,
+      "result_type": "error",
+      "power_alarm_flag": 0,
+      "bus_off_flag": 0,
+      "active_dtcs": [],
+      "signal_guard_result": {
+        "valid": true,
+        "fault_type": null,
+        "reason": "信号有效"
+      },
+      "detail": "口盖信号未同时满足电压和时序条件",
+      "state_name": "state09",
+      "test_status": 4,
+      "ready_flag": 0,
+      "bms_wake_cmd": 1,
+      "mcu_wake_cmd": 1,
+      "battery_voltage": 12.92
+    },
+    "passed": true,
+    "mismatches": []
+  },
+  {
+    "case_id": "ee54d9c7-5982-4922-9d08-64d204f26f52",
+    "requirement_id": "REQ-006",
+    "technique": "BVA",
+    "title": "BVA-电压下边界：4.0V",
+    "input": {
+      "hood_voltage": 4.0,
+      "duration_ms": 10
+    },
+    "expected": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 9
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 0
+      },
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "error"
+      },
+      {
+        "name": "bus_message_flag",
+        "operator": "eq",
+        "value": 0
+      }
+    ],
+    "actual_output": {
+      "vehicle_state": 9,
+      "vehicle_mode": 2,
+      "power_current": 0.01,
+      "bus_message_flag": 0,
+      "pdcu_wake_reason": 0,
+      "actual_duration": 14.7,
+      "result_type": "error",
+      "power_alarm_flag": 0,
+      "bus_off_flag": 0,
+      "active_dtcs": [],
+      "signal_guard_result": {
+        "valid": true,
+        "fault_type": null,
+        "reason": "信号有效"
+      },
+      "detail": "口盖信号未同时满足电压和时序条件",
+      "state_name": "state09",
+      "test_status": 4,
+      "ready_flag": 0,
+      "bms_wake_cmd": 1,
+      "mcu_wake_cmd": 1,
+      "battery_voltage": 12.92
+    },
+    "passed": true,
+    "mismatches": []
+  },
+  {
+    "case_id": "8069a480-2fec-49de-bf10-a4431eeb6ce8",
+    "requirement_id": "REQ-006",
+    "technique": "BVA",
+    "title": "BVA-电压刚过边界：4.1V",
+    "input": {
+      "hood_voltage": 4.1,
+      "duration_ms": 10
+    },
+    "expected": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 11
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 6
+      },
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "expected"
+      },
+      {
+        "name": "bus_message_flag",
+        "operator": "eq",
+        "value": 1
+      }
+    ],
+    "actual_output": {
+      "vehicle_state": 11,
+      "vehicle_mode": 5,
+      "power_current": 0.05,
+      "bus_message_flag": 1,
+      "pdcu_wake_reason": 6,
+      "actual_duration": 14.7,
+      "result_type": "expected",
+      "power_alarm_flag": 0,
+      "bus_off_flag": 0,
+      "active_dtcs": [],
+      "signal_guard_result": {
+        "valid": true,
+        "fault_type": null,
+        "reason": "信号有效"
+      },
+      "detail": "口盖信号=4.1V > 4V，持续10ms >= 10ms，Module B校验通过，唤醒成功",
+      "state_name": "state11",
+      "test_status": 1,
+      "ready_flag": 1,
+      "bms_wake_cmd": 1,
+      "mcu_wake_cmd": 1,
+      "battery_voltage": 12.92
+    },
+    "passed": true,
+    "mismatches": []
+  },
+  {
+    "case_id": "f4e1868c-1f0f-4af3-a665-d36f593afef8",
+    "requirement_id": "REQ-006",
+    "technique": "BVA",
+    "title": "BVA-时间下边界外：9ms",
+    "input": {
+      "hood_voltage": 5.0,
+      "duration_ms": 9
+    },
+    "expected": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 9
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 0
+      },
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "error"
+      },
+      {
+        "name": "bus_message_flag",
+        "operator": "eq",
+        "value": 0
+      }
+    ],
+    "actual_output": {
+      "vehicle_state": 9,
+      "vehicle_mode": 2,
+      "power_current": 0.01,
+      "bus_message_flag": 0,
+      "pdcu_wake_reason": 0,
+      "actual_duration": 14.7,
+      "result_type": "error",
+      "power_alarm_flag": 0,
+      "bus_off_flag": 0,
+      "active_dtcs": [],
+      "signal_guard_result": {
+        "valid": true,
+        "fault_type": null,
+        "reason": "信号有效"
+      },
+      "detail": "口盖信号未同时满足电压和时序条件",
+      "state_name": "state09",
+      "test_status": 4,
+      "ready_flag": 0,
+      "bms_wake_cmd": 1,
+      "mcu_wake_cmd": 1,
+      "battery_voltage": 12.92
+    },
+    "passed": true,
+    "mismatches": []
+  },
+  {
+    "case_id": "d2a3afdf-6cb5-4c2d-93cd-5b245200c5ef",
+    "requirement_id": "REQ-006",
+    "technique": "BVA",
+    "title": "BVA-时间下边界：10ms",
+    "input": {
+      "hood_voltage": 5.0,
+      "duration_ms": 10
+    },
+    "expected": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 11
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 6
+      },
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "expected"
+      },
+      {
+        "name": "bus_message_flag",
+        "operator": "eq",
+        "value": 1
+      }
+    ],
+    "actual_output": {
+      "vehicle_state": 11,
+      "vehicle_mode": 5,
+      "power_current": 0.05,
+      "bus_message_flag": 1,
+      "pdcu_wake_reason": 6,
+      "actual_duration": 14.7,
+      "result_type": "expected",
+      "power_alarm_flag": 0,
+      "bus_off_flag": 0,
+      "active_dtcs": [],
+      "signal_guard_result": {
+        "valid": true,
+        "fault_type": null,
+        "reason": "信号有效"
+      },
+      "detail": "口盖信号=5.0V > 4V，持续10ms >= 10ms，Module B校验通过，唤醒成功",
+      "state_name": "state11",
+      "test_status": 1,
+      "ready_flag": 1,
+      "bms_wake_cmd": 1,
+      "mcu_wake_cmd": 1,
+      "battery_voltage": 12.92
+    },
+    "passed": true,
+    "mismatches": []
+  },
+  {
+    "case_id": "6a41e68e-60d6-47b9-83c8-e3200d21a4a3",
+    "requirement_id": "REQ-006",
+    "technique": "BVA",
+    "title": "BVA-时间刚过边界：11ms",
+    "input": {
+      "hood_voltage": 5.0,
+      "duration_ms": 11
+    },
+    "expected": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 11
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 6
+      },
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "expected"
+      },
+      {
+        "name": "bus_message_flag",
+        "operator": "eq",
+        "value": 1
+      }
+    ],
+    "actual_output": {
+      "vehicle_state": 11,
+      "vehicle_mode": 5,
+      "power_current": 0.05,
+      "bus_message_flag": 1,
+      "pdcu_wake_reason": 6,
+      "actual_duration": 14.7,
+      "result_type": "expected",
+      "power_alarm_flag": 0,
+      "bus_off_flag": 0,
+      "active_dtcs": [],
+      "signal_guard_result": {
+        "valid": true,
+        "fault_type": null,
+        "reason": "信号有效"
+      },
+      "detail": "口盖信号=5.0V > 4V，持续11ms >= 10ms，Module B校验通过，唤醒成功",
+      "state_name": "state11",
+      "test_status": 1,
+      "ready_flag": 1,
+      "bms_wake_cmd": 1,
+      "mcu_wake_cmd": 1,
+      "battery_voltage": 12.92
+    },
+    "passed": true,
+    "mismatches": []
+  },
+  {
+    "case_id": "2e316a80-9cd5-4ba2-9398-3d8bd6cce07f",
+    "requirement_id": "REQ-008",
+    "technique": "DT",
+    "title": "DT-决策表规则1_VCUIdle_flg为1",
+    "input": {
+      "VCUO_bDIAG_VCUIdle_flg": 1
+    },
+    "expected": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 9
+      },
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "expected"
+      }
+    ],
+    "actual_output": {
+      "vehicle_state": 9,
+      "vehicle_mode": 2,
+      "power_current": 0.01,
+      "bus_message_flag": 0,
+      "pdcu_wake_reason": 0,
+      "actual_duration": 42.0,
+      "result_type": "expected",
+      "power_alarm_flag": 0,
+      "bus_off_flag": 0,
+      "active_dtcs": [],
+      "signal_guard_result": {
+        "valid": true,
+        "fault_type": null,
+        "reason": "信号有效"
+      },
+      "detail": "h1/h2/h3同时满足，VCU进入state09休眠",
+      "state_name": "state09",
+      "test_status": 3,
+      "ready_flag": 0,
+      "bms_wake_cmd": 1,
+      "mcu_wake_cmd": 1,
+      "battery_voltage": 12.92
+    },
+    "passed": true,
+    "mismatches": []
+  },
+  {
+    "case_id": "ce1fd6b1-d46d-45a0-84f2-06b805fdf11d",
+    "requirement_id": "REQ-008",
+    "technique": "DT",
+    "title": "DT-决策表规则2_VCUIdle_flg为0",
+    "input": {
+      "VCUO_bDIAG_VCUIdle_flg": 0
+    },
+    "expected": [
+      {
+        "name": "vehicle_state",
+        "operator": "ne",
+        "value": 9
+      },
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "error"
+      }
+    ],
+    "actual_output": {
+      "vehicle_state": 11,
+      "vehicle_mode": 5,
+      "power_current": 0.05,
+      "bus_message_flag": 1,
+      "pdcu_wake_reason": 0,
+      "actual_duration": 42.0,
+      "result_type": "error",
+      "power_alarm_flag": 0,
+      "bus_off_flag": 0,
+      "active_dtcs": [],
+      "signal_guard_result": {
+        "valid": true,
+        "fault_type": null,
+        "reason": "信号有效"
+      },
+      "detail": "休眠条件不完整（缺少h1），状态保持不变",
+      "state_name": "state11",
+      "test_status": 4,
+      "ready_flag": 1,
+      "bms_wake_cmd": 1,
+      "mcu_wake_cmd": 1,
+      "battery_voltage": 12.92
+    },
+    "passed": true,
+    "mismatches": []
+  },
+  {
+    "case_id": "3bfb2b0d-630b-4146-a917-579c28ced848",
+    "requirement_id": "REQ-009",
+    "technique": "DT",
+    "title": "DT-AuthComplete_flg为0时不满足休眠条件h2",
+    "input": {
+      "VCUO_bDIAG_AuthComplete_flg": 0
+    },
+    "expected": [
+      {
+        "name": "vehicle_state",
+        "operator": "ne",
+        "value": 9
+      },
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "error"
+      }
+    ],
+    "actual_output": {
+      "vehicle_state": 11,
+      "vehicle_mode": 5,
+      "power_current": 0.05,
+      "bus_message_flag": 1,
+      "pdcu_wake_reason": 0,
+      "actual_duration": 42.0,
+      "result_type": "error",
+      "power_alarm_flag": 0,
+      "bus_off_flag": 0,
+      "active_dtcs": [],
+      "signal_guard_result": {
+        "valid": true,
+        "fault_type": null,
+        "reason": "信号有效"
+      },
+      "detail": "休眠条件不完整（缺少h2），状态保持不变",
+      "state_name": "state11",
+      "test_status": 4,
+      "ready_flag": 1,
+      "bms_wake_cmd": 1,
+      "mcu_wake_cmd": 1,
+      "battery_voltage": 12.92
+    },
+    "passed": true,
+    "mismatches": []
+  },
+  {
+    "case_id": "a46e563d-ea69-4b0e-81ca-c95d9f1a9a27",
+    "requirement_id": "REQ-010",
+    "technique": "DT",
+    "title": "DT-休眠条件h3决策表(条件全满足)",
+    "input": {
+      "can_bus_idle": 1
+    },
+    "expected": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 9
+      },
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "expected"
+      },
+      {
+        "name": "bus_message_flag",
+        "operator": "eq",
+        "value": 0
+      }
+    ],
+    "actual_output": {
+      "vehicle_state": 9,
+      "vehicle_mode": 2,
+      "power_current": 0.01,
+      "bus_message_flag": 0,
+      "pdcu_wake_reason": 0,
+      "actual_duration": 42.0,
+      "result_type": "expected",
+      "power_alarm_flag": 0,
+      "bus_off_flag": 0,
+      "active_dtcs": [],
+      "signal_guard_result": {
+        "valid": true,
+        "fault_type": null,
+        "reason": "信号有效"
+      },
+      "detail": "h1/h2/h3同时满足，VCU进入state09休眠",
+      "state_name": "state09",
+      "test_status": 3,
+      "ready_flag": 0,
+      "bms_wake_cmd": 1,
+      "mcu_wake_cmd": 1,
+      "battery_voltage": 12.92
+    },
+    "passed": true,
+    "mismatches": []
+  },
+  {
+    "case_id": "817b4757-275d-42d9-bc18-243c63cba70c",
+    "requirement_id": "REQ-011",
+    "technique": "DT",
+    "title": "DT-h1=1,h2=1,h3=1全满足进入休眠",
+    "input": {
+      "h1": 1,
+      "h2": 1,
+      "h3": 1
+    },
+    "expected": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 9
+      },
+      {
+        "name": "bus_message_flag",
+        "operator": "eq",
+        "value": 0
+      },
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "expected"
+      }
+    ],
+    "actual_output": {
+      "vehicle_state": 9,
+      "vehicle_mode": 2,
+      "power_current": 0.01,
+      "bus_message_flag": 0,
+      "pdcu_wake_reason": 0,
+      "actual_duration": 42.0,
+      "result_type": "expected",
+      "power_alarm_flag": 0,
+      "bus_off_flag": 0,
+      "active_dtcs": [],
+      "signal_guard_result": {
+        "valid": true,
+        "fault_type": null,
+        "reason": "信号有效"
+      },
+      "detail": "h1/h2/h3同时满足，VCU进入state09休眠",
+      "state_name": "state09",
+      "test_status": 3,
+      "ready_flag": 0,
+      "bms_wake_cmd": 1,
+      "mcu_wake_cmd": 1,
+      "battery_voltage": 12.92
+    },
+    "passed": true,
+    "mismatches": []
+  },
+  {
+    "case_id": "2d7a85f0-a358-4289-82f3-382b3e0b4a40",
+    "requirement_id": "REQ-011",
+    "technique": "DT",
+    "title": "DT-h1=1,h2=1,h3=0不满足休眠",
+    "input": {
+      "h1": 1,
+      "h2": 1,
+      "h3": 0
+    },
+    "expected": [
+      {
+        "name": "vehicle_state",
+        "operator": "ne",
+        "value": 9
+      },
+      {
+        "name": "bus_message_flag",
+        "operator": "eq",
+        "value": 1
+      },
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "error"
+      }
+    ],
+    "actual_output": {
+      "vehicle_state": 11,
+      "vehicle_mode": 5,
+      "power_current": 0.05,
+      "bus_message_flag": 1,
+      "pdcu_wake_reason": 0,
+      "actual_duration": 42.0,
+      "result_type": "error",
+      "power_alarm_flag": 0,
+      "bus_off_flag": 0,
+      "active_dtcs": [],
+      "signal_guard_result": {
+        "valid": true,
+        "fault_type": null,
+        "reason": "信号有效"
+      },
+      "detail": "休眠条件不完整（缺少h3），状态保持不变",
+      "state_name": "state11",
+      "test_status": 4,
+      "ready_flag": 1,
+      "bms_wake_cmd": 1,
+      "mcu_wake_cmd": 1,
+      "battery_voltage": 12.92
+    },
+    "passed": true,
+    "mismatches": []
+  },
+  {
+    "case_id": "30931751-8675-4ddd-bfb7-7ce0ef85cf2e",
+    "requirement_id": "REQ-011",
+    "technique": "DT",
+    "title": "DT-h1=1,h2=0,h3=1不满足休眠",
+    "input": {
+      "h1": 1,
+      "h2": 0,
+      "h3": 1
+    },
+    "expected": [
+      {
+        "name": "vehicle_state",
+        "operator": "ne",
+        "value": 9
+      },
+      {
+        "name": "bus_message_flag",
+        "operator": "eq",
+        "value": 1
+      },
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "error"
+      }
+    ],
+    "actual_output": {
+      "vehicle_state": 11,
+      "vehicle_mode": 5,
+      "power_current": 0.05,
+      "bus_message_flag": 1,
+      "pdcu_wake_reason": 0,
+      "actual_duration": 42.0,
+      "result_type": "error",
+      "power_alarm_flag": 0,
+      "bus_off_flag": 0,
+      "active_dtcs": [],
+      "signal_guard_result": {
+        "valid": true,
+        "fault_type": null,
+        "reason": "信号有效"
+      },
+      "detail": "休眠条件不完整（缺少h2），状态保持不变",
+      "state_name": "state11",
+      "test_status": 4,
+      "ready_flag": 1,
+      "bms_wake_cmd": 1,
+      "mcu_wake_cmd": 1,
+      "battery_voltage": 12.92
+    },
+    "passed": true,
+    "mismatches": []
+  },
+  {
+    "case_id": "3a706d0a-a76e-4fe9-abf8-5d2a9ed11184",
+    "requirement_id": "REQ-011",
+    "technique": "DT",
+    "title": "DT-h1=1,h2=0,h3=0不满足休眠",
+    "input": {
+      "h1": 1,
+      "h2": 0,
+      "h3": 0
+    },
+    "expected": [
+      {
+        "name": "vehicle_state",
+        "operator": "ne",
+        "value": 9
+      },
+      {
+        "name": "bus_message_flag",
+        "operator": "eq",
+        "value": 1
+      },
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "error"
+      }
+    ],
+    "actual_output": {
+      "vehicle_state": 11,
+      "vehicle_mode": 5,
+      "power_current": 0.05,
+      "bus_message_flag": 1,
+      "pdcu_wake_reason": 0,
+      "actual_duration": 42.0,
+      "result_type": "error",
+      "power_alarm_flag": 0,
+      "bus_off_flag": 0,
+      "active_dtcs": [],
+      "signal_guard_result": {
+        "valid": true,
+        "fault_type": null,
+        "reason": "信号有效"
+      },
+      "detail": "休眠条件不完整（缺少h2,h3），状态保持不变",
+      "state_name": "state11",
+      "test_status": 4,
+      "ready_flag": 1,
+      "bms_wake_cmd": 1,
+      "mcu_wake_cmd": 1,
+      "battery_voltage": 12.92
+    },
+    "passed": true,
+    "mismatches": []
+  },
+  {
+    "case_id": "0133eb83-e406-4232-b4d0-16b64d704a71",
+    "requirement_id": "REQ-011",
+    "technique": "DT",
+    "title": "DT-h1=0,h2=1,h3=1不满足休眠",
+    "input": {
+      "h1": 0,
+      "h2": 1,
+      "h3": 1
+    },
+    "expected": [
+      {
+        "name": "vehicle_state",
+        "operator": "ne",
+        "value": 9
+      },
+      {
+        "name": "bus_message_flag",
+        "operator": "eq",
+        "value": 1
+      },
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "error"
+      }
+    ],
+    "actual_output": {
+      "vehicle_state": 11,
+      "vehicle_mode": 5,
+      "power_current": 0.05,
+      "bus_message_flag": 1,
+      "pdcu_wake_reason": 0,
+      "actual_duration": 42.0,
+      "result_type": "error",
+      "power_alarm_flag": 0,
+      "bus_off_flag": 0,
+      "active_dtcs": [],
+      "signal_guard_result": {
+        "valid": true,
+        "fault_type": null,
+        "reason": "信号有效"
+      },
+      "detail": "休眠条件不完整（缺少h1），状态保持不变",
+      "state_name": "state11",
+      "test_status": 4,
+      "ready_flag": 1,
+      "bms_wake_cmd": 1,
+      "mcu_wake_cmd": 1,
+      "battery_voltage": 12.92
+    },
+    "passed": true,
+    "mismatches": []
+  },
+  {
+    "case_id": "2576b370-b8cf-4e87-ba4a-0c307fb9fea5",
+    "requirement_id": "REQ-011",
+    "technique": "DT",
+    "title": "DT-h1=0,h2=1,h3=0不满足休眠",
+    "input": {
+      "h1": 0,
+      "h2": 1,
+      "h3": 0
+    },
+    "expected": [
+      {
+        "name": "vehicle_state",
+        "operator": "ne",
+        "value": 9
+      },
+      {
+        "name": "bus_message_flag",
+        "operator": "eq",
+        "value": 1
+      },
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "error"
+      }
+    ],
+    "actual_output": {
+      "vehicle_state": 11,
+      "vehicle_mode": 5,
+      "power_current": 0.05,
+      "bus_message_flag": 1,
+      "pdcu_wake_reason": 0,
+      "actual_duration": 42.0,
+      "result_type": "error",
+      "power_alarm_flag": 0,
+      "bus_off_flag": 0,
+      "active_dtcs": [],
+      "signal_guard_result": {
+        "valid": true,
+        "fault_type": null,
+        "reason": "信号有效"
+      },
+      "detail": "休眠条件不完整（缺少h1,h3），状态保持不变",
+      "state_name": "state11",
+      "test_status": 4,
+      "ready_flag": 1,
+      "bms_wake_cmd": 1,
+      "mcu_wake_cmd": 1,
+      "battery_voltage": 12.92
+    },
+    "passed": true,
+    "mismatches": []
+  },
+  {
+    "case_id": "a9ba303d-995a-4b7e-a9ef-493f35f86ee9",
+    "requirement_id": "REQ-011",
+    "technique": "DT",
+    "title": "DT-h1=0,h2=0,h3=1不满足休眠",
+    "input": {
+      "h1": 0,
+      "h2": 0,
+      "h3": 1
+    },
+    "expected": [
+      {
+        "name": "vehicle_state",
+        "operator": "ne",
+        "value": 9
+      },
+      {
+        "name": "bus_message_flag",
+        "operator": "eq",
+        "value": 1
+      },
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "error"
+      }
+    ],
+    "actual_output": {
+      "vehicle_state": 11,
+      "vehicle_mode": 5,
+      "power_current": 0.05,
+      "bus_message_flag": 1,
+      "pdcu_wake_reason": 0,
+      "actual_duration": 42.0,
+      "result_type": "error",
+      "power_alarm_flag": 0,
+      "bus_off_flag": 0,
+      "active_dtcs": [],
+      "signal_guard_result": {
+        "valid": true,
+        "fault_type": null,
+        "reason": "信号有效"
+      },
+      "detail": "休眠条件不完整（缺少h1,h2），状态保持不变",
+      "state_name": "state11",
+      "test_status": 4,
+      "ready_flag": 1,
+      "bms_wake_cmd": 1,
+      "mcu_wake_cmd": 1,
+      "battery_voltage": 12.92
+    },
+    "passed": true,
+    "mismatches": []
+  },
+  {
+    "case_id": "be4785f4-c65c-4b53-b101-cba626aa3968",
+    "requirement_id": "REQ-011",
+    "technique": "DT",
+    "title": "DT-h1=0,h2=0,h3=0不满足休眠",
+    "input": {
+      "h1": 0,
+      "h2": 0,
+      "h3": 0
+    },
+    "expected": [
+      {
+        "name": "vehicle_state",
+        "operator": "ne",
+        "value": 9
+      },
+      {
+        "name": "bus_message_flag",
+        "operator": "eq",
+        "value": 1
+      },
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "error"
+      }
+    ],
+    "actual_output": {
+      "vehicle_state": 11,
+      "vehicle_mode": 5,
+      "power_current": 0.05,
+      "bus_message_flag": 1,
+      "pdcu_wake_reason": 0,
+      "actual_duration": 42.0,
+      "result_type": "error",
+      "power_alarm_flag": 0,
+      "bus_off_flag": 0,
+      "active_dtcs": [],
+      "signal_guard_result": {
+        "valid": true,
+        "fault_type": null,
+        "reason": "信号有效"
+      },
+      "detail": "休眠条件不完整（缺少h1,h2,h3），状态保持不变",
+      "state_name": "state11",
+      "test_status": 4,
+      "ready_flag": 1,
+      "bms_wake_cmd": 1,
+      "mcu_wake_cmd": 1,
+      "battery_voltage": 12.92
+    },
+    "passed": true,
+    "mismatches": []
+  },
+  {
+    "case_id": "02298f93-1544-4aa9-b897-b1987933e8a5",
+    "requirement_id": "REQ-013",
+    "technique": "DT",
+    "title": "DT-决策表-state11时bus_message_flag为1",
+    "input": {
+      "vehicle_state": 11
+    },
+    "expected": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 11
+      },
+      {
+        "name": "bus_message_flag",
+        "operator": "eq",
+        "value": 1
+      },
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "expected"
+      }
+    ],
+    "actual_output": {
+      "vehicle_state": 11,
+      "vehicle_mode": 5,
+      "power_current": 0.05,
+      "bus_message_flag": 1,
+      "pdcu_wake_reason": 1,
+      "actual_duration": 14.7,
+      "result_type": "expected",
+      "power_alarm_flag": 0,
+      "bus_off_flag": 0,
+      "active_dtcs": [],
+      "signal_guard_result": {
+        "valid": true,
+        "fault_type": null,
+        "reason": "信号有效"
+      },
+      "detail": "供电电压=9.3V > 9V，持续15ms >= 10ms，Module B校验通过，唤醒成功",
+      "state_name": "state11",
+      "test_status": 1,
+      "ready_flag": 1,
+      "bms_wake_cmd": 1,
+      "mcu_wake_cmd": 1,
+      "battery_voltage": 12.92
+    },
+    "passed": true,
+    "mismatches": []
+  },
+  {
+    "case_id": "778cc8ad-5007-4399-808d-d8c30235b93e",
+    "requirement_id": "REQ-012",
+    "technique": "ST",
+    "title": "状态迁移测试：连续快速循环触发state10卡死序列",
+    "input": {
+      "consecutive_wake_sleep_cycles": 3,
+      "interval": 0.5
+    },
+    "expected": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 10
+      },
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "error"
+      },
+      {
+        "name": "active_dtcs",
+        "operator": "contains",
+        "value": "DTC_001"
+      },
+      {
+        "name": "actual_duration",
+        "operator": "gt",
+        "value": 20
+      }
+    ],
+    "actual_output": {
+      "vehicle_state": 10,
+      "vehicle_mode": 2,
+      "power_current": 0.25,
+      "bus_message_flag": 0,
+      "pdcu_wake_reason": 1,
+      "actual_duration": 41.0,
+      "result_type": "error",
+      "power_alarm_flag": 1,
+      "bus_off_flag": 0,
+      "active_dtcs": [
+        "DTC_001"
+      ],
+      "signal_guard_result": {
+        "valid": true,
+        "fault_type": null,
+        "reason": "信号有效"
+      },
+      "detail": "供电电压=9.3V > 9V，持续15ms >= 10ms；触发state10卡死缺陷，actual_duration超过估计时间2倍",
+      "state_name": "state10",
+      "test_status": 4,
+      "ready_flag": 0,
+      "bms_wake_cmd": 1,
+      "mcu_wake_cmd": 1,
+      "battery_voltage": 12.92
+    },
+    "passed": true,
+    "mismatches": []
+  },
+  {
+    "case_id": "bcfde974-b0ac-4824-b03c-f2b78d605882",
+    "requirement_id": "REQ-001",
+    "technique": "ST",
+    "title": "ST_正常唤醒序列_state09_to_state11",
+    "input": {
+      "voltage": 12.0,
+      "duration_ms": 20
+    },
+    "expected": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 11
+      },
+      {
+        "name": "bus_message_flag",
+        "operator": "eq",
+        "value": 1
+      },
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "expected"
+      }
+    ],
+    "actual_output": {
+      "vehicle_state": 11,
+      "vehicle_mode": 5,
+      "power_current": 0.05,
+      "bus_message_flag": 1,
+      "pdcu_wake_reason": 1,
+      "actual_duration": 14.7,
+      "result_type": "expected",
+      "power_alarm_flag": 0,
+      "bus_off_flag": 0,
+      "active_dtcs": [],
+      "signal_guard_result": {
+        "valid": true,
+        "fault_type": null,
+        "reason": "信号有效"
+      },
+      "detail": "供电电压=12.0V > 9V，持续20ms >= 10ms，Module B校验通过，唤醒成功",
+      "state_name": "state11",
+      "test_status": 1,
+      "ready_flag": 1,
+      "bms_wake_cmd": 1,
+      "mcu_wake_cmd": 1,
+      "battery_voltage": 12.92
+    },
+    "passed": true,
+    "mismatches": []
+  },
+  {
+    "case_id": "168e5e15-432e-45f8-a210-aa98bc7efe2f",
+    "requirement_id": "REQ-008",
+    "technique": "ST",
+    "title": "ST-状态迁移_唤醒态到休眠态",
+    "input": {
+      "VCUO_bDIAG_VCUIdle_flg": 1
+    },
+    "expected": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 9
+      },
+      {
+        "name": "bus_message_flag",
+        "operator": "eq",
+        "value": 0
+      },
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "expected"
+      }
+    ],
+    "actual_output": {
+      "vehicle_state": 9,
+      "vehicle_mode": 2,
+      "power_current": 0.01,
+      "bus_message_flag": 0,
+      "pdcu_wake_reason": 0,
+      "actual_duration": 42.0,
+      "result_type": "expected",
+      "power_alarm_flag": 0,
+      "bus_off_flag": 0,
+      "active_dtcs": [],
+      "signal_guard_result": {
+        "valid": true,
+        "fault_type": null,
+        "reason": "信号有效"
+      },
+      "detail": "h1/h2/h3同时满足，VCU进入state09休眠",
+      "state_name": "state09",
+      "test_status": 3,
+      "ready_flag": 0,
+      "bms_wake_cmd": 1,
+      "mcu_wake_cmd": 1,
+      "battery_voltage": 12.92
+    },
+    "passed": true,
+    "mismatches": []
+  },
+  {
+    "case_id": "cfda9952-c082-4c51-8da3-5424276ddbd8",
+    "requirement_id": "REQ-009",
+    "technique": "ST",
+    "title": "ST-唤醒状态下AuthComplete_flg置1触发休眠迁移",
+    "input": {
+      "VCUO_bDIAG_AuthComplete_flg": 1
+    },
+    "expected": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 9
+      },
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "expected"
+      }
+    ],
+    "actual_output": {
+      "vehicle_state": 9,
+      "vehicle_mode": 2,
+      "power_current": 0.01,
+      "bus_message_flag": 0,
+      "pdcu_wake_reason": 0,
+      "actual_duration": 42.0,
+      "result_type": "expected",
+      "power_alarm_flag": 0,
+      "bus_off_flag": 0,
+      "active_dtcs": [],
+      "signal_guard_result": {
+        "valid": true,
+        "fault_type": null,
+        "reason": "信号有效"
+      },
+      "detail": "h1/h2/h3同时满足，VCU进入state09休眠",
+      "state_name": "state09",
+      "test_status": 3,
+      "ready_flag": 0,
+      "bms_wake_cmd": 1,
+      "mcu_wake_cmd": 1,
+      "battery_voltage": 12.92
+    },
+    "passed": true,
+    "mismatches": []
+  },
+  {
+    "case_id": "dba3b73d-8294-4eee-a96a-9ef7599ab540",
+    "requirement_id": "REQ-010",
+    "technique": "ST",
+    "title": "ST-状态迁移(唤醒态到休眠态)",
+    "input": {
+      "can_bus_idle": 1
+    },
+    "expected": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 9
+      },
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "expected"
+      },
+      {
+        "name": "actual_duration",
+        "operator": "lte",
+        "value": 60
+      }
+    ],
+    "actual_output": {
+      "vehicle_state": 9,
+      "vehicle_mode": 2,
+      "power_current": 0.01,
+      "bus_message_flag": 0,
+      "pdcu_wake_reason": 0,
+      "actual_duration": 42.0,
+      "result_type": "expected",
+      "power_alarm_flag": 0,
+      "bus_off_flag": 0,
+      "active_dtcs": [],
+      "signal_guard_result": {
+        "valid": true,
+        "fault_type": null,
+        "reason": "信号有效"
+      },
+      "detail": "h1/h2/h3同时满足，VCU进入state09休眠",
+      "state_name": "state09",
+      "test_status": 3,
+      "ready_flag": 0,
+      "bms_wake_cmd": 1,
+      "mcu_wake_cmd": 1,
+      "battery_voltage": 12.92
+    },
+    "passed": true,
+    "mismatches": []
+  },
+  {
+    "case_id": "4f195107-957c-41de-8568-1573d61571c0",
+    "requirement_id": "REQ-011",
+    "technique": "ST",
+    "title": "ST-唤醒态至休眠态迁移",
+    "input": {
+      "h1": 1,
+      "h2": 1,
+      "h3": 1
+    },
+    "expected": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 9
+      },
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "expected"
+      }
+    ],
+    "actual_output": {
+      "vehicle_state": 9,
+      "vehicle_mode": 2,
+      "power_current": 0.01,
+      "bus_message_flag": 0,
+      "pdcu_wake_reason": 0,
+      "actual_duration": 42.0,
+      "result_type": "expected",
+      "power_alarm_flag": 0,
+      "bus_off_flag": 0,
+      "active_dtcs": [],
+      "signal_guard_result": {
+        "valid": true,
+        "fault_type": null,
+        "reason": "信号有效"
+      },
+      "detail": "h1/h2/h3同时满足，VCU进入state09休眠",
+      "state_name": "state09",
+      "test_status": 3,
+      "ready_flag": 0,
+      "bms_wake_cmd": 1,
+      "mcu_wake_cmd": 1,
+      "battery_voltage": 12.92
+    },
+    "passed": true,
+    "mismatches": []
+  },
+  {
+    "case_id": "39a7294c-fee6-4e33-b0c7-4b93e3996176",
+    "requirement_id": "REQ-011",
+    "technique": "ST",
+    "title": "ST-唤醒态维持非休眠态",
+    "input": {
+      "h1": 0,
+      "h2": 0,
+      "h3": 0
+    },
+    "expected": [
+      {
+        "name": "vehicle_state",
+        "operator": "ne",
+        "value": 9
+      },
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "error"
+      }
+    ],
+    "actual_output": {
+      "vehicle_state": 11,
+      "vehicle_mode": 5,
+      "power_current": 0.05,
+      "bus_message_flag": 1,
+      "pdcu_wake_reason": 0,
+      "actual_duration": 42.0,
+      "result_type": "error",
+      "power_alarm_flag": 0,
+      "bus_off_flag": 0,
+      "active_dtcs": [],
+      "signal_guard_result": {
+        "valid": true,
+        "fault_type": null,
+        "reason": "信号有效"
+      },
+      "detail": "休眠条件不完整（缺少h1,h2,h3），状态保持不变",
+      "state_name": "state11",
+      "test_status": 4,
+      "ready_flag": 1,
+      "bms_wake_cmd": 1,
+      "mcu_wake_cmd": 1,
+      "battery_voltage": 12.92
+    },
+    "passed": true,
+    "mismatches": []
+  },
+  {
+    "case_id": "744feca2-285d-404b-aad3-1bf8f4d097e0",
+    "requirement_id": "REQ-003",
+    "technique": "ST",
+    "title": "ST_休眠状态下CP信号10.0V迁移至唤醒",
+    "input": {
+      "cp_voltage": 10.0
+    },
+    "expected": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 11
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 3
+      },
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "expected"
+      }
+    ],
+    "actual_output": {
+      "vehicle_state": 11,
+      "vehicle_mode": 5,
+      "power_current": 0.05,
+      "bus_message_flag": 1,
+      "pdcu_wake_reason": 3,
+      "actual_duration": 14.7,
+      "result_type": "expected",
+      "power_alarm_flag": 0,
+      "bus_off_flag": 0,
+      "active_dtcs": [],
+      "signal_guard_result": {
+        "valid": true,
+        "fault_type": null,
+        "reason": "信号有效"
+      },
+      "detail": "CP信号=10.0V > 9V，Module B校验通过，唤醒成功",
+      "state_name": "state11",
+      "test_status": 1,
+      "ready_flag": 1,
+      "bms_wake_cmd": 1,
+      "mcu_wake_cmd": 1,
+      "battery_voltage": 12.92
+    },
+    "passed": true,
+    "mismatches": []
+  },
+  {
+    "case_id": "e846f095-40a3-4216-a1a7-928004bc094e",
+    "requirement_id": "REQ-003",
+    "technique": "ST",
+    "title": "ST_休眠状态下CP信号8.0V维持休眠",
+    "input": {
+      "cp_voltage": 8.0
+    },
+    "expected": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 9
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 0
+      },
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "error"
+      }
+    ],
+    "actual_output": {
+      "vehicle_state": 9,
+      "vehicle_mode": 2,
+      "power_current": 0.01,
+      "bus_message_flag": 0,
+      "pdcu_wake_reason": 0,
+      "actual_duration": 14.7,
+      "result_type": "error",
+      "power_alarm_flag": 0,
+      "bus_off_flag": 0,
+      "active_dtcs": [],
+      "signal_guard_result": {
+        "valid": true,
+        "fault_type": null,
+        "reason": "信号有效"
+      },
+      "detail": "CP信号=8.0V未超过9V",
+      "state_name": "state09",
+      "test_status": 4,
+      "ready_flag": 0,
+      "bms_wake_cmd": 1,
+      "mcu_wake_cmd": 1,
+      "battery_voltage": 12.92
+    },
+    "passed": true,
+    "mismatches": []
+  },
+  {
+    "case_id": "5e0a6a1b-5cdd-4af7-af5f-e8221663255d",
+    "requirement_id": "REQ-002",
+    "technique": "ST",
+    "title": "ST: 休眠状态接收有效CAN报文迁移至唤醒状态",
+    "input": {
+      "can_msg_id": 1104
+    },
+    "expected": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 11
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 2
+      },
+      {
+        "name": "bus_message_flag",
+        "operator": "eq",
+        "value": 1
+      },
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "expected"
+      }
+    ],
+    "actual_output": {
+      "vehicle_state": 11,
+      "vehicle_mode": 5,
+      "power_current": 0.05,
+      "bus_message_flag": 1,
+      "pdcu_wake_reason": 2,
+      "actual_duration": 14.7,
+      "result_type": "expected",
+      "power_alarm_flag": 0,
+      "bus_off_flag": 0,
+      "active_dtcs": [],
+      "signal_guard_result": {
+        "valid": true,
+        "fault_type": null,
+        "reason": "信号有效"
+      },
+      "detail": "ID 0x450 在有效范围内，触发唤醒，Module B校验通过，唤醒成功",
+      "state_name": "state11",
+      "test_status": 1,
+      "ready_flag": 1,
+      "bms_wake_cmd": 1,
+      "mcu_wake_cmd": 1,
+      "battery_voltage": 12.92
+    },
+    "passed": true,
+    "mismatches": []
+  },
+  {
+    "case_id": "1ba60e64-2fef-4979-8df5-e3ba48775aef",
+    "requirement_id": "REQ-004",
+    "technique": "ST",
+    "title": "ST_CC信号触发休眠到唤醒状态迁移",
+    "input": {
+      "cc_voltage": 3.0
+    },
+    "expected": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 11
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 4
+      },
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "expected"
+      },
+      {
+        "name": "bus_message_flag",
+        "operator": "eq",
+        "value": 1
+      }
+    ],
+    "actual_output": {
+      "vehicle_state": 11,
+      "vehicle_mode": 5,
+      "power_current": 0.05,
+      "bus_message_flag": 1,
+      "pdcu_wake_reason": 4,
+      "actual_duration": 14.7,
+      "result_type": "expected",
+      "power_alarm_flag": 0,
+      "bus_off_flag": 0,
+      "active_dtcs": [],
+      "signal_guard_result": {
+        "valid": true,
+        "fault_type": null,
+        "reason": "信号有效"
+      },
+      "detail": "CC信号=3.0V < 4.4V，Module B校验通过，唤醒成功",
+      "state_name": "state11",
+      "test_status": 1,
+      "ready_flag": 1,
+      "bms_wake_cmd": 1,
+      "mcu_wake_cmd": 1,
+      "battery_voltage": 12.92
+    },
+    "passed": true,
+    "mismatches": []
+  },
+  {
+    "case_id": "a91942fd-748b-48a0-ab02-5ddee8ad40ca",
+    "requirement_id": "REQ-004",
+    "technique": "ST",
+    "title": "ST_CC信号不满足条件维持休眠状态",
+    "input": {
+      "cc_voltage": 6.0
+    },
+    "expected": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 9
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 0
+      },
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "error"
+      },
+      {
+        "name": "bus_message_flag",
+        "operator": "eq",
+        "value": 0
+      }
+    ],
+    "actual_output": {
+      "vehicle_state": 9,
+      "vehicle_mode": 2,
+      "power_current": 0.01,
+      "bus_message_flag": 0,
+      "pdcu_wake_reason": 0,
+      "actual_duration": 14.7,
+      "result_type": "error",
+      "power_alarm_flag": 0,
+      "bus_off_flag": 0,
+      "active_dtcs": [],
+      "signal_guard_result": {
+        "valid": true,
+        "fault_type": null,
+        "reason": "信号有效"
+      },
+      "detail": "CC信号=6.0V未低于4.4V",
+      "state_name": "state09",
+      "test_status": 4,
+      "ready_flag": 0,
+      "bms_wake_cmd": 1,
+      "mcu_wake_cmd": 1,
+      "battery_voltage": 12.92
+    },
+    "passed": true,
+    "mismatches": []
+  },
+  {
+    "case_id": "4b96b9f5-0abb-48f2-a7d9-6c743858a1ab",
+    "requirement_id": "REQ-005",
+    "technique": "ST",
+    "title": "ST_休眠状态接收有效CC2信号迁移至唤醒",
+    "input": {
+      "cc2_voltage": 3.0
+    },
+    "expected": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 11
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 5
+      },
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "expected"
+      },
+      {
+        "name": "bus_message_flag",
+        "operator": "eq",
+        "value": 1
+      }
+    ],
+    "actual_output": {
+      "vehicle_state": 11,
+      "vehicle_mode": 5,
+      "power_current": 0.05,
+      "bus_message_flag": 1,
+      "pdcu_wake_reason": 5,
+      "actual_duration": 14.7,
+      "result_type": "expected",
+      "power_alarm_flag": 0,
+      "bus_off_flag": 0,
+      "active_dtcs": [],
+      "signal_guard_result": {
+        "valid": true,
+        "fault_type": null,
+        "reason": "信号有效"
+      },
+      "detail": "CC2信号=3.0V < UBR阈值4.4V，Module B校验通过，唤醒成功",
+      "state_name": "state11",
+      "test_status": 1,
+      "ready_flag": 1,
+      "bms_wake_cmd": 1,
+      "mcu_wake_cmd": 1,
+      "battery_voltage": 12.92
+    },
+    "passed": true,
+    "mismatches": []
+  },
+  {
+    "case_id": "1090b464-466e-4281-ae1d-2717f67f374f",
+    "requirement_id": "REQ-005",
+    "technique": "ST",
+    "title": "ST_休眠状态接收无效CC2信号维持休眠",
+    "input": {
+      "cc2_voltage": 5.0
+    },
+    "expected": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 9
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 0
+      },
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "error"
+      },
+      {
+        "name": "bus_message_flag",
+        "operator": "eq",
+        "value": 0
+      }
+    ],
+    "actual_output": {
+      "vehicle_state": 9,
+      "vehicle_mode": 2,
+      "power_current": 0.01,
+      "bus_message_flag": 0,
+      "pdcu_wake_reason": 0,
+      "actual_duration": 14.7,
+      "result_type": "error",
+      "power_alarm_flag": 0,
+      "bus_off_flag": 0,
+      "active_dtcs": [],
+      "signal_guard_result": {
+        "valid": true,
+        "fault_type": null,
+        "reason": "信号有效"
+      },
+      "detail": "CC2信号=5.0V未低于UBR阈值",
+      "state_name": "state09",
+      "test_status": 4,
+      "ready_flag": 0,
+      "bms_wake_cmd": 1,
+      "mcu_wake_cmd": 1,
+      "battery_voltage": 12.92
+    },
+    "passed": true,
+    "mismatches": []
+  },
+  {
+    "case_id": "497f7cd0-0681-4953-855e-1989f6067059",
+    "requirement_id": "REQ-007",
+    "technique": "ST",
+    "title": "ST: 休眠状态接收有效门板信号迁移至唤醒状态",
+    "input": {
+      "door_voltage": 0.8,
+      "duration_ms": 20
+    },
+    "expected": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 11
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 7
+      },
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "expected"
+      },
+      {
+        "name": "bus_message_flag",
+        "operator": "eq",
+        "value": 1
+      }
+    ],
+    "actual_output": {
+      "vehicle_state": 11,
+      "vehicle_mode": 5,
+      "power_current": 0.05,
+      "bus_message_flag": 1,
+      "pdcu_wake_reason": 7,
+      "actual_duration": 14.7,
+      "result_type": "expected",
+      "power_alarm_flag": 0,
+      "bus_off_flag": 0,
+      "active_dtcs": [],
+      "signal_guard_result": {
+        "valid": true,
+        "fault_type": null,
+        "reason": "信号有效"
+      },
+      "detail": "门板信号=0.8V < 1V，持续20ms >= 10ms，Module B校验通过，唤醒成功",
+      "state_name": "state11",
+      "test_status": 1,
+      "ready_flag": 1,
+      "bms_wake_cmd": 1,
+      "mcu_wake_cmd": 1,
+      "battery_voltage": 12.92
+    },
+    "passed": true,
+    "mismatches": []
+  },
+  {
+    "case_id": "6e248f61-a0f0-4710-8515-a168acd0ad24",
+    "requirement_id": "REQ-007",
+    "technique": "ST",
+    "title": "ST: 休眠状态接收无效门板信号维持休眠状态",
+    "input": {
+      "door_voltage": 2.0,
+      "duration_ms": 20
+    },
+    "expected": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 9
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 0
+      },
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "error"
+      },
+      {
+        "name": "bus_message_flag",
+        "operator": "eq",
+        "value": 0
+      }
+    ],
+    "actual_output": {
+      "vehicle_state": 9,
+      "vehicle_mode": 2,
+      "power_current": 0.01,
+      "bus_message_flag": 0,
+      "pdcu_wake_reason": 0,
+      "actual_duration": 14.7,
+      "result_type": "error",
+      "power_alarm_flag": 0,
+      "bus_off_flag": 0,
+      "active_dtcs": [],
+      "signal_guard_result": {
+        "valid": true,
+        "fault_type": null,
+        "reason": "信号有效"
+      },
+      "detail": "门板信号未同时满足电压和时序条件",
+      "state_name": "state09",
+      "test_status": 4,
+      "ready_flag": 0,
+      "bms_wake_cmd": 1,
+      "mcu_wake_cmd": 1,
+      "battery_voltage": 12.92
+    },
+    "passed": true,
+    "mismatches": []
+  },
+  {
+    "case_id": "163b2ca6-7142-4284-abe9-b562e62f449b",
+    "requirement_id": "REQ-013",
+    "technique": "ST",
+    "title": "ST-状态转换-转换至state11时bus_message_flag更新",
+    "input": {
+      "vehicle_state": 11
+    },
+    "expected": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 11
+      },
+      {
+        "name": "bus_message_flag",
+        "operator": "eq",
+        "value": 1
+      },
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "expected"
+      }
+    ],
+    "actual_output": {
+      "vehicle_state": 11,
+      "vehicle_mode": 5,
+      "power_current": 0.05,
+      "bus_message_flag": 1,
+      "pdcu_wake_reason": 1,
+      "actual_duration": 14.7,
+      "result_type": "expected",
+      "power_alarm_flag": 0,
+      "bus_off_flag": 0,
+      "active_dtcs": [],
+      "signal_guard_result": {
+        "valid": true,
+        "fault_type": null,
+        "reason": "信号有效"
+      },
+      "detail": "供电电压=9.3V > 9V，持续15ms >= 10ms，Module B校验通过，唤醒成功",
+      "state_name": "state11",
+      "test_status": 1,
+      "ready_flag": 1,
+      "bms_wake_cmd": 1,
+      "mcu_wake_cmd": 1,
+      "battery_voltage": 12.92
+    },
+    "passed": true,
+    "mismatches": []
+  },
+  {
+    "case_id": "d8faf85f-f554-4681-b56f-305387f2d3a0",
+    "requirement_id": "REQ-006",
+    "technique": "ST",
+    "title": "ST-状态迁移：休眠态到唤醒态迁移验证",
+    "input": {
+      "hood_voltage": 6.0,
+      "duration_ms": 50
+    },
+    "expected": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 11
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 6
+      },
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "expected"
+      },
+      {
+        "name": "bus_message_flag",
+        "operator": "eq",
+        "value": 1
+      }
+    ],
+    "actual_output": {
+      "vehicle_state": 11,
+      "vehicle_mode": 5,
+      "power_current": 0.05,
+      "bus_message_flag": 1,
+      "pdcu_wake_reason": 6,
+      "actual_duration": 14.7,
+      "result_type": "expected",
+      "power_alarm_flag": 0,
+      "bus_off_flag": 0,
+      "active_dtcs": [],
+      "signal_guard_result": {
+        "valid": true,
+        "fault_type": null,
+        "reason": "信号有效"
+      },
+      "detail": "口盖信号=6.0V > 4V，持续50ms >= 10ms，Module B校验通过，唤醒成功",
+      "state_name": "state11",
+      "test_status": 1,
+      "ready_flag": 1,
+      "bms_wake_cmd": 1,
+      "mcu_wake_cmd": 1,
+      "battery_voltage": 12.92
+    },
+    "passed": true,
+    "mismatches": []
+  },
+  {
+    "case_id": "b696660e-3af3-42b6-aa93-363510588854",
+    "requirement_id": "REQ-012",
+    "technique": "SC",
+    "title": "边界测试：2次快速循环不触发卡死",
+    "input": {
+      "consecutive_wake_sleep_cycles": 2,
+      "interval": 0.9
+    },
+    "expected": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 11
+      },
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "expected"
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 1
+      }
+    ],
+    "actual_output": {
+      "vehicle_state": 11,
+      "vehicle_mode": 5,
+      "power_current": 0.05,
+      "bus_message_flag": 1,
+      "pdcu_wake_reason": 1,
+      "actual_duration": 14.7,
+      "result_type": "expected",
+      "power_alarm_flag": 0,
+      "bus_off_flag": 0,
+      "active_dtcs": [],
+      "signal_guard_result": {
+        "valid": true,
+        "fault_type": null,
+        "reason": "信号有效"
+      },
+      "detail": "供电电压=9.3V > 9V，持续15ms >= 10ms，Module B校验通过，唤醒成功",
+      "state_name": "state11",
+      "test_status": 1,
+      "ready_flag": 1,
+      "bms_wake_cmd": 1,
+      "mcu_wake_cmd": 1,
+      "battery_voltage": 12.92
+    },
+    "passed": true,
+    "mismatches": []
+  },
+  {
+    "case_id": "0cfe2431-40ab-481c-b9f5-1692bf945df7",
+    "requirement_id": "REQ-012",
+    "technique": "SC",
+    "title": "边界测试：3次快速循环触发卡死及DTC上报",
+    "input": {
+      "consecutive_wake_sleep_cycles": 3,
+      "interval": 0.9
+    },
+    "expected": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 10
+      },
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "error"
+      },
+      {
+        "name": "active_dtcs",
+        "operator": "contains",
+        "value": "DTC_001"
+      },
+      {
+        "name": "actual_duration",
+        "operator": "gt",
+        "value": 20
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 1
+      }
+    ],
+    "actual_output": {
+      "vehicle_state": 10,
+      "vehicle_mode": 2,
+      "power_current": 0.25,
+      "bus_message_flag": 0,
+      "pdcu_wake_reason": 1,
+      "actual_duration": 41.0,
+      "result_type": "error",
+      "power_alarm_flag": 1,
+      "bus_off_flag": 0,
+      "active_dtcs": [
+        "DTC_001"
+      ],
+      "signal_guard_result": {
+        "valid": true,
+        "fault_type": null,
+        "reason": "信号有效"
+      },
+      "detail": "供电电压=9.3V > 9V，持续15ms >= 10ms；触发state10卡死缺陷，actual_duration超过估计时间2倍",
+      "state_name": "state10",
+      "test_status": 4,
+      "ready_flag": 0,
+      "bms_wake_cmd": 1,
+      "mcu_wake_cmd": 1,
+      "battery_voltage": 12.92
+    },
+    "passed": true,
+    "mismatches": []
+  },
+  {
+    "case_id": "a4c9c942-d8d9-40a8-9161-ed171637016b",
+    "requirement_id": "REQ-012",
+    "technique": "SC",
+    "title": "边界测试：4次快速循环触发卡死",
+    "input": {
+      "consecutive_wake_sleep_cycles": 4,
+      "interval": 0.9
+    },
+    "expected": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 10
+      },
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "error"
+      },
+      {
+        "name": "active_dtcs",
+        "operator": "contains",
+        "value": "DTC_001"
+      },
+      {
+        "name": "actual_duration",
+        "operator": "gt",
+        "value": 20
+      }
+    ],
+    "actual_output": {
+      "vehicle_state": 10,
+      "vehicle_mode": 2,
+      "power_current": 0.25,
+      "bus_message_flag": 0,
+      "pdcu_wake_reason": 1,
+      "actual_duration": 41.0,
+      "result_type": "error",
+      "power_alarm_flag": 1,
+      "bus_off_flag": 0,
+      "active_dtcs": [
+        "DTC_001"
+      ],
+      "signal_guard_result": {
+        "valid": true,
+        "fault_type": null,
+        "reason": "信号有效"
+      },
+      "detail": "供电电压=9.3V > 9V，持续15ms >= 10ms；触发state10卡死缺陷，actual_duration超过估计时间2倍",
+      "state_name": "state10",
+      "test_status": 4,
+      "ready_flag": 0,
+      "bms_wake_cmd": 1,
+      "mcu_wake_cmd": 1,
+      "battery_voltage": 12.92
+    },
+    "passed": true,
+    "mismatches": []
+  },
+  {
+    "case_id": "6448e10b-55e8-41d1-81c1-9504d3e46862",
+    "requirement_id": "REQ-012",
+    "technique": "SC",
+    "title": "边界测试：3次循环但间隔等于1.0s不触发卡死",
+    "input": {
+      "consecutive_wake_sleep_cycles": 3,
+      "interval": 1.0
+    },
+    "expected": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 11
+      },
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "expected"
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 1
+      }
+    ],
+    "actual_output": {
+      "vehicle_state": 11,
+      "vehicle_mode": 5,
+      "power_current": 0.05,
+      "bus_message_flag": 1,
+      "pdcu_wake_reason": 1,
+      "actual_duration": 14.7,
+      "result_type": "expected",
+      "power_alarm_flag": 0,
+      "bus_off_flag": 0,
+      "active_dtcs": [],
+      "signal_guard_result": {
+        "valid": true,
+        "fault_type": null,
+        "reason": "信号有效"
+      },
+      "detail": "供电电压=9.3V > 9V，持续15ms >= 10ms，Module B校验通过，唤醒成功",
+      "state_name": "state11",
+      "test_status": 1,
+      "ready_flag": 1,
+      "bms_wake_cmd": 1,
+      "mcu_wake_cmd": 1,
+      "battery_voltage": 12.92
+    },
+    "passed": true,
+    "mismatches": []
+  },
+  {
+    "case_id": "c315d930-5f4b-4f8f-8ba6-57381aded239",
+    "requirement_id": "REQ-012",
+    "technique": "SC",
+    "title": "边界测试：3次循环但间隔大于1.0s不触发卡死",
+    "input": {
+      "consecutive_wake_sleep_cycles": 3,
+      "interval": 1.1
+    },
+    "expected": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 11
+      },
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "expected"
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 1
+      }
+    ],
+    "actual_output": {
+      "vehicle_state": 11,
+      "vehicle_mode": 5,
+      "power_current": 0.05,
+      "bus_message_flag": 1,
+      "pdcu_wake_reason": 1,
+      "actual_duration": 14.7,
+      "result_type": "expected",
+      "power_alarm_flag": 0,
+      "bus_off_flag": 0,
+      "active_dtcs": [],
+      "signal_guard_result": {
+        "valid": true,
+        "fault_type": null,
+        "reason": "信号有效"
+      },
+      "detail": "供电电压=9.3V > 9V，持续15ms >= 10ms，Module B校验通过，唤醒成功",
+      "state_name": "state11",
+      "test_status": 1,
+      "ready_flag": 1,
+      "bms_wake_cmd": 1,
+      "mcu_wake_cmd": 1,
+      "battery_voltage": 12.92
+    },
+    "passed": true,
+    "mismatches": []
+  }
+]

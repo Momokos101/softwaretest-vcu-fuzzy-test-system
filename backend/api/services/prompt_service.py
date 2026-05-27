@@ -3,6 +3,7 @@ from datetime import datetime
 from typing import List, Optional
 
 from api.models.schemas import PromptTemplate, PromptUpdate
+from api.services import _persist
 
 
 DEFAULT_PROMPTS: dict[str, tuple[str, str]] = {
@@ -57,6 +58,12 @@ _prompts: dict[str, PromptTemplate] = {
     key: PromptTemplate(type=key, system_prompt=value[0], user_prompt=value[1], updated_at=datetime.now())
     for key, value in DEFAULT_PROMPTS.items()
 }
+# Overlay any persisted (user-edited) prompt overrides on top of the defaults.
+_prompts.update(_persist.load_dict("prompts", PromptTemplate))
+
+
+def _save() -> None:
+    _persist.save_dict("prompts", _prompts)
 
 
 def list_prompts() -> List[PromptTemplate]:
@@ -83,4 +90,5 @@ def update_prompt(prompt_type: str, update: PromptUpdate) -> Optional[PromptTemp
     if update.user_prompt is not None:
         prompt.user_prompt = update.user_prompt
     prompt.updated_at = datetime.now()
+    _save()
     return prompt

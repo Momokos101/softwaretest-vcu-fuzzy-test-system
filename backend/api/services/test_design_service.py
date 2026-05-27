@@ -18,12 +18,16 @@ from api.models.schemas import (
     TestInput,
     TestTechnique,
 )
-from api.services import coverage_service, requirement_service
+from api.services import _persist, coverage_service, requirement_service
 from api.services.llm_client import llm_client
 from api.services.prompt_service import require_prompt
 
 
-_test_cases: List[TestCase] = []
+_test_cases: List[TestCase] = _persist.load_list("test_cases", TestCase)
+
+
+def _save() -> None:
+    _persist.save_list("test_cases", _test_cases)
 
 
 async def generate_test_cases(request: TestGenerationRequest, parsed_req: ParsedRequirement) -> List[TestCase]:
@@ -44,6 +48,7 @@ async def generate_test_cases(request: TestGenerationRequest, parsed_req: Parsed
     if request.regenerate:
         delete_by_requirement(parsed_req.requirement_id)
     _test_cases.extend(cases)
+    _save()
     return cases
 
 
@@ -73,6 +78,7 @@ def create_test_case(create: TestCaseCreate) -> TestCase:
     now = datetime.now()
     case = TestCase(id=str(uuid.uuid4()), created_at=now, updated_at=now, **create.model_dump())
     _test_cases.append(case)
+    _save()
     return case
 
 
@@ -113,17 +119,22 @@ def update_test_case(case_id: str, update: TestCaseUpdate) -> Optional[TestCase]
         _upsert_expected(case, "vehicle_state", "eq", update.expected_vehicle_state)
 
     case.updated_at = datetime.now()
+    _save()
     return case
 
 
 def delete_test_case(case_id: str) -> bool:
     original_len = len(_test_cases)
     _test_cases[:] = [case for case in _test_cases if case.id != case_id]
-    return len(_test_cases) < original_len
+    removed = len(_test_cases) < original_len
+    if removed:
+        _save()
+    return removed
 
 
 def delete_by_requirement(requirement_id: str) -> None:
     _test_cases[:] = [case for case in _test_cases if case.requirement_id != requirement_id]
+    _save()
 
 
 def mark_execution(case_id: str, execution_result: dict, passed: bool) -> Optional[TestCase]:
@@ -133,6 +144,7 @@ def mark_execution(case_id: str, execution_result: dict, passed: bool) -> Option
     case.execution_result = execution_result
     case.status = TestCaseStatus.PASS if passed else TestCaseStatus.FAIL
     case.updated_at = datetime.now()
+    _save()
     return case
 
 
@@ -161,7 +173,7 @@ async def _generate_from_context(context: dict) -> List[TestCase]:
                 type=_case_type(item.get("type")),
                 in_data=_normalize_in_data(item.get("in_data") or []),
                 expected_results=_normalize_expected_results(item.get("expected_results") or []),
-                error=item.get("error") or [],
+                error=_normalize_error(item.get("error")),
                 est_time=float(item.get("est_time", 20.0)),
                 oracle_reasoning=item.get("oracle_reasoning") or "",
                 created_at=now,
@@ -169,6 +181,19 @@ async def _generate_from_context(context: dict) -> List[TestCase]:
             )
         )
     return cases
+
+
+def _normalize_error(value: object) -> list[dict[str, object]]:
+    """Coerce the LLM 'error' field into a valid BqErrorOracle list.
+
+    The LLM occasionally returns a bare description string (e.g. the REQ-014
+    timeout case returns 'Timeout expected') instead of the expected list of
+    error-oracle objects. Such non-list payloads would fail TestCase validation;
+    we drop them here (the timing oracle is carried by expected_results anyway).
+    """
+    if isinstance(value, list):
+        return [item for item in value if isinstance(item, dict)]
+    return []
 
 
 def _normalize_technique(value: str) -> str:
@@ -212,8 +237,8 @@ def _normalize_in_data(raw_items: list[object]) -> list[dict[str, object]]:
 
 
 def _normalize_expected_results(raw_items: list[object]) -> list[dict[str, object]]:
-    allowed_ops = {"eq", "gte", "lte", "gt", "lt", "contains"}
-    aliases = {"=": "eq", "==": "eq", ">=": "gte", "<=": "lte", ">": "gt", "<": "lt"}
+    allowed_ops = {"eq", "ne", "gte", "lte", "gt", "lt", "contains"}
+    aliases = {"=": "eq", "==": "eq", "!=": "ne", "<>": "ne", "≠": "ne", "neq": "ne", ">=": "gte", "<=": "lte", ">": "gt", "<": "lt"}
     items: list[dict[str, object]] = []
     for raw in raw_items:
         if not isinstance(raw, dict):

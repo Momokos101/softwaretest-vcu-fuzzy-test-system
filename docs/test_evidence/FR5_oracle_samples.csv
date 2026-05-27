@@ -1,0 +1,97 @@
+﻿test_case_id,requirement_id,technique,in_data,expected_results(oracle),oracle_reasoning
+ee00759f,REQ-001,BVA,voltage=9.1; duration_ms=10,vehicle_state eq 11; pdcu_wake_reason eq 1; result_type eq expected,电压9.1V > 9.0V，持续时间10ms >= 10ms，满足唤醒条件，处于边界有效值。
+32b5bc02,REQ-001,BVA,voltage=9.0; duration_ms=10,vehicle_state eq 9; pdcu_wake_reason eq 0; result_type eq expected,电压9.0V 不满足 > 9.0V 的严格大于条件，处于边界无效值，不应唤醒。
+61e911de,REQ-001,BVA,voltage=9.1; duration_ms=9,vehicle_state eq 9; pdcu_wake_reason eq 0; result_type eq expected,持续时间9ms 不满足 >= 10ms 的条件，处于边界无效值，不应唤醒。
+d461618e,REQ-001,EP,voltage=12.0; duration_ms=50,vehicle_state eq 11,"输入属于有效等价类（voltage>9, duration>=10），预期 vehicle_state 迁移至唤醒状态 11。"
+18e082c6,REQ-001,EP,voltage=5.0; duration_ms=50,vehicle_state eq 9,输入属于无效等价类（voltage<=9），预期 vehicle_state 保持休眠状态 9。
+a4e14ce9,REQ-001,EP,voltage=12.0; duration_ms=50,pdcu_wake_reason eq 1,硬线供电唤醒触发，pdcu_wake_reason 应编码为 1。
+85ce2121,REQ-001,EP,voltage=5.0; duration_ms=50,pdcu_wake_reason eq 0,未满足唤醒条件，pdcu_wake_reason 应编码为 0（无唤醒）。
+409a411f,REQ-001,ST,voltage=12.0; duration_ms=50,vehicle_state eq 11,验证状态机从休眠(09)经准备(10)最终到达唤醒(11)的完整迁移路径，最终状态应为11。
+1c242593,REQ-001,EP,voltage=12.0; duration_ms=20,result_type eq expected; vehicle_state eq 11,在 SIL 仿真环境下执行基础有效输入，验证环境连通性及基础功能正常，result_type 应为 expected。
+4f2f5aa8,REQ-002,BVA,can_msg_id=1023,vehicle_state eq 10; pdcu_wake_reason eq 0,0x3FF (1023) 低于唤醒阈值 0x400，属于无效边界，VCU 应保持休眠状态 (10) 且无唤醒原因 (0)。
+a53a6774,REQ-002,BVA,can_msg_id=1024,vehicle_state eq 11; pdcu_wake_reason eq 2,0x400 (1024) 是唤醒范围的下边界，属于有效边界，VCU 应唤醒 (11) 且原因标记为 CAN 唤醒 (2)。
+a417e351,REQ-002,BVA,can_msg_id=1151,vehicle_state eq 11; pdcu_wake_reason eq 2,0x47F (1151) 是唤醒范围的上边界，属于有效边界，VCU 应唤醒 (11) 且原因标记为 CAN 唤醒 (2)。
+e68cbea0,REQ-002,BVA,can_msg_id=1152,vehicle_state eq 10; pdcu_wake_reason eq 0,0x480 (1152) 高于唤醒阈值 0x47F，属于无效边界，VCU 应保持休眠状态 (10) 且无唤醒原因 (0)。
+609a2d31,REQ-002,EP,can_msg_id=1087,vehicle_state eq 11; pdcu_wake_reason eq 2,"0x43F (1087) 位于 [0x400, 0x47F] 有效等价类内部，代表该区间内的任意有效 ID，应触发唤醒。"
+aabf0ff5,REQ-002,EP,can_msg_id=512,vehicle_state eq 10; pdcu_wake_reason eq 0,0x200 (512) 位于 <0x400 无效等价类，代表该区间内的任意无效 ID，不应触发唤醒。
+a184492b,REQ-002,ST,can_msg_id=1024,vehicle_state eq 11; pdcu_wake_reason eq 2,验证 VCU 从休眠状态 (Sleep) 接收到有效 CAN 报文后，正确发生状态迁移至唤醒状态 (11) 并准确记录唤醒源 (2)。
+e8355fa0,REQ-003,BVA,cp_voltage=8.9,vehicle_state eq 0; pdcu_wake_reason eq 0,CP电压8.9V小于阈值9.0V，不满足唤醒条件，VCU应保持休眠状态。
+aec428a0,REQ-003,BVA,cp_voltage=9.0,vehicle_state eq 0; pdcu_wake_reason eq 0,CP电压9.0V等于阈值，不满足严格大于9.0V的条件，VCU应保持休眠状态。
+1499fcad,REQ-003,BVA,cp_voltage=9.1,vehicle_state eq 11; pdcu_wake_reason eq 3,CP电压9.1V大于阈值9.0V，满足唤醒条件，VCU应进入唤醒状态并记录唤醒原因。
+1573ddef,REQ-003,EP,cp_voltage=12.0,vehicle_state eq 11; pdcu_wake_reason eq 3,"12.0V属于大于9.0V的有效等价类区间(9.0, 15]，应触发VCU唤醒。"
+ac0951eb,REQ-003,EP,cp_voltage=5.0,vehicle_state eq 0; pdcu_wake_reason eq 0,"5.0V属于小于等于9.0V的无效等价类区间[0, 9.0]，不应触发VCU唤醒。"
+34187498,REQ-003,ST,cp_voltage=12.0,vehicle_state eq 11; pdcu_wake_reason eq 3,在休眠状态下，检测到CP电压上升沿且幅值大于9V，状态机应从休眠状态正确迁移至唤醒状态。
+627f4c96,REQ-004,BVA,cc_voltage=4.3,vehicle_state eq 11; pdcu_wake_reason eq 4,CC电压4.3V小于阈值4.4V，满足唤醒条件，预期vehicle_state为11，pdcu_wake_reason为4。
+3fa5ccea,REQ-004,BVA,cc_voltage=4.4,vehicle_state eq 11; pdcu_wake_reason eq 4,CC电压4.4V不小于阈值4.4V，不满足唤醒条件，预期不触发唤醒。
+51b5d7a7,REQ-004,BVA,cc_voltage=4.5,vehicle_state eq 11; pdcu_wake_reason eq 4,CC电压4.5V大于阈值4.4V，不满足唤醒条件，预期不触发唤醒。
+c3ed0dd6,REQ-004,EP,cc_voltage=2.0,vehicle_state eq 11; pdcu_wake_reason eq 4,CC电压2.0V属于<4.4V的有效等价类，满足唤醒条件。
+c0a2219f,REQ-004,EP,cc_voltage=10.0,vehicle_state eq 11; pdcu_wake_reason eq 4,CC电压10.0V属于>=4.4V的等价类，不满足唤醒条件。
+6649aed9,REQ-004,ST,cc_voltage=5.0; cc_voltage=4.0,vehicle_state eq 11; pdcu_wake_reason eq 4,CC电压从5.0V下降至4.0V，产生下降沿并跨越4.4V阈值，触发状态迁移至唤醒状态。
+5063355c,REQ-005,BVA,cc2_voltage=4.3,vehicle_state eq 11; pdcu_wake_reason eq 5,4.3V 严格小于阈值 4.4V，满足 CC2 UBR 电压下降沿触发条件，VCU 应进入唤醒状态并记录唤醒原因。
+e77f33a3,REQ-005,BVA,cc2_voltage=4.4,vehicle_state eq 11; pdcu_wake_reason eq 5,4.4V 等于阈值，不满足严格小于 (<) 4.4V 的条件，因此不应触发 CC2 唤醒。
+8ff28b9f,REQ-005,BVA,cc2_voltage=4.5,vehicle_state eq 11; pdcu_wake_reason eq 5,4.5V 大于阈值 4.4V，不满足下降沿触发条件，VCU 保持原状态。
+663c24cb,REQ-005,EP,cc2_voltage=2.0,vehicle_state eq 11; pdcu_wake_reason eq 5,2.0V 属于有效触发等价类 (0V <= v < 4.4V)，应成功触发 VCU 唤醒。
+7e126bb1,REQ-005,EP,cc2_voltage=10.0,vehicle_state eq 11; pdcu_wake_reason eq 5,10.0V 属于无效触发等价类 (v >= 4.4V)，不应触发 VCU 唤醒。
+c190a304,REQ-005,ST,initial_power_state=Sleep; cc2_voltage=3.5,vehicle_state eq 11; pdcu_wake_reason eq 5,验证状态迁移：当 VCU 处于 Sleep 状态时，接收到满足条件的 CC2 电压下降沿 (3.5V < 4.4V)，系统应正确迁移至 Wake 状态 (vehicle_state=11)。
+0ab0931c,REQ-006,BVA,hood_voltage=4.1; duration_ms=10,vehicle_state eq 11; pdcu_wake_reason eq 6,电压4.1V > 4.0V且时间10ms >= 10ms，满足唤醒边界条件，预期进入唤醒状态且唤醒原因为口盖。
+56debfe8,REQ-006,BVA,hood_voltage=4.0; duration_ms=10,vehicle_state eq 11,电压4.0V不满足 > 4.0V的严格阈值条件，即使时间满足，也不应触发唤醒。
+37e89816,REQ-006,BVA,hood_voltage=4.1; duration_ms=9,vehicle_state eq 11,时间9ms不满足 >= 10ms的时序边界条件，即使电压满足，也不应触发唤醒。
+dc70f131,REQ-006,EP,hood_voltage=12.0; duration_ms=50,vehicle_state eq 11; pdcu_wake_reason eq 6,电压12V和时间50ms均在有效等价类范围内（>4V且>=10ms），满足唤醒条件。
+4897fac9,REQ-006,EP,hood_voltage=2.0; duration_ms=50,vehicle_state eq 11,电压2V在无效等价类（<=4.0V）内，不满足唤醒条件，预期保持非唤醒状态。
+cf10b077,REQ-006,ST,hood_voltage=5.0; duration_ms=20,vehicle_state eq 11; pdcu_wake_reason eq 6,验证系统从休眠状态到唤醒状态的状态迁移，输入满足唤醒条件，预期状态正确迁移至11且原因记录为6。
+f5a0643d,REQ-007,BVA,door_voltage=0.9; duration_ms=10,vehicle_state eq 11; pdcu_wake_reason eq 7,电压0.9V < 1.0V，且持续时间10ms >= 10ms，满足唤醒条件，状态应为11，唤醒原因为7。
+06c7d8de,REQ-007,BVA,door_voltage=1.0; duration_ms=10,vehicle_state eq 0; pdcu_wake_reason eq 0,电压1.0V不满足 < 1.0V 的条件，即使时间达到10ms也不应触发唤醒。
+5c2e2fa3,REQ-007,BVA,door_voltage=0.9; duration_ms=9,vehicle_state eq 0; pdcu_wake_reason eq 0,持续时间9ms不满足 >= 10ms 的条件，即使电压低于1.0V也不应触发唤醒。
+4014304e,REQ-007,BVA,door_voltage=1.1; duration_ms=10,vehicle_state eq 0; pdcu_wake_reason eq 0,电压1.1V超出 < 1.0V 边界，不满足唤醒条件。
+d80b0a80,REQ-007,BVA,door_voltage=0.9; duration_ms=11,vehicle_state eq 11; pdcu_wake_reason eq 7,电压0.9V < 1.0V，且持续时间11ms > 10ms，满足唤醒条件。
+3ff46bbc,REQ-007,EP,door_voltage=0.5; duration_ms=50,vehicle_state eq 11; pdcu_wake_reason eq 7,输入处于有效等价类（电压<1V，时间>=10ms），应正常触发唤醒。
+85caf9b0,REQ-007,EP,door_voltage=5.0; duration_ms=50,vehicle_state eq 0; pdcu_wake_reason eq 0,输入处于无效等价类（电压>=1V），即使时间充足也不应触发唤醒。
+07b1e5eb,REQ-007,EP,door_voltage=0.5; duration_ms=5,vehicle_state eq 0; pdcu_wake_reason eq 0,输入处于无效等价类（时间<10ms），即使电压满足也不应触发唤醒。
+36e9f0e3,REQ-007,ST,door_voltage=0.5; duration_ms=15,vehicle_state eq 11; pdcu_wake_reason eq 7,系统初始处于Sleep状态，满足唤醒条件后应成功迁移至Wake状态（vehicle_state=11）。
+dd420393,REQ-007,ST,door_voltage=0.5; duration_ms=5,vehicle_state eq 0; pdcu_wake_reason eq 0,低电压信号在达到10ms阈值前中断（仅持续5ms），状态机不应发生迁移，保持Sleep状态。
+69ff22a5,REQ-011,DT,h1=1; h2=1; h3=1,vehicle_state eq 9,"h1, h2, h3全为True，满足三条件同时休眠，VCU进入state09。"
+9cb90b88,REQ-011,DT,h1=1; h2=1; h3=0,vehicle_state gt 9,h3为False，任一条件不满足，VCU维持当前非休眠状态(>9)。
+7d74cb3d,REQ-011,DT,h1=1; h2=0; h3=1,vehicle_state gt 9,h2为False，任一条件不满足，VCU维持当前非休眠状态(>9)。
+2cd3a0b3,REQ-011,DT,h1=0; h2=1; h3=1,vehicle_state gt 9,h1为False，任一条件不满足，VCU维持当前非休眠状态(>9)。
+a72ae648,REQ-011,DT,h1=1; h2=0; h3=0,vehicle_state gt 9,"h2, h3为False，条件不满足，VCU维持当前非休眠状态(>9)。"
+2bef367c,REQ-011,DT,h1=0; h2=1; h3=0,vehicle_state gt 9,"h1, h3为False，条件不满足，VCU维持当前非休眠状态(>9)。"
+888b722b,REQ-011,DT,h1=0; h2=0; h3=1,vehicle_state gt 9,"h1, h2为False，条件不满足，VCU维持当前非休眠状态(>9)。"
+5b21a8d2,REQ-011,DT,h1=0; h2=0; h3=0,vehicle_state gt 9,"h1, h2, h3全为False，条件不满足，VCU维持当前非休眠状态(>9)。"
+0982a75b,REQ-011,ST,initial_state=10; h1=1; h2=1; h3=1,vehicle_state eq 9,"初始处于state10，当h1, h2, h3全满足时，状态迁移至state09休眠。"
+79566a95,REQ-011,ST,initial_state=10; h1=1; h2=0; h3=1,vehicle_state eq 10,初始处于state10，h2不满足，任一条件缺失，VCU维持state10不发生迁移。
+6454c70f,REQ-012,SC,consecutive_wake_sleep_cycles=3; interval=0.9,vehicle_state eq 10; result_type eq stuck; active_dtcs contains DTC_001,满足连续>=3次且间隔<1.0s的条件，应触发state10卡死并上报DTC_001。
+f458fc50,REQ-012,SC,consecutive_wake_sleep_cycles=2; interval=0.9,result_type ne stuck; vehicle_state ne 10,循环次数为2，未达到>=3次的阈值，不应触发卡死缺陷和DTC_001。
+4ff97a2e,REQ-012,SC,consecutive_wake_sleep_cycles=3; interval=1.0,result_type ne stuck; vehicle_state ne 10,间隔时间为1.0s，不满足<1.0s的快速循环条件，不应触发卡死。
+ab1e34c3,REQ-012,SC,consecutive_wake_sleep_cycles=5; interval=0.5,active_dtcs contains DTC_001; result_type eq stuck,在明确的卡死场景下，验证响应体中active_dtcs列表必须包含DTC_001字符串。
+5bbc9c0c,REQ-012,ST,consecutive_wake_sleep_cycles=3; interval=0.8,vehicle_state eq 10; result_type eq stuck,验证状态机在满足快速循环条件时，从正常初始化状态正确迁移并卡死在state10。
+b479a752,REQ-013,DT,vehicle_state=11,bus_message_flag eq 1,根据决策表规则，当vehicle_state为11时，bus_message_flag应输出1。
+f3dae3c7,REQ-013,DT,vehicle_state=9,bus_message_flag eq 0,根据决策表规则，当vehicle_state为9时，bus_message_flag应输出0。
+1c6e12c8,REQ-013,EP,vehicle_state=10,bus_message_flag eq 0,根据等价类划分，除9和11外的其他有效状态属于同一等价类，预期不触发正常运行标志，输出0。
+67c74cf9,REQ-013,BVA,vehicle_state=8,bus_message_flag eq 0,边界值分析，测试状态9的下边界8，不应触发休眠或运行特定标志，预期输出0。
+11d44636,REQ-013,ST,vehicle_state=9; vehicle_state=11,bus_message_flag eq 1,状态转换测试，验证从休眠到正常运行状态切换后，标志位正确更新为1。
+a210ce21,REQ-013,ST,vehicle_state=11; vehicle_state=9,bus_message_flag eq 0,状态转换测试，验证从正常运行到休眠状态切换后，标志位正确更新为0。
+5096855a,REQ-013,SC,vehicle_state=0; vehicle_state=11; vehicle_state=9,bus_message_flag eq 0,场景测试覆盖车辆从初始状态到运行再到休眠的完整业务场景，最终状态为9，标志位应为0。
+42ce0823,REQ-014,BVA,test_case_type=1; actual_duration=19.9,actual_duration lte 20,type1 边界 20s，19.9s < 20s，满足 actual_duration <= 20s 要求，预期合规。
+6e81dff0,REQ-014,BVA,test_case_type=1; actual_duration=20.0,actual_duration lte 20,type1 边界 20s，20.0s == 20s，满足 actual_duration <= 20s 要求，预期合规。
+1d54b795,REQ-014,BVA,test_case_type=1; actual_duration=20.1,actual_duration gt 20,type1 边界 20s，20.1s > 20s，不满足 actual_duration <= 20s 要求，预期不合规。
+f0d2d266,REQ-014,BVA,test_case_type=2; actual_duration=59.9,actual_duration lte 60,type2 边界 60s，59.9s < 60s，满足 actual_duration <= 60s 要求，预期合规。
+71d58d11,REQ-014,BVA,test_case_type=2; actual_duration=60.0,actual_duration lte 60,type2 边界 60s，60.0s == 60s，满足 actual_duration <= 60s 要求，预期合规。
+bc6b1920,REQ-014,BVA,test_case_type=2; actual_duration=60.1,actual_duration gt 60,type2 边界 60s，60.1s > 60s，不满足 actual_duration <= 60s 要求，预期不合规。
+e8caa358,REQ-001,BVA,voltage=8.9; duration_ms=10,vehicle_state eq 9; pdcu_wake_reason eq 0; result_type eq expected,BVA invalid-too-low：供电电压 8.9V < 9V 阈值，应不唤醒（vehicle_state=9）。补全 Chp4Part1 P35-40 要求的 just-below 无效等价类。
+3c1cc3d2,REQ-008,EP,VCUO_bDIAG_VCUIdle_flg=1,vehicle_state eq 9,VCUIdle_flg为1是进入休眠的必要条件，满足时系统应进入休眠状态(vehicle_state=9)。
+006107d9,REQ-008,EP,VCUO_bDIAG_VCUIdle_flg=0,vehicle_state ne 9,VCUIdle_flg为0时不满足休眠必要条件，系统应维持非休眠状态(vehicle_state!=9)。
+b4744dbc,REQ-008,DT,VCUO_bDIAG_VCUIdle_flg=1,vehicle_state eq 9,决策表规则：当VCUIdle_flg=1时，触发休眠状态迁移，vehicle_state应为9。
+efe48128,REQ-008,DT,VCUO_bDIAG_VCUIdle_flg=0,vehicle_state ne 9,决策表规则：当VCUIdle_flg=0时，阻止休眠状态迁移，vehicle_state应不为9。
+47a1f250,REQ-008,ST,VCUO_bDIAG_VCUIdle_flg=1,vehicle_state eq 9,状态迁移测试：验证系统从非休眠状态在VCUIdle_flg=1条件下正确迁移至休眠状态(vehicle_state=9)。
+c40de7c5,REQ-008,ST,VCUO_bDIAG_VCUIdle_flg=0,vehicle_state ne 9,状态迁移测试：验证系统在VCUIdle_flg=0条件下无法迁移至休眠状态，维持非休眠状态(vehicle_state!=9)。
+62206712,REQ-009,EP,VCUO_bDIAG_AuthComplete_flg=1,vehicle_state eq 9,AuthComplete_flg=1是进入休眠的必要条件，当其为1且其他条件满足时，VCU应进入休眠状态(vehicle_state=9)。
+58aebeef,REQ-009,EP,VCUO_bDIAG_AuthComplete_flg=0,vehicle_state ne 9,AuthComplete_flg=0时不满足休眠必要条件，VCU应保持非休眠状态(vehicle_state!=9)。
+3931960a,REQ-009,DT,VCUO_bDIAG_AuthComplete_flg=1,vehicle_state eq 9,决策表中AuthComplete_flg=1对应的动作是允许进入休眠，验证vehicle_state变为9。
+8073d368,REQ-009,DT,VCUO_bDIAG_AuthComplete_flg=0,vehicle_state ne 9,决策表中AuthComplete_flg=0对应的动作是禁止进入休眠，验证vehicle_state不为9。
+285d1a3b,REQ-009,ST,VCUO_bDIAG_AuthComplete_flg=0; VCUO_bDIAG_AuthComplete_flg=1,vehicle_state eq 9,状态迁移测试：当AuthComplete_flg从0跳变为1时，满足休眠条件，VCU状态应从非休眠迁移至休眠(vehicle_state=9)。
+f7e78d83,REQ-009,ST,VCUO_bDIAG_AuthComplete_flg=0,vehicle_state ne 9,状态迁移测试：AuthComplete_flg持续为0时，不满足休眠条件，VCU应维持在非休眠状态(vehicle_state!=9)。
+9b4d1774,REQ-010,EP,can_bus_idle=1,vehicle_state eq 9,CAN总线无0x400~0x47F报文持续1s，满足休眠必要条件，车辆进入休眠状态。
+9bfcecad,REQ-010,EP,can_bus_idle=0,vehicle_state ne 9,CAN总线有0x400~0x47F报文，不满足休眠必要条件，车辆维持非休眠状态。
+d07c6ba3,REQ-010,DT,can_bus_idle=1,vehicle_state eq 9,决策表规则：总线空闲且持续时间大于阈值，触发休眠。
+e31ad6a7,REQ-010,DT,can_bus_idle=0,vehicle_state ne 9,决策表规则：总线非空闲，即使时间大于阈值也不触发休眠。
+531d22d5,REQ-010,ST,can_bus_idle=0; can_bus_idle=1,vehicle_state ne 9; vehicle_state eq 9,状态迁移测试：初始总线非空闲维持非休眠，随后总线空闲持续1s，状态迁移至休眠。

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { Fragment, useEffect, useMemo, useRef, useState } from 'react';
 import { AlertTriangle, CheckCircle, Download, FileText, Gauge, Layers3, ListChecks, Pencil, Play, Plus, RefreshCw, Save, Sparkles, Trash2, Upload, X } from 'lucide-react';
 import { autoTestAPI } from '../services/api';
 
@@ -23,6 +23,7 @@ export function AutoTestDesignV2() {
   const [prompts, setPrompts] = useState<any[]>([]);
   const [summary, setSummary] = useState<any>(null);
   const [performance, setPerformance] = useState<any[]>([]);
+  const [expandedCase, setExpandedCase] = useState<string | null>(null);
   const [rawText, setRawText] = useState('');
   const [selectedReqId, setSelectedReqId] = useState('');
   const [strategy, setStrategy] = useState<any>({ techniques: ['EP', 'BVA'], rationale: '' });
@@ -170,12 +171,14 @@ export function AutoTestDesignV2() {
   };
 
   const loadResults = async () => {
-    const [resultSummary, perf] = await Promise.all([
+    const [resultSummary, perf, testRows] = await Promise.all([
       autoTestAPI.getResultsSummary(),
       autoTestAPI.getPerformance(),
+      autoTestAPI.getTestCases(),
     ]);
     setSummary(resultSummary);
     setPerformance(perf as unknown as any[]);
+    setCases(testRows as unknown as any[]);
   };
 
   const exportFile = async (format: string) => {
@@ -421,6 +424,65 @@ export function AutoTestDesignV2() {
             <button onClick={() => void loadResults()} className="px-3 py-2 border rounded">刷新结果</button>
           </div>
           {summary && <Summary summary={summary} />}
+
+          <h3 className="text-base font-semibold mt-6 mb-2">测试用例执行结果（pytest 逐条，点"查看输出"展开 VCU 实际响应）</h3>
+          <div className="border rounded overflow-hidden">
+            <table className="w-full text-sm">
+              <thead className="bg-slate-50 text-slate-600">
+                <tr>
+                  <th className="text-left p-2">REQ</th>
+                  <th className="text-left p-2">技术</th>
+                  <th className="text-left p-2">用例</th>
+                  <th className="text-left p-2">结果</th>
+                  <th className="text-left p-2">详情</th>
+                </tr>
+              </thead>
+              <tbody>
+                {cases.map((c) => {
+                  const er = c.execution_result || {};
+                  const isOpen = expandedCase === c.id;
+                  const st = (c.status || 'pending') as string;
+                  return (
+                    <Fragment key={c.id}>
+                      <tr className="border-t">
+                        <td className="p-2">{c.requirement_id}</td>
+                        <td className="p-2">{c.technique}</td>
+                        <td className="p-2">{c.title}</td>
+                        <td className="p-2">
+                          <span className={st === 'pass' ? 'text-green-600 font-semibold' : st === 'fail' || st === 'error' ? 'text-red-600 font-semibold' : 'text-slate-400'}>{st.toUpperCase()}</span>
+                        </td>
+                        <td className="p-2">
+                          <button className="text-blue-600 hover:underline" onClick={() => setExpandedCase(isOpen ? null : c.id)}>{isOpen ? '收起' : '查看输出'}</button>
+                        </td>
+                      </tr>
+                      {isOpen && (
+                        <tr className="bg-slate-50">
+                          <td colSpan={5} className="p-3">
+                            <div className="grid gap-2 text-xs">
+                              <div><span className="font-semibold">输入 (in_data)：</span>{JSON.stringify(er.input ?? c.in_data)}</div>
+                              <div><span className="font-semibold">预期 oracle：</span>{JSON.stringify(er.expected ?? c.expected_results)}</div>
+                              <div>
+                                <span className="font-semibold">VCU 仿真器实际输出：</span>
+                                <pre className="bg-white border rounded p-2 mt-1 overflow-auto max-h-72">{JSON.stringify(er.actual_output ?? {}, null, 2)}</pre>
+                              </div>
+                              {Array.isArray(er.mismatches) && er.mismatches.length > 0 && (
+                                <div className="text-red-600"><span className="font-semibold">不匹配：</span>{er.mismatches.join('; ')}</div>
+                              )}
+                            </div>
+                          </td>
+                        </tr>
+                      )}
+                    </Fragment>
+                  );
+                })}
+                {cases.length === 0 && (
+                  <tr><td colSpan={5} className="p-6 text-center text-slate-500">暂无数据（点"执行全部"运行 pytest）</td></tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+
+          <h3 className="text-base font-semibold mt-6 mb-2 text-slate-500">LLM 调用性能日志（NFR Performance，非测试结果）</h3>
           <DataTable rows={performance} columns={['operation', 'elapsed_ms', 'model', 'created_at']} />
         </section>
       )}

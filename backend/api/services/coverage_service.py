@@ -14,12 +14,21 @@ from api.models.schemas import (
     StrategyUpdate,
     TestStrategy,
 )
+from api.services import _persist
 from api.services.llm_client import llm_client
 from api.services.prompt_service import require_prompt
 
 
-_coverage_items: dict[str, CoverageItem] = {}
-_strategies: dict[str, TestStrategy] = {}
+_coverage_items: dict[str, CoverageItem] = _persist.load_dict("coverage_items", CoverageItem)
+_strategies: dict[str, TestStrategy] = _persist.load_dict("strategies", TestStrategy)
+
+
+def _save_items() -> None:
+    _persist.save_dict("coverage_items", _coverage_items)
+
+
+def _save_strategies() -> None:
+    _persist.save_dict("strategies", _strategies)
 
 
 async def generate_coverage_items(
@@ -45,6 +54,8 @@ async def generate_coverage_items(
         to_remove = [k for k, v in _coverage_items.items() if v.requirement_id in affected_req_ids]
         for k in to_remove:
             del _coverage_items[k]
+        if to_remove:
+            _save_items()
 
     prompt = require_prompt("coverage")
     requirements_json = json.dumps([item.model_dump(mode="json") for item in parsed_requirements], ensure_ascii=False, indent=2)
@@ -106,6 +117,7 @@ def create_coverage_item(create: CoverageItemCreate) -> CoverageItem:
         updated_at=now,
     )
     _coverage_items[item.id] = item
+    _save_items()
     ensure_strategy(item.requirement_id)
     return item
 
@@ -119,11 +131,15 @@ def update_coverage_item(item_id: str, update: CoverageItemUpdate) -> Optional[C
         if value is not None:
             setattr(item, field, value)
     item.updated_at = datetime.now()
+    _save_items()
     return item
 
 
 def delete_coverage_item(item_id: str) -> bool:
-    return _coverage_items.pop(item_id, None) is not None
+    removed = _coverage_items.pop(item_id, None) is not None
+    if removed:
+        _save_items()
+    return removed
 
 
 def ensure_strategy(requirement_id: str) -> TestStrategy:
@@ -138,6 +154,7 @@ def ensure_strategy(requirement_id: str) -> TestStrategy:
         updated_at=datetime.now(),
     )
     _strategies[requirement_id] = strategy
+    _save_strategies()
     return strategy
 
 
@@ -153,6 +170,7 @@ def update_strategy(requirement_id: str, update: StrategyUpdate) -> TestStrategy
         updated_at=datetime.now(),
     )
     _strategies[requirement_id] = strategy
+    _save_strategies()
     return strategy
 
 

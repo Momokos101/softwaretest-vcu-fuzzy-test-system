@@ -1,0 +1,30 @@
+{
+  "total": 88,
+  "passed": 0,
+  "failed": 0,
+  "errors": 0,
+  "pass_rate": 0.0,
+  "coverage_rate": 0.9286,
+  "dtc_counts": {},
+  "failure_reasons": {},
+  "performance": {
+    "llm.reasoning_stream": {
+      "count": 15,
+      "avg_ms": 0.0,
+      "max_ms": 0.0,
+      "min_ms": 0.0
+    },
+    "risk.analyze": {
+      "count": 1,
+      "avg_ms": 75444.35,
+      "max_ms": 75444.35,
+      "min_ms": 75444.35
+    },
+    "testcase.generate": {
+      "count": 14,
+      "avg_ms": 72295.09,
+      "max_ms": 113401.27,
+      "min_ms": 47263.93
+    }
+  }
+}

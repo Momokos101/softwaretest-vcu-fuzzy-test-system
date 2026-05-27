@@ -16,11 +16,17 @@ from api.models.schemas import (
     RequirementSource,
     RequirementUpdate,
 )
+from api.services import _persist
 from api.services.requirement_parser import parse_requirement, parse_requirements_from_text
 
 
-_requirements: List[Requirement] = []
-_parsed_requirements: dict[str, ParsedRequirement] = {}
+_requirements: List[Requirement] = _persist.load_list("requirements", Requirement)
+_parsed_requirements: dict[str, ParsedRequirement] = _persist.load_dict("parsed_requirements", ParsedRequirement)
+
+
+def _save() -> None:
+    _persist.save_list("requirements", _requirements)
+    _persist.save_dict("parsed_requirements", _parsed_requirements)
 
 
 VCU_DEMO_REQUIREMENTS: list[dict[str, str]] = [
@@ -135,6 +141,7 @@ def update_requirement(req_id: str, req_update: RequirementUpdate) -> Optional[R
         if value is not None:
             setattr(req, field, value)
     req.updated_at = datetime.now()
+    _save()
     return req
 
 
@@ -142,6 +149,7 @@ def delete_requirement(req_id: str) -> bool:
     original_len = len(_requirements)
     _requirements[:] = [req for req in _requirements if req.id != req_id]
     _parsed_requirements.pop(req_id, None)
+    _save()
     return len(_requirements) < original_len
 
 
@@ -160,6 +168,7 @@ async def parse_raw_text(raw_text: str, source: RequirementSource = RequirementS
             )
             req.parsed = True
             _parsed_requirements[req.id] = parsed
+        _save()
     return parsed_items
 
 
@@ -173,6 +182,7 @@ async def parse_requirement_by_id(req_id: str) -> Optional[ParsedRequirement]:
     _parsed_requirements[req_id] = parsed
     req.parsed = True
     req.updated_at = datetime.now()
+    _save()
     return parsed
 
 
@@ -205,12 +215,14 @@ def update_parsed_requirement(req_id: str, parsed: ParsedRequirement) -> Optiona
     req = get_requirement(req_id)
     if req:
         req.parsed = True
+    _save()
     return parsed
 
 
 def clear_all() -> None:
     _requirements.clear()
     _parsed_requirements.clear()
+    _save()
 
 
 def _replace_requirement(req: Requirement) -> None:
@@ -218,5 +230,7 @@ def _replace_requirement(req: Requirement) -> None:
         if existing.id == req.id:
             _requirements[index] = req
             _parsed_requirements.pop(req.id, None)
+            _save()
             return
     _requirements.append(req)
+    _save()

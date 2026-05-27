@@ -6,11 +6,16 @@ from datetime import datetime
 from typing import List, Optional
 
 from api.models.schemas import ParsedRequirement, RiskAnalysisResult, RiskDimension
+from api.services import _persist
 from api.services.llm_client import llm_client
 from api.services.prompt_service import require_prompt
 
 
-_risk_results: dict[str, RiskAnalysisResult] = {}
+_risk_results: dict[str, RiskAnalysisResult] = _persist.load_dict("risk_results", RiskAnalysisResult)
+
+
+def _save() -> None:
+    _persist.save_dict("risk_results", _risk_results)
 
 
 async def analyze_risk(requirement_id: str, parsed_req: ParsedRequirement) -> RiskAnalysisResult:
@@ -20,6 +25,7 @@ async def analyze_risk(requirement_id: str, parsed_req: ParsedRequirement) -> Ri
     result = results[0]
     result.requirement_id = requirement_id
     _risk_results[requirement_id] = result
+    _save()
     return result
 
 
@@ -39,6 +45,7 @@ async def analyze_risks(parsed_requirements: List[ParsedRequirement]) -> List[Ri
     results = [_to_risk_result(item, model, elapsed_ms) for item in items]
     for result in results:
         _risk_results[result.requirement_id] = result
+    _save()
     return results
 
 
@@ -75,6 +82,7 @@ def adjust_risk(
         created_at=datetime.now(),
     )
     _risk_results[requirement_id] = result
+    _save()
     return result
 
 

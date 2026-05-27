@@ -72,7 +72,7 @@ class RequirementCondition(BaseModel):
 class ExpectedAction(BaseModel):
     output_field: str
     expected_value: Any
-    operator: Literal["eq", "gte", "lte", "gt", "lt", "contains"] = "eq"
+    operator: Literal["eq", "ne", "gte", "lte", "gt", "lt", "contains"] = "eq"
 
 
 class ParsedRequirement(BaseModel):
@@ -249,7 +249,7 @@ class TestInput(BaseModel):
 
 class ExpectedOutput(BaseModel):
     name: str
-    operator: Literal["eq", "gte", "lte", "gt", "lt", "contains"] = "eq"
+    operator: Literal["eq", "ne", "gte", "lte", "gt", "lt", "contains"] = "eq"
     value: Any
     out_type: int = 1
     out_range: int = 2

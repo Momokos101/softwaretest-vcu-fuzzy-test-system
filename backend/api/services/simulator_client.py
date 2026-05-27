@@ -143,6 +143,8 @@ def _compare_expected(actual: dict[str, Any], test_case: TestCase) -> tuple[bool
 def _matches(actual: Any, operator: str, expected: Any) -> bool:
     if operator == "eq":
         return actual == expected
+    if operator == "ne":
+        return actual != expected
     if operator == "contains":
         return isinstance(actual, list | str | dict) and expected in actual
     try:

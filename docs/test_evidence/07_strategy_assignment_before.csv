@@ -1,0 +1,15 @@
+﻿requirement_id,title,techniques,rationale
+REQ-001,硬线供电唤醒 w1,EP;BVA,Default strategy generated from coverage items.
+REQ-002,CAN 网络唤醒 w2,BVA,Default strategy generated from coverage items.
+REQ-003,CP 信号唤醒 w3,BVA,Default strategy generated from coverage items.
+REQ-004,CC 信号唤醒 w4,BVA,Default strategy generated from coverage items.
+REQ-005,CC2 信号唤醒 w5,BVA,Default strategy generated from coverage items.
+REQ-006,口盖信号唤醒 w6,BVA,Default strategy generated from coverage items.
+REQ-007,门板信号唤醒 w7,BVA,Default strategy generated from coverage items.
+REQ-008,休眠条件 h1,EP,Default strategy generated from coverage items.
+REQ-009,休眠条件 h2,EP,Default strategy generated from coverage items.
+REQ-010,休眠条件 h3,EP,Default strategy generated from coverage items.
+REQ-011,三条件同时才休眠,DT,Default strategy generated from coverage items.
+REQ-012,卡死缺陷检测,SC,Default strategy generated from coverage items.
+REQ-013,输出字段一致性,ST,Default strategy generated from coverage items.
+REQ-014,响应时序合规,BVA,Default strategy generated from coverage items.

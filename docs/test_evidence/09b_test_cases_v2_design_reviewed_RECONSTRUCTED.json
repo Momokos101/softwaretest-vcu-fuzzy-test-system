@@ -1,0 +1,4490 @@
+[
+  {
+    "id": "ee00759f-d173-4121-9286-eeb3dbc16354",
+    "requirement_id": "REQ-001",
+    "coverage_item_id": "9505f9e7-bea9-450d-b8f8-7c468ccc8b8b",
+    "title": "BVA: 电压9.1V且持续10ms触发唤醒",
+    "technique": "BVA",
+    "type": 1,
+    "in_data": [
+      {
+        "name": "voltage",
+        "data_type": "float",
+        "value": 9.1,
+        "duration": 10.0,
+        "unit": "V"
+      },
+      {
+        "name": "duration_ms",
+        "data_type": "integer",
+        "value": 10,
+        "duration": 10.0,
+        "unit": "ms"
+      }
+    ],
+    "expected_results": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 11,
+        "out_type": 1,
+        "out_range": 2
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 1,
+        "out_type": 1,
+        "out_range": 2
+      },
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "expected",
+        "out_type": 1,
+        "out_range": 2
+      }
+    ],
+    "error": [],
+    "est_time": 5.0,
+    "oracle_reasoning": "电压9.1V > 9.0V，持续时间10ms >= 10ms，满足唤醒条件，处于边界有效值。",
+    "status": "pending",
+    "execution_result": null,
+    "created_at": "2026-05-25T18:37:19.678545",
+    "updated_at": "2026-05-25T18:37:19.678545",
+    "signal_name": "voltage",
+    "test_value": 9.1,
+    "expected_result": "PASS",
+    "expected_status": 1,
+    "expected_vehicle_state": 11
+  },
+  {
+    "id": "32b5bc02-2aad-42b7-9740-39f5c4ae0b72",
+    "requirement_id": "REQ-001",
+    "coverage_item_id": "9505f9e7-bea9-450d-b8f8-7c468ccc8b8b",
+    "title": "BVA: 电压9.0V且持续10ms不触发唤醒",
+    "technique": "BVA",
+    "type": 1,
+    "in_data": [
+      {
+        "name": "voltage",
+        "data_type": "float",
+        "value": 9.0,
+        "duration": 10.0,
+        "unit": "V"
+      },
+      {
+        "name": "duration_ms",
+        "data_type": "integer",
+        "value": 10,
+        "duration": 10.0,
+        "unit": "ms"
+      }
+    ],
+    "expected_results": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 9,
+        "out_type": 1,
+        "out_range": 2
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 0,
+        "out_type": 1,
+        "out_range": 2
+      },
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "expected",
+        "out_type": 1,
+        "out_range": 2
+      }
+    ],
+    "error": [],
+    "est_time": 5.0,
+    "oracle_reasoning": "电压9.0V 不满足 > 9.0V 的严格大于条件，处于边界无效值，不应唤醒。",
+    "status": "pending",
+    "execution_result": null,
+    "created_at": "2026-05-25T18:37:19.678545",
+    "updated_at": "2026-05-25T18:37:19.678545",
+    "signal_name": "voltage",
+    "test_value": 9.0,
+    "expected_result": "PASS",
+    "expected_status": 1,
+    "expected_vehicle_state": 9
+  },
+  {
+    "id": "61e911de-637f-4d83-b4b6-38e25f1fdc9e",
+    "requirement_id": "REQ-001",
+    "coverage_item_id": "9505f9e7-bea9-450d-b8f8-7c468ccc8b8b",
+    "title": "BVA: 电压9.1V且持续9ms不触发唤醒",
+    "technique": "BVA",
+    "type": 1,
+    "in_data": [
+      {
+        "name": "voltage",
+        "data_type": "float",
+        "value": 9.1,
+        "duration": 9.0,
+        "unit": "V"
+      },
+      {
+        "name": "duration_ms",
+        "data_type": "integer",
+        "value": 9,
+        "duration": 9.0,
+        "unit": "ms"
+      }
+    ],
+    "expected_results": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 9,
+        "out_type": 1,
+        "out_range": 2
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 0,
+        "out_type": 1,
+        "out_range": 2
+      },
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "expected",
+        "out_type": 1,
+        "out_range": 2
+      }
+    ],
+    "error": [],
+    "est_time": 5.0,
+    "oracle_reasoning": "持续时间9ms 不满足 >= 10ms 的条件，处于边界无效值，不应唤醒。",
+    "status": "pending",
+    "execution_result": null,
+    "created_at": "2026-05-25T18:37:19.678545",
+    "updated_at": "2026-05-25T18:37:19.678545",
+    "signal_name": "voltage",
+    "test_value": 9.1,
+    "expected_result": "PASS",
+    "expected_status": 1,
+    "expected_vehicle_state": 9
+  },
+  {
+    "id": "d461618e-136a-40d1-9dd4-e127edccc8da",
+    "requirement_id": "REQ-001",
+    "coverage_item_id": "4d57bf11-c28f-4d04-a9f4-cafd4636c72d",
+    "title": "EP: 正常唤醒 vehicle_state 输出 11",
+    "technique": "EP",
+    "type": 1,
+    "in_data": [
+      {
+        "name": "voltage",
+        "data_type": "float",
+        "value": 12.0,
+        "duration": 50.0,
+        "unit": "V"
+      },
+      {
+        "name": "duration_ms",
+        "data_type": "integer",
+        "value": 50,
+        "duration": 50.0,
+        "unit": "ms"
+      }
+    ],
+    "expected_results": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 11,
+        "out_type": 1,
+        "out_range": 2
+      }
+    ],
+    "error": [],
+    "est_time": 5.0,
+    "oracle_reasoning": "输入属于有效等价类（voltage>9, duration>=10），预期 vehicle_state 迁移至唤醒状态 11。",
+    "status": "pending",
+    "execution_result": null,
+    "created_at": "2026-05-25T18:37:19.678545",
+    "updated_at": "2026-05-25T18:37:19.678545",
+    "signal_name": "voltage",
+    "test_value": 12.0,
+    "expected_result": "PASS",
+    "expected_status": 1,
+    "expected_vehicle_state": 11
+  },
+  {
+    "id": "18e082c6-8099-4b0c-908a-1d52db166b84",
+    "requirement_id": "REQ-001",
+    "coverage_item_id": "4d57bf11-c28f-4d04-a9f4-cafd4636c72d",
+    "title": "EP: 条件不满足 vehicle_state 保持休眠 9",
+    "technique": "EP",
+    "type": 1,
+    "in_data": [
+      {
+        "name": "voltage",
+        "data_type": "float",
+        "value": 5.0,
+        "duration": 50.0,
+        "unit": "V"
+      },
+      {
+        "name": "duration_ms",
+        "data_type": "integer",
+        "value": 50,
+        "duration": 50.0,
+        "unit": "ms"
+      }
+    ],
+    "expected_results": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 9,
+        "out_type": 1,
+        "out_range": 2
+      }
+    ],
+    "error": [],
+    "est_time": 5.0,
+    "oracle_reasoning": "输入属于无效等价类（voltage<=9），预期 vehicle_state 保持休眠状态 9。",
+    "status": "pending",
+    "execution_result": null,
+    "created_at": "2026-05-25T18:37:19.678545",
+    "updated_at": "2026-05-25T18:37:19.678545",
+    "signal_name": "voltage",
+    "test_value": 5.0,
+    "expected_result": "SLEEP",
+    "expected_status": 3,
+    "expected_vehicle_state": 9
+  },
+  {
+    "id": "a4e14ce9-0f1d-467f-b861-5319305cd1ce",
+    "requirement_id": "REQ-001",
+    "coverage_item_id": "81cc0697-eb34-49b8-9ba0-c55ba8e02d38",
+    "title": "EP: 硬线供电唤醒 pdcu_wake_reason 输出 1",
+    "technique": "EP",
+    "type": 1,
+    "in_data": [
+      {
+        "name": "voltage",
+        "data_type": "float",
+        "value": 12.0,
+        "duration": 50.0,
+        "unit": "V"
+      },
+      {
+        "name": "duration_ms",
+        "data_type": "integer",
+        "value": 50,
+        "duration": 50.0,
+        "unit": "ms"
+      }
+    ],
+    "expected_results": [
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 1,
+        "out_type": 1,
+        "out_range": 2
+      }
+    ],
+    "error": [],
+    "est_time": 5.0,
+    "oracle_reasoning": "硬线供电唤醒触发，pdcu_wake_reason 应编码为 1。",
+    "status": "pending",
+    "execution_result": null,
+    "created_at": "2026-05-25T18:37:19.678545",
+    "updated_at": "2026-05-25T18:37:19.678545",
+    "signal_name": "voltage",
+    "test_value": 12.0,
+    "expected_result": "FAIL",
+    "expected_status": 4,
+    "expected_vehicle_state": 9
+  },
+  {
+    "id": "85ce2121-c10b-41c7-93c9-969abea932fb",
+    "requirement_id": "REQ-001",
+    "coverage_item_id": "81cc0697-eb34-49b8-9ba0-c55ba8e02d38",
+    "title": "EP: 无唤醒条件 pdcu_wake_reason 输出 0",
+    "technique": "EP",
+    "type": 1,
+    "in_data": [
+      {
+        "name": "voltage",
+        "data_type": "float",
+        "value": 5.0,
+        "duration": 50.0,
+        "unit": "V"
+      },
+      {
+        "name": "duration_ms",
+        "data_type": "integer",
+        "value": 50,
+        "duration": 50.0,
+        "unit": "ms"
+      }
+    ],
+    "expected_results": [
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 0,
+        "out_type": 1,
+        "out_range": 2
+      }
+    ],
+    "error": [],
+    "est_time": 5.0,
+    "oracle_reasoning": "未满足唤醒条件，pdcu_wake_reason 应编码为 0（无唤醒）。",
+    "status": "pending",
+    "execution_result": null,
+    "created_at": "2026-05-25T18:37:19.678545",
+    "updated_at": "2026-05-25T18:37:19.678545",
+    "signal_name": "voltage",
+    "test_value": 5.0,
+    "expected_result": "FAIL",
+    "expected_status": 4,
+    "expected_vehicle_state": 9
+  },
+  {
+    "id": "409a411f-000c-4e0c-969f-49291d34803c",
+    "requirement_id": "REQ-001",
+    "coverage_item_id": "4637dc4b-8ab5-42fa-9008-9d61ea0bb489",
+    "title": "ST: 正常唤醒序列 state09->state10->state11",
+    "technique": "ST",
+    "type": 1,
+    "in_data": [
+      {
+        "name": "voltage",
+        "data_type": "float",
+        "value": 12.0,
+        "duration": 50.0,
+        "unit": "V"
+      },
+      {
+        "name": "duration_ms",
+        "data_type": "integer",
+        "value": 50,
+        "duration": 50.0,
+        "unit": "ms"
+      }
+    ],
+    "expected_results": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 11,
+        "out_type": 1,
+        "out_range": 2
+      }
+    ],
+    "error": [],
+    "est_time": 10.0,
+    "oracle_reasoning": "验证状态机从休眠(09)经准备(10)最终到达唤醒(11)的完整迁移路径，最终状态应为11。",
+    "status": "pending",
+    "execution_result": null,
+    "created_at": "2026-05-25T18:37:19.678545",
+    "updated_at": "2026-05-25T18:37:19.678545",
+    "signal_name": "voltage",
+    "test_value": 12.0,
+    "expected_result": "PASS",
+    "expected_status": 1,
+    "expected_vehicle_state": 11
+  },
+  {
+    "id": "1c242593-dc7b-4fdf-a583-171a2dd1bde1",
+    "requirement_id": "REQ-001",
+    "coverage_item_id": "5dd2cbe4-280d-4087-881f-a704e622b0b4",
+    "title": "EP: VCU SIL 环境基线连通性与基础唤醒验证",
+    "technique": "EP",
+    "type": 1,
+    "in_data": [
+      {
+        "name": "voltage",
+        "data_type": "float",
+        "value": 12.0,
+        "duration": 20.0,
+        "unit": "V"
+      },
+      {
+        "name": "duration_ms",
+        "data_type": "integer",
+        "value": 20,
+        "duration": 20.0,
+        "unit": "ms"
+      }
+    ],
+    "expected_results": [
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "expected",
+        "out_type": 1,
+        "out_range": 2
+      },
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 11,
+        "out_type": 1,
+        "out_range": 2
+      }
+    ],
+    "error": [],
+    "est_time": 5.0,
+    "oracle_reasoning": "在 SIL 仿真环境下执行基础有效输入，验证环境连通性及基础功能正常，result_type 应为 expected。",
+    "status": "pending",
+    "execution_result": null,
+    "created_at": "2026-05-25T18:37:19.678545",
+    "updated_at": "2026-05-25T18:37:19.678545",
+    "signal_name": "voltage",
+    "test_value": 12.0,
+    "expected_result": "PASS",
+    "expected_status": 1,
+    "expected_vehicle_state": 11
+  },
+  {
+    "id": "4f2f5aa8-a110-4efd-8d80-c3a78fa11801",
+    "requirement_id": "REQ-002",
+    "coverage_item_id": "2bf2066a-3894-4772-ac4e-d2cabe17a06c",
+    "title": "BVA: CAN ID 0x3FF (下界外) 不触发唤醒",
+    "technique": "BVA",
+    "type": 1,
+    "in_data": [
+      {
+        "name": "can_msg_id",
+        "data_type": "integer",
+        "value": 1023,
+        "duration": 100.0,
+        "unit": "ms"
+      }
+    ],
+    "expected_results": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 10,
+        "out_type": 1,
+        "out_range": 2
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 0,
+        "out_type": 1,
+        "out_range": 2
+      }
+    ],
+    "error": [],
+    "est_time": 2.0,
+    "oracle_reasoning": "0x3FF (1023) 低于唤醒阈值 0x400，属于无效边界，VCU 应保持休眠状态 (10) 且无唤醒原因 (0)。",
+    "status": "pending",
+    "execution_result": null,
+    "created_at": "2026-05-25T18:38:39.811108",
+    "updated_at": "2026-05-25T18:38:39.811108",
+    "signal_name": "can_msg_id",
+    "test_value": 1023.0,
+    "expected_result": "FAIL",
+    "expected_status": 4,
+    "expected_vehicle_state": 10
+  },
+  {
+    "id": "a53a6774-ac88-48a8-a900-9aaa4475130d",
+    "requirement_id": "REQ-002",
+    "coverage_item_id": "2bf2066a-3894-4772-ac4e-d2cabe17a06c",
+    "title": "BVA: CAN ID 0x400 (下界) 触发唤醒",
+    "technique": "BVA",
+    "type": 1,
+    "in_data": [
+      {
+        "name": "can_msg_id",
+        "data_type": "integer",
+        "value": 1024,
+        "duration": 100.0,
+        "unit": "ms"
+      }
+    ],
+    "expected_results": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 11,
+        "out_type": 1,
+        "out_range": 2
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 2,
+        "out_type": 1,
+        "out_range": 2
+      }
+    ],
+    "error": [],
+    "est_time": 2.0,
+    "oracle_reasoning": "0x400 (1024) 是唤醒范围的下边界，属于有效边界，VCU 应唤醒 (11) 且原因标记为 CAN 唤醒 (2)。",
+    "status": "pending",
+    "execution_result": null,
+    "created_at": "2026-05-25T18:38:39.811108",
+    "updated_at": "2026-05-25T18:38:39.811108",
+    "signal_name": "can_msg_id",
+    "test_value": 1024.0,
+    "expected_result": "PASS",
+    "expected_status": 1,
+    "expected_vehicle_state": 11
+  },
+  {
+    "id": "a417e351-6ac6-44ac-a03d-b2dd6301eee7",
+    "requirement_id": "REQ-002",
+    "coverage_item_id": "2bf2066a-3894-4772-ac4e-d2cabe17a06c",
+    "title": "BVA: CAN ID 0x47F (上界) 触发唤醒",
+    "technique": "BVA",
+    "type": 1,
+    "in_data": [
+      {
+        "name": "can_msg_id",
+        "data_type": "integer",
+        "value": 1151,
+        "duration": 100.0,
+        "unit": "ms"
+      }
+    ],
+    "expected_results": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 11,
+        "out_type": 1,
+        "out_range": 2
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 2,
+        "out_type": 1,
+        "out_range": 2
+      }
+    ],
+    "error": [],
+    "est_time": 2.0,
+    "oracle_reasoning": "0x47F (1151) 是唤醒范围的上边界，属于有效边界，VCU 应唤醒 (11) 且原因标记为 CAN 唤醒 (2)。",
+    "status": "pending",
+    "execution_result": null,
+    "created_at": "2026-05-25T18:38:39.811108",
+    "updated_at": "2026-05-25T18:38:39.811108",
+    "signal_name": "can_msg_id",
+    "test_value": 1151.0,
+    "expected_result": "PASS",
+    "expected_status": 1,
+    "expected_vehicle_state": 11
+  },
+  {
+    "id": "e68cbea0-db5d-4b2b-a9a8-f58b69382282",
+    "requirement_id": "REQ-002",
+    "coverage_item_id": "2bf2066a-3894-4772-ac4e-d2cabe17a06c",
+    "title": "BVA: CAN ID 0x480 (上界外) 不触发唤醒",
+    "technique": "BVA",
+    "type": 1,
+    "in_data": [
+      {
+        "name": "can_msg_id",
+        "data_type": "integer",
+        "value": 1152,
+        "duration": 100.0,
+        "unit": "ms"
+      }
+    ],
+    "expected_results": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 10,
+        "out_type": 1,
+        "out_range": 2
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 0,
+        "out_type": 1,
+        "out_range": 2
+      }
+    ],
+    "error": [],
+    "est_time": 2.0,
+    "oracle_reasoning": "0x480 (1152) 高于唤醒阈值 0x47F，属于无效边界，VCU 应保持休眠状态 (10) 且无唤醒原因 (0)。",
+    "status": "pending",
+    "execution_result": null,
+    "created_at": "2026-05-25T18:38:39.811108",
+    "updated_at": "2026-05-25T18:38:39.811108",
+    "signal_name": "can_msg_id",
+    "test_value": 1152.0,
+    "expected_result": "FAIL",
+    "expected_status": 4,
+    "expected_vehicle_state": 10
+  },
+  {
+    "id": "609a2d31-adda-4ff0-b36f-b0af6613bf13",
+    "requirement_id": "REQ-002",
+    "coverage_item_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567891",
+    "title": "EP: 有效等价类 CAN ID 0x43F 触发唤醒",
+    "technique": "EP",
+    "type": 1,
+    "in_data": [
+      {
+        "name": "can_msg_id",
+        "data_type": "integer",
+        "value": 1087,
+        "duration": 100.0,
+        "unit": "ms"
+      }
+    ],
+    "expected_results": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 11,
+        "out_type": 1,
+        "out_range": 2
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 2,
+        "out_type": 1,
+        "out_range": 2
+      }
+    ],
+    "error": [],
+    "est_time": 2.0,
+    "oracle_reasoning": "0x43F (1087) 位于 [0x400, 0x47F] 有效等价类内部，代表该区间内的任意有效 ID，应触发唤醒。",
+    "status": "pending",
+    "execution_result": null,
+    "created_at": "2026-05-25T18:38:39.811108",
+    "updated_at": "2026-05-25T18:38:39.811108",
+    "signal_name": "can_msg_id",
+    "test_value": 1087.0,
+    "expected_result": "PASS",
+    "expected_status": 1,
+    "expected_vehicle_state": 11
+  },
+  {
+    "id": "aabf0ff5-a2aa-4704-9ffe-f0eb204e8d54",
+    "requirement_id": "REQ-002",
+    "coverage_item_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567892",
+    "title": "EP: 无效等价类 CAN ID 0x200 不触发唤醒",
+    "technique": "EP",
+    "type": 1,
+    "in_data": [
+      {
+        "name": "can_msg_id",
+        "data_type": "integer",
+        "value": 512,
+        "duration": 100.0,
+        "unit": "ms"
+      }
+    ],
+    "expected_results": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 10,
+        "out_type": 1,
+        "out_range": 2
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 0,
+        "out_type": 1,
+        "out_range": 2
+      }
+    ],
+    "error": [],
+    "est_time": 2.0,
+    "oracle_reasoning": "0x200 (512) 位于 <0x400 无效等价类，代表该区间内的任意无效 ID，不应触发唤醒。",
+    "status": "pending",
+    "execution_result": null,
+    "created_at": "2026-05-25T18:38:39.811108",
+    "updated_at": "2026-05-25T18:38:39.811108",
+    "signal_name": "can_msg_id",
+    "test_value": 512.0,
+    "expected_result": "FAIL",
+    "expected_status": 4,
+    "expected_vehicle_state": 10
+  },
+  {
+    "id": "a184492b-9146-4d15-8283-443845b35dbf",
+    "requirement_id": "REQ-002",
+    "coverage_item_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567893",
+    "title": "ST: 休眠到唤醒状态迁移验证",
+    "technique": "ST",
+    "type": 1,
+    "in_data": [
+      {
+        "name": "can_msg_id",
+        "data_type": "integer",
+        "value": 1024,
+        "duration": 100.0,
+        "unit": "ms"
+      }
+    ],
+    "expected_results": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 11,
+        "out_type": 1,
+        "out_range": 2
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 2,
+        "out_type": 1,
+        "out_range": 2
+      }
+    ],
+    "error": [],
+    "est_time": 3.0,
+    "oracle_reasoning": "验证 VCU 从休眠状态 (Sleep) 接收到有效 CAN 报文后，正确发生状态迁移至唤醒状态 (11) 并准确记录唤醒源 (2)。",
+    "status": "pending",
+    "execution_result": null,
+    "created_at": "2026-05-25T18:38:39.811108",
+    "updated_at": "2026-05-25T18:38:39.811108",
+    "signal_name": "can_msg_id",
+    "test_value": 1024.0,
+    "expected_result": "PASS",
+    "expected_status": 1,
+    "expected_vehicle_state": 11
+  },
+  {
+    "id": "e8355fa0-479d-4889-95f5-622d432c856a",
+    "requirement_id": "REQ-003",
+    "coverage_item_id": "a762e3cd-3444-41fa-9715-e9c0f5c80e70",
+    "title": "BVA_CP电压8.9V不触发唤醒",
+    "technique": "BVA",
+    "type": 1,
+    "in_data": [
+      {
+        "name": "cp_voltage",
+        "data_type": "float",
+        "value": 8.9,
+        "duration": 100.0,
+        "unit": "V"
+      }
+    ],
+    "expected_results": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 0,
+        "out_type": 1,
+        "out_range": 2
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 0,
+        "out_type": 1,
+        "out_range": 2
+      }
+    ],
+    "error": [],
+    "est_time": 5.0,
+    "oracle_reasoning": "CP电压8.9V小于阈值9.0V，不满足唤醒条件，VCU应保持休眠状态。",
+    "status": "pending",
+    "execution_result": null,
+    "created_at": "2026-05-25T18:39:45.269802",
+    "updated_at": "2026-05-25T18:39:45.269802",
+    "signal_name": "cp_voltage",
+    "test_value": 8.9,
+    "expected_result": "FAIL",
+    "expected_status": 4,
+    "expected_vehicle_state": 0
+  },
+  {
+    "id": "aec428a0-8cd8-484a-baea-cbc6a91188c7",
+    "requirement_id": "REQ-003",
+    "coverage_item_id": "a762e3cd-3444-41fa-9715-e9c0f5c80e70",
+    "title": "BVA_CP电压9.0V不触发唤醒",
+    "technique": "BVA",
+    "type": 1,
+    "in_data": [
+      {
+        "name": "cp_voltage",
+        "data_type": "float",
+        "value": 9.0,
+        "duration": 100.0,
+        "unit": "V"
+      }
+    ],
+    "expected_results": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 0,
+        "out_type": 1,
+        "out_range": 2
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 0,
+        "out_type": 1,
+        "out_range": 2
+      }
+    ],
+    "error": [],
+    "est_time": 5.0,
+    "oracle_reasoning": "CP电压9.0V等于阈值，不满足严格大于9.0V的条件，VCU应保持休眠状态。",
+    "status": "pending",
+    "execution_result": null,
+    "created_at": "2026-05-25T18:39:45.269802",
+    "updated_at": "2026-05-25T18:39:45.269802",
+    "signal_name": "cp_voltage",
+    "test_value": 9.0,
+    "expected_result": "FAIL",
+    "expected_status": 4,
+    "expected_vehicle_state": 0
+  },
+  {
+    "id": "1499fcad-7c16-4d0d-a43f-326f239334a5",
+    "requirement_id": "REQ-003",
+    "coverage_item_id": "a762e3cd-3444-41fa-9715-e9c0f5c80e70",
+    "title": "BVA_CP电压9.1V触发唤醒",
+    "technique": "BVA",
+    "type": 1,
+    "in_data": [
+      {
+        "name": "cp_voltage",
+        "data_type": "float",
+        "value": 9.1,
+        "duration": 100.0,
+        "unit": "V"
+      }
+    ],
+    "expected_results": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 11,
+        "out_type": 1,
+        "out_range": 2
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 3,
+        "out_type": 1,
+        "out_range": 2
+      }
+    ],
+    "error": [],
+    "est_time": 5.0,
+    "oracle_reasoning": "CP电压9.1V大于阈值9.0V，满足唤醒条件，VCU应进入唤醒状态并记录唤醒原因。",
+    "status": "pending",
+    "execution_result": null,
+    "created_at": "2026-05-25T18:39:45.269802",
+    "updated_at": "2026-05-25T18:39:45.269802",
+    "signal_name": "cp_voltage",
+    "test_value": 9.1,
+    "expected_result": "PASS",
+    "expected_status": 1,
+    "expected_vehicle_state": 11
+  },
+  {
+    "id": "1573ddef-f111-4b60-af27-c3785ac90247",
+    "requirement_id": "REQ-003",
+    "coverage_item_id": "e1a2b3c4-1111-41fa-9715-e9c0f5c80e70",
+    "title": "EP_CP电压有效等价类12.0V触发唤醒",
+    "technique": "EP",
+    "type": 1,
+    "in_data": [
+      {
+        "name": "cp_voltage",
+        "data_type": "float",
+        "value": 12.0,
+        "duration": 100.0,
+        "unit": "V"
+      }
+    ],
+    "expected_results": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 11,
+        "out_type": 1,
+        "out_range": 2
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 3,
+        "out_type": 1,
+        "out_range": 2
+      }
+    ],
+    "error": [],
+    "est_time": 5.0,
+    "oracle_reasoning": "12.0V属于大于9.0V的有效等价类区间(9.0, 15]，应触发VCU唤醒。",
+    "status": "pending",
+    "execution_result": null,
+    "created_at": "2026-05-25T18:39:45.269802",
+    "updated_at": "2026-05-25T18:39:45.269802",
+    "signal_name": "cp_voltage",
+    "test_value": 12.0,
+    "expected_result": "PASS",
+    "expected_status": 1,
+    "expected_vehicle_state": 11
+  },
+  {
+    "id": "ac0951eb-30d2-4e50-8c00-c4baf4e6c89e",
+    "requirement_id": "REQ-003",
+    "coverage_item_id": "e1a2b3c4-2222-41fa-9715-e9c0f5c80e70",
+    "title": "EP_CP电压无效等价类5.0V不触发唤醒",
+    "technique": "EP",
+    "type": 1,
+    "in_data": [
+      {
+        "name": "cp_voltage",
+        "data_type": "float",
+        "value": 5.0,
+        "duration": 100.0,
+        "unit": "V"
+      }
+    ],
+    "expected_results": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 0,
+        "out_type": 1,
+        "out_range": 2
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 0,
+        "out_type": 1,
+        "out_range": 2
+      }
+    ],
+    "error": [],
+    "est_time": 5.0,
+    "oracle_reasoning": "5.0V属于小于等于9.0V的无效等价类区间[0, 9.0]，不应触发VCU唤醒。",
+    "status": "pending",
+    "execution_result": null,
+    "created_at": "2026-05-25T18:39:45.269802",
+    "updated_at": "2026-05-25T18:39:45.269802",
+    "signal_name": "cp_voltage",
+    "test_value": 5.0,
+    "expected_result": "FAIL",
+    "expected_status": 4,
+    "expected_vehicle_state": 0
+  },
+  {
+    "id": "34187498-30a0-45a2-9e7c-7ec56dd61203",
+    "requirement_id": "REQ-003",
+    "coverage_item_id": "s1a2b3c4-3333-41fa-9715-e9c0f5c80e70",
+    "title": "ST_休眠状态接收12V上升沿迁移至唤醒状态",
+    "technique": "ST",
+    "type": 1,
+    "in_data": [
+      {
+        "name": "cp_voltage",
+        "data_type": "float",
+        "value": 12.0,
+        "duration": 100.0,
+        "unit": "V"
+      }
+    ],
+    "expected_results": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 11,
+        "out_type": 1,
+        "out_range": 2
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 3,
+        "out_type": 1,
+        "out_range": 2
+      }
+    ],
+    "error": [],
+    "est_time": 10.0,
+    "oracle_reasoning": "在休眠状态下，检测到CP电压上升沿且幅值大于9V，状态机应从休眠状态正确迁移至唤醒状态。",
+    "status": "pending",
+    "execution_result": null,
+    "created_at": "2026-05-25T18:39:45.269802",
+    "updated_at": "2026-05-25T18:39:45.269802",
+    "signal_name": "cp_voltage",
+    "test_value": 12.0,
+    "expected_result": "PASS",
+    "expected_status": 1,
+    "expected_vehicle_state": 11
+  },
+  {
+    "id": "627f4c96-95d2-4f76-b8ae-4e9c01a56265",
+    "requirement_id": "REQ-004",
+    "coverage_item_id": "1945c7d8-4d43-4779-b914-749c75a882c3",
+    "title": "BVA-CC电压4.3V触发唤醒",
+    "technique": "BVA",
+    "type": 1,
+    "in_data": [
+      {
+        "name": "cc_voltage",
+        "data_type": "float",
+        "value": 4.3,
+        "duration": 100.0,
+        "unit": "V"
+      }
+    ],
+    "expected_results": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 11,
+        "out_type": 1,
+        "out_range": 2
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 4,
+        "out_type": 1,
+        "out_range": 2
+      }
+    ],
+    "error": [],
+    "est_time": 5.0,
+    "oracle_reasoning": "CC电压4.3V小于阈值4.4V，满足唤醒条件，预期vehicle_state为11，pdcu_wake_reason为4。",
+    "status": "pending",
+    "execution_result": null,
+    "created_at": "2026-05-25T18:40:48.187769",
+    "updated_at": "2026-05-25T18:40:48.187769",
+    "signal_name": "cc_voltage",
+    "test_value": 4.3,
+    "expected_result": "PASS",
+    "expected_status": 1,
+    "expected_vehicle_state": 11
+  },
+  {
+    "id": "3fa5ccea-687d-47c3-8b00-b3a0da2e27f7",
+    "requirement_id": "REQ-004",
+    "coverage_item_id": "1945c7d8-4d43-4779-b914-749c75a882c3",
+    "title": "BVA-CC电压4.4V不触发唤醒",
+    "technique": "BVA",
+    "type": 1,
+    "in_data": [
+      {
+        "name": "cc_voltage",
+        "data_type": "float",
+        "value": 4.4,
+        "duration": 100.0,
+        "unit": "V"
+      }
+    ],
+    "expected_results": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 11,
+        "out_type": 1,
+        "out_range": 2
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 4,
+        "out_type": 1,
+        "out_range": 2
+      }
+    ],
+    "error": [],
+    "est_time": 5.0,
+    "oracle_reasoning": "CC电压4.4V不小于阈值4.4V，不满足唤醒条件，预期不触发唤醒。",
+    "status": "pending",
+    "execution_result": null,
+    "created_at": "2026-05-25T18:40:48.187769",
+    "updated_at": "2026-05-25T18:40:48.187769",
+    "signal_name": "cc_voltage",
+    "test_value": 4.4,
+    "expected_result": "PASS",
+    "expected_status": 1,
+    "expected_vehicle_state": 11
+  },
+  {
+    "id": "51b5d7a7-c8bc-40af-848c-1301cc107463",
+    "requirement_id": "REQ-004",
+    "coverage_item_id": "1945c7d8-4d43-4779-b914-749c75a882c3",
+    "title": "BVA-CC电压4.5V不触发唤醒",
+    "technique": "BVA",
+    "type": 1,
+    "in_data": [
+      {
+        "name": "cc_voltage",
+        "data_type": "float",
+        "value": 4.5,
+        "duration": 100.0,
+        "unit": "V"
+      }
+    ],
+    "expected_results": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 11,
+        "out_type": 1,
+        "out_range": 2
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 4,
+        "out_type": 1,
+        "out_range": 2
+      }
+    ],
+    "error": [],
+    "est_time": 5.0,
+    "oracle_reasoning": "CC电压4.5V大于阈值4.4V，不满足唤醒条件，预期不触发唤醒。",
+    "status": "pending",
+    "execution_result": null,
+    "created_at": "2026-05-25T18:40:48.187769",
+    "updated_at": "2026-05-25T18:40:48.187769",
+    "signal_name": "cc_voltage",
+    "test_value": 4.5,
+    "expected_result": "PASS",
+    "expected_status": 1,
+    "expected_vehicle_state": 11
+  },
+  {
+    "id": "c3ed0dd6-46ac-4c35-a573-73afda094824",
+    "requirement_id": "REQ-004",
+    "coverage_item_id": "a1b2c3d4-1111-2222-3333-444444444444",
+    "title": "EP-CC电压有效等价类低值触发唤醒",
+    "technique": "EP",
+    "type": 1,
+    "in_data": [
+      {
+        "name": "cc_voltage",
+        "data_type": "float",
+        "value": 2.0,
+        "duration": 100.0,
+        "unit": "V"
+      }
+    ],
+    "expected_results": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 11,
+        "out_type": 1,
+        "out_range": 2
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 4,
+        "out_type": 1,
+        "out_range": 2
+      }
+    ],
+    "error": [],
+    "est_time": 5.0,
+    "oracle_reasoning": "CC电压2.0V属于<4.4V的有效等价类，满足唤醒条件。",
+    "status": "pending",
+    "execution_result": null,
+    "created_at": "2026-05-25T18:40:48.187769",
+    "updated_at": "2026-05-25T18:40:48.187769",
+    "signal_name": "cc_voltage",
+    "test_value": 2.0,
+    "expected_result": "PASS",
+    "expected_status": 1,
+    "expected_vehicle_state": 11
+  },
+  {
+    "id": "c0a2219f-71b0-47f6-9d3a-8ff53d047515",
+    "requirement_id": "REQ-004",
+    "coverage_item_id": "a1b2c3d4-1111-2222-3333-555555555555",
+    "title": "EP-CC电压无效等价类高值不触发唤醒",
+    "technique": "EP",
+    "type": 1,
+    "in_data": [
+      {
+        "name": "cc_voltage",
+        "data_type": "float",
+        "value": 10.0,
+        "duration": 100.0,
+        "unit": "V"
+      }
+    ],
+    "expected_results": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 11,
+        "out_type": 1,
+        "out_range": 2
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 4,
+        "out_type": 1,
+        "out_range": 2
+      }
+    ],
+    "error": [],
+    "est_time": 5.0,
+    "oracle_reasoning": "CC电压10.0V属于>=4.4V的等价类，不满足唤醒条件。",
+    "status": "pending",
+    "execution_result": null,
+    "created_at": "2026-05-25T18:40:48.187769",
+    "updated_at": "2026-05-25T18:40:48.187769",
+    "signal_name": "cc_voltage",
+    "test_value": 10.0,
+    "expected_result": "PASS",
+    "expected_status": 1,
+    "expected_vehicle_state": 11
+  },
+  {
+    "id": "6649aed9-8d8a-4c16-9363-0feb116def20",
+    "requirement_id": "REQ-004",
+    "coverage_item_id": "a1b2c3d4-1111-2222-3333-666666666666",
+    "title": "ST-CC电压下降沿触发唤醒状态迁移",
+    "technique": "ST",
+    "type": 1,
+    "in_data": [
+      {
+        "name": "cc_voltage",
+        "data_type": "float",
+        "value": 5.0,
+        "duration": 100.0,
+        "unit": "V"
+      },
+      {
+        "name": "cc_voltage",
+        "data_type": "float",
+        "value": 4.0,
+        "duration": 100.0,
+        "unit": "V"
+      }
+    ],
+    "expected_results": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 11,
+        "out_type": 1,
+        "out_range": 2
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 4,
+        "out_type": 1,
+        "out_range": 2
+      }
+    ],
+    "error": [],
+    "est_time": 10.0,
+    "oracle_reasoning": "CC电压从5.0V下降至4.0V，产生下降沿并跨越4.4V阈值，触发状态迁移至唤醒状态。",
+    "status": "pending",
+    "execution_result": null,
+    "created_at": "2026-05-25T18:40:48.187769",
+    "updated_at": "2026-05-25T18:40:48.187769",
+    "signal_name": "cc_voltage",
+    "test_value": 5.0,
+    "expected_result": "PASS",
+    "expected_status": 1,
+    "expected_vehicle_state": 11
+  },
+  {
+    "id": "5063355c-ecf5-4ca0-929a-7c477d420e8a",
+    "requirement_id": "REQ-005",
+    "coverage_item_id": "3e28fc83-b2f7-4083-87f0-d03ae67c00b5",
+    "title": "BVA: CC2电压下降沿至4.3V触发唤醒",
+    "technique": "BVA",
+    "type": 1,
+    "in_data": [
+      {
+        "name": "cc2_voltage",
+        "data_type": "float",
+        "value": 4.3,
+        "duration": 100.0,
+        "unit": "V"
+      }
+    ],
+    "expected_results": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 11,
+        "out_type": 1,
+        "out_range": 11
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 5,
+        "out_type": 1,
+        "out_range": 5
+      }
+    ],
+    "error": [],
+    "est_time": 5.0,
+    "oracle_reasoning": "4.3V 严格小于阈值 4.4V，满足 CC2 UBR 电压下降沿触发条件，VCU 应进入唤醒状态并记录唤醒原因。",
+    "status": "pending",
+    "execution_result": null,
+    "created_at": "2026-05-25T18:41:51.275484",
+    "updated_at": "2026-05-25T18:41:51.275484",
+    "signal_name": "cc2_voltage",
+    "test_value": 4.3,
+    "expected_result": "PASS",
+    "expected_status": 1,
+    "expected_vehicle_state": 11
+  },
+  {
+    "id": "e77f33a3-5b80-4c20-869a-d69ce5dfda01",
+    "requirement_id": "REQ-005",
+    "coverage_item_id": "3e28fc83-b2f7-4083-87f0-d03ae67c00b5",
+    "title": "BVA: CC2电压下降沿至4.4V不触发唤醒",
+    "technique": "BVA",
+    "type": 1,
+    "in_data": [
+      {
+        "name": "cc2_voltage",
+        "data_type": "float",
+        "value": 4.4,
+        "duration": 100.0,
+        "unit": "V"
+      }
+    ],
+    "expected_results": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 11,
+        "out_type": 1,
+        "out_range": 2
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 5,
+        "out_type": 1,
+        "out_range": 2
+      }
+    ],
+    "error": [],
+    "est_time": 5.0,
+    "oracle_reasoning": "4.4V 等于阈值，不满足严格小于 (<) 4.4V 的条件，因此不应触发 CC2 唤醒。",
+    "status": "pending",
+    "execution_result": null,
+    "created_at": "2026-05-25T18:41:51.275484",
+    "updated_at": "2026-05-25T18:41:51.275484",
+    "signal_name": "cc2_voltage",
+    "test_value": 4.4,
+    "expected_result": "PASS",
+    "expected_status": 1,
+    "expected_vehicle_state": 11
+  },
+  {
+    "id": "8ff28b9f-73c6-4b94-ad10-03d76075c3f0",
+    "requirement_id": "REQ-005",
+    "coverage_item_id": "3e28fc83-b2f7-4083-87f0-d03ae67c00b5",
+    "title": "BVA: CC2电压下降沿至4.5V不触发唤醒",
+    "technique": "BVA",
+    "type": 1,
+    "in_data": [
+      {
+        "name": "cc2_voltage",
+        "data_type": "float",
+        "value": 4.5,
+        "duration": 100.0,
+        "unit": "V"
+      }
+    ],
+    "expected_results": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 11,
+        "out_type": 1,
+        "out_range": 2
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 5,
+        "out_type": 1,
+        "out_range": 2
+      }
+    ],
+    "error": [],
+    "est_time": 5.0,
+    "oracle_reasoning": "4.5V 大于阈值 4.4V，不满足下降沿触发条件，VCU 保持原状态。",
+    "status": "pending",
+    "execution_result": null,
+    "created_at": "2026-05-25T18:41:51.275484",
+    "updated_at": "2026-05-25T18:41:51.275484",
+    "signal_name": "cc2_voltage",
+    "test_value": 4.5,
+    "expected_result": "PASS",
+    "expected_status": 1,
+    "expected_vehicle_state": 11
+  },
+  {
+    "id": "663c24cb-ec61-477a-a12e-d7f5c45bc787",
+    "requirement_id": "REQ-005",
+    "coverage_item_id": "3e28fc83-b2f7-4083-87f0-d03ae67c00b5",
+    "title": "EP: CC2电压有效等价类(2.0V)触发唤醒",
+    "technique": "EP",
+    "type": 1,
+    "in_data": [
+      {
+        "name": "cc2_voltage",
+        "data_type": "float",
+        "value": 2.0,
+        "duration": 100.0,
+        "unit": "V"
+      }
+    ],
+    "expected_results": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 11,
+        "out_type": 1,
+        "out_range": 11
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 5,
+        "out_type": 1,
+        "out_range": 5
+      }
+    ],
+    "error": [],
+    "est_time": 5.0,
+    "oracle_reasoning": "2.0V 属于有效触发等价类 (0V <= v < 4.4V)，应成功触发 VCU 唤醒。",
+    "status": "pending",
+    "execution_result": null,
+    "created_at": "2026-05-25T18:41:51.275484",
+    "updated_at": "2026-05-25T18:41:51.275484",
+    "signal_name": "cc2_voltage",
+    "test_value": 2.0,
+    "expected_result": "PASS",
+    "expected_status": 1,
+    "expected_vehicle_state": 11
+  },
+  {
+    "id": "7e126bb1-3954-43db-8846-055e5c960e50",
+    "requirement_id": "REQ-005",
+    "coverage_item_id": "3e28fc83-b2f7-4083-87f0-d03ae67c00b5",
+    "title": "EP: CC2电压无效等价类(10.0V)不触发唤醒",
+    "technique": "EP",
+    "type": 1,
+    "in_data": [
+      {
+        "name": "cc2_voltage",
+        "data_type": "float",
+        "value": 10.0,
+        "duration": 100.0,
+        "unit": "V"
+      }
+    ],
+    "expected_results": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 11,
+        "out_type": 1,
+        "out_range": 2
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 5,
+        "out_type": 1,
+        "out_range": 2
+      }
+    ],
+    "error": [],
+    "est_time": 5.0,
+    "oracle_reasoning": "10.0V 属于无效触发等价类 (v >= 4.4V)，不应触发 VCU 唤醒。",
+    "status": "pending",
+    "execution_result": null,
+    "created_at": "2026-05-25T18:41:51.275484",
+    "updated_at": "2026-05-25T18:41:51.275484",
+    "signal_name": "cc2_voltage",
+    "test_value": 10.0,
+    "expected_result": "PASS",
+    "expected_status": 1,
+    "expected_vehicle_state": 11
+  },
+  {
+    "id": "c190a304-ef60-4b22-8bb4-9445504444ee",
+    "requirement_id": "REQ-005",
+    "coverage_item_id": "3e28fc83-b2f7-4083-87f0-d03ae67c00b5",
+    "title": "ST: VCU从休眠状态经CC2下降沿迁移至唤醒状态",
+    "technique": "ST",
+    "type": 1,
+    "in_data": [
+      {
+        "name": "initial_power_state",
+        "data_type": "string",
+        "value": "Sleep",
+        "duration": 0.0,
+        "unit": ""
+      },
+      {
+        "name": "cc2_voltage",
+        "data_type": "float",
+        "value": 3.5,
+        "duration": 100.0,
+        "unit": "V"
+      }
+    ],
+    "expected_results": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 11,
+        "out_type": 1,
+        "out_range": 11
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 5,
+        "out_type": 1,
+        "out_range": 5
+      }
+    ],
+    "error": [],
+    "est_time": 10.0,
+    "oracle_reasoning": "验证状态迁移：当 VCU 处于 Sleep 状态时，接收到满足条件的 CC2 电压下降沿 (3.5V < 4.4V)，系统应正确迁移至 Wake 状态 (vehicle_state=11)。",
+    "status": "pending",
+    "execution_result": null,
+    "created_at": "2026-05-25T18:41:51.275484",
+    "updated_at": "2026-05-25T18:41:51.275484",
+    "signal_name": "initial_power_state",
+    "test_value": 0.0,
+    "expected_result": "PASS",
+    "expected_status": 1,
+    "expected_vehicle_state": 11
+  },
+  {
+    "id": "0ab0931c-05b3-423f-8527-9c4fda00a5dc",
+    "requirement_id": "REQ-006",
+    "coverage_item_id": "d1b4e183-9fcc-4cfd-92c0-b3163050356a",
+    "title": "BVA: 口盖电压4.1V持续10ms触发唤醒",
+    "technique": "BVA",
+    "type": 1,
+    "in_data": [
+      {
+        "name": "hood_voltage",
+        "data_type": "float",
+        "value": 4.1,
+        "duration": 0.0,
+        "unit": "V"
+      },
+      {
+        "name": "duration_ms",
+        "data_type": "integer",
+        "value": 10,
+        "duration": 0.0,
+        "unit": "ms"
+      }
+    ],
+    "expected_results": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 11,
+        "out_type": 1,
+        "out_range": 2
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 6,
+        "out_type": 1,
+        "out_range": 2
+      }
+    ],
+    "error": [],
+    "est_time": 5.0,
+    "oracle_reasoning": "电压4.1V > 4.0V且时间10ms >= 10ms，满足唤醒边界条件，预期进入唤醒状态且唤醒原因为口盖。",
+    "status": "pending",
+    "execution_result": null,
+    "created_at": "2026-05-25T18:42:57.041640",
+    "updated_at": "2026-05-25T18:42:57.041640",
+    "signal_name": "hood_voltage",
+    "test_value": 4.1,
+    "expected_result": "PASS",
+    "expected_status": 1,
+    "expected_vehicle_state": 11
+  },
+  {
+    "id": "56debfe8-c79f-4f20-bb65-5b2ce309a7af",
+    "requirement_id": "REQ-006",
+    "coverage_item_id": "d1b4e183-9fcc-4cfd-92c0-b3163050356a",
+    "title": "BVA: 口盖电压4.0V持续10ms不触发唤醒",
+    "technique": "BVA",
+    "type": 1,
+    "in_data": [
+      {
+        "name": "hood_voltage",
+        "data_type": "float",
+        "value": 4.0,
+        "duration": 0.0,
+        "unit": "V"
+      },
+      {
+        "name": "duration_ms",
+        "data_type": "integer",
+        "value": 10,
+        "duration": 0.0,
+        "unit": "ms"
+      }
+    ],
+    "expected_results": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 11,
+        "out_type": 1,
+        "out_range": 2
+      }
+    ],
+    "error": [],
+    "est_time": 5.0,
+    "oracle_reasoning": "电压4.0V不满足 > 4.0V的严格阈值条件，即使时间满足，也不应触发唤醒。",
+    "status": "pending",
+    "execution_result": null,
+    "created_at": "2026-05-25T18:42:57.041640",
+    "updated_at": "2026-05-25T18:42:57.041640",
+    "signal_name": "hood_voltage",
+    "test_value": 4.0,
+    "expected_result": "PASS",
+    "expected_status": 1,
+    "expected_vehicle_state": 11
+  },
+  {
+    "id": "37e89816-d0e1-4312-b165-3a2ff8d41fe3",
+    "requirement_id": "REQ-006",
+    "coverage_item_id": "d1b4e183-9fcc-4cfd-92c0-b3163050356a",
+    "title": "BVA: 口盖电压4.1V持续9ms不触发唤醒",
+    "technique": "BVA",
+    "type": 1,
+    "in_data": [
+      {
+        "name": "hood_voltage",
+        "data_type": "float",
+        "value": 4.1,
+        "duration": 0.0,
+        "unit": "V"
+      },
+      {
+        "name": "duration_ms",
+        "data_type": "integer",
+        "value": 9,
+        "duration": 0.0,
+        "unit": "ms"
+      }
+    ],
+    "expected_results": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 11,
+        "out_type": 1,
+        "out_range": 2
+      }
+    ],
+    "error": [],
+    "est_time": 5.0,
+    "oracle_reasoning": "时间9ms不满足 >= 10ms的时序边界条件，即使电压满足，也不应触发唤醒。",
+    "status": "pending",
+    "execution_result": null,
+    "created_at": "2026-05-25T18:42:57.041640",
+    "updated_at": "2026-05-25T18:42:57.041640",
+    "signal_name": "hood_voltage",
+    "test_value": 4.1,
+    "expected_result": "PASS",
+    "expected_status": 1,
+    "expected_vehicle_state": 11
+  },
+  {
+    "id": "dc70f131-f8d5-47c7-99fb-ff6ae66dad1b",
+    "requirement_id": "REQ-006",
+    "coverage_item_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+    "title": "EP: 口盖电压12V持续50ms触发唤醒",
+    "technique": "EP",
+    "type": 1,
+    "in_data": [
+      {
+        "name": "hood_voltage",
+        "data_type": "float",
+        "value": 12.0,
+        "duration": 0.0,
+        "unit": "V"
+      },
+      {
+        "name": "duration_ms",
+        "data_type": "integer",
+        "value": 50,
+        "duration": 0.0,
+        "unit": "ms"
+      }
+    ],
+    "expected_results": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 11,
+        "out_type": 1,
+        "out_range": 2
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 6,
+        "out_type": 1,
+        "out_range": 2
+      }
+    ],
+    "error": [],
+    "est_time": 5.0,
+    "oracle_reasoning": "电压12V和时间50ms均在有效等价类范围内（>4V且>=10ms），满足唤醒条件。",
+    "status": "pending",
+    "execution_result": null,
+    "created_at": "2026-05-25T18:42:57.041640",
+    "updated_at": "2026-05-25T18:42:57.041640",
+    "signal_name": "hood_voltage",
+    "test_value": 12.0,
+    "expected_result": "PASS",
+    "expected_status": 1,
+    "expected_vehicle_state": 11
+  },
+  {
+    "id": "4897fac9-2824-4064-9031-69bc6a74cc27",
+    "requirement_id": "REQ-006",
+    "coverage_item_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+    "title": "EP: 口盖电压2V持续50ms不触发唤醒",
+    "technique": "EP",
+    "type": 1,
+    "in_data": [
+      {
+        "name": "hood_voltage",
+        "data_type": "float",
+        "value": 2.0,
+        "duration": 0.0,
+        "unit": "V"
+      },
+      {
+        "name": "duration_ms",
+        "data_type": "integer",
+        "value": 50,
+        "duration": 0.0,
+        "unit": "ms"
+      }
+    ],
+    "expected_results": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 11,
+        "out_type": 1,
+        "out_range": 2
+      }
+    ],
+    "error": [],
+    "est_time": 5.0,
+    "oracle_reasoning": "电压2V在无效等价类（<=4.0V）内，不满足唤醒条件，预期保持非唤醒状态。",
+    "status": "pending",
+    "execution_result": null,
+    "created_at": "2026-05-25T18:42:57.041640",
+    "updated_at": "2026-05-25T18:42:57.041640",
+    "signal_name": "hood_voltage",
+    "test_value": 2.0,
+    "expected_result": "PASS",
+    "expected_status": 1,
+    "expected_vehicle_state": 11
+  },
+  {
+    "id": "cf10b077-aca0-4671-99ca-c2b84ff567c8",
+    "requirement_id": "REQ-006",
+    "coverage_item_id": "b2c3d4e5-f6a7-8901-bcde-f12345678901",
+    "title": "ST: 休眠状态下口盖电压5V持续20ms迁移至唤醒状态",
+    "technique": "ST",
+    "type": 1,
+    "in_data": [
+      {
+        "name": "hood_voltage",
+        "data_type": "float",
+        "value": 5.0,
+        "duration": 0.0,
+        "unit": "V"
+      },
+      {
+        "name": "duration_ms",
+        "data_type": "integer",
+        "value": 20,
+        "duration": 0.0,
+        "unit": "ms"
+      }
+    ],
+    "expected_results": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 11,
+        "out_type": 1,
+        "out_range": 2
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 6,
+        "out_type": 1,
+        "out_range": 2
+      }
+    ],
+    "error": [],
+    "est_time": 5.0,
+    "oracle_reasoning": "验证系统从休眠状态到唤醒状态的状态迁移，输入满足唤醒条件，预期状态正确迁移至11且原因记录为6。",
+    "status": "pending",
+    "execution_result": null,
+    "created_at": "2026-05-25T18:42:57.041640",
+    "updated_at": "2026-05-25T18:42:57.041640",
+    "signal_name": "hood_voltage",
+    "test_value": 5.0,
+    "expected_result": "PASS",
+    "expected_status": 1,
+    "expected_vehicle_state": 11
+  },
+  {
+    "id": "f5a0643d-1669-442a-a5a2-bc794131fb36",
+    "requirement_id": "REQ-007",
+    "coverage_item_id": "67935ead-0a81-4290-933a-30caa666c4d4",
+    "title": "BVA: 门板电压0.9V持续10ms触发唤醒",
+    "technique": "BVA",
+    "type": 1,
+    "in_data": [
+      {
+        "name": "door_voltage",
+        "data_type": "float",
+        "value": 0.9,
+        "duration": 10.0,
+        "unit": "V"
+      },
+      {
+        "name": "duration_ms",
+        "data_type": "integer",
+        "value": 10,
+        "duration": 10.0,
+        "unit": "ms"
+      }
+    ],
+    "expected_results": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 11,
+        "out_type": 1,
+        "out_range": 2
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 7,
+        "out_type": 1,
+        "out_range": 2
+      }
+    ],
+    "error": [],
+    "est_time": 10.0,
+    "oracle_reasoning": "电压0.9V < 1.0V，且持续时间10ms >= 10ms，满足唤醒条件，状态应为11，唤醒原因为7。",
+    "status": "pending",
+    "execution_result": null,
+    "created_at": "2026-05-25T18:44:18.949829",
+    "updated_at": "2026-05-25T18:44:18.949829",
+    "signal_name": "door_voltage",
+    "test_value": 0.9,
+    "expected_result": "PASS",
+    "expected_status": 1,
+    "expected_vehicle_state": 11
+  },
+  {
+    "id": "06c7d8de-f85d-487b-a405-123cfae40d1c",
+    "requirement_id": "REQ-007",
+    "coverage_item_id": "67935ead-0a81-4290-933a-30caa666c4d4",
+    "title": "BVA: 门板电压1.0V持续10ms不触发唤醒",
+    "technique": "BVA",
+    "type": 1,
+    "in_data": [
+      {
+        "name": "door_voltage",
+        "data_type": "float",
+        "value": 1.0,
+        "duration": 10.0,
+        "unit": "V"
+      },
+      {
+        "name": "duration_ms",
+        "data_type": "integer",
+        "value": 10,
+        "duration": 10.0,
+        "unit": "ms"
+      }
+    ],
+    "expected_results": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 0,
+        "out_type": 1,
+        "out_range": 2
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 0,
+        "out_type": 1,
+        "out_range": 2
+      }
+    ],
+    "error": [],
+    "est_time": 10.0,
+    "oracle_reasoning": "电压1.0V不满足 < 1.0V 的条件，即使时间达到10ms也不应触发唤醒。",
+    "status": "pending",
+    "execution_result": null,
+    "created_at": "2026-05-25T18:44:18.949829",
+    "updated_at": "2026-05-25T18:44:18.949829",
+    "signal_name": "door_voltage",
+    "test_value": 1.0,
+    "expected_result": "FAIL",
+    "expected_status": 4,
+    "expected_vehicle_state": 0
+  },
+  {
+    "id": "5c2e2fa3-c78c-41dc-a53a-1e36619b8709",
+    "requirement_id": "REQ-007",
+    "coverage_item_id": "67935ead-0a81-4290-933a-30caa666c4d4",
+    "title": "BVA: 门板电压0.9V持续9ms不触发唤醒",
+    "technique": "BVA",
+    "type": 1,
+    "in_data": [
+      {
+        "name": "door_voltage",
+        "data_type": "float",
+        "value": 0.9,
+        "duration": 9.0,
+        "unit": "V"
+      },
+      {
+        "name": "duration_ms",
+        "data_type": "integer",
+        "value": 9,
+        "duration": 9.0,
+        "unit": "ms"
+      }
+    ],
+    "expected_results": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 0,
+        "out_type": 1,
+        "out_range": 2
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 0,
+        "out_type": 1,
+        "out_range": 2
+      }
+    ],
+    "error": [],
+    "est_time": 10.0,
+    "oracle_reasoning": "持续时间9ms不满足 >= 10ms 的条件，即使电压低于1.0V也不应触发唤醒。",
+    "status": "pending",
+    "execution_result": null,
+    "created_at": "2026-05-25T18:44:18.949829",
+    "updated_at": "2026-05-25T18:44:18.949829",
+    "signal_name": "door_voltage",
+    "test_value": 0.9,
+    "expected_result": "FAIL",
+    "expected_status": 4,
+    "expected_vehicle_state": 0
+  },
+  {
+    "id": "4014304e-3965-4f17-b2ea-295816408bde",
+    "requirement_id": "REQ-007",
+    "coverage_item_id": "67935ead-0a81-4290-933a-30caa666c4d4",
+    "title": "BVA: 门板电压1.1V持续10ms不触发唤醒",
+    "technique": "BVA",
+    "type": 1,
+    "in_data": [
+      {
+        "name": "door_voltage",
+        "data_type": "float",
+        "value": 1.1,
+        "duration": 10.0,
+        "unit": "V"
+      },
+      {
+        "name": "duration_ms",
+        "data_type": "integer",
+        "value": 10,
+        "duration": 10.0,
+        "unit": "ms"
+      }
+    ],
+    "expected_results": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 0,
+        "out_type": 1,
+        "out_range": 2
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 0,
+        "out_type": 1,
+        "out_range": 2
+      }
+    ],
+    "error": [],
+    "est_time": 10.0,
+    "oracle_reasoning": "电压1.1V超出 < 1.0V 边界，不满足唤醒条件。",
+    "status": "pending",
+    "execution_result": null,
+    "created_at": "2026-05-25T18:44:18.949829",
+    "updated_at": "2026-05-25T18:44:18.949829",
+    "signal_name": "door_voltage",
+    "test_value": 1.1,
+    "expected_result": "FAIL",
+    "expected_status": 4,
+    "expected_vehicle_state": 0
+  },
+  {
+    "id": "d80b0a80-d460-4a2b-9573-a57e6856c8af",
+    "requirement_id": "REQ-007",
+    "coverage_item_id": "67935ead-0a81-4290-933a-30caa666c4d4",
+    "title": "BVA: 门板电压0.9V持续11ms触发唤醒",
+    "technique": "BVA",
+    "type": 1,
+    "in_data": [
+      {
+        "name": "door_voltage",
+        "data_type": "float",
+        "value": 0.9,
+        "duration": 11.0,
+        "unit": "V"
+      },
+      {
+        "name": "duration_ms",
+        "data_type": "integer",
+        "value": 11,
+        "duration": 11.0,
+        "unit": "ms"
+      }
+    ],
+    "expected_results": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 11,
+        "out_type": 1,
+        "out_range": 2
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 7,
+        "out_type": 1,
+        "out_range": 2
+      }
+    ],
+    "error": [],
+    "est_time": 10.0,
+    "oracle_reasoning": "电压0.9V < 1.0V，且持续时间11ms > 10ms，满足唤醒条件。",
+    "status": "pending",
+    "execution_result": null,
+    "created_at": "2026-05-25T18:44:18.949829",
+    "updated_at": "2026-05-25T18:44:18.949829",
+    "signal_name": "door_voltage",
+    "test_value": 0.9,
+    "expected_result": "PASS",
+    "expected_status": 1,
+    "expected_vehicle_state": 11
+  },
+  {
+    "id": "3ff46bbc-aeaf-47ce-ac82-0acbbd485270",
+    "requirement_id": "REQ-007",
+    "coverage_item_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+    "title": "EP: 有效等价类-典型低电压与充足时间触发唤醒",
+    "technique": "EP",
+    "type": 1,
+    "in_data": [
+      {
+        "name": "door_voltage",
+        "data_type": "float",
+        "value": 0.5,
+        "duration": 50.0,
+        "unit": "V"
+      },
+      {
+        "name": "duration_ms",
+        "data_type": "integer",
+        "value": 50,
+        "duration": 50.0,
+        "unit": "ms"
+      }
+    ],
+    "expected_results": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 11,
+        "out_type": 1,
+        "out_range": 2
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 7,
+        "out_type": 1,
+        "out_range": 2
+      }
+    ],
+    "error": [],
+    "est_time": 10.0,
+    "oracle_reasoning": "输入处于有效等价类（电压<1V，时间>=10ms），应正常触发唤醒。",
+    "status": "pending",
+    "execution_result": null,
+    "created_at": "2026-05-25T18:44:18.949829",
+    "updated_at": "2026-05-25T18:44:18.949829",
+    "signal_name": "door_voltage",
+    "test_value": 0.5,
+    "expected_result": "PASS",
+    "expected_status": 1,
+    "expected_vehicle_state": 11
+  },
+  {
+    "id": "85caf9b0-7299-4add-afe0-148363e390cf",
+    "requirement_id": "REQ-007",
+    "coverage_item_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+    "title": "EP: 无效等价类-高电压不触发唤醒",
+    "technique": "EP",
+    "type": 1,
+    "in_data": [
+      {
+        "name": "door_voltage",
+        "data_type": "float",
+        "value": 5.0,
+        "duration": 50.0,
+        "unit": "V"
+      },
+      {
+        "name": "duration_ms",
+        "data_type": "integer",
+        "value": 50,
+        "duration": 50.0,
+        "unit": "ms"
+      }
+    ],
+    "expected_results": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 0,
+        "out_type": 1,
+        "out_range": 2
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 0,
+        "out_type": 1,
+        "out_range": 2
+      }
+    ],
+    "error": [],
+    "est_time": 10.0,
+    "oracle_reasoning": "输入处于无效等价类（电压>=1V），即使时间充足也不应触发唤醒。",
+    "status": "pending",
+    "execution_result": null,
+    "created_at": "2026-05-25T18:44:18.949829",
+    "updated_at": "2026-05-25T18:44:18.949829",
+    "signal_name": "door_voltage",
+    "test_value": 5.0,
+    "expected_result": "FAIL",
+    "expected_status": 4,
+    "expected_vehicle_state": 0
+  },
+  {
+    "id": "07b1e5eb-03ed-41c5-9f60-297bcdf60543",
+    "requirement_id": "REQ-007",
+    "coverage_item_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+    "title": "EP: 无效等价类-时间过短不触发唤醒",
+    "technique": "EP",
+    "type": 1,
+    "in_data": [
+      {
+        "name": "door_voltage",
+        "data_type": "float",
+        "value": 0.5,
+        "duration": 5.0,
+        "unit": "V"
+      },
+      {
+        "name": "duration_ms",
+        "data_type": "integer",
+        "value": 5,
+        "duration": 5.0,
+        "unit": "ms"
+      }
+    ],
+    "expected_results": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 0,
+        "out_type": 1,
+        "out_range": 2
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 0,
+        "out_type": 1,
+        "out_range": 2
+      }
+    ],
+    "error": [],
+    "est_time": 10.0,
+    "oracle_reasoning": "输入处于无效等价类（时间<10ms），即使电压满足也不应触发唤醒。",
+    "status": "pending",
+    "execution_result": null,
+    "created_at": "2026-05-25T18:44:18.949829",
+    "updated_at": "2026-05-25T18:44:18.949829",
+    "signal_name": "door_voltage",
+    "test_value": 0.5,
+    "expected_result": "FAIL",
+    "expected_status": 4,
+    "expected_vehicle_state": 0
+  },
+  {
+    "id": "36e9f0e3-897e-469b-be93-61642dc3af5b",
+    "requirement_id": "REQ-007",
+    "coverage_item_id": "b2c3d4e5-f6a7-8901-bcde-f12345678901",
+    "title": "ST: 从Sleep状态迁移到Wake状态",
+    "technique": "ST",
+    "type": 1,
+    "in_data": [
+      {
+        "name": "door_voltage",
+        "data_type": "float",
+        "value": 0.5,
+        "duration": 15.0,
+        "unit": "V"
+      },
+      {
+        "name": "duration_ms",
+        "data_type": "integer",
+        "value": 15,
+        "duration": 15.0,
+        "unit": "ms"
+      }
+    ],
+    "expected_results": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 11,
+        "out_type": 1,
+        "out_range": 2
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 7,
+        "out_type": 1,
+        "out_range": 2
+      }
+    ],
+    "error": [],
+    "est_time": 15.0,
+    "oracle_reasoning": "系统初始处于Sleep状态，满足唤醒条件后应成功迁移至Wake状态（vehicle_state=11）。",
+    "status": "pending",
+    "execution_result": null,
+    "created_at": "2026-05-25T18:44:18.949829",
+    "updated_at": "2026-05-25T18:44:18.949829",
+    "signal_name": "door_voltage",
+    "test_value": 0.5,
+    "expected_result": "PASS",
+    "expected_status": 1,
+    "expected_vehicle_state": 11
+  },
+  {
+    "id": "dd420393-3da3-4dc1-8bd4-6d75cec46848",
+    "requirement_id": "REQ-007",
+    "coverage_item_id": "b2c3d4e5-f6a7-8901-bcde-f12345678901",
+    "title": "ST: 信号中断导致保持Sleep状态",
+    "technique": "ST",
+    "type": 1,
+    "in_data": [
+      {
+        "name": "door_voltage",
+        "data_type": "float",
+        "value": 0.5,
+        "duration": 5.0,
+        "unit": "V"
+      },
+      {
+        "name": "duration_ms",
+        "data_type": "integer",
+        "value": 5,
+        "duration": 5.0,
+        "unit": "ms"
+      }
+    ],
+    "expected_results": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 0,
+        "out_type": 1,
+        "out_range": 2
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 0,
+        "out_type": 1,
+        "out_range": 2
+      }
+    ],
+    "error": [],
+    "est_time": 10.0,
+    "oracle_reasoning": "低电压信号在达到10ms阈值前中断（仅持续5ms），状态机不应发生迁移，保持Sleep状态。",
+    "status": "pending",
+    "execution_result": null,
+    "created_at": "2026-05-25T18:44:18.949829",
+    "updated_at": "2026-05-25T18:44:18.949829",
+    "signal_name": "door_voltage",
+    "test_value": 0.5,
+    "expected_result": "FAIL",
+    "expected_status": 4,
+    "expected_vehicle_state": 0
+  },
+  {
+    "id": "69ff22a5-bf32-4760-b625-1cad077c8b51",
+    "requirement_id": "REQ-011",
+    "coverage_item_id": "d15917bd-b314-458d-bf67-a8b50695add9",
+    "title": "DT-条件全满足进入休眠",
+    "technique": "DT",
+    "type": 1,
+    "in_data": [
+      {
+        "name": "h1",
+        "data_type": "boolean",
+        "value": 1,
+        "duration": 0.0,
+        "unit": "N/A"
+      },
+      {
+        "name": "h2",
+        "data_type": "boolean",
+        "value": 1,
+        "duration": 0.0,
+        "unit": "N/A"
+      },
+      {
+        "name": "h3",
+        "data_type": "boolean",
+        "value": 1,
+        "duration": 0.0,
+        "unit": "N/A"
+      }
+    ],
+    "expected_results": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 9,
+        "out_type": 1,
+        "out_range": 9
+      }
+    ],
+    "error": [],
+    "est_time": 5.0,
+    "oracle_reasoning": "h1, h2, h3全为True，满足三条件同时休眠，VCU进入state09。",
+    "status": "pending",
+    "execution_result": null,
+    "created_at": "2026-05-25T18:48:01.828651",
+    "updated_at": "2026-05-25T18:48:01.828651",
+    "signal_name": "h1",
+    "test_value": 1.0,
+    "expected_result": "SLEEP",
+    "expected_status": 3,
+    "expected_vehicle_state": 9
+  },
+  {
+    "id": "9cb90b88-7d5b-45ba-afe8-11657cd796fc",
+    "requirement_id": "REQ-011",
+    "coverage_item_id": "d15917bd-b314-458d-bf67-a8b50695add9",
+    "title": "DT-h3不满足维持状态",
+    "technique": "DT",
+    "type": 1,
+    "in_data": [
+      {
+        "name": "h1",
+        "data_type": "boolean",
+        "value": 1,
+        "duration": 0.0,
+        "unit": "N/A"
+      },
+      {
+        "name": "h2",
+        "data_type": "boolean",
+        "value": 1,
+        "duration": 0.0,
+        "unit": "N/A"
+      },
+      {
+        "name": "h3",
+        "data_type": "boolean",
+        "value": 0,
+        "duration": 0.0,
+        "unit": "N/A"
+      }
+    ],
+    "expected_results": [
+      {
+        "name": "vehicle_state",
+        "operator": "gt",
+        "value": 9,
+        "out_type": 1,
+        "out_range": 1
+      }
+    ],
+    "error": [],
+    "est_time": 5.0,
+    "oracle_reasoning": "h3为False，任一条件不满足，VCU维持当前非休眠状态(>9)。",
+    "status": "pending",
+    "execution_result": null,
+    "created_at": "2026-05-25T18:48:01.828651",
+    "updated_at": "2026-05-25T18:48:01.828651",
+    "signal_name": "h1",
+    "test_value": 1.0,
+    "expected_result": "SLEEP",
+    "expected_status": 3,
+    "expected_vehicle_state": 9
+  },
+  {
+    "id": "7d74cb3d-1280-4eb7-99dd-48f277d1ff9b",
+    "requirement_id": "REQ-011",
+    "coverage_item_id": "d15917bd-b314-458d-bf67-a8b50695add9",
+    "title": "DT-h2不满足维持状态",
+    "technique": "DT",
+    "type": 1,
+    "in_data": [
+      {
+        "name": "h1",
+        "data_type": "boolean",
+        "value": 1,
+        "duration": 0.0,
+        "unit": "N/A"
+      },
+      {
+        "name": "h2",
+        "data_type": "boolean",
+        "value": 0,
+        "duration": 0.0,
+        "unit": "N/A"
+      },
+      {
+        "name": "h3",
+        "data_type": "boolean",
+        "value": 1,
+        "duration": 0.0,
+        "unit": "N/A"
+      }
+    ],
+    "expected_results": [
+      {
+        "name": "vehicle_state",
+        "operator": "gt",
+        "value": 9,
+        "out_type": 1,
+        "out_range": 1
+      }
+    ],
+    "error": [],
+    "est_time": 5.0,
+    "oracle_reasoning": "h2为False，任一条件不满足，VCU维持当前非休眠状态(>9)。",
+    "status": "pending",
+    "execution_result": null,
+    "created_at": "2026-05-25T18:48:01.828651",
+    "updated_at": "2026-05-25T18:48:01.828651",
+    "signal_name": "h1",
+    "test_value": 1.0,
+    "expected_result": "SLEEP",
+    "expected_status": 3,
+    "expected_vehicle_state": 9
+  },
+  {
+    "id": "2cd3a0b3-3c2b-428c-9e6a-5919b4e0d4c3",
+    "requirement_id": "REQ-011",
+    "coverage_item_id": "d15917bd-b314-458d-bf67-a8b50695add9",
+    "title": "DT-h1不满足维持状态",
+    "technique": "DT",
+    "type": 1,
+    "in_data": [
+      {
+        "name": "h1",
+        "data_type": "boolean",
+        "value": 0,
+        "duration": 0.0,
+        "unit": "N/A"
+      },
+      {
+        "name": "h2",
+        "data_type": "boolean",
+        "value": 1,
+        "duration": 0.0,
+        "unit": "N/A"
+      },
+      {
+        "name": "h3",
+        "data_type": "boolean",
+        "value": 1,
+        "duration": 0.0,
+        "unit": "N/A"
+      }
+    ],
+    "expected_results": [
+      {
+        "name": "vehicle_state",
+        "operator": "gt",
+        "value": 9,
+        "out_type": 1,
+        "out_range": 1
+      }
+    ],
+    "error": [],
+    "est_time": 5.0,
+    "oracle_reasoning": "h1为False，任一条件不满足，VCU维持当前非休眠状态(>9)。",
+    "status": "pending",
+    "execution_result": null,
+    "created_at": "2026-05-25T18:48:01.828651",
+    "updated_at": "2026-05-25T18:48:01.828651",
+    "signal_name": "h1",
+    "test_value": 0.0,
+    "expected_result": "SLEEP",
+    "expected_status": 3,
+    "expected_vehicle_state": 9
+  },
+  {
+    "id": "a72ae648-1bf0-4e57-9ae3-cabdfcc2ce19",
+    "requirement_id": "REQ-011",
+    "coverage_item_id": "d15917bd-b314-458d-bf67-a8b50695add9",
+    "title": "DT-仅h1满足维持状态",
+    "technique": "DT",
+    "type": 1,
+    "in_data": [
+      {
+        "name": "h1",
+        "data_type": "boolean",
+        "value": 1,
+        "duration": 0.0,
+        "unit": "N/A"
+      },
+      {
+        "name": "h2",
+        "data_type": "boolean",
+        "value": 0,
+        "duration": 0.0,
+        "unit": "N/A"
+      },
+      {
+        "name": "h3",
+        "data_type": "boolean",
+        "value": 0,
+        "duration": 0.0,
+        "unit": "N/A"
+      }
+    ],
+    "expected_results": [
+      {
+        "name": "vehicle_state",
+        "operator": "gt",
+        "value": 9,
+        "out_type": 1,
+        "out_range": 1
+      }
+    ],
+    "error": [],
+    "est_time": 5.0,
+    "oracle_reasoning": "h2, h3为False，条件不满足，VCU维持当前非休眠状态(>9)。",
+    "status": "pending",
+    "execution_result": null,
+    "created_at": "2026-05-25T18:48:01.828651",
+    "updated_at": "2026-05-25T18:48:01.828651",
+    "signal_name": "h1",
+    "test_value": 1.0,
+    "expected_result": "SLEEP",
+    "expected_status": 3,
+    "expected_vehicle_state": 9
+  },
+  {
+    "id": "2bef367c-d804-447a-98e6-62891c44b790",
+    "requirement_id": "REQ-011",
+    "coverage_item_id": "d15917bd-b314-458d-bf67-a8b50695add9",
+    "title": "DT-仅h2满足维持状态",
+    "technique": "DT",
+    "type": 1,
+    "in_data": [
+      {
+        "name": "h1",
+        "data_type": "boolean",
+        "value": 0,
+        "duration": 0.0,
+        "unit": "N/A"
+      },
+      {
+        "name": "h2",
+        "data_type": "boolean",
+        "value": 1,
+        "duration": 0.0,
+        "unit": "N/A"
+      },
+      {
+        "name": "h3",
+        "data_type": "boolean",
+        "value": 0,
+        "duration": 0.0,
+        "unit": "N/A"
+      }
+    ],
+    "expected_results": [
+      {
+        "name": "vehicle_state",
+        "operator": "gt",
+        "value": 9,
+        "out_type": 1,
+        "out_range": 1
+      }
+    ],
+    "error": [],
+    "est_time": 5.0,
+    "oracle_reasoning": "h1, h3为False，条件不满足，VCU维持当前非休眠状态(>9)。",
+    "status": "pending",
+    "execution_result": null,
+    "created_at": "2026-05-25T18:48:01.828651",
+    "updated_at": "2026-05-25T18:48:01.828651",
+    "signal_name": "h1",
+    "test_value": 0.0,
+    "expected_result": "SLEEP",
+    "expected_status": 3,
+    "expected_vehicle_state": 9
+  },
+  {
+    "id": "888b722b-d4fe-49ff-8792-761a2d922926",
+    "requirement_id": "REQ-011",
+    "coverage_item_id": "d15917bd-b314-458d-bf67-a8b50695add9",
+    "title": "DT-仅h3满足维持状态",
+    "technique": "DT",
+    "type": 1,
+    "in_data": [
+      {
+        "name": "h1",
+        "data_type": "boolean",
+        "value": 0,
+        "duration": 0.0,
+        "unit": "N/A"
+      },
+      {
+        "name": "h2",
+        "data_type": "boolean",
+        "value": 0,
+        "duration": 0.0,
+        "unit": "N/A"
+      },
+      {
+        "name": "h3",
+        "data_type": "boolean",
+        "value": 1,
+        "duration": 0.0,
+        "unit": "N/A"
+      }
+    ],
+    "expected_results": [
+      {
+        "name": "vehicle_state",
+        "operator": "gt",
+        "value": 9,
+        "out_type": 1,
+        "out_range": 1
+      }
+    ],
+    "error": [],
+    "est_time": 5.0,
+    "oracle_reasoning": "h1, h2为False，条件不满足，VCU维持当前非休眠状态(>9)。",
+    "status": "pending",
+    "execution_result": null,
+    "created_at": "2026-05-25T18:48:01.828651",
+    "updated_at": "2026-05-25T18:48:01.828651",
+    "signal_name": "h1",
+    "test_value": 0.0,
+    "expected_result": "SLEEP",
+    "expected_status": 3,
+    "expected_vehicle_state": 9
+  },
+  {
+    "id": "5b21a8d2-c3a4-44ea-bd21-c612f9a0ab36",
+    "requirement_id": "REQ-011",
+    "coverage_item_id": "d15917bd-b314-458d-bf67-a8b50695add9",
+    "title": "DT-全不满足维持状态",
+    "technique": "DT",
+    "type": 1,
+    "in_data": [
+      {
+        "name": "h1",
+        "data_type": "boolean",
+        "value": 0,
+        "duration": 0.0,
+        "unit": "N/A"
+      },
+      {
+        "name": "h2",
+        "data_type": "boolean",
+        "value": 0,
+        "duration": 0.0,
+        "unit": "N/A"
+      },
+      {
+        "name": "h3",
+        "data_type": "boolean",
+        "value": 0,
+        "duration": 0.0,
+        "unit": "N/A"
+      }
+    ],
+    "expected_results": [
+      {
+        "name": "vehicle_state",
+        "operator": "gt",
+        "value": 9,
+        "out_type": 1,
+        "out_range": 1
+      }
+    ],
+    "error": [],
+    "est_time": 5.0,
+    "oracle_reasoning": "h1, h2, h3全为False，条件不满足，VCU维持当前非休眠状态(>9)。",
+    "status": "pending",
+    "execution_result": null,
+    "created_at": "2026-05-25T18:48:01.828651",
+    "updated_at": "2026-05-25T18:48:01.828651",
+    "signal_name": "h1",
+    "test_value": 0.0,
+    "expected_result": "SLEEP",
+    "expected_status": 3,
+    "expected_vehicle_state": 9
+  },
+  {
+    "id": "0982a75b-03b8-4d85-85f7-01103fca31cc",
+    "requirement_id": "REQ-011",
+    "coverage_item_id": "d15917bd-b314-458d-bf67-a8b50695add9",
+    "title": "ST-非休眠态满足条件迁移至休眠",
+    "technique": "ST",
+    "type": 1,
+    "in_data": [
+      {
+        "name": "initial_state",
+        "data_type": "integer",
+        "value": 10,
+        "duration": 0.0,
+        "unit": "N/A"
+      },
+      {
+        "name": "h1",
+        "data_type": "boolean",
+        "value": 1,
+        "duration": 0.0,
+        "unit": "N/A"
+      },
+      {
+        "name": "h2",
+        "data_type": "boolean",
+        "value": 1,
+        "duration": 0.0,
+        "unit": "N/A"
+      },
+      {
+        "name": "h3",
+        "data_type": "boolean",
+        "value": 1,
+        "duration": 0.0,
+        "unit": "N/A"
+      }
+    ],
+    "expected_results": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 9,
+        "out_type": 1,
+        "out_range": 9
+      }
+    ],
+    "error": [],
+    "est_time": 5.0,
+    "oracle_reasoning": "初始处于state10，当h1, h2, h3全满足时，状态迁移至state09休眠。",
+    "status": "pending",
+    "execution_result": null,
+    "created_at": "2026-05-25T18:48:01.828651",
+    "updated_at": "2026-05-25T18:48:01.828651",
+    "signal_name": "initial_state",
+    "test_value": 10.0,
+    "expected_result": "SLEEP",
+    "expected_status": 3,
+    "expected_vehicle_state": 9
+  },
+  {
+    "id": "79566a95-ba1e-4b89-a550-bc7c5c2e8a7a",
+    "requirement_id": "REQ-011",
+    "coverage_item_id": "d15917bd-b314-458d-bf67-a8b50695add9",
+    "title": "ST-非休眠态条件不满足维持原态",
+    "technique": "ST",
+    "type": 1,
+    "in_data": [
+      {
+        "name": "initial_state",
+        "data_type": "integer",
+        "value": 10,
+        "duration": 0.0,
+        "unit": "N/A"
+      },
+      {
+        "name": "h1",
+        "data_type": "boolean",
+        "value": 1,
+        "duration": 0.0,
+        "unit": "N/A"
+      },
+      {
+        "name": "h2",
+        "data_type": "boolean",
+        "value": 0,
+        "duration": 0.0,
+        "unit": "N/A"
+      },
+      {
+        "name": "h3",
+        "data_type": "boolean",
+        "value": 1,
+        "duration": 0.0,
+        "unit": "N/A"
+      }
+    ],
+    "expected_results": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 10,
+        "out_type": 1,
+        "out_range": 10
+      }
+    ],
+    "error": [],
+    "est_time": 5.0,
+    "oracle_reasoning": "初始处于state10，h2不满足，任一条件缺失，VCU维持state10不发生迁移。",
+    "status": "pending",
+    "execution_result": null,
+    "created_at": "2026-05-25T18:48:01.828651",
+    "updated_at": "2026-05-25T18:48:01.828651",
+    "signal_name": "initial_state",
+    "test_value": 10.0,
+    "expected_result": "FAIL",
+    "expected_status": 4,
+    "expected_vehicle_state": 10
+  },
+  {
+    "id": "6454c70f-51aa-44c6-a8df-5699918207c9",
+    "requirement_id": "REQ-012",
+    "coverage_item_id": "9c11892b-1ecf-456e-9e37-2065d6063a12",
+    "title": "连续3次快速唤醒休眠循环(间隔0.9s)触发卡死",
+    "technique": "SC",
+    "type": 1,
+    "in_data": [
+      {
+        "name": "consecutive_wake_sleep_cycles",
+        "data_type": "integer",
+        "value": 3,
+        "duration": 0.0,
+        "unit": "N/A"
+      },
+      {
+        "name": "interval",
+        "data_type": "float",
+        "value": 0.9,
+        "duration": 0.9,
+        "unit": "s"
+      }
+    ],
+    "expected_results": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 10,
+        "out_type": 1,
+        "out_range": 2
+      },
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "stuck",
+        "out_type": 1,
+        "out_range": 2
+      },
+      {
+        "name": "active_dtcs",
+        "operator": "contains",
+        "value": "DTC_001",
+        "out_type": 1,
+        "out_range": 2
+      }
+    ],
+    "error": [],
+    "est_time": 15.0,
+    "oracle_reasoning": "满足连续>=3次且间隔<1.0s的条件，应触发state10卡死并上报DTC_001。",
+    "status": "pending",
+    "execution_result": null,
+    "created_at": "2026-05-25T18:49:36.321672",
+    "updated_at": "2026-05-25T18:49:36.321672",
+    "signal_name": "consecutive_wake_sleep_cycles",
+    "test_value": 3.0,
+    "expected_result": "FAIL",
+    "expected_status": 4,
+    "expected_vehicle_state": 10
+  },
+  {
+    "id": "f458fc50-b222-4e13-be0c-1ca444f98258",
+    "requirement_id": "REQ-012",
+    "coverage_item_id": "9c11892b-1ecf-456e-9e37-2065d6063a12",
+    "title": "连续2次快速唤醒休眠循环(间隔0.9s)不触发卡死",
+    "technique": "SC",
+    "type": 1,
+    "in_data": [
+      {
+        "name": "consecutive_wake_sleep_cycles",
+        "data_type": "integer",
+        "value": 2,
+        "duration": 0.0,
+        "unit": "N/A"
+      },
+      {
+        "name": "interval",
+        "data_type": "float",
+        "value": 0.9,
+        "duration": 0.9,
+        "unit": "s"
+      }
+    ],
+    "expected_results": [
+      {
+        "name": "result_type",
+        "operator": "ne",
+        "value": "stuck",
+        "out_type": 1,
+        "out_range": 2
+      },
+      {
+        "name": "vehicle_state",
+        "operator": "ne",
+        "value": 10,
+        "out_type": 1,
+        "out_range": 2
+      }
+    ],
+    "error": [],
+    "est_time": 10.0,
+    "oracle_reasoning": "循环次数为2，未达到>=3次的阈值，不应触发卡死缺陷和DTC_001。",
+    "status": "pending",
+    "execution_result": null,
+    "created_at": "2026-05-25T18:49:36.321672",
+    "updated_at": "2026-05-25T18:49:36.321672",
+    "signal_name": "consecutive_wake_sleep_cycles",
+    "test_value": 2.0,
+    "expected_result": "FAIL",
+    "expected_status": 4,
+    "expected_vehicle_state": 9
+  },
+  {
+    "id": "4ff97a2e-a3b0-4f95-a4b8-783171b48076",
+    "requirement_id": "REQ-012",
+    "coverage_item_id": "9c11892b-1ecf-456e-9e37-2065d6063a12",
+    "title": "连续3次唤醒休眠循环但间隔为1.0s不触发卡死",
+    "technique": "SC",
+    "type": 1,
+    "in_data": [
+      {
+        "name": "consecutive_wake_sleep_cycles",
+        "data_type": "integer",
+        "value": 3,
+        "duration": 0.0,
+        "unit": "N/A"
+      },
+      {
+        "name": "interval",
+        "data_type": "float",
+        "value": 1.0,
+        "duration": 1.0,
+        "unit": "s"
+      }
+    ],
+    "expected_results": [
+      {
+        "name": "result_type",
+        "operator": "ne",
+        "value": "stuck",
+        "out_type": 1,
+        "out_range": 2
+      },
+      {
+        "name": "vehicle_state",
+        "operator": "ne",
+        "value": 10,
+        "out_type": 1,
+        "out_range": 2
+      }
+    ],
+    "error": [],
+    "est_time": 10.0,
+    "oracle_reasoning": "间隔时间为1.0s，不满足<1.0s的快速循环条件，不应触发卡死。",
+    "status": "pending",
+    "execution_result": null,
+    "created_at": "2026-05-25T18:49:36.321672",
+    "updated_at": "2026-05-25T18:49:36.321672",
+    "signal_name": "consecutive_wake_sleep_cycles",
+    "test_value": 3.0,
+    "expected_result": "FAIL",
+    "expected_status": 4,
+    "expected_vehicle_state": 9
+  },
+  {
+    "id": "ab1e34c3-0844-46be-9a09-792b7df1f815",
+    "requirement_id": "REQ-012",
+    "coverage_item_id": "8d54175b-12ad-4e01-a5c7-26b8e02b8d3f",
+    "title": "验证卡死场景下active_dtcs准确包含DTC_001",
+    "technique": "SC",
+    "type": 1,
+    "in_data": [
+      {
+        "name": "consecutive_wake_sleep_cycles",
+        "data_type": "integer",
+        "value": 5,
+        "duration": 0.0,
+        "unit": "N/A"
+      },
+      {
+        "name": "interval",
+        "data_type": "float",
+        "value": 0.5,
+        "duration": 0.5,
+        "unit": "s"
+      }
+    ],
+    "expected_results": [
+      {
+        "name": "active_dtcs",
+        "operator": "contains",
+        "value": "DTC_001",
+        "out_type": 1,
+        "out_range": 2
+      },
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "stuck",
+        "out_type": 1,
+        "out_range": 2
+      }
+    ],
+    "error": [],
+    "est_time": 15.0,
+    "oracle_reasoning": "在明确的卡死场景下，验证响应体中active_dtcs列表必须包含DTC_001字符串。",
+    "status": "pending",
+    "execution_result": null,
+    "created_at": "2026-05-25T18:49:36.321672",
+    "updated_at": "2026-05-25T18:49:36.321672",
+    "signal_name": "consecutive_wake_sleep_cycles",
+    "test_value": 5.0,
+    "expected_result": "FAIL",
+    "expected_status": 4,
+    "expected_vehicle_state": 9
+  },
+  {
+    "id": "5bbc9c0c-edcc-4b14-8522-f973ed52df21",
+    "requirement_id": "REQ-012",
+    "coverage_item_id": "75158fa6-747d-4dac-a3f0-d4685d8f03d3",
+    "title": "状态迁移：正常状态经3次快速循环迁移至state10卡死状态",
+    "technique": "ST",
+    "type": 1,
+    "in_data": [
+      {
+        "name": "consecutive_wake_sleep_cycles",
+        "data_type": "integer",
+        "value": 3,
+        "duration": 0.0,
+        "unit": "N/A"
+      },
+      {
+        "name": "interval",
+        "data_type": "float",
+        "value": 0.8,
+        "duration": 0.8,
+        "unit": "s"
+      }
+    ],
+    "expected_results": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 10,
+        "out_type": 1,
+        "out_range": 2
+      },
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "stuck",
+        "out_type": 1,
+        "out_range": 2
+      }
+    ],
+    "error": [],
+    "est_time": 15.0,
+    "oracle_reasoning": "验证状态机在满足快速循环条件时，从正常初始化状态正确迁移并卡死在state10。",
+    "status": "pending",
+    "execution_result": null,
+    "created_at": "2026-05-25T18:49:36.321672",
+    "updated_at": "2026-05-25T18:49:36.321672",
+    "signal_name": "consecutive_wake_sleep_cycles",
+    "test_value": 3.0,
+    "expected_result": "FAIL",
+    "expected_status": 4,
+    "expected_vehicle_state": 10
+  },
+  {
+    "id": "b479a752-62e8-4334-9e9a-513d4b619bad",
+    "requirement_id": "REQ-013",
+    "coverage_item_id": "31c9b11d-f39c-468b-b501-1cf5742bab0b",
+    "title": "决策表-正常运行状态(state=11)输出标志位1",
+    "technique": "DT",
+    "type": 1,
+    "in_data": [
+      {
+        "name": "vehicle_state",
+        "data_type": "integer",
+        "value": 11,
+        "duration": 100.0,
+        "unit": "ms"
+      }
+    ],
+    "expected_results": [
+      {
+        "name": "bus_message_flag",
+        "operator": "eq",
+        "value": 1,
+        "out_type": 1,
+        "out_range": 2
+      }
+    ],
+    "error": [],
+    "est_time": 5.0,
+    "oracle_reasoning": "根据决策表规则，当vehicle_state为11时，bus_message_flag应输出1。",
+    "status": "pending",
+    "execution_result": null,
+    "created_at": "2026-05-25T18:50:48.159510",
+    "updated_at": "2026-05-25T18:50:48.159510",
+    "signal_name": "vehicle_state",
+    "test_value": 11.0,
+    "expected_result": "FAIL",
+    "expected_status": 4,
+    "expected_vehicle_state": 9
+  },
+  {
+    "id": "f3dae3c7-b9b5-4369-badd-5e0b66cb5d34",
+    "requirement_id": "REQ-013",
+    "coverage_item_id": "31c9b11d-f39c-468b-b501-1cf5742bab0b",
+    "title": "决策表-休眠状态(state=9)输出标志位0",
+    "technique": "DT",
+    "type": 1,
+    "in_data": [
+      {
+        "name": "vehicle_state",
+        "data_type": "integer",
+        "value": 9,
+        "duration": 100.0,
+        "unit": "ms"
+      }
+    ],
+    "expected_results": [
+      {
+        "name": "bus_message_flag",
+        "operator": "eq",
+        "value": 0,
+        "out_type": 1,
+        "out_range": 2
+      }
+    ],
+    "error": [],
+    "est_time": 5.0,
+    "oracle_reasoning": "根据决策表规则，当vehicle_state为9时，bus_message_flag应输出0。",
+    "status": "pending",
+    "execution_result": null,
+    "created_at": "2026-05-25T18:50:48.159510",
+    "updated_at": "2026-05-25T18:50:48.159510",
+    "signal_name": "vehicle_state",
+    "test_value": 9.0,
+    "expected_result": "FAIL",
+    "expected_status": 4,
+    "expected_vehicle_state": 9
+  },
+  {
+    "id": "1c6e12c8-e761-4c23-b368-7ba6bbdf6160",
+    "requirement_id": "REQ-013",
+    "coverage_item_id": "31c9b11d-f39c-468b-b501-1cf5742bab0b",
+    "title": "等价类-非9和11状态(如state=10)输出默认标志位0",
+    "technique": "EP",
+    "type": 1,
+    "in_data": [
+      {
+        "name": "vehicle_state",
+        "data_type": "integer",
+        "value": 10,
+        "duration": 100.0,
+        "unit": "ms"
+      }
+    ],
+    "expected_results": [
+      {
+        "name": "bus_message_flag",
+        "operator": "eq",
+        "value": 0,
+        "out_type": 1,
+        "out_range": 2
+      }
+    ],
+    "error": [],
+    "est_time": 5.0,
+    "oracle_reasoning": "根据等价类划分，除9和11外的其他有效状态属于同一等价类，预期不触发正常运行标志，输出0。",
+    "status": "pending",
+    "execution_result": null,
+    "created_at": "2026-05-25T18:50:48.159510",
+    "updated_at": "2026-05-25T18:50:48.159510",
+    "signal_name": "vehicle_state",
+    "test_value": 10.0,
+    "expected_result": "FAIL",
+    "expected_status": 4,
+    "expected_vehicle_state": 9
+  },
+  {
+    "id": "67c74cf9-2067-4057-bd30-e2393eb63d7b",
+    "requirement_id": "REQ-013",
+    "coverage_item_id": "31c9b11d-f39c-468b-b501-1cf5742bab0b",
+    "title": "边界值-状态9和11的邻近边界值(state=8)测试",
+    "technique": "BVA",
+    "type": 1,
+    "in_data": [
+      {
+        "name": "vehicle_state",
+        "data_type": "integer",
+        "value": 8,
+        "duration": 100.0,
+        "unit": "ms"
+      }
+    ],
+    "expected_results": [
+      {
+        "name": "bus_message_flag",
+        "operator": "eq",
+        "value": 0,
+        "out_type": 1,
+        "out_range": 2
+      }
+    ],
+    "error": [],
+    "est_time": 5.0,
+    "oracle_reasoning": "边界值分析，测试状态9的下边界8，不应触发休眠或运行特定标志，预期输出0。",
+    "status": "pending",
+    "execution_result": null,
+    "created_at": "2026-05-25T18:50:48.159510",
+    "updated_at": "2026-05-25T18:50:48.159510",
+    "signal_name": "vehicle_state",
+    "test_value": 8.0,
+    "expected_result": "FAIL",
+    "expected_status": 4,
+    "expected_vehicle_state": 9
+  },
+  {
+    "id": "11d44636-f378-4b85-8006-89c2e050235b",
+    "requirement_id": "REQ-013",
+    "coverage_item_id": "9c2f51bd-9c1b-44b7-8a40-f1cd3a53f6b9",
+    "title": "状态转换-从休眠(state=9)切换到正常运行(state=11)",
+    "technique": "ST",
+    "type": 1,
+    "in_data": [
+      {
+        "name": "vehicle_state",
+        "data_type": "integer",
+        "value": 9,
+        "duration": 100.0,
+        "unit": "ms"
+      },
+      {
+        "name": "vehicle_state",
+        "data_type": "integer",
+        "value": 11,
+        "duration": 100.0,
+        "unit": "ms"
+      }
+    ],
+    "expected_results": [
+      {
+        "name": "bus_message_flag",
+        "operator": "eq",
+        "value": 1,
+        "out_type": 1,
+        "out_range": 2
+      }
+    ],
+    "error": [],
+    "est_time": 10.0,
+    "oracle_reasoning": "状态转换测试，验证从休眠到正常运行状态切换后，标志位正确更新为1。",
+    "status": "pending",
+    "execution_result": null,
+    "created_at": "2026-05-25T18:50:48.159510",
+    "updated_at": "2026-05-25T18:50:48.159510",
+    "signal_name": "vehicle_state",
+    "test_value": 9.0,
+    "expected_result": "FAIL",
+    "expected_status": 4,
+    "expected_vehicle_state": 9
+  },
+  {
+    "id": "a210ce21-04ed-4f02-a7b3-8bdf8523db38",
+    "requirement_id": "REQ-013",
+    "coverage_item_id": "9c2f51bd-9c1b-44b7-8a40-f1cd3a53f6b9",
+    "title": "状态转换-从正常运行(state=11)切换到休眠(state=9)",
+    "technique": "ST",
+    "type": 1,
+    "in_data": [
+      {
+        "name": "vehicle_state",
+        "data_type": "integer",
+        "value": 11,
+        "duration": 100.0,
+        "unit": "ms"
+      },
+      {
+        "name": "vehicle_state",
+        "data_type": "integer",
+        "value": 9,
+        "duration": 100.0,
+        "unit": "ms"
+      }
+    ],
+    "expected_results": [
+      {
+        "name": "bus_message_flag",
+        "operator": "eq",
+        "value": 0,
+        "out_type": 1,
+        "out_range": 2
+      }
+    ],
+    "error": [],
+    "est_time": 10.0,
+    "oracle_reasoning": "状态转换测试，验证从正常运行到休眠状态切换后，标志位正确更新为0。",
+    "status": "pending",
+    "execution_result": null,
+    "created_at": "2026-05-25T18:50:48.159510",
+    "updated_at": "2026-05-25T18:50:48.159510",
+    "signal_name": "vehicle_state",
+    "test_value": 11.0,
+    "expected_result": "FAIL",
+    "expected_status": 4,
+    "expected_vehicle_state": 9
+  },
+  {
+    "id": "5096855a-84fa-42a5-9a92-a42a296072d8",
+    "requirement_id": "REQ-013",
+    "coverage_item_id": "9c2f51bd-9c1b-44b7-8a40-f1cd3a53f6b9",
+    "title": "场景测试-车辆完整上下电状态流转(0->11->9)",
+    "technique": "SC",
+    "type": 1,
+    "in_data": [
+      {
+        "name": "vehicle_state",
+        "data_type": "integer",
+        "value": 0,
+        "duration": 100.0,
+        "unit": "ms"
+      },
+      {
+        "name": "vehicle_state",
+        "data_type": "integer",
+        "value": 11,
+        "duration": 500.0,
+        "unit": "ms"
+      },
+      {
+        "name": "vehicle_state",
+        "data_type": "integer",
+        "value": 9,
+        "duration": 500.0,
+        "unit": "ms"
+      }
+    ],
+    "expected_results": [
+      {
+        "name": "bus_message_flag",
+        "operator": "eq",
+        "value": 0,
+        "out_type": 1,
+        "out_range": 2
+      }
+    ],
+    "error": [],
+    "est_time": 15.0,
+    "oracle_reasoning": "场景测试覆盖车辆从初始状态到运行再到休眠的完整业务场景，最终状态为9，标志位应为0。",
+    "status": "pending",
+    "execution_result": null,
+    "created_at": "2026-05-25T18:50:48.159510",
+    "updated_at": "2026-05-25T18:50:48.159510",
+    "signal_name": "vehicle_state",
+    "test_value": 0.0,
+    "expected_result": "FAIL",
+    "expected_status": 4,
+    "expected_vehicle_state": 9
+  },
+  {
+    "id": "42ce0823-96f5-4d74-9c83-7bddb6606b7e",
+    "requirement_id": "REQ-014",
+    "coverage_item_id": "3c90f016-557b-4eb5-8898-af31363e0c9e",
+    "title": "Type1单信号唤醒时序边界测试-19.9s",
+    "technique": "BVA",
+    "type": 1,
+    "in_data": [
+      {
+        "name": "test_case_type",
+        "data_type": "integer",
+        "value": 1,
+        "duration": 0.0,
+        "unit": "N/A"
+      },
+      {
+        "name": "actual_duration",
+        "data_type": "float",
+        "value": 19.9,
+        "duration": 19.9,
+        "unit": "s"
+      }
+    ],
+    "expected_results": [
+      {
+        "name": "actual_duration",
+        "operator": "lte",
+        "value": 20,
+        "out_type": 1,
+        "out_range": 2
+      }
+    ],
+    "error": [],
+    "est_time": 5.0,
+    "oracle_reasoning": "type1 边界 20s，19.9s < 20s，满足 actual_duration <= 20s 要求，预期合规。",
+    "status": "pending",
+    "execution_result": null,
+    "created_at": "2026-05-25T19:25:56.282455",
+    "updated_at": "2026-05-25T19:25:56.282455",
+    "signal_name": "test_case_type",
+    "test_value": 1.0,
+    "expected_result": "FAIL",
+    "expected_status": 4,
+    "expected_vehicle_state": 9
+  },
+  {
+    "id": "6e81dff0-f624-4d6a-9b1d-24914283ea26",
+    "requirement_id": "REQ-014",
+    "coverage_item_id": "3c90f016-557b-4eb5-8898-af31363e0c9e",
+    "title": "Type1单信号唤醒时序边界测试-20.0s",
+    "technique": "BVA",
+    "type": 1,
+    "in_data": [
+      {
+        "name": "test_case_type",
+        "data_type": "integer",
+        "value": 1,
+        "duration": 0.0,
+        "unit": "N/A"
+      },
+      {
+        "name": "actual_duration",
+        "data_type": "float",
+        "value": 20.0,
+        "duration": 20.0,
+        "unit": "s"
+      }
+    ],
+    "expected_results": [
+      {
+        "name": "actual_duration",
+        "operator": "lte",
+        "value": 20,
+        "out_type": 1,
+        "out_range": 2
+      }
+    ],
+    "error": [],
+    "est_time": 5.0,
+    "oracle_reasoning": "type1 边界 20s，20.0s == 20s，满足 actual_duration <= 20s 要求，预期合规。",
+    "status": "pending",
+    "execution_result": null,
+    "created_at": "2026-05-25T19:25:56.282455",
+    "updated_at": "2026-05-25T19:25:56.282455",
+    "signal_name": "test_case_type",
+    "test_value": 1.0,
+    "expected_result": "FAIL",
+    "expected_status": 4,
+    "expected_vehicle_state": 9
+  },
+  {
+    "id": "1d54b795-125e-49bd-b8b4-fb3155dbb109",
+    "requirement_id": "REQ-014",
+    "coverage_item_id": "57068d42-3014-4257-b689-1752f85f7d82",
+    "title": "Type1单信号唤醒时序边界测试-20.1s",
+    "technique": "BVA",
+    "type": 1,
+    "in_data": [
+      {
+        "name": "test_case_type",
+        "data_type": "integer",
+        "value": 1,
+        "duration": 0.0,
+        "unit": "N/A"
+      },
+      {
+        "name": "actual_duration",
+        "data_type": "float",
+        "value": 20.1,
+        "duration": 20.1,
+        "unit": "s"
+      }
+    ],
+    "expected_results": [
+      {
+        "name": "actual_duration",
+        "operator": "gt",
+        "value": 20,
+        "out_type": 1,
+        "out_range": 2
+      }
+    ],
+    "error": [],
+    "est_time": 5.0,
+    "oracle_reasoning": "type1 边界 20s，20.1s > 20s，不满足 actual_duration <= 20s 要求，预期不合规。",
+    "status": "pending",
+    "execution_result": null,
+    "created_at": "2026-05-25T19:25:56.282455",
+    "updated_at": "2026-05-25T19:25:56.282455",
+    "signal_name": "test_case_type",
+    "test_value": 1.0,
+    "expected_result": "FAIL",
+    "expected_status": 4,
+    "expected_vehicle_state": 9
+  },
+  {
+    "id": "f0d2d266-51bf-407d-a009-667d76e907af",
+    "requirement_id": "REQ-014",
+    "coverage_item_id": "57068d42-3014-4257-b689-1752f85f7d82",
+    "title": "Type2多信号休眠时序边界测试-59.9s",
+    "technique": "BVA",
+    "type": 1,
+    "in_data": [
+      {
+        "name": "test_case_type",
+        "data_type": "integer",
+        "value": 2,
+        "duration": 0.0,
+        "unit": "N/A"
+      },
+      {
+        "name": "actual_duration",
+        "data_type": "float",
+        "value": 59.9,
+        "duration": 59.9,
+        "unit": "s"
+      }
+    ],
+    "expected_results": [
+      {
+        "name": "actual_duration",
+        "operator": "lte",
+        "value": 60,
+        "out_type": 1,
+        "out_range": 2
+      }
+    ],
+    "error": [],
+    "est_time": 5.0,
+    "oracle_reasoning": "type2 边界 60s，59.9s < 60s，满足 actual_duration <= 60s 要求，预期合规。",
+    "status": "pending",
+    "execution_result": null,
+    "created_at": "2026-05-25T19:25:56.282455",
+    "updated_at": "2026-05-25T19:25:56.282455",
+    "signal_name": "test_case_type",
+    "test_value": 2.0,
+    "expected_result": "FAIL",
+    "expected_status": 4,
+    "expected_vehicle_state": 9
+  },
+  {
+    "id": "71d58d11-1939-4229-acf0-75dcc7376415",
+    "requirement_id": "REQ-014",
+    "coverage_item_id": "3c90f016-557b-4eb5-8898-af31363e0c9e",
+    "title": "Type2多信号休眠时序边界测试-60.0s",
+    "technique": "BVA",
+    "type": 1,
+    "in_data": [
+      {
+        "name": "test_case_type",
+        "data_type": "integer",
+        "value": 2,
+        "duration": 0.0,
+        "unit": "N/A"
+      },
+      {
+        "name": "actual_duration",
+        "data_type": "float",
+        "value": 60.0,
+        "duration": 60.0,
+        "unit": "s"
+      }
+    ],
+    "expected_results": [
+      {
+        "name": "actual_duration",
+        "operator": "lte",
+        "value": 60,
+        "out_type": 1,
+        "out_range": 2
+      }
+    ],
+    "error": [],
+    "est_time": 5.0,
+    "oracle_reasoning": "type2 边界 60s，60.0s == 60s，满足 actual_duration <= 60s 要求，预期合规。",
+    "status": "pending",
+    "execution_result": null,
+    "created_at": "2026-05-25T19:25:56.282455",
+    "updated_at": "2026-05-25T19:25:56.282455",
+    "signal_name": "test_case_type",
+    "test_value": 2.0,
+    "expected_result": "FAIL",
+    "expected_status": 4,
+    "expected_vehicle_state": 9
+  },
+  {
+    "id": "bc6b1920-b69e-462f-88cd-5ec45dbfc0db",
+    "requirement_id": "REQ-014",
+    "coverage_item_id": "57068d42-3014-4257-b689-1752f85f7d82",
+    "title": "Type2多信号休眠时序边界测试-60.1s",
+    "technique": "BVA",
+    "type": 1,
+    "in_data": [
+      {
+        "name": "test_case_type",
+        "data_type": "integer",
+        "value": 2,
+        "duration": 0.0,
+        "unit": "N/A"
+      },
+      {
+        "name": "actual_duration",
+        "data_type": "float",
+        "value": 60.1,
+        "duration": 60.1,
+        "unit": "s"
+      }
+    ],
+    "expected_results": [
+      {
+        "name": "actual_duration",
+        "operator": "gt",
+        "value": 60,
+        "out_type": 1,
+        "out_range": 2
+      }
+    ],
+    "error": [],
+    "est_time": 5.0,
+    "oracle_reasoning": "type2 边界 60s，60.1s > 60s，不满足 actual_duration <= 60s 要求，预期不合规。",
+    "status": "pending",
+    "execution_result": null,
+    "created_at": "2026-05-25T19:25:56.282455",
+    "updated_at": "2026-05-25T19:25:56.282455",
+    "signal_name": "test_case_type",
+    "test_value": 2.0,
+    "expected_result": "FAIL",
+    "expected_status": 4,
+    "expected_vehicle_state": 9
+  },
+  {
+    "id": "3c1cc3d2-bcba-400b-93dd-a249b5651ab7",
+    "requirement_id": "REQ-008",
+    "coverage_item_id": "327e5c6a-5140-4be2-9ca8-eb2981a05416",
+    "title": "EP-VCUIdle_flg为1时满足休眠条件",
+    "technique": "EP",
+    "type": 1,
+    "in_data": [
+      {
+        "name": "VCUO_bDIAG_VCUIdle_flg",
+        "data_type": "boolean",
+        "value": 1,
+        "duration": 1000.0,
+        "unit": "ms"
+      }
+    ],
+    "expected_results": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 9,
+        "out_type": 1,
+        "out_range": 9
+      }
+    ],
+    "error": [],
+    "est_time": 5.0,
+    "oracle_reasoning": "VCUIdle_flg为1是进入休眠的必要条件，满足时系统应进入休眠状态(vehicle_state=9)。",
+    "status": "pending",
+    "execution_result": null,
+    "created_at": "2026-05-26T10:13:14.980625",
+    "updated_at": "2026-05-26T10:13:14.980625",
+    "signal_name": "VCUO_bDIAG_VCUIdle_flg",
+    "test_value": 1.0,
+    "expected_result": "SLEEP",
+    "expected_status": 3,
+    "expected_vehicle_state": 9
+  },
+  {
+    "id": "006107d9-a6fd-4aa3-81c0-4419a7f95461",
+    "requirement_id": "REQ-008",
+    "coverage_item_id": "327e5c6a-5140-4be2-9ca8-eb2981a05416",
+    "title": "EP-VCUIdle_flg为0时不满足休眠条件",
+    "technique": "EP",
+    "type": 1,
+    "in_data": [
+      {
+        "name": "VCUO_bDIAG_VCUIdle_flg",
+        "data_type": "boolean",
+        "value": 0,
+        "duration": 1000.0,
+        "unit": "ms"
+      }
+    ],
+    "expected_results": [
+      {
+        "name": "vehicle_state",
+        "operator": "ne",
+        "value": 9,
+        "out_type": 1,
+        "out_range": 2
+      }
+    ],
+    "error": [],
+    "est_time": 5.0,
+    "oracle_reasoning": "VCUIdle_flg为0时不满足休眠必要条件，系统应维持非休眠状态(vehicle_state!=9)。",
+    "status": "pending",
+    "execution_result": null,
+    "created_at": "2026-05-26T10:13:14.980625",
+    "updated_at": "2026-05-26T10:13:14.980625",
+    "signal_name": "VCUO_bDIAG_VCUIdle_flg",
+    "test_value": 0.0,
+    "expected_result": "SLEEP",
+    "expected_status": 3,
+    "expected_vehicle_state": 9
+  },
+  {
+    "id": "b4744dbc-93f4-4743-bd9a-a8c8f2556e68",
+    "requirement_id": "REQ-008",
+    "coverage_item_id": "327e5c6a-5140-4be2-9ca8-eb2981a05416",
+    "title": "DT-VCUIdle_flg为1决策规则",
+    "technique": "DT",
+    "type": 1,
+    "in_data": [
+      {
+        "name": "VCUO_bDIAG_VCUIdle_flg",
+        "data_type": "boolean",
+        "value": 1,
+        "duration": 1000.0,
+        "unit": "ms"
+      }
+    ],
+    "expected_results": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 9,
+        "out_type": 1,
+        "out_range": 9
+      }
+    ],
+    "error": [],
+    "est_time": 5.0,
+    "oracle_reasoning": "决策表规则：当VCUIdle_flg=1时，触发休眠状态迁移，vehicle_state应为9。",
+    "status": "pending",
+    "execution_result": null,
+    "created_at": "2026-05-26T10:13:14.980625",
+    "updated_at": "2026-05-26T10:13:14.980625",
+    "signal_name": "VCUO_bDIAG_VCUIdle_flg",
+    "test_value": 1.0,
+    "expected_result": "SLEEP",
+    "expected_status": 3,
+    "expected_vehicle_state": 9
+  },
+  {
+    "id": "efe48128-c158-418b-89ef-48f5097c3077",
+    "requirement_id": "REQ-008",
+    "coverage_item_id": "327e5c6a-5140-4be2-9ca8-eb2981a05416",
+    "title": "DT-VCUIdle_flg为0决策规则",
+    "technique": "DT",
+    "type": 1,
+    "in_data": [
+      {
+        "name": "VCUO_bDIAG_VCUIdle_flg",
+        "data_type": "boolean",
+        "value": 0,
+        "duration": 1000.0,
+        "unit": "ms"
+      }
+    ],
+    "expected_results": [
+      {
+        "name": "vehicle_state",
+        "operator": "ne",
+        "value": 9,
+        "out_type": 1,
+        "out_range": 2
+      }
+    ],
+    "error": [],
+    "est_time": 5.0,
+    "oracle_reasoning": "决策表规则：当VCUIdle_flg=0时，阻止休眠状态迁移，vehicle_state应不为9。",
+    "status": "pending",
+    "execution_result": null,
+    "created_at": "2026-05-26T10:13:14.980625",
+    "updated_at": "2026-05-26T10:13:14.980625",
+    "signal_name": "VCUO_bDIAG_VCUIdle_flg",
+    "test_value": 0.0,
+    "expected_result": "SLEEP",
+    "expected_status": 3,
+    "expected_vehicle_state": 9
+  },
+  {
+    "id": "47a1f250-7355-4926-ad83-49792daf9371",
+    "requirement_id": "REQ-008",
+    "coverage_item_id": "327e5c6a-5140-4be2-9ca8-eb2981a05416",
+    "title": "ST-非休眠状态到休眠状态迁移",
+    "technique": "ST",
+    "type": 1,
+    "in_data": [
+      {
+        "name": "VCUO_bDIAG_VCUIdle_flg",
+        "data_type": "boolean",
+        "value": 1,
+        "duration": 2000.0,
+        "unit": "ms"
+      }
+    ],
+    "expected_results": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 9,
+        "out_type": 1,
+        "out_range": 9
+      }
+    ],
+    "error": [],
+    "est_time": 10.0,
+    "oracle_reasoning": "状态迁移测试：验证系统从非休眠状态在VCUIdle_flg=1条件下正确迁移至休眠状态(vehicle_state=9)。",
+    "status": "pending",
+    "execution_result": null,
+    "created_at": "2026-05-26T10:13:14.980625",
+    "updated_at": "2026-05-26T10:13:14.980625",
+    "signal_name": "VCUO_bDIAG_VCUIdle_flg",
+    "test_value": 1.0,
+    "expected_result": "SLEEP",
+    "expected_status": 3,
+    "expected_vehicle_state": 9
+  },
+  {
+    "id": "c40de7c5-d5ea-441a-9216-4fff6a4b8280",
+    "requirement_id": "REQ-008",
+    "coverage_item_id": "327e5c6a-5140-4be2-9ca8-eb2981a05416",
+    "title": "ST-非休眠状态维持非休眠",
+    "technique": "ST",
+    "type": 1,
+    "in_data": [
+      {
+        "name": "VCUO_bDIAG_VCUIdle_flg",
+        "data_type": "boolean",
+        "value": 0,
+        "duration": 2000.0,
+        "unit": "ms"
+      }
+    ],
+    "expected_results": [
+      {
+        "name": "vehicle_state",
+        "operator": "ne",
+        "value": 9,
+        "out_type": 1,
+        "out_range": 2
+      }
+    ],
+    "error": [],
+    "est_time": 10.0,
+    "oracle_reasoning": "状态迁移测试：验证系统在VCUIdle_flg=0条件下无法迁移至休眠状态，维持非休眠状态(vehicle_state!=9)。",
+    "status": "pending",
+    "execution_result": null,
+    "created_at": "2026-05-26T10:13:14.980625",
+    "updated_at": "2026-05-26T10:13:14.980625",
+    "signal_name": "VCUO_bDIAG_VCUIdle_flg",
+    "test_value": 0.0,
+    "expected_result": "SLEEP",
+    "expected_status": 3,
+    "expected_vehicle_state": 9
+  },
+  {
+    "id": "62206712-7336-4abd-8814-5be47fcc50d8",
+    "requirement_id": "REQ-009",
+    "coverage_item_id": "be20e236-471d-4194-83db-3053ee80d698",
+    "title": "EP-AuthComplete_flg为1时满足休眠子条件",
+    "technique": "EP",
+    "type": 1,
+    "in_data": [
+      {
+        "name": "VCUO_bDIAG_AuthComplete_flg",
+        "data_type": "boolean",
+        "value": 1,
+        "duration": 100.0,
+        "unit": "ms"
+      }
+    ],
+    "expected_results": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 9,
+        "out_type": 1,
+        "out_range": 9
+      }
+    ],
+    "error": [],
+    "est_time": 5.0,
+    "oracle_reasoning": "AuthComplete_flg=1是进入休眠的必要条件，当其为1且其他条件满足时，VCU应进入休眠状态(vehicle_state=9)。",
+    "status": "pending",
+    "execution_result": null,
+    "created_at": "2026-05-26T10:13:59.910320",
+    "updated_at": "2026-05-26T10:13:59.910320",
+    "signal_name": "VCUO_bDIAG_AuthComplete_flg",
+    "test_value": 1.0,
+    "expected_result": "SLEEP",
+    "expected_status": 3,
+    "expected_vehicle_state": 9
+  },
+  {
+    "id": "58aebeef-50c2-49c9-951c-2226bd213f3c",
+    "requirement_id": "REQ-009",
+    "coverage_item_id": "be20e236-471d-4194-83db-3053ee80d698",
+    "title": "EP-AuthComplete_flg为0时不满足休眠子条件",
+    "technique": "EP",
+    "type": 1,
+    "in_data": [
+      {
+        "name": "VCUO_bDIAG_AuthComplete_flg",
+        "data_type": "boolean",
+        "value": 0,
+        "duration": 100.0,
+        "unit": "ms"
+      }
+    ],
+    "expected_results": [
+      {
+        "name": "vehicle_state",
+        "operator": "ne",
+        "value": 9,
+        "out_type": 1,
+        "out_range": 2
+      }
+    ],
+    "error": [],
+    "est_time": 5.0,
+    "oracle_reasoning": "AuthComplete_flg=0时不满足休眠必要条件，VCU应保持非休眠状态(vehicle_state!=9)。",
+    "status": "pending",
+    "execution_result": null,
+    "created_at": "2026-05-26T10:13:59.910320",
+    "updated_at": "2026-05-26T10:13:59.910320",
+    "signal_name": "VCUO_bDIAG_AuthComplete_flg",
+    "test_value": 0.0,
+    "expected_result": "SLEEP",
+    "expected_status": 3,
+    "expected_vehicle_state": 9
+  },
+  {
+    "id": "3931960a-5557-47f9-bd18-fe8eadd34d4b",
+    "requirement_id": "REQ-009",
+    "coverage_item_id": "dt-00000000-0000-0000-0000-000000000001",
+    "title": "DT-AuthComplete_flg为1时的决策规则验证",
+    "technique": "DT",
+    "type": 1,
+    "in_data": [
+      {
+        "name": "VCUO_bDIAG_AuthComplete_flg",
+        "data_type": "boolean",
+        "value": 1,
+        "duration": 100.0,
+        "unit": "ms"
+      }
+    ],
+    "expected_results": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 9,
+        "out_type": 1,
+        "out_range": 9
+      }
+    ],
+    "error": [],
+    "est_time": 5.0,
+    "oracle_reasoning": "决策表中AuthComplete_flg=1对应的动作是允许进入休眠，验证vehicle_state变为9。",
+    "status": "pending",
+    "execution_result": null,
+    "created_at": "2026-05-26T10:13:59.910320",
+    "updated_at": "2026-05-26T10:13:59.910320",
+    "signal_name": "VCUO_bDIAG_AuthComplete_flg",
+    "test_value": 1.0,
+    "expected_result": "SLEEP",
+    "expected_status": 3,
+    "expected_vehicle_state": 9
+  },
+  {
+    "id": "8073d368-10a3-4050-b2d8-2b668db3f363",
+    "requirement_id": "REQ-009",
+    "coverage_item_id": "dt-00000000-0000-0000-0000-000000000002",
+    "title": "DT-AuthComplete_flg为0时的决策规则验证",
+    "technique": "DT",
+    "type": 1,
+    "in_data": [
+      {
+        "name": "VCUO_bDIAG_AuthComplete_flg",
+        "data_type": "boolean",
+        "value": 0,
+        "duration": 100.0,
+        "unit": "ms"
+      }
+    ],
+    "expected_results": [
+      {
+        "name": "vehicle_state",
+        "operator": "ne",
+        "value": 9,
+        "out_type": 1,
+        "out_range": 2
+      }
+    ],
+    "error": [],
+    "est_time": 5.0,
+    "oracle_reasoning": "决策表中AuthComplete_flg=0对应的动作是禁止进入休眠，验证vehicle_state不为9。",
+    "status": "pending",
+    "execution_result": null,
+    "created_at": "2026-05-26T10:13:59.910320",
+    "updated_at": "2026-05-26T10:13:59.910320",
+    "signal_name": "VCUO_bDIAG_AuthComplete_flg",
+    "test_value": 0.0,
+    "expected_result": "SLEEP",
+    "expected_status": 3,
+    "expected_vehicle_state": 9
+  },
+  {
+    "id": "285d1a3b-af65-4fb6-bb21-87fe5cf40ef6",
+    "requirement_id": "REQ-009",
+    "coverage_item_id": "st-00000000-0000-0000-0000-000000000001",
+    "title": "ST-AuthComplete_flg由0变为1触发休眠状态迁移",
+    "technique": "ST",
+    "type": 1,
+    "in_data": [
+      {
+        "name": "VCUO_bDIAG_AuthComplete_flg",
+        "data_type": "boolean",
+        "value": 0,
+        "duration": 50.0,
+        "unit": "ms"
+      },
+      {
+        "name": "VCUO_bDIAG_AuthComplete_flg",
+        "data_type": "boolean",
+        "value": 1,
+        "duration": 50.0,
+        "unit": "ms"
+      }
+    ],
+    "expected_results": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 9,
+        "out_type": 1,
+        "out_range": 9
+      }
+    ],
+    "error": [],
+    "est_time": 10.0,
+    "oracle_reasoning": "状态迁移测试：当AuthComplete_flg从0跳变为1时，满足休眠条件，VCU状态应从非休眠迁移至休眠(vehicle_state=9)。",
+    "status": "pending",
+    "execution_result": null,
+    "created_at": "2026-05-26T10:13:59.910320",
+    "updated_at": "2026-05-26T10:13:59.910320",
+    "signal_name": "VCUO_bDIAG_AuthComplete_flg",
+    "test_value": 0.0,
+    "expected_result": "SLEEP",
+    "expected_status": 3,
+    "expected_vehicle_state": 9
+  },
+  {
+    "id": "f7e78d83-af99-4aee-a301-c85bc342c415",
+    "requirement_id": "REQ-009",
+    "coverage_item_id": "st-00000000-0000-0000-0000-000000000002",
+    "title": "ST-AuthComplete_flg保持为0时维持非休眠状态",
+    "technique": "ST",
+    "type": 1,
+    "in_data": [
+      {
+        "name": "VCUO_bDIAG_AuthComplete_flg",
+        "data_type": "boolean",
+        "value": 0,
+        "duration": 100.0,
+        "unit": "ms"
+      }
+    ],
+    "expected_results": [
+      {
+        "name": "vehicle_state",
+        "operator": "ne",
+        "value": 9,
+        "out_type": 1,
+        "out_range": 2
+      }
+    ],
+    "error": [],
+    "est_time": 5.0,
+    "oracle_reasoning": "状态迁移测试：AuthComplete_flg持续为0时，不满足休眠条件，VCU应维持在非休眠状态(vehicle_state!=9)。",
+    "status": "pending",
+    "execution_result": null,
+    "created_at": "2026-05-26T10:13:59.910320",
+    "updated_at": "2026-05-26T10:13:59.910320",
+    "signal_name": "VCUO_bDIAG_AuthComplete_flg",
+    "test_value": 0.0,
+    "expected_result": "SLEEP",
+    "expected_status": 3,
+    "expected_vehicle_state": 9
+  },
+  {
+    "id": "9b4d1774-520a-4f83-8e56-c511ed07ad06",
+    "requirement_id": "REQ-010",
+    "coverage_item_id": "9e6be4d2-a149-4701-9e6f-26df8c8bee39",
+    "title": "CAN总线空闲满足阈值进入休眠",
+    "technique": "EP",
+    "type": 1,
+    "in_data": [
+      {
+        "name": "can_bus_idle",
+        "data_type": "boolean",
+        "value": 1,
+        "duration": 1.0,
+        "unit": "s"
+      }
+    ],
+    "expected_results": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 9,
+        "out_type": 1,
+        "out_range": 9
+      }
+    ],
+    "error": [],
+    "est_time": 5.0,
+    "oracle_reasoning": "CAN总线无0x400~0x47F报文持续1s，满足休眠必要条件，车辆进入休眠状态。",
+    "status": "pending",
+    "execution_result": null,
+    "created_at": "2026-05-26T10:14:34.930338",
+    "updated_at": "2026-05-26T10:14:34.930338",
+    "signal_name": "can_bus_idle",
+    "test_value": 1.0,
+    "expected_result": "SLEEP",
+    "expected_status": 3,
+    "expected_vehicle_state": 9
+  },
+  {
+    "id": "9bfcecad-dd0b-4657-a226-2d5bc0057636",
+    "requirement_id": "REQ-010",
+    "coverage_item_id": "9e6be4d2-a149-4701-9e6f-26df8c8bee39",
+    "title": "CAN总线非空闲不进入休眠",
+    "technique": "EP",
+    "type": 1,
+    "in_data": [
+      {
+        "name": "can_bus_idle",
+        "data_type": "boolean",
+        "value": 0,
+        "duration": 1.0,
+        "unit": "s"
+      }
+    ],
+    "expected_results": [
+      {
+        "name": "vehicle_state",
+        "operator": "ne",
+        "value": 9,
+        "out_type": 1,
+        "out_range": 2
+      }
+    ],
+    "error": [],
+    "est_time": 5.0,
+    "oracle_reasoning": "CAN总线有0x400~0x47F报文，不满足休眠必要条件，车辆维持非休眠状态。",
+    "status": "pending",
+    "execution_result": null,
+    "created_at": "2026-05-26T10:14:34.930338",
+    "updated_at": "2026-05-26T10:14:34.930338",
+    "signal_name": "can_bus_idle",
+    "test_value": 0.0,
+    "expected_result": "SLEEP",
+    "expected_status": 3,
+    "expected_vehicle_state": 9
+  },
+  {
+    "id": "d07c6ba3-084a-4274-bd3a-cf480127aa06",
+    "requirement_id": "REQ-010",
+    "coverage_item_id": "9e6be4d2-a149-4701-9e6f-26df8c8bee39",
+    "title": "决策表-总线空闲且时间大于阈值",
+    "technique": "DT",
+    "type": 1,
+    "in_data": [
+      {
+        "name": "can_bus_idle",
+        "data_type": "boolean",
+        "value": 1,
+        "duration": 2.0,
+        "unit": "s"
+      }
+    ],
+    "expected_results": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 9,
+        "out_type": 1,
+        "out_range": 9
+      }
+    ],
+    "error": [],
+    "est_time": 5.0,
+    "oracle_reasoning": "决策表规则：总线空闲且持续时间大于阈值，触发休眠。",
+    "status": "pending",
+    "execution_result": null,
+    "created_at": "2026-05-26T10:14:34.930338",
+    "updated_at": "2026-05-26T10:14:34.930338",
+    "signal_name": "can_bus_idle",
+    "test_value": 1.0,
+    "expected_result": "SLEEP",
+    "expected_status": 3,
+    "expected_vehicle_state": 9
+  },
+  {
+    "id": "e31ad6a7-24b9-46fb-8507-4d4e7ad84e14",
+    "requirement_id": "REQ-010",
+    "coverage_item_id": "9e6be4d2-a149-4701-9e6f-26df8c8bee39",
+    "title": "决策表-总线非空闲且时间大于阈值",
+    "technique": "DT",
+    "type": 1,
+    "in_data": [
+      {
+        "name": "can_bus_idle",
+        "data_type": "boolean",
+        "value": 0,
+        "duration": 2.0,
+        "unit": "s"
+      }
+    ],
+    "expected_results": [
+      {
+        "name": "vehicle_state",
+        "operator": "ne",
+        "value": 9,
+        "out_type": 1,
+        "out_range": 2
+      }
+    ],
+    "error": [],
+    "est_time": 5.0,
+    "oracle_reasoning": "决策表规则：总线非空闲，即使时间大于阈值也不触发休眠。",
+    "status": "pending",
+    "execution_result": null,
+    "created_at": "2026-05-26T10:14:34.930338",
+    "updated_at": "2026-05-26T10:14:34.930338",
+    "signal_name": "can_bus_idle",
+    "test_value": 0.0,
+    "expected_result": "SLEEP",
+    "expected_status": 3,
+    "expected_vehicle_state": 9
+  },
+  {
+    "id": "531d22d5-32f4-43bf-99b7-f7165e9d0ce3",
+    "requirement_id": "REQ-010",
+    "coverage_item_id": "9e6be4d2-a149-4701-9e6f-26df8c8bee39",
+    "title": "状态迁移-从非休眠到休眠",
+    "technique": "ST",
+    "type": 1,
+    "in_data": [
+      {
+        "name": "can_bus_idle",
+        "data_type": "boolean",
+        "value": 0,
+        "duration": 1.0,
+        "unit": "s"
+      },
+      {
+        "name": "can_bus_idle",
+        "data_type": "boolean",
+        "value": 1,
+        "duration": 1.0,
+        "unit": "s"
+      }
+    ],
+    "expected_results": [
+      {
+        "name": "vehicle_state",
+        "operator": "ne",
+        "value": 9,
+        "out_type": 1,
+        "out_range": 2
+      },
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 9,
+        "out_type": 1,
+        "out_range": 9
+      }
+    ],
+    "error": [],
+    "est_time": 10.0,
+    "oracle_reasoning": "状态迁移测试：初始总线非空闲维持非休眠，随后总线空闲持续1s，状态迁移至休眠。",
+    "status": "pending",
+    "execution_result": null,
+    "created_at": "2026-05-26T10:14:34.930338",
+    "updated_at": "2026-05-26T10:14:34.930338",
+    "signal_name": "can_bus_idle",
+    "test_value": 0.0,
+    "expected_result": "SLEEP",
+    "expected_status": 3,
+    "expected_vehicle_state": 9
+  },
+  {
+    "id": "20d23be4-2b16-4254-ae5b-62d18b6179cb",
+    "requirement_id": "REQ-001",
+    "coverage_item_id": "9505f9e7-bea9-450d-b8f8-7c468ccc8b8b",
+    "title": "BVA: 电压8.9V（无效-过低 invalid too low）不触发唤醒",
+    "technique": "BVA",
+    "type": 1,
+    "in_data": [
+      {
+        "name": "voltage",
+        "data_type": "float",
+        "value": 8.9,
+        "duration": 10,
+        "unit": null
+      },
+      {
+        "name": "duration_ms",
+        "data_type": "float",
+        "value": 10,
+        "duration": 10,
+        "unit": null
+      }
+    ],
+    "expected_results": [
+      {
+        "name": "vehicle_state",
+        "operator": "eq",
+        "value": 9,
+        "out_type": 1,
+        "out_range": 2
+      },
+      {
+        "name": "pdcu_wake_reason",
+        "operator": "eq",
+        "value": 0,
+        "out_type": 1,
+        "out_range": 2
+      },
+      {
+        "name": "result_type",
+        "operator": "eq",
+        "value": "expected",
+        "out_type": 1,
+        "out_range": 2
+      }
+    ],
+    "error": [],
+    "est_time": 15.0,
+    "oracle_reasoning": "REV-014 设计期补 invalid-too-low（v2 期 oracle，后在 REV-016 修正为 error）",
+    "status": "pending",
+    "execution_result": null
+  }
+]

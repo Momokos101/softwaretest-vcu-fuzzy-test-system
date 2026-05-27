@@ -1,0 +1,15 @@
+﻿requirement_id,title,techniques,rationale
+REQ-001,硬线供电唤醒 w1,EP;BVA;ST,w1 硬线供电唤醒：供电电压/duration 输入域等价类(EP) + 9V&10ms 时序边界(BVA) + state09→state10→state11 状态迁移(ST)
+REQ-002,CAN 网络唤醒 w2,EP;ST,"w2 CAN 唤醒：CAN ID∈[0x400,0x47F] 范围等价类(EP) + 唤醒状态迁移(ST)"
+REQ-003,CP 信号唤醒 w3,EP;ST,w3 CP 信号唤醒：CP 幅值等价类(EP) + 状态迁移(ST)
+REQ-004,CC 信号唤醒 w4,EP;ST,w4 唤醒：输入域等价类(EP) + 状态迁移(ST)
+REQ-005,CC2 信号唤醒 w5,EP;ST,w5 唤醒：输入域等价类(EP) + 状态迁移(ST)
+REQ-006,口盖信号唤醒 w6,EP;BVA;ST,w6 带时序唤醒：输入等价类(EP) + duration≥10ms 时序边界(BVA) + 状态迁移(ST)
+REQ-007,门板信号唤醒 w7,EP;BVA;ST,w7 带时序唤醒：输入等价类(EP) + 时序边界(BVA) + 状态迁移(ST)
+REQ-008,休眠条件 h1,DT;ST,休眠条件 h1：3 布尔条件决策表(DT) + state11→state09 迁移(ST)
+REQ-009,休眠条件 h2,DT;ST,休眠条件 h2：决策表(DT) + 状态迁移(ST)
+REQ-010,休眠条件 h3,DT;ST,休眠条件 h3：决策表(DT) + 状态迁移(ST)
+REQ-011,三条件同时才休眠,DT;ST,休眠组合 h1∧h2∧h3：2³ 决策表全枚举(DT) + 状态迁移(ST)
+REQ-012,卡死缺陷检测,ST;SC,state10 卡死：状态迁移(ST) + 快速3次循环场景/序列(SC) 复现已知缺陷 DEF-001
+REQ-013,输出字段一致性,EP,bus_message_flag 输出一致性：输出域等价类(EP)
+REQ-014,响应时序合规,BVA,actual_duration≤20s 时序边界(BVA)；性能 NFR 度量见 Artifact 4 §4.5

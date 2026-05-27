@@ -1,0 +1,129 @@
+{
+  "REQ-001": {
+    "requirement_id": "REQ-001",
+    "techniques": [
+      "EP",
+      "BVA",
+      "ST"
+    ],
+    "rationale": "w1 硬线供电唤醒：供电电压/duration 输入域等价类(EP) + 9V&10ms 时序边界(BVA) + state09→state10→state11 状态迁移(ST)",
+    "updated_at": "2026-05-25T15:55:01.061864"
+  },
+  "REQ-002": {
+    "requirement_id": "REQ-002",
+    "techniques": [
+      "EP",
+      "ST"
+    ],
+    "rationale": "w2 CAN 唤醒：CAN ID∈[0x400,0x47F] 范围等价类(EP) + 唤醒状态迁移(ST)",
+    "updated_at": "2026-05-25T15:55:01.065205"
+  },
+  "REQ-003": {
+    "requirement_id": "REQ-003",
+    "techniques": [
+      "EP",
+      "ST"
+    ],
+    "rationale": "w3 CP 信号唤醒：CP 幅值等价类(EP) + 状态迁移(ST)",
+    "updated_at": "2026-05-25T15:55:01.068005"
+  },
+  "REQ-004": {
+    "requirement_id": "REQ-004",
+    "techniques": [
+      "EP",
+      "ST"
+    ],
+    "rationale": "w4 唤醒：输入域等价类(EP) + 状态迁移(ST)",
+    "updated_at": "2026-05-25T15:55:01.069697"
+  },
+  "REQ-005": {
+    "requirement_id": "REQ-005",
+    "techniques": [
+      "EP",
+      "ST"
+    ],
+    "rationale": "w5 唤醒：输入域等价类(EP) + 状态迁移(ST)",
+    "updated_at": "2026-05-25T15:55:01.071461"
+  },
+  "REQ-006": {
+    "requirement_id": "REQ-006",
+    "techniques": [
+      "EP",
+      "BVA",
+      "ST"
+    ],
+    "rationale": "w6 带时序唤醒：输入等价类(EP) + duration≥10ms 时序边界(BVA) + 状态迁移(ST)",
+    "updated_at": "2026-05-25T15:55:01.073956"
+  },
+  "REQ-007": {
+    "requirement_id": "REQ-007",
+    "techniques": [
+      "EP",
+      "BVA",
+      "ST"
+    ],
+    "rationale": "w7 带时序唤醒：输入等价类(EP) + 时序边界(BVA) + 状态迁移(ST)",
+    "updated_at": "2026-05-25T15:55:01.075776"
+  },
+  "REQ-008": {
+    "requirement_id": "REQ-008",
+    "techniques": [
+      "DT",
+      "ST"
+    ],
+    "rationale": "休眠条件 h1：3 布尔条件决策表(DT) + state11→state09 迁移(ST)",
+    "updated_at": "2026-05-25T15:55:01.077834"
+  },
+  "REQ-009": {
+    "requirement_id": "REQ-009",
+    "techniques": [
+      "DT",
+      "ST"
+    ],
+    "rationale": "休眠条件 h2：决策表(DT) + 状态迁移(ST)",
+    "updated_at": "2026-05-25T15:55:01.080005"
+  },
+  "REQ-010": {
+    "requirement_id": "REQ-010",
+    "techniques": [
+      "DT",
+      "ST"
+    ],
+    "rationale": "休眠条件 h3：决策表(DT) + 状态迁移(ST)",
+    "updated_at": "2026-05-25T15:55:01.081792"
+  },
+  "REQ-011": {
+    "requirement_id": "REQ-011",
+    "techniques": [
+      "DT",
+      "ST"
+    ],
+    "rationale": "休眠组合 h1∧h2∧h3：2³ 决策表全枚举(DT) + 状态迁移(ST)",
+    "updated_at": "2026-05-25T15:55:01.083746"
+  },
+  "REQ-012": {
+    "requirement_id": "REQ-012",
+    "techniques": [
+      "ST",
+      "SC"
+    ],
+    "rationale": "state10 卡死：状态迁移(ST) + 快速3次循环场景/序列(SC) 复现已知缺陷 DEF-001",
+    "updated_at": "2026-05-25T15:55:01.085782"
+  },
+  "REQ-013": {
+    "requirement_id": "REQ-013",
+    "techniques": [
+      "EP"
+    ],
+    "rationale": "bus_message_flag 输出一致性：输出域等价类(EP)",
+    "updated_at": "2026-05-25T15:55:01.087818"
+  },
+  "REQ-014": {
+    "requirement_id": "REQ-014",
+    "techniques": [
+      "BVA"
+    ],
+    "rationale": "actual_duration≤20s 时序边界(BVA)；性能 NFR 度量见 Artifact 4 §4.5",
+    "updated_at": "2026-05-25T15:55:01.089581"
+  }
+}
