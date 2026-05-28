@@ -1,7 +1,7 @@
 # Prompts Used — AutoTestDesign 工具实际使用的 LLM Prompt
 
 > Artifact 4 §6 Prompt Design 证据。LLM = 百炼 DashScope（OpenAI 兼容模式），model=qwen，结构化 JSON 输出。
-> 工具共 5 个 prompt 模板：`parse`（需求解析/FR1.1）、`risk`（风险分析/FR2.0）、`coverage`（覆盖项/FR3.0前置）、`testcase`（用例+oracle生成/FR3.0+4.0+5.0）、`improve`（两轮模糊改进建议）。
+> 工具共 5 个 prompt 模板：`parse`（需求解析/FR1.1）、`risk`（风险分析/FR2.0）、`coverage`（覆盖项/FR3.0前置）、`testcase`（用例+oracle生成/FR3.0+4.0+5.0）、`improve`（第二轮 LLM 用例增广建议）。
 > 每个 prompt 以"system_prompt + user_prompt 模板 + 真实输入→输出样例"呈现，体现"prompt 决定输出质量"。
 
 ---
@@ -145,11 +145,11 @@ operator 只能是 eq/ne/gte/lte/gt/lt/contains。
 
 ---
 
-## 5. `improve` — 两轮模糊测试改进建议（PROJECT_PLAN_V2 §3.9 反馈机制）
+## 5. `improve` — 第二轮 LLM 用例增广建议（PROJECT_PLAN_V2 §3.9 反馈机制；非 fuzz）
 
-### system_prompt
+### system_prompt（当前版）
 ```
-你是模糊测试改进工程师，根据第一轮执行失败和新状态发现生成第二轮改进建议。
+你是测试设计改进助手。基于第一轮测试执行结果（覆盖情况与未通过用例），为相关需求提出第二轮的测试覆盖项与测试用例增广建议（补充遗漏的边界、状态与场景）。
 仅返回 JSON 对象：{"suggestions": [...]}。
 每个 suggestions 元素字段：
 requirement_id, title, reason, coverage_item, test_case。
@@ -162,7 +162,8 @@ coverage_item 字段同覆盖项；test_case 字段同 bq_new 兼容测试用例
 {execution_context_json}
 ```
 
-**说明**：该 prompt 用于"第一轮执行失败/新状态发现 → 第二轮针对性改进建议"。本 Artifact 4 的执行期改进（§12.2）将在 Step 3 pytest 执行后调用，届时补充真实输入→输出样例。
+**真实输入→输出样例（Artifact 4 §12 已执行）**：第一轮 96/96 跑完后调用，LLM 返 8 条建议（qwen3.7-max，67s）→ 人工评审 8 进 3（其中 2 条纠正 LLM 写错的 oracle）→ 加入后 VCU 重跑 3/3 通过。详见 `improve_round2_suggestions.json`（8 条原始）、`improve_round2_accepted.json`（3 条采纳）、`improvement_evidence.md` §1。
+**术语澄清**：此功能是"LLM 第二轮用例增广"（结构化、有 oracle、需人工评审），**不是 fuzz**（无随机/变异输入）；Assignment 2 亦无 fuzz 相关 FR。FR 7.0 的"测试套件优化（优先级排序/最小化）"是另一独立、纯算法功能，见 `fr7_optimization.md`。
 
 ---
 

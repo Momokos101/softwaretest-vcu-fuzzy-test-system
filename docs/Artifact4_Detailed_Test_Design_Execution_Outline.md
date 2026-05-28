@@ -158,19 +158,7 @@
 
 如果测试同学没有代码覆盖率报告，则正文写 State Transition Testing 作为主白盒技术，Branch Coverage 放到限制与改进建议中。
 
-### 3.4 GAN Sequence as Complementary Testing
 
-说明：
-
-- EP/BVA 覆盖静态单点输入。
-- GAN sequence 覆盖 CC2 电压连续变化、边界穿越和渐变越界。
-- GAN 测试不改变 oracle；oracle 仍以仿真器契约为准。
-- GAN 用例用于补充 Coverage & Effectiveness，不替代 ISO 29119-4 黑盒技术。
-
-需要插入：
-
-- [INSERT SCREENSHOT: GAN-generated CC2 sequence in AutoTestDesign]
-- [INSERT TABLE: GAN sequence test cases and expected transition points]
 
 ---
 
@@ -286,15 +274,6 @@
 
 需要测试同学提供：状态机图、状态转换覆盖表、是否执行了全部 transition。
 
-### 5.5 GAN Sequence Strategy
-
-| Sequence ID | CC2 Sequence | Coverage Purpose | Expected Result |
-|---|---|---|---|
-| GAN-SEQ-01 | [INSERT SEQUENCE] | Gradual crossing from valid to invalid high range | [TBD] |
-| GAN-SEQ-02 | [INSERT SEQUENCE] | Boundary oscillation near 7.7/7.8 | [TBD] |
-| GAN-SEQ-03 | [INSERT SEQUENCE] | Gradual recovery into valid range | [TBD] |
-
-需要测试同学提供：GAN 生成的实际序列、执行方式、是否作为单步循环执行、结果如何判断。
 
 ---
 

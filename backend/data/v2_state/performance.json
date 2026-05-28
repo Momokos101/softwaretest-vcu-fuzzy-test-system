@@ -558,5 +558,21 @@
     "model": "qwen3.7-max",
     "created_at": "2026-05-28T13:25:49.171599",
     "detail": {}
+  },
+  {
+    "operation": "llm.reasoning_stream",
+    "elapsed_ms": 0.0,
+    "model": "qwen3.7-max",
+    "created_at": "2026-05-28T14:25:43.724189",
+    "detail": {
+      "enabled": true
+    }
+  },
+  {
+    "operation": "improve.generate",
+    "elapsed_ms": 9682.89,
+    "model": "qwen3.7-max",
+    "created_at": "2026-05-28T14:25:43.728186",
+    "detail": {}
   }
 ]

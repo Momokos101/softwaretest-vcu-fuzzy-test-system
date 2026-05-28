@@ -470,61 +470,63 @@ Evidence: docs/test_evidence/pytest_output/design_suite.txt
 
 **11.3 Branch Coverage（Module A 被测代码 simulator.py）**：语句 **95.8%** / 分支 **89.0%**（剔除非-Module-A 行后；见 `coverage_analysis.md`）。
 
-### Step 4.4 — Improvement with Evidence（评分硬性要求，分两类）
+### Step 4.4 — Improvement with Evidence（§12：仅"执行后、基于证据新增的有效用例"）
 
-> **概念区分**（来自 Assignment 2 原文 "Mainly" 段）：
-> - **设计期改进（Design-time）= 主线**：原文 "results analysis (**mapping of designed test cases** to Coverage Item Identification and Strategy)" 后接 "improvement with evidence"，明确指人工审查 AutoTestDesign 工具初版 → 发现遗漏 → 补回 Coverage Items 和用例的过程。这是 Assignment 2 强调的 "designer's participation and interactive validation of effectiveness"。
-> - **执行期改进（Execution-driven）= 加分**：第 3 节 pytest 跑完后从真实失败 / 边界发现 / 执行反馈触发的改进。对应 In-depth Analysis (20%) 评分项和 PROJECT_PLAN_V2 §3.9 两轮反馈机制（工具内由 `/api/improve` 的 LLM 第二轮用例增广实现；非 fuzz，Assignment 2 无 fuzz FR）。
+> **范围更正（重要）**：Assignment 2「Mainly」清单里 **#7 基于证据的改进**排在 **#6 结果分析**之后，特指**用例真正在 VCU 上跑完、拿到执行/覆盖证据之后新增的有效覆盖项与测试用例**。因此 §12 **只**收录第二轮（执行后）的有效新增；设计期与执行纠正不放这里。
+> **完整证据见 `docs/test_evidence/improvement_evidence.md`**（含 §0 归属表 + §1 两类来源）。
 
-**Artifact 4 §12 必须分两段写，缺一不可**。完整汇总（含量化 Before/After + REV/TOOL-FIX 索引 + §C 汇总结论）已落到 `docs/test_evidence/improvement_evidence.md`。
+**归属更正（之前误放进 §12 的内容，现各归各位）**：
 
-#### 4.4a — Design-time Improvement（必选，从 `review_log.md` 来）
-
-从 `review_log.md` Phase 1~5 的设计期 REV 统计（对照课件审查工具初版）：
-
-| Metric | Before（工具初版 v1，94 条）| After（设计期审查后）| Improvement |
-|---|---|---|---|
-| 引用 VCU 不存在字段的用例（Untestable）| 21 | 0 | 全部消除 |
-| oracle 字段是否限于 VCU 真实输出 | 否 | 是（白名单约束）| 工具级修复 |
-| BVA 无效等价类（invalid-too-low）| 缺 | 补齐 8.9V | +1 |
-| 测试技术覆盖 | 偏单一 | EP/BVA/DT/ST/SC 五种 | 黑盒+白盒齐全 |
-
-举例（具体 REV，详见 review_log）：
-- **REV-014**：工具初版 BVA 漏 invalid-too-low（只有 9.0/9.1）→ 人工补 8.9V→state9 用例（参考 Chp4Part1 P35-40）
-- **REV-015**：工具把 oracle 字段写成 VCU 不返回的 `is_compliant`/`sleep_sub_condition_*`（Untestable）→ 改 testcase prompt 加字段白名单 + regenerate → 臆造字段 21→0
-- **REV-012/013**：REQ-014 `is_compliant`→`actual_duration`、REQ-012 反转的 stuck oracle 修正
-
-#### 4.4b — Execution-driven Improvement（加分，从 pytest 执行结果来）
-
-把 96 条做成数据驱动 pytest 真正执行后，暴露了设计期审查没抓到的缺陷（来源 `design_suite.txt` + `coverage_analysis.md` + `review_log.md` Phase 6）：
-
-| Evidence ID | 执行期发现 | 触发的改进 |
+| 内容 | 正确板块 | 证据 |
 |---|---|---|
-| EXE-001 | 首次执行 96 条仅 **48/96 通过**——失败的 48 条是 LLM 系统性 oracle 取值错误（vehicle_state=0 幻觉、维持态写 10、no-wake 写 expected、卡死写 stuck）| **TOOL-FIX-007**：testcase prompt 加“VCU 输出取值语义”→ regenerate → **48/96→80/99**（一次工具修复，非手工补 48 条）|
-| EXE-002 | 诊断剩余失败，发现 13 条是**测试脚本 harness bug**（休眠测试需先唤醒 state11 再施加条件），非设计缺陷 | 修适配器（先唤醒前置）→ **80/99→92/99**；正确区分工具/脚本/用例三类问题 |
-| EXE-003 | 7 条残留为真·设计缺陷（REQ-013 输出当输入、REQ-010 标题/输入矛盾、REQ-014 超时不可复现）| **REV-016**：改 3 删 4 加 1 → **92→96/96** |
+| +8 Coverage Items（Output/Behavior/Environment，14→22）、REV-001~011 | **§4 覆盖项识别 / §3 风险 / §5 策略（人工交互评审）** | `review_log.md` Phase 1~4、`coverage_tables.md` |
+| Prompt 迭代 + 用例重生成（REV-012~015、TOOL-FIX-007 取值语义、用例 v1→v4 版本链）| **§6 提示设计 + 测试用例人工交互** | `review_log.md` Phase 5、`prompts_used.md` |
+| 执行纠正链 48→80→92→96（oracle 纠正 / harness 修复 / REV-016 改删）| **§10 结果分析（执行质量）** | `review_log.md` Phase 6、`pass_rate_summary.md` |
+| FR7.0 最小化 96 vs 65 对比 | **§10 结果分析（展示 FR7 功能点）** | `fr7_optimization.md` §2b |
 
-> **本节即 PROJECT_PLAN_V2 §3.9 “两轮反馈机制” 的体现**：设计 96 → 执行暴露缺陷 → 改进（prompt/适配器/用例）→ 重执行通过。Artifact 4 §12.2 明确引用此机制。关键诚实点：根因优先（改工具 prompt 一次顶 48 次手工补丁）、三类问题分清（工具/脚本/用例）。
+**§12 本节内容 = 两类"执行后、基于证据"的有效新增（合计 4 条，4/4 通过）**：
 
-#### 4.4c — 汇总结论（≥ 300 字）
+#### 4.4a — 来源 A：第二轮 LLM 用例增广（`/api/improve`，人工评审）
 
-写一段总结，要点：
-1. Design-time 改进了 N 个 Coverage Items、M 条用例（人工补足了工具看不到的领域知识，如时序、CAN ID 范围、DTC 联动）；
-2. Execution-driven 改进了 X 个 Coverage Items、Y 条用例（执行后的真实证据驱动，体现执行反馈闭环）；
-3. 两类改进合计使**执行通过率从首次 48/96（50%）提升到 96/96（100%）**、臆造字段从 21 条降到 0、Module A 分支覆盖达 89.0%；
-4. 证明"工具初版 + 人工审查 + 真实执行"三方协同优于任一单方（设计期审查抓不到 oracle-vs-SUT 偏差，只有执行能；根因在 prompt 则改工具一次顶手工补几十条）。
+第一轮 96/96 跑完后，把全部用例喂给 LLM（improve prompt，qwen3.7-max，67s）得 **8 条**建议 → **人工对照 simulator.py 逐条核 → 8 进 3（采纳率 37.5%）**：
+
+| 结果 | 数量 | 说明 |
+|---|---|---|
+| ✅ 采纳 | 3 | REQ-011 休眠>唤醒、REQ-004 CC>CC2、REQ-006 超长时序；**其中 2 条人工纠正了 LLM 写错的 oracle**（state11→9、`in[4,5,6]`→reason4）|
+| ❌ 拒绝 | 5 | SUT 未建模（防抖重置/NM keep-awake）、越界 Module C、臆造 DTC_CAN_BUS_OFF / state12 / DTC_AUTH_TIMEOUT |
+
+执行结果：3/3 通过，VCU 行为印证人工修正的 oracle。**有效性诚实披露**：新增 **3 条组合/优先级**条件（分支覆盖看不见但属真实规格行为），但**分支覆盖 +0**（优先级是判定顺序行为，走已覆盖路径）。
+
+#### 4.4b — 来源 B：覆盖缺口驱动（可量化提升覆盖）
+
+依据第一轮 `coverage_analysis.md` 证据（simulator.py **L273 未覆盖**：无任何有效唤醒信号的 fallthrough）→ 针对性新增 1 条「无唤醒信号→维持 state9 报错」用例 → 重跑：
+
+| 指标 | 96 基线 | 96+新增 | Δ |
+|---|---|---|---|
+| 新覆盖行 | — | **恰为 L273**（脚本 diff 确认）| — |
+| 纯 Module A 语句 | 95.8% | **96.4%** | +1 行 |
+| 纯 Module A 分支 | 89.0% | **90.2%** | +1 弧 |
+
+#### 4.4c — 汇总结论
+
+§12 收录 **2 类来源、4 条执行后新增有效用例（4/4 通过）**：
+1. **LLM 增广**（3 条）：采纳率 37.5%，新增组合/优先级用例 + 人工拦下 5 条越界/臆造、修正 2 条错误 oracle——体现 designer 的 interactive validation；分支覆盖 +0（诚实：优先级行为分支覆盖不敏感）。
+2. **覆盖缺口驱动**（1 条 L273）：可量化把纯 Module A 分支覆盖 **89.0%→90.2%**。
+3. **核心认知**：分支覆盖必要但不充分——组合/优先级盲区靠 LLM 增广提示（需人工把关），代码路径盲区靠覆盖分析定位；两类证据互补才构成完整的"基于证据的改进"。
+> 注：设计期改进（21→0 臆造字段、CI 14→22、五技术齐全）与执行纠正链（48→96）是真实且重要的工作，但按 Assignment 时序语义归 §4/§6/§10，不计入本 §12（见上方归属表）。
 
 ### Step 4.5 — Performance NFR 度量（Project Requirement Specification §4.1）
 
-数据来源：工具 `/api/performance`（Results 页底部 LLM 调用性能日志，model=qwen3.7-max 百炼云端）。
+数据来源：工具 `/api/performance`（`performance.json` 72 条，model=qwen3.7-max 百炼云端）。完整度量见 `docs/test_evidence/nfr_performance.md`。
 
-| NFR（工具）| 规格 | 实测 | 满足？|
+| NFR（工具）| 规格（Spec §4.1）| 实测（脚本聚合）| 满足？|
 |---|---|---|---|
-| 单需求用例生成（NFR 4.1.2）| ≤ 2s | `testcase.generate` 约 **60~113s/需求** | ❌ 严重超标 |
-| 风险分析 | — | `risk.analyze` 约 **75s/批** | — |
-| **被测系统 REQ-014**：actual_duration（type1）| ≤ 20s | 正常 **14.7s** ≤ 20 ✓；卡死时 **41s**（缺陷）| ✓（正常路径）|
+| **NFR 4.1.1** 分析时间 | 100 条需求解析+风险 ≤ **5s** | `risk.analyze` 14 条/批 **75.4s**（~540s/100 条）| ❌ 超标 ~100× |
+| **NFR 4.1.2** 用例生成 | 单需求 ≤ **2s** | `testcase.generate`(n=32) min**35.0**/mean**75.4**/max**124.6** s | ❌ 超标 ~37× |
+| NFR 4.2.2 可追溯 | 用例↔REQ↔技术 | `10_traceability_matrix.csv` | ✅ |
+| **（区分）被测系统 REQ-014** | SUT 时序 ≤20s | 正常 **14.7s** ✓；卡死 **41s**（DEF-001）| 属 §10/SUT，**非工具 NFR** |
 
-**NFR 4.1.2 严重不达标**（云端 qwen3.7-max + reasoning 导致每需求数十秒 vs 目标 2s）。按 Assignment 2 §5（不可隐瞒），在 Artifact 4 §13 写**分析 + 改进建议**：本地小模型 / 关闭 reasoning（LLM_ENABLE_THINKING=false 已部分缓解）/ 结果缓存 / 并发批量生成 / 流式输出。
+**NFR 4.1.1/4.1.2 严重不达标**（唯一根因：云端 qwen3.7-max reasoning，单次往返 35~125s vs 目标 2s/5s）。按 Assignment 2 §5（不可隐瞒），§13 写**分析 + 改进建议**：关闭 reasoning（LLM_ENABLE_THINKING=false 已部分缓解）/ 本地小模型 / 结果缓存 / 并发批量 / 流式输出。
 
 ---
 
@@ -542,13 +544,13 @@ Evidence: docs/test_evidence/pytest_output/design_suite.txt
 | §3 Concept & Rationale | EP/BVA/DT/ST 选择理由 | Step 2.4.2 |
 | §4 Coverage Item Identification | Coverage items 表（22 项 Module A）| Step 2.3.2 |
 | §5 Coverage Strategy & Method | 5 种技术的策略表 | Step 2.4.2 |
-| §6 Prompt Design + Interactive Review | REV-001~016 前后对比 + 5 prompts（testcase v1→v3）| Step 2.2~2.6 |
+| §6 Prompt Design + Interactive Review | 设计期 REV-001~015 前后对比 + 5 prompts（testcase v1→v3）+ 用例版本链 v1→v4 | Step 2.2~2.6、`review_log.md` Ph1-5 |
 | §7 Test Case Design | 全部用例表 + JSON 链接 | Step 2.5.3 |
 | §8 Traceability Matrix | 三列追溯表 | Step 2.5.3 |
 | §9 Test Tool Implementation | pytest + 脚本结构 + 命令 | Step 3.1~3.3 |
-| §10 Test Execution Results | 通过率 + Failed 分析 + DEF-001 | Step 4.1~4.2 |
+| §10 Test Execution Results | 通过率 + DEF-001 + **执行纠正链 48→96** + **FR7 最小化 96 vs 65 对比** | Step 4.1~4.2、`pass_rate_summary.md`、`fr7_optimization.md` |
 | §11 Coverage Analysis | 三张覆盖率表 | Step 4.3 |
-| §12 Evidence-based Improvement | Before/After 对比表 | Step 4.4 |
+| §12 Evidence-based Improvement | **仅第二轮**：LLM 增广(8→3) + 覆盖缺口 L273（分支 89.0→90.2%）| Step 4.4、`improvement_evidence.md` |
 | §13 Limitations / Residual Risks | NFR 不达标 + Out of Scope 说明 | Step 4.5 + §0.3 |
 | Appendix A/B/C | Prompts + 文件列表 + 截图 | Step 1.3、2.6 |
 
