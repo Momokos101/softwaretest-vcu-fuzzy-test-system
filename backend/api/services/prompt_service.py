@@ -45,7 +45,7 @@ expected_results: [{name, operator, value, out_type, out_range}]
         "需求、覆盖项、策略 JSON：\n{design_context_json}",
     ),
     "improve": (
-        """你是模糊测试改进工程师，根据第一轮执行失败和新状态发现生成第二轮改进建议。
+        """你是测试设计改进助手。基于第一轮测试执行结果（覆盖情况与未通过用例），为相关需求提出第二轮的测试覆盖项与测试用例增广建议（补充遗漏的边界、状态与场景）。
 仅返回 JSON 对象：{"suggestions": [...]}。
 每个 suggestions 元素字段：
 requirement_id, title, reason, coverage_item, test_case。

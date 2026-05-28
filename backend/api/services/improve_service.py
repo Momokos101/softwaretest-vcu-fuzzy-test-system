@@ -1,4 +1,4 @@
-"""Second-round fuzzy testing improvement suggestions."""
+"""Second-round LLM test-augmentation suggestions (interactive improvement)."""
 from __future__ import annotations
 
 import json
@@ -6,8 +6,14 @@ import uuid
 from datetime import datetime
 from typing import List
 
-from api.models.schemas import CoverageItemCreate, ImproveRequest, ImproveSuggestion, TestCase
-from api.services import coverage_service, test_design_service
+from api.models.schemas import (
+    CoverageItem,
+    ImproveRequest,
+    ImproveSuggestion,
+    TestCase,
+    TestCaseCreate,
+)
+from api.services import test_design_service
 from api.services.llm_client import llm_client
 from api.services.prompt_service import require_prompt
 
@@ -38,29 +44,42 @@ async def generate_improvements(request: ImproveRequest) -> List[ImproveSuggesti
     if not isinstance(raw, list):
         raise ValueError("LLM improve response must include suggestions array")
 
+    # NOTE: suggestions are built as TRANSIENT objects and are NOT persisted.
+    # The canonical Coverage Items / Test Cases are only mutated when the user
+    # explicitly accepts a suggestion (frontend "添加到 Coverage" → create_coverage_item),
+    # so a second-round brainstorm can never silently pollute the reviewed suite.
+    now = datetime.now()
     suggestions: list[ImproveSuggestion] = []
     for item in raw[: request.max_suggestions]:
-        coverage_raw = item.get("coverage_item") or {}
-        coverage = coverage_service.create_coverage_item(
-            CoverageItemCreate(
+        if not isinstance(item, dict):
+            continue
+        coverage_raw = item.get("coverage_item")
+        if not isinstance(coverage_raw, dict):  # LLM sometimes returns a bare string
+            coverage_raw = {}
+        try:
+            coverage = CoverageItem(
+                id=str(uuid.uuid4()),
                 requirement_id=str(coverage_raw.get("requirement_id") or item.get("requirement_id")),
                 title=coverage_raw.get("title") or item.get("title") or "Improvement coverage",
                 description=coverage_raw.get("description") or item.get("reason") or "",
                 technique=coverage_raw.get("technique") or "BVA",
                 iso9126_characteristic=coverage_raw.get("iso9126_characteristic"),
                 priority=coverage_raw.get("priority") or "High",
+                created_at=now,
+                updated_at=now,
             )
-        )
-        test_case = _build_optional_test_case(item.get("test_case"), coverage.id)
-        suggestion = ImproveSuggestion(
-            id=str(uuid.uuid4()),
-            requirement_id=coverage.requirement_id,
-            title=item.get("title") or coverage.title,
-            reason=item.get("reason") or "",
-            coverage_item=coverage,
-            test_case=test_case,
-            created_at=datetime.now(),
-        )
+            test_case = _build_transient_test_case(item.get("test_case"), coverage.id, now)
+            suggestion = ImproveSuggestion(
+                id=str(uuid.uuid4()),
+                requirement_id=coverage.requirement_id,
+                title=item.get("title") or coverage.title,
+                reason=item.get("reason") or "",
+                coverage_item=coverage,
+                test_case=test_case,
+                created_at=now,
+            )
+        except Exception:
+            continue  # skip malformed LLM suggestion rather than 500 the whole batch
         _suggestions.append(suggestion)
         suggestions.append(suggestion)
     return suggestions
@@ -70,21 +89,23 @@ def list_suggestions() -> List[ImproveSuggestion]:
     return list(_suggestions)
 
 
-def _build_optional_test_case(raw: object, coverage_item_id: str) -> TestCase | None:
+def _build_transient_test_case(raw: object, coverage_item_id: str, now: datetime) -> TestCase | None:
+    """Build a TestCase object for display only — NOT appended to the live store."""
     if not isinstance(raw, dict):
         return None
-    create = {
-        "requirement_id": str(raw.get("requirement_id")),
-        "coverage_item_id": coverage_item_id,
-        "title": raw.get("title") or "Improvement test case",
-        "technique": raw.get("technique") or "BVA",
-        "type": raw.get("type", 1),
-        "in_data": raw.get("in_data") or [],
-        "expected_results": raw.get("expected_results") or [],
-        "error": raw.get("error") or [],
-        "est_time": raw.get("est_time", 20.0),
-        "oracle_reasoning": raw.get("oracle_reasoning") or "",
-    }
-    from api.models.schemas import TestCaseCreate
-
-    return test_design_service.create_test_case(TestCaseCreate(**create))
+    try:
+        create = TestCaseCreate(
+            requirement_id=str(raw.get("requirement_id")),
+            coverage_item_id=coverage_item_id,
+            title=raw.get("title") or "Improvement test case",
+            technique=raw.get("technique") or "BVA",
+            type=raw.get("type", 1),
+            in_data=raw.get("in_data") or [],
+            expected_results=raw.get("expected_results") or [],
+            error=raw.get("error") or [],
+            est_time=raw.get("est_time", 20.0),
+            oracle_reasoning=raw.get("oracle_reasoning") or "",
+        )
+        return TestCase(id=str(uuid.uuid4()), created_at=now, updated_at=now, **create.model_dump())
+    except Exception:
+        return None  # malformed LLM test_case → keep the suggestion's coverage item, drop the case

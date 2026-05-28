@@ -44,7 +44,8 @@ python3 run_server.py
 | `/api/test-design` | `routers/test_design.py` | FR 3.0 — EP, BVA, Decision Table generation |
 | `/api/prompts` | `routers/autotest_review.py` | Interactive Review prompt editing |
 | `/api/execute` | `routers/autotest_review.py` | V2 simulator execution |
-| `/api/improve` | `routers/autotest_review.py` | Second-round fuzzing improvement |
+| `/api/improve` | `routers/autotest_review.py` | Second-round LLM test-augmentation suggestions |
+| `/api/optimize/prioritize`, `/api/optimize/minimize` | `routers/autotest_review.py` | FR 7.0 — risk prioritization + coverage minimization |
 | `/api/performance` | `routers/autotest_review.py` | Tool NFR timing metrics |
 | `/api/export` | `routers/export.py` | FR 6.0 — JSON, CSV, Excel export |
 | `/api/test-plans` | `routers/test_plans.py` | Test plan CRUD |

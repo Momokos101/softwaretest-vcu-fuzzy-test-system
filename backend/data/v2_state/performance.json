@@ -526,5 +526,37 @@
     "model": "qwen3.7-max",
     "created_at": "2026-05-26T13:31:45.707286",
     "detail": {}
+  },
+  {
+    "operation": "llm.reasoning_stream",
+    "elapsed_ms": 0.0,
+    "model": "qwen3.7-max",
+    "created_at": "2026-05-28T13:22:50.466227",
+    "detail": {
+      "enabled": true
+    }
+  },
+  {
+    "operation": "improve.generate",
+    "elapsed_ms": 53099.18,
+    "model": "qwen3.7-max",
+    "created_at": "2026-05-28T13:22:50.469283",
+    "detail": {}
+  },
+  {
+    "operation": "llm.reasoning_stream",
+    "elapsed_ms": 0.0,
+    "model": "qwen3.7-max",
+    "created_at": "2026-05-28T13:25:49.168833",
+    "detail": {
+      "enabled": true
+    }
+  },
+  {
+    "operation": "improve.generate",
+    "elapsed_ms": 67269.61,
+    "model": "qwen3.7-max",
+    "created_at": "2026-05-28T13:25:49.171599",
+    "detail": {}
   }
 ]

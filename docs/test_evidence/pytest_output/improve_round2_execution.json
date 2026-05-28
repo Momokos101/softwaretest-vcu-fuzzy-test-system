@@ -1,0 +1,208 @@
+[
+  {
+    "id": "r2-001-req011-precedence",
+    "requirement_id": "REQ-011",
+    "technique": "SC",
+    "title": "并发：休眠条件全满足同时来唤醒信号 → 休眠优先(state9)",
+    "input": {
+      "h1": 1,
+      "h2": 1,
+      "h3": 1,
+      "voltage": 12.0
+    },
+    "expected": [
+      [
+        "vehicle_state",
+        "eq",
+        9
+      ],
+      [
+        "result_type",
+        "eq",
+        "expected"
+      ]
+    ],
+    "actual_output": {
+      "vehicle_state": 9,
+      "vehicle_mode": 2,
+      "power_current": 0.01,
+      "bus_message_flag": 0,
+      "pdcu_wake_reason": 0,
+      "actual_duration": 42.0,
+      "result_type": "expected",
+      "power_alarm_flag": 0,
+      "bus_off_flag": 0,
+      "active_dtcs": [],
+      "signal_guard_result": {
+        "valid": true,
+        "fault_type": null,
+        "reason": "信号有效"
+      },
+      "detail": "h1/h2/h3同时满足，VCU进入state09休眠",
+      "state_name": "state09",
+      "test_status": 3,
+      "ready_flag": 0,
+      "bms_wake_cmd": 1,
+      "mcu_wake_cmd": 1,
+      "battery_voltage": 12.92
+    },
+    "passed": true,
+    "mismatches": []
+  },
+  {
+    "id": "r2-002-req004-ccprio",
+    "requirement_id": "REQ-004",
+    "technique": "SC",
+    "title": "并发：CC 与 CC2 同时满足唤醒 → CC 优先(reason4)",
+    "input": {
+      "cc_voltage": 2.0,
+      "cc2_voltage": 2.0
+    },
+    "expected": [
+      [
+        "vehicle_state",
+        "eq",
+        11
+      ],
+      [
+        "pdcu_wake_reason",
+        "eq",
+        4
+      ],
+      [
+        "result_type",
+        "eq",
+        "expected"
+      ]
+    ],
+    "actual_output": {
+      "vehicle_state": 11,
+      "vehicle_mode": 5,
+      "power_current": 0.05,
+      "bus_message_flag": 1,
+      "pdcu_wake_reason": 4,
+      "actual_duration": 14.7,
+      "result_type": "expected",
+      "power_alarm_flag": 0,
+      "bus_off_flag": 0,
+      "active_dtcs": [],
+      "signal_guard_result": {
+        "valid": true,
+        "fault_type": null,
+        "reason": "信号有效"
+      },
+      "detail": "CC信号=2.0V < 4.4V，Module B校验通过，唤醒成功",
+      "state_name": "state11",
+      "test_status": 1,
+      "ready_flag": 1,
+      "bms_wake_cmd": 1,
+      "mcu_wake_cmd": 1,
+      "battery_voltage": 12.92
+    },
+    "passed": true,
+    "mismatches": []
+  },
+  {
+    "id": "r2-003-req006-longdur",
+    "requirement_id": "REQ-006",
+    "technique": "BVA",
+    "title": "口盖信号极端长时序 5000ms → 正常唤醒(reason6)",
+    "input": {
+      "hood_voltage": 4.1,
+      "duration_ms": 5000
+    },
+    "expected": [
+      [
+        "vehicle_state",
+        "eq",
+        11
+      ],
+      [
+        "pdcu_wake_reason",
+        "eq",
+        6
+      ],
+      [
+        "result_type",
+        "eq",
+        "expected"
+      ]
+    ],
+    "actual_output": {
+      "vehicle_state": 11,
+      "vehicle_mode": 5,
+      "power_current": 0.05,
+      "bus_message_flag": 1,
+      "pdcu_wake_reason": 6,
+      "actual_duration": 14.7,
+      "result_type": "expected",
+      "power_alarm_flag": 0,
+      "bus_off_flag": 0,
+      "active_dtcs": [],
+      "signal_guard_result": {
+        "valid": true,
+        "fault_type": null,
+        "reason": "信号有效"
+      },
+      "detail": "口盖信号=4.1V > 4V，持续5000ms >= 10ms，Module B校验通过，唤醒成功",
+      "state_name": "state11",
+      "test_status": 1,
+      "ready_flag": 1,
+      "bms_wake_cmd": 1,
+      "mcu_wake_cmd": 1,
+      "battery_voltage": 12.92
+    },
+    "passed": true,
+    "mismatches": []
+  },
+  {
+    "id": "r2-004-nosignal-l273",
+    "requirement_id": "REQ-001",
+    "technique": "EP",
+    "title": "无任何有效唤醒信号 → VCU 维持休眠(state9)",
+    "input": {},
+    "expected": [
+      [
+        "vehicle_state",
+        "eq",
+        9
+      ],
+      [
+        "pdcu_wake_reason",
+        "eq",
+        0
+      ],
+      [
+        "result_type",
+        "eq",
+        "error"
+      ]
+    ],
+    "actual_output": {
+      "vehicle_state": 9,
+      "vehicle_mode": 2,
+      "power_current": 0.01,
+      "bus_message_flag": 0,
+      "pdcu_wake_reason": 0,
+      "actual_duration": 14.7,
+      "result_type": "error",
+      "power_alarm_flag": 0,
+      "bus_off_flag": 0,
+      "active_dtcs": [],
+      "signal_guard_result": {
+        "valid": true,
+        "fault_type": null,
+        "reason": "信号有效"
+      },
+      "detail": "未满足任何唤醒条件，VCU保持当前状态",
+      "state_name": "state09",
+      "test_status": 4,
+      "ready_flag": 0,
+      "bms_wake_cmd": 1,
+      "mcu_wake_cmd": 1,
+      "battery_voltage": 12.92
+    },
+    "passed": true,
+    "mismatches": []
+  }
+]

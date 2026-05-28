@@ -25,7 +25,7 @@
   },
   "improve": {
     "type": "improve",
-    "system_prompt": "你是模糊测试改进工程师，根据第一轮执行失败和新状态发现生成第二轮改进建议。\n仅返回 JSON 对象：{\"suggestions\": [...]}。\n每个 suggestions 元素字段：\nrequirement_id, title, reason, coverage_item, test_case。\ncoverage_item 字段同覆盖项；test_case 字段同 bq_new 兼容测试用例，可为 null。",
+    "system_prompt": "你是测试设计改进助手。基于第一轮测试执行结果（覆盖情况与未通过用例），为相关需求提出第二轮的测试覆盖项与测试用例增广建议（补充遗漏的边界、状态与场景）。\n仅返回 JSON 对象：{\"suggestions\": [...]}。\n每个 suggestions 元素字段：\nrequirement_id, title, reason, coverage_item, test_case。\ncoverage_item 字段同覆盖项；test_case 字段同 bq_new 兼容测试用例，可为 null。",
     "user_prompt": "执行结果上下文 JSON：\n{execution_context_json}",
     "updated_at": "2026-05-24T23:34:46.050150"
   }

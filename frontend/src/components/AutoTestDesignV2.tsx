@@ -1,5 +1,5 @@
 import { Fragment, useEffect, useMemo, useRef, useState } from 'react';
-import { AlertTriangle, CheckCircle, Download, FileText, Gauge, Layers3, ListChecks, Pencil, Play, Plus, RefreshCw, Save, Sparkles, Trash2, Upload, X } from 'lucide-react';
+import { AlertTriangle, CheckCircle, ChevronDown, ChevronRight, Download, FileText, Gauge, Layers3, ListChecks, Pencil, Play, Plus, RefreshCw, Save, Sparkles, Trash2, Upload, X } from 'lucide-react';
 import { autoTestAPI } from '../services/api';
 
 const steps = [
@@ -9,7 +9,7 @@ const steps = [
   { id: 'cases', label: 'Test Cases', icon: Sparkles },
   { id: 'prompts', label: 'Prompts', icon: Save },
   { id: 'results', label: 'Results', icon: Play },
-  { id: 'improve', label: 'Improve', icon: Gauge },
+  { id: 'improve', label: 'Optimize (FR7.0)', icon: Gauge },
 ] as const;
 
 type StepId = typeof steps[number]['id'];
@@ -28,8 +28,15 @@ export function AutoTestDesignV2() {
   const [selectedReqId, setSelectedReqId] = useState('');
   const [strategy, setStrategy] = useState<any>({ techniques: ['EP', 'BVA'], rationale: '' });
   const [selectedPrompt, setSelectedPrompt] = useState<any>(null);
+  // FR 7.0 测试套件优化
+  const [prioritized, setPrioritized] = useState<any>(null);
+  const [minimized, setMinimized] = useState<any>(null);
+  const [showPriority, setShowPriority] = useState(false);
+  const [showMinimize, setShowMinimize] = useState(false);
+  // 第二轮 fuzz 改进建议（LLM，PROJECT_PLAN §3.9）
   const [suggestions, setSuggestions] = useState<any[]>([]);
   const [addedIds, setAddedIds] = useState<Set<string>>(new Set());
+  const [improveFailedOnly, setImproveFailedOnly] = useState(true);
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
   const csvInputRef = useRef<HTMLInputElement>(null);
@@ -80,21 +87,73 @@ export function AutoTestDesignV2() {
     }
   };
 
+  const togglePrioritize = async () => {
+    if (showPriority) { setShowPriority(false); return; }
+    if (!prioritized) {
+      setLoading(true);
+      setMessage('');
+      try {
+        const result = await autoTestAPI.optimizePrioritize() as unknown as any;
+        setPrioritized(result);
+        setMessage(`已按风险(RPN)排序 ${result.total} 条用例`);
+      } catch (error: any) {
+        setMessage(error?.message || '操作失败');
+        setLoading(false);
+        return;
+      }
+      setLoading(false);
+    }
+    setShowPriority(true);
+  };
+
+  const toggleMinimize = async () => {
+    if (showMinimize) { setShowMinimize(false); return; }
+    if (!minimized) {
+      setLoading(true);
+      setMessage('');
+      try {
+        const result = await autoTestAPI.optimizeMinimize() as unknown as any;
+        setMinimized(result);
+        setMessage(`最小化：${result.before} → ${result.after}（-${result.reduction_pct}%），覆盖保持 ${result.coverage_retained_pct}%`);
+      } catch (error: any) {
+        setMessage(error?.message || '操作失败');
+        setLoading(false);
+        return;
+      }
+      setLoading(false);
+    }
+    setShowMinimize(true);
+  };
+
   const runImprove = async () => {
     setLoading(true);
     setMessage('');
     setSuggestions([]);
     setAddedIds(new Set());
     try {
-      const result = await autoTestAPI.improve({ failed_only: true, max_suggestions: 10 }) as unknown as any[];
+      const result = await autoTestAPI.improve({ failed_only: improveFailedOnly, max_suggestions: 10 }) as unknown as any[];
       setSuggestions(result);
-      setMessage(`已生成 ${result.length} 条改进建议`);
+      setMessage(`已生成 ${result.length} 条第二轮改进建议`);
       await loadAll();
     } catch (error: any) {
       setMessage(error?.message || '操作失败');
     } finally {
       setLoading(false);
     }
+  };
+
+  const addSuggestionToCoverage = async (suggestion: any) => {
+    const ci = suggestion.coverage_item;
+    await autoTestAPI.createCoverageItem({
+      requirement_id: ci.requirement_id,
+      title: ci.title,
+      description: ci.description,
+      technique: ci.technique,
+      iso9126_characteristic: ci.iso9126_characteristic,
+      priority: ci.priority ?? 'Medium',
+    });
+    setAddedIds((prev) => new Set(prev).add(suggestion.id));
+    await loadAll();
   };
 
   const openAddCoverageForm = () => {
@@ -137,20 +196,6 @@ export function AutoTestDesignV2() {
   const deleteCoverageItem = async (item: any) => {
     if (!window.confirm(`确认删除 Coverage Item？\n\n${item.requirement_id} | ${item.title}\n\n此操作不可撤销。`)) return;
     await run(() => autoTestAPI.deleteCoverageItem(item.id), 'Coverage Item 已删除');
-  };
-
-  const addSuggestionToCoverage = async (suggestion: any) => {
-    const ci = suggestion.coverage_item;
-    await autoTestAPI.createCoverageItem({
-      requirement_id: ci.requirement_id,
-      title: ci.title,
-      description: ci.description,
-      technique: ci.technique,
-      iso9126_characteristic: ci.iso9126_characteristic,
-      priority: ci.priority ?? 'Medium',
-    });
-    setAddedIds((prev) => new Set(prev).add(suggestion.id));
-    await loadAll();
   };
 
   const loadAll = async () => {
@@ -336,7 +381,6 @@ export function AutoTestDesignV2() {
                 <tr>
                   <th className="p-2 text-left font-medium">requirement_id</th>
                   <th className="p-2 text-left font-medium">title</th>
-                  <th className="p-2 text-left font-medium">technique</th>
                   <th className="p-2 text-left font-medium">priority</th>
                   <th className="p-2 text-left font-medium">iso9126</th>
                   <th className="p-2 text-left font-medium">description</th>
@@ -348,7 +392,6 @@ export function AutoTestDesignV2() {
                   <tr key={item.id || `${item.requirement_id}-${index}`} className="border-t hover:bg-slate-50">
                     <td className="p-2 align-top font-mono text-xs">{item.requirement_id || '-'}</td>
                     <td className="p-2 align-top max-w-[260px]">{item.title || '-'}</td>
-                    <td className="p-2 align-top"><span className="px-1.5 py-0.5 text-xs bg-blue-100 text-blue-700 rounded">{item.technique || '-'}</span></td>
                     <td className="p-2 align-top">{item.priority || '-'}</td>
                     <td className="p-2 align-top text-xs">{item.iso9126_characteristic || '-'}</td>
                     <td className="p-2 align-top max-w-[360px] truncate text-xs text-slate-600">{item.description || '-'}</td>
@@ -363,7 +406,7 @@ export function AutoTestDesignV2() {
                   </tr>
                 ))}
                 {coverage.length === 0 && (
-                  <tr><td colSpan={7} className="p-6 text-center text-slate-500">暂无 Coverage Items，点上方"添加"或"生成覆盖项"创建</td></tr>
+                  <tr><td colSpan={6} className="p-6 text-center text-slate-500">暂无 Coverage Items，点上方"添加"或"生成覆盖项"创建</td></tr>
                 )}
               </tbody>
             </table>
@@ -372,15 +415,34 @@ export function AutoTestDesignV2() {
       )}
 
       {activeStep === 'strategy' && (
-        <section className="bg-white border rounded-lg p-6">
-          <div className="grid grid-cols-1 lg:grid-cols-[320px_1fr] gap-4">
-            <RequirementPicker requirements={requirements} selectedReqId={selectedReqId} onChange={setSelectedReqId} />
-            <div>
-              <h2 className="text-lg font-semibold mb-3">Strategy</h2>
-              <div className="mb-3 text-sm text-slate-600">{selectedRequirement?.title || selectedReqId}</div>
-              <TechniqueChecks value={strategy.techniques || []} onChange={(techniques) => setStrategy({ ...strategy, techniques })} />
-              <textarea value={strategy.rationale || ''} onChange={(event) => setStrategy({ ...strategy, rationale: event.target.value })} className="w-full h-24 p-3 border rounded mt-3" placeholder="Rationale" />
-              <button disabled={loading || !selectedReqId} onClick={() => run(() => autoTestAPI.updateStrategy(selectedReqId, strategy), '策略已保存')} className="mt-3 px-3 py-2 bg-blue-600 text-white rounded disabled:bg-slate-400">保存策略</button>
+        <section className="bg-white border rounded-lg p-6 space-y-6">
+          {/* 总览：每条 Coverage Item 用了哪种技术（技术归属统一在此查看，Coverage 页只展示"覆盖什么"）*/}
+          <div>
+            <h2 className="text-lg font-semibold">技术总览（Coverage Item × 技术）</h2>
+            <p className="text-sm text-slate-500 mt-1 mb-3">每条覆盖项对应的测试技术。共 {coverage.length} 条覆盖项，覆盖 {Array.from(new Set(coverage.map((c) => c.technique))).filter(Boolean).join(' / ')} 五种技术。</p>
+            <div className="flex flex-wrap gap-2 mb-3">
+              {['EP', 'BVA', 'DT', 'ST', 'SC'].map((t) => {
+                const n = coverage.filter((c) => c.technique === t).length;
+                return <span key={t} className="text-xs px-2 py-1 rounded border bg-slate-50">{t}: {n} 条</span>;
+              })}
+            </div>
+            <DataTable
+              rows={[...coverage].sort((a, b) => (a.requirement_id || '').localeCompare(b.requirement_id || '') || (a.technique || '').localeCompare(b.technique || ''))}
+              columns={['requirement_id', 'title', 'technique', 'priority', 'iso9126_characteristic']}
+            />
+          </div>
+
+          {/* 按需求编辑策略（每条需求用哪几种技术 + rationale）*/}
+          <div className="border-t pt-6">
+            <div className="grid grid-cols-1 lg:grid-cols-[320px_1fr] gap-4">
+              <RequirementPicker requirements={requirements} selectedReqId={selectedReqId} onChange={setSelectedReqId} />
+              <div>
+                <h2 className="text-lg font-semibold mb-3">按需求设置策略</h2>
+                <div className="mb-3 text-sm text-slate-600">{selectedRequirement?.title || selectedReqId}</div>
+                <TechniqueChecks value={strategy.techniques || []} onChange={(techniques) => setStrategy({ ...strategy, techniques })} />
+                <textarea value={strategy.rationale || ''} onChange={(event) => setStrategy({ ...strategy, rationale: event.target.value })} className="w-full h-24 p-3 border rounded mt-3" placeholder="Rationale" />
+                <button disabled={loading || !selectedReqId} onClick={() => run(() => autoTestAPI.updateStrategy(selectedReqId, strategy), '策略已保存')} className="mt-3 px-3 py-2 bg-blue-600 text-white rounded disabled:bg-slate-400">保存策略</button>
+              </div>
             </div>
           </div>
         </section>
@@ -484,19 +546,21 @@ export function AutoTestDesignV2() {
 
           <h3 className="text-base font-semibold mt-6 mb-2 text-slate-500">LLM 调用性能日志（NFR Performance，非测试结果）</h3>
           <DataTable rows={performance} columns={['operation', 'elapsed_ms', 'model', 'created_at']} />
-        </section>
-      )}
 
-      {activeStep === 'improve' && (
-        <section className="bg-white border rounded-lg p-6">
-          <div className="flex items-center gap-3 mb-4">
-            <button disabled={loading} onClick={runImprove} className="px-3 py-2 bg-blue-600 text-white rounded disabled:bg-slate-400">生成改进建议</button>
-            <span className="text-sm text-slate-500">基于失败用例触发第二轮变异，发现新边界和卡死场景</span>
-          </div>
-
-          {suggestions.length > 0 && (
-            <div className="mb-6">
-              <h3 className="text-base font-semibold mb-3">改进建议（点击"添加"将其加入 Coverage Items）</h3>
+          {/* 第二轮 LLM 用例增广建议（Assignment 2 "Mainly" 迭代改进）*/}
+          <div className="mt-8 border-t pt-6">
+            <h3 className="text-base font-semibold mb-1">第二轮 LLM 用例增广建议</h3>
+            <p className="text-sm text-slate-500 mb-3">基于执行结果调用 LLM（improve prompt）提出第二轮覆盖项/用例增广建议，补充遗漏的边界、状态与场景——属 Assignment 2 “Mainly” 段的迭代改进（区别于 FR7.0 纯算法优化）。</p>
+            <div className="flex items-center gap-3 mb-4">
+              <button disabled={loading} onClick={runImprove} className="px-3 py-2 bg-indigo-600 text-white rounded disabled:bg-slate-400 inline-flex items-center gap-2">
+                <Sparkles className="w-4 h-4" />生成改进建议
+              </button>
+              <label className="text-sm text-slate-600 inline-flex items-center gap-1.5">
+                <input type="checkbox" checked={improveFailedOnly} onChange={(e) => setImproveFailedOnly(e.target.checked)} />
+                仅基于失败用例（否则基于全部用例）
+              </label>
+            </div>
+            {suggestions.length > 0 && (
               <div className="space-y-3">
                 {suggestions.map((s) => {
                   const added = addedIds.has(s.id);
@@ -527,12 +591,69 @@ export function AutoTestDesignV2() {
                   );
                 })}
               </div>
-            </div>
-          )}
+            )}
+          </div>
+        </section>
+      )}
 
+      {activeStep === 'improve' && (
+        <section className="bg-white border rounded-lg p-6 space-y-8">
           <div>
-            <h3 className="text-base font-semibold mb-3">当前高优先级 Coverage Items</h3>
-            <DataTable rows={coverage.filter((item) => item.priority === 'High')} columns={['requirement_id', 'title', 'technique', 'priority', 'description']} />
+            <h2 className="text-lg font-semibold">测试套件优化（FR 7.0 Test Suite Optimization）</h2>
+            <p className="text-sm text-slate-500 mt-1">基于<strong>风险</strong>对套件优先级排序，并基于<strong>覆盖效率</strong>最小化套件——覆盖不降。</p>
+          </div>
+
+          {/* 1) 风险优先级排序 */}
+          <div>
+            <div className="flex items-center gap-3 mb-3">
+              <button disabled={loading} onClick={togglePrioritize} className="px-3 py-2 bg-blue-600 text-white rounded disabled:bg-slate-400 inline-flex items-center gap-1.5">
+                {showPriority ? <ChevronDown className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}
+                按风险(RPN)排序
+              </button>
+              <span className="text-sm text-slate-500">RPN 升序：RPN=1 风险最高，最先执行（RPN 来自 FR 2.0 风险分析）{showPriority ? '（点击收起）' : ''}</span>
+            </div>
+            {showPriority && prioritized && (
+              <div className="space-y-3">
+                <div className="flex flex-wrap gap-2">
+                  {prioritized.bands.map((b: any) => (
+                    <span key={b.rpn} className={`text-xs px-2 py-1 rounded border ${b.rpn <= 5 ? 'bg-red-50 border-red-200 text-red-700' : b.rpn <= 10 ? 'bg-yellow-50 border-yellow-200 text-yellow-800' : 'bg-slate-50 border-slate-200 text-slate-600'}`}>
+                      RPN {b.rpn}（{b.priority}）: {b.count} 条
+                    </span>
+                  ))}
+                </div>
+                <DataTable rows={prioritized.items} columns={['rank', 'requirement_id', 'title', 'technique', 'polarity', 'rpn', 'extent', 'priority', 'status']} />
+              </div>
+            )}
+          </div>
+
+          {/* 2) 覆盖最小化 */}
+          <div>
+            <div className="flex items-center gap-3 mb-3">
+              <button disabled={loading} onClick={toggleMinimize} className="px-3 py-2 bg-emerald-600 text-white rounded disabled:bg-slate-400 inline-flex items-center gap-1.5">
+                {showMinimize ? <ChevronDown className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}
+                覆盖最小化
+              </button>
+              <span className="text-sm text-slate-500">贪心 set-cover：覆盖单元 = 需求 × 技术 × 正负向（= Coverage Item × polarity），平手优先保留高风险/低耗时{showMinimize ? '（点击收起）' : ''}</span>
+            </div>
+            {showMinimize && minimized && (
+              <div className="space-y-4">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                  <div className="border rounded p-3 text-center"><div className="text-2xl font-bold">{minimized.before} → {minimized.after}</div><div className="text-xs text-slate-500">用例数（最小化前→后）</div></div>
+                  <div className="border rounded p-3 text-center"><div className="text-2xl font-bold text-emerald-600">-{minimized.reduction_pct}%</div><div className="text-xs text-slate-500">削减 {minimized.removed} 条</div></div>
+                  <div className="border rounded p-3 text-center"><div className="text-2xl font-bold text-blue-600">{minimized.coverage_retained_pct}%</div><div className="text-xs text-slate-500">覆盖保持（{minimized.coverage_units_retained}/{minimized.coverage_units_total} 单元）</div></div>
+                  <div className="border rounded p-3 text-center"><div className="text-sm font-semibold">{minimized.requirements_retained} 需求<br />{minimized.req_technique_retained} 需求×技术</div><div className="text-xs text-slate-500">{minimized.full_coverage_retained ? '✅ 覆盖未降' : '⚠ 覆盖下降'}</div></div>
+                </div>
+                <div className="text-xs text-slate-500">{minimized.criterion}</div>
+                <div>
+                  <h3 className="text-sm font-semibold mb-2 text-emerald-700">保留（{minimized.kept.length} 条 — 最小覆盖集）</h3>
+                  <DataTable rows={minimized.kept} columns={['requirement_id', 'title', 'technique', 'polarity', 'rpn', 'covers']} />
+                </div>
+                <div>
+                  <h3 className="text-sm font-semibold mb-2 text-slate-500">移除（{minimized.dropped.length} 条 — 覆盖冗余）</h3>
+                  <DataTable rows={minimized.dropped} columns={['requirement_id', 'title', 'technique', 'polarity', 'rpn', 'redundant_on']} />
+                </div>
+              </div>
+            )}
           </div>
         </section>
       )}

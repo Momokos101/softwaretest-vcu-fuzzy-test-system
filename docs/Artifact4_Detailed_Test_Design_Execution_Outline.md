@@ -178,6 +178,8 @@
 
 本节是全文核心。必须写清“测什么”。
 
+> **工具职责划分（Coverage 页）**：AutoTestDesign 的 **Coverage** 标签页只负责"测什么"——每条 Coverage Item 维护 `requirement_id / title / priority / iso9126 / description`。**该页不再展示 technique 列**（技术归属容易与 Strategy 不一致），每条 CI 用什么测试技术统一在 **Strategy 页的"技术总览"**查看（见 §5）。technique 仍是 CI 的内部字段（Strategy 推断与 Test Case 生成都依赖它），只是不在 Coverage 列表展示。Coverage Item 存储于 `backend/data/v2_state/coverage_items.json`（22 条）。
+
 ### 4.1 Input Coverage Items
 
 | Coverage Item ID | Signal | Coverage Item | Technique | Requirement ID | Risk Priority |
@@ -227,6 +229,13 @@
 ---
 
 ## 5. Coverage Strategy and Method
+
+> **工具职责划分（Strategy 页）**：AutoTestDesign 的 **Strategy** 标签页负责"用什么技术测"，分两块：
+> 1. **技术总览（Coverage Item × 技术）**：只读表，列出全部 22 条 Coverage Item 各自使用的技术（EP/BVA/DT/ST/SC），并给出每种技术的覆盖项数量。技术信息从 Coverage 页迁移至此，**消除"改了 Strategy 而 Coverage 技术列不同步"的前后不一致**。
+> 2. **按需求设置策略**：每条需求的技术集合 + rationale。初始值由该需求 Coverage Items 的技术集合**自动推断**（`coverage_service.ensure_strategy()`，仅在该需求尚未保存过策略时推断一次），可人工增删技术并保存。
+>
+> **存储分离**：策略存于 `backend/data/v2_state/strategies.json`（14 条，每需求 1 条），与 `coverage_items.json` **分开存储**；点"保存策略"只写 strategies.json，不回写 Coverage Item。
+> **数据流**：Coverage（覆盖什么 + technique 字段）→ 自动推断 Strategy 初始技术 → Coverage Items + Strategy.techniques **共同**喂给 Test Case 生成（`test_design_service.generate_test_cases`）。
 
 ### 5.1 EP Strategy
 

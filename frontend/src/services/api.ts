@@ -126,6 +126,9 @@ export const autoTestAPI = {
   execute: (ids?: string[]) => api.post('/api/execute', { test_case_ids: ids || null, reset_before_run: true }),
   getResultsSummary: () => api.get('/api/results/summary'),
   improve: (data: any) => api.post('/api/improve', data),
+  // FR 7.0 测试套件优化
+  optimizePrioritize: () => api.get('/api/optimize/prioritize'),
+  optimizeMinimize: () => api.get('/api/optimize/minimize'),
   getPerformance: () => api.get('/api/performance'),
 
   // 导出

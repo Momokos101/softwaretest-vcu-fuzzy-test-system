@@ -1,0 +1,76 @@
+[
+  {
+    "id": "r2-001-req011-precedence",
+    "requirement_id": "REQ-011",
+    "technique": "SC",
+    "title": "并发：休眠条件全满足同时来唤醒信号 → 休眠优先(state9)",
+    "in_data": [
+      {"name": "h1", "value": 1},
+      {"name": "h2", "value": 1},
+      {"name": "h3", "value": 1},
+      {"name": "voltage", "value": 12.0}
+    ],
+    "expected_results": [
+      {"name": "vehicle_state", "operator": "eq", "value": 9},
+      {"name": "result_type", "operator": "eq", "value": "expected"}
+    ],
+    "oracle_reasoning": "VCU simulate() 先判 _has_sleep_inputs（先于唤醒检测），休眠输入存在且 h1∧h2∧h3 全真 → 进入 state09 休眠。即休眠优先于唤醒。",
+    "source": "improve_round2_llm",
+    "llm_original_oracle": "vehicle_state eq 11 / pdcu_wake_reason eq 1 (唤醒赢)",
+    "human_review": "LLM oracle 与真实 VCU 优先级相反；人工改为 state9（休眠优先）。场景有效：现有 96 条未覆盖休眠/唤醒并发优先级。"
+  },
+  {
+    "id": "r2-002-req004-ccprio",
+    "requirement_id": "REQ-004",
+    "technique": "SC",
+    "title": "并发：CC 与 CC2 同时满足唤醒 → CC 优先(reason4)",
+    "in_data": [
+      {"name": "cc_voltage", "value": 2.0},
+      {"name": "cc2_voltage", "value": 2.0}
+    ],
+    "expected_results": [
+      {"name": "vehicle_state", "operator": "eq", "value": 11},
+      {"name": "pdcu_wake_reason", "operator": "eq", "value": 4},
+      {"name": "result_type", "operator": "eq", "value": "expected"}
+    ],
+    "oracle_reasoning": "_detect_wake_reason 按 supply→can→cp→cc→cc2 顺序判定，cc 在 cc2 之前；cc=2.0<4.4 即返回 reason 4。故并发时 CC 优先。",
+    "source": "improve_round2_llm",
+    "llm_original_oracle": "pdcu_wake_reason in [4,5,6]（操作符 in 不支持，且未定优先级）",
+    "human_review": "LLM 用了不支持的 in 操作符且未确定优先级；人工改为 reason eq 4（CC 先于 CC2 判定）。场景有效：现有用例独立测 CC/CC2，未测并发优先级。"
+  },
+  {
+    "id": "r2-003-req006-longdur",
+    "requirement_id": "REQ-006",
+    "technique": "BVA",
+    "title": "口盖信号极端长时序 5000ms → 正常唤醒(reason6)",
+    "in_data": [
+      {"name": "hood_voltage", "value": 4.1},
+      {"name": "duration_ms", "value": 5000}
+    ],
+    "expected_results": [
+      {"name": "vehicle_state", "operator": "eq", "value": 11},
+      {"name": "pdcu_wake_reason", "operator": "eq", "value": 6},
+      {"name": "result_type", "operator": "eq", "value": "expected"}
+    ],
+    "oracle_reasoning": "hood 4.1>4V 且 duration 5000ms>=10ms → reason6 唤醒到 state11。测超长时序鲁棒性（无计时器溢出）。",
+    "source": "improve_round2_llm",
+    "llm_original_oracle": "vehicle_state eq 11 / pdcu_wake_reason eq 6 / expected（正确）",
+    "human_review": "LLM oracle 正确，原样接受。补充现有 BVA 仅覆盖 10~50ms，未测极端大值。"
+  },
+  {
+    "id": "r2-004-nosignal-l273",
+    "requirement_id": "REQ-001",
+    "technique": "EP",
+    "title": "无任何有效唤醒信号 → VCU 维持休眠(state9)",
+    "in_data": [],
+    "expected_results": [
+      {"name": "vehicle_state", "operator": "eq", "value": 9},
+      {"name": "pdcu_wake_reason", "operator": "eq", "value": 0},
+      {"name": "result_type", "operator": "eq", "value": "error"}
+    ],
+    "oracle_reasoning": "simulate() 收到不含任何已知唤醒信号的输入 → _detect_wake_reason 走 fallthrough (simulator.py L273 `return 0, \"\"`) → wake_reason=0 → 维持 state09 并报未满足唤醒条件。",
+    "source": "coverage_gap_driven",
+    "evidence": "coverage_analysis.md 显示 simulator.py L273 在 96 条基线下未覆盖；本用例针对该覆盖缺口新增，预期使分支覆盖 +1。",
+    "human_review": "覆盖率驱动的人工新增（非 LLM）。属 7 路唤醒需求的负向等价类『无有效信号』，第一轮 96 条按单信号设计而遗漏。"
+  }
+]

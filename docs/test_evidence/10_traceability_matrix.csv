@@ -1,97 +1,97 @@
-﻿Test Case ID,Coverage Item ID,Requirement ID,Technique,RPN,Polarity,Title(design case)
-TC-EP-01,4d57bf11-c28f-4d04-a9f4-cafd4636c72d,REQ-001,EP,RPN2,positive,EP_正常唤醒_vehicle_state_eq_11
-TC-EP-02,4d57bf11-c28f-4d04-a9f4-cafd4636c72d,REQ-001,EP,RPN2,negative,EP_未满足唤醒条件_vehicle_state_eq_9
-TC-EP-03,81cc0697-eb34-49b8-9ba0-c55ba8e02d38,REQ-001,EP,RPN2,positive,EP_硬线唤醒_pdcu_wake_reason_eq_1
-TC-EP-04,81cc0697-eb34-49b8-9ba0-c55ba8e02d38,REQ-001,EP,RPN2,negative,EP_无唤醒_pdcu_wake_reason_eq_0
-TC-EP-05,5dd2cbe4-280d-4087-881f-a704e622b0b4,REQ-001,EP,RPN2,positive,EP_SIL环境基线验证_正常唤醒
-TC-EP-06,327e5c6a-5140-4be2-9ca8-eb2981a05416,REQ-008,EP,RPN2,positive,EP-VCUIdle_flg为1时满足休眠条件
-TC-EP-07,327e5c6a-5140-4be2-9ca8-eb2981a05416,REQ-008,EP,RPN2,negative,EP-VCUIdle_flg为0时不满足休眠条件
-TC-EP-08,be20e236-471d-4194-83db-3053ee80d698,REQ-009,EP,RPN2,positive,EP-AuthComplete_flg为1时满足休眠条件h2
-TC-EP-09,9e6be4d2-a149-4701-9e6f-26df8c8bee39,REQ-010,EP,RPN2,positive,EP-休眠条件h3满足(CAN总线空闲)
-TC-EP-10,9e6be4d2-a149-4701-9e6f-26df8c8bee39,REQ-010,EP,RPN2,negative,EP-休眠条件h3不满足(CAN总线非空闲)
-TC-EP-11,,REQ-003,EP,RPN4,positive,EP_CP信号有效电压12.0V触发唤醒
-TC-EP-12,,REQ-003,EP,RPN4,negative,EP_CP信号无效电压5.0V不唤醒
-TC-EP-13,EP-REQ-002,REQ-002,EP,RPN6,positive,EP: 有效等价类(范围内中间值0x440)成功唤醒
-TC-EP-14,EP-REQ-002,REQ-002,EP,RPN6,negative,EP: 无效等价类(小于0x400的0x200)不唤醒
-TC-EP-15,EP-REQ-002,REQ-002,EP,RPN6,negative,EP: 无效等价类(大于0x47F的0x600)不唤醒
-TC-EP-16,1945c7d8-4d43-4779-b914-749c75a882c3,REQ-004,EP,RPN6,positive,EP_CC电压有效等价类唤醒测试
-TC-EP-17,1945c7d8-4d43-4779-b914-749c75a882c3,REQ-004,EP,RPN6,negative,EP_CC电压无效等价类不唤醒测试
-TC-EP-18,EP-REQ-005,REQ-005,EP,RPN6,positive,EP_CC2电压有效等价类唤醒测试
-TC-EP-19,EP-REQ-005,REQ-005,EP,RPN6,negative,EP_CC2电压无效等价类不唤醒测试
-TC-EP-20,67935ead-0a81-4290-933a-30caa666c4d4,REQ-007,EP,RPN6,positive,EP: 门板电压与时间均在有效等价类触发唤醒
-TC-EP-21,67935ead-0a81-4290-933a-30caa666c4d4,REQ-007,EP,RPN6,negative,EP: 门板电压在无效等价类不触发唤醒
-TC-EP-22,67935ead-0a81-4290-933a-30caa666c4d4,REQ-007,EP,RPN6,negative,EP: 门板时间在无效等价类不触发唤醒
-TC-EP-23,31c9b11d-f39c-468b-b501-1cf5742bab0b,REQ-013,EP,RPN8,positive,EP-有效等价类-vehicle_state为11
-TC-EP-24,31c9b11d-f39c-468b-b501-1cf5742bab0b,REQ-013,EP,RPN8,negative,EP-有效等价类-vehicle_state为9
-TC-EP-25,N/A,REQ-006,EP,RPN9,positive,EP-有效等价类：电压和时间均满足唤醒条件
-TC-EP-26,N/A,REQ-006,EP,RPN9,negative,EP-无效等价类：电压不满足唤醒条件
-TC-EP-27,N/A,REQ-006,EP,RPN9,negative,EP-无效等价类：持续时间不满足唤醒条件
-TC-BVA-01,9505f9e7-bea9-450d-b8f8-7c468ccc8b8b,REQ-001,BVA,RPN2,positive,BVA_有效边界_电压9.1V_持续11ms
-TC-BVA-02,9505f9e7-bea9-450d-b8f8-7c468ccc8b8b,REQ-001,BVA,RPN2,negative,BVA_无效边界_电压9.0V_持续10ms
-TC-BVA-03,9505f9e7-bea9-450d-b8f8-7c468ccc8b8b,REQ-001,BVA,RPN2,negative,BVA_无效边界_电压9.1V_持续9ms
-TC-BVA-04,9505f9e7-bea9-450d-b8f8-7c468ccc8b8b,REQ-001,BVA,RPN2,negative,BVA: 电压8.9V (invalid-too-low 无效过低) 不触发唤醒
-TC-BVA-05,9e6be4d2-a149-4701-9e6f-26df8c8bee39,REQ-010,BVA,RPN2,negative,BVA-休眠条件h3时间窗口下边界(不满足)
-TC-BVA-06,9e6be4d2-a149-4701-9e6f-26df8c8bee39,REQ-010,BVA,RPN2,positive,BVA-休眠条件h3时间窗口标称值(满足)
-TC-BVA-07,a762e3cd-3444-41fa-9715-e9c0f5c80e70,REQ-003,BVA,RPN4,negative,BVA_CP信号电压8.9V不唤醒
-TC-BVA-08,a762e3cd-3444-41fa-9715-e9c0f5c80e70,REQ-003,BVA,RPN4,negative,BVA_CP信号电压9.0V不唤醒
-TC-BVA-09,a762e3cd-3444-41fa-9715-e9c0f5c80e70,REQ-003,BVA,RPN4,positive,BVA_CP信号电压9.1V触发唤醒
-TC-BVA-10,2bf2066a-3894-4772-ac4e-d2cabe17a06c,REQ-002,BVA,RPN6,negative,BVA: CAN报文ID下边界外(0x3FF)不唤醒
-TC-BVA-11,2bf2066a-3894-4772-ac4e-d2cabe17a06c,REQ-002,BVA,RPN6,positive,BVA: CAN报文ID下边界(0x400)成功唤醒
-TC-BVA-12,2bf2066a-3894-4772-ac4e-d2cabe17a06c,REQ-002,BVA,RPN6,positive,BVA: CAN报文ID上边界(0x47F)成功唤醒
-TC-BVA-13,2bf2066a-3894-4772-ac4e-d2cabe17a06c,REQ-002,BVA,RPN6,negative,BVA: CAN报文ID上边界外(0x480)不唤醒
-TC-BVA-14,1945c7d8-4d43-4779-b914-749c75a882c3,REQ-004,BVA,RPN6,positive,BVA_CC电压4.3V唤醒测试
-TC-BVA-15,1945c7d8-4d43-4779-b914-749c75a882c3,REQ-004,BVA,RPN6,negative,BVA_CC电压4.4V不唤醒测试
-TC-BVA-16,1945c7d8-4d43-4779-b914-749c75a882c3,REQ-004,BVA,RPN6,negative,BVA_CC电压4.5V不唤醒测试
-TC-BVA-17,3e28fc83-b2f7-4083-87f0-d03ae67c00b5,REQ-005,BVA,RPN6,positive,BVA_CC2电压4.3V边界唤醒测试
-TC-BVA-18,3e28fc83-b2f7-4083-87f0-d03ae67c00b5,REQ-005,BVA,RPN6,negative,BVA_CC2电压4.4V边界不唤醒测试
-TC-BVA-19,3e28fc83-b2f7-4083-87f0-d03ae67c00b5,REQ-005,BVA,RPN6,negative,BVA_CC2电压4.5V边界不唤醒测试
-TC-BVA-20,67935ead-0a81-4290-933a-30caa666c4d4,REQ-007,BVA,RPN6,positive,BVA: 门板电压下边界有效且时间下边界有效触发唤醒
-TC-BVA-21,67935ead-0a81-4290-933a-30caa666c4d4,REQ-007,BVA,RPN6,negative,BVA: 门板电压上边界无效且时间下边界有效不触发唤醒
-TC-BVA-22,67935ead-0a81-4290-933a-30caa666c4d4,REQ-007,BVA,RPN6,negative,BVA: 门板电压下边界有效且时间上边界无效不触发唤醒
-TC-BVA-23,3c90f016-557b-4eb5-8898-af31363e0c9e,REQ-014,BVA,RPN6,positive,type1单信号唤醒时序边界19.9s合规测试
-TC-BVA-24,3c90f016-557b-4eb5-8898-af31363e0c9e,REQ-014,BVA,RPN6,positive,type1单信号唤醒时序边界20.0s合规测试
-TC-BVA-25,57068d42-3014-4257-b689-1752f85f7d82,REQ-014,BVA,RPN6,negative,type1单信号唤醒时序边界20.1s不合规测试
-TC-BVA-26,3c90f016-557b-4eb5-8898-af31363e0c9e,REQ-014,BVA,RPN6,negative,type2多信号休眠时序边界59.9s合规测试
-TC-BVA-27,3c90f016-557b-4eb5-8898-af31363e0c9e,REQ-014,BVA,RPN6,negative,type2多信号休眠时序边界60.0s合规测试
-TC-BVA-28,d1b4e183-9fcc-4cfd-92c0-b3163050356a,REQ-006,BVA,RPN9,negative,BVA-电压下边界外：3.9V
-TC-BVA-29,d1b4e183-9fcc-4cfd-92c0-b3163050356a,REQ-006,BVA,RPN9,negative,BVA-电压下边界：4.0V
-TC-BVA-30,d1b4e183-9fcc-4cfd-92c0-b3163050356a,REQ-006,BVA,RPN9,positive,BVA-电压刚过边界：4.1V
-TC-BVA-31,d1b4e183-9fcc-4cfd-92c0-b3163050356a,REQ-006,BVA,RPN9,negative,BVA-时间下边界外：9ms
-TC-BVA-32,d1b4e183-9fcc-4cfd-92c0-b3163050356a,REQ-006,BVA,RPN9,positive,BVA-时间下边界：10ms
-TC-BVA-33,d1b4e183-9fcc-4cfd-92c0-b3163050356a,REQ-006,BVA,RPN9,positive,BVA-时间刚过边界：11ms
-TC-DT-01,327e5c6a-5140-4be2-9ca8-eb2981a05416,REQ-008,DT,RPN2,positive,DT-决策表规则1_VCUIdle_flg为1
-TC-DT-02,327e5c6a-5140-4be2-9ca8-eb2981a05416,REQ-008,DT,RPN2,negative,DT-决策表规则2_VCUIdle_flg为0
-TC-DT-03,be20e236-471d-4194-83db-3053ee80d698,REQ-009,DT,RPN2,negative,DT-AuthComplete_flg为0时不满足休眠条件h2
-TC-DT-04,9e6be4d2-a149-4701-9e6f-26df8c8bee39,REQ-010,DT,RPN2,positive,DT-休眠条件h3决策表(条件全满足)
-TC-DT-05,d15917bd-b314-458d-bf67-a8b50695add9,REQ-011,DT,RPN2,positive,"DT-h1=1,h2=1,h3=1全满足进入休眠"
-TC-DT-06,d15917bd-b314-458d-bf67-a8b50695add9,REQ-011,DT,RPN2,negative,"DT-h1=1,h2=1,h3=0不满足休眠"
-TC-DT-07,d15917bd-b314-458d-bf67-a8b50695add9,REQ-011,DT,RPN2,negative,"DT-h1=1,h2=0,h3=1不满足休眠"
-TC-DT-08,d15917bd-b314-458d-bf67-a8b50695add9,REQ-011,DT,RPN2,negative,"DT-h1=1,h2=0,h3=0不满足休眠"
-TC-DT-09,d15917bd-b314-458d-bf67-a8b50695add9,REQ-011,DT,RPN2,negative,"DT-h1=0,h2=1,h3=1不满足休眠"
-TC-DT-10,d15917bd-b314-458d-bf67-a8b50695add9,REQ-011,DT,RPN2,negative,"DT-h1=0,h2=1,h3=0不满足休眠"
-TC-DT-11,d15917bd-b314-458d-bf67-a8b50695add9,REQ-011,DT,RPN2,negative,"DT-h1=0,h2=0,h3=1不满足休眠"
-TC-DT-12,d15917bd-b314-458d-bf67-a8b50695add9,REQ-011,DT,RPN2,negative,"DT-h1=0,h2=0,h3=0不满足休眠"
-TC-DT-13,31c9b11d-f39c-468b-b501-1cf5742bab0b,REQ-013,DT,RPN8,positive,DT-决策表-state11时bus_message_flag为1
-TC-ST-01,75158fa6-747d-4dac-a3f0-d4685d8f03d3,REQ-012,ST,RPN1,negative,状态迁移测试：连续快速循环触发state10卡死序列
-TC-ST-02,4637dc4b-8ab5-42fa-9008-9d61ea0bb489,REQ-001,ST,RPN2,positive,ST_正常唤醒序列_state09_to_state11
-TC-ST-03,327e5c6a-5140-4be2-9ca8-eb2981a05416,REQ-008,ST,RPN2,positive,ST-状态迁移_唤醒态到休眠态
-TC-ST-04,be20e236-471d-4194-83db-3053ee80d698,REQ-009,ST,RPN2,positive,ST-唤醒状态下AuthComplete_flg置1触发休眠迁移
-TC-ST-05,9e6be4d2-a149-4701-9e6f-26df8c8bee39,REQ-010,ST,RPN2,positive,ST-状态迁移(唤醒态到休眠态)
-TC-ST-06,d15917bd-b314-458d-bf67-a8b50695add9,REQ-011,ST,RPN2,positive,ST-唤醒态至休眠态迁移
-TC-ST-07,d15917bd-b314-458d-bf67-a8b50695add9,REQ-011,ST,RPN2,negative,ST-唤醒态维持非休眠态
-TC-ST-08,,REQ-003,ST,RPN4,positive,ST_休眠状态下CP信号10.0V迁移至唤醒
-TC-ST-09,,REQ-003,ST,RPN4,negative,ST_休眠状态下CP信号8.0V维持休眠
-TC-ST-10,ST-REQ-002,REQ-002,ST,RPN6,positive,ST: 休眠状态接收有效CAN报文迁移至唤醒状态
-TC-ST-11,1945c7d8-4d43-4779-b914-749c75a882c3,REQ-004,ST,RPN6,positive,ST_CC信号触发休眠到唤醒状态迁移
-TC-ST-12,1945c7d8-4d43-4779-b914-749c75a882c3,REQ-004,ST,RPN6,negative,ST_CC信号不满足条件维持休眠状态
-TC-ST-13,ST-REQ-005,REQ-005,ST,RPN6,positive,ST_休眠状态接收有效CC2信号迁移至唤醒
-TC-ST-14,ST-REQ-005,REQ-005,ST,RPN6,negative,ST_休眠状态接收无效CC2信号维持休眠
-TC-ST-15,67935ead-0a81-4290-933a-30caa666c4d4,REQ-007,ST,RPN6,positive,ST: 休眠状态接收有效门板信号迁移至唤醒状态
-TC-ST-16,67935ead-0a81-4290-933a-30caa666c4d4,REQ-007,ST,RPN6,negative,ST: 休眠状态接收无效门板信号维持休眠状态
-TC-ST-17,9c2f51bd-9c1b-44b7-8a40-f1cd3a53f6b9,REQ-013,ST,RPN8,positive,ST-状态转换-转换至state11时bus_message_flag更新
-TC-ST-18,N/A,REQ-006,ST,RPN9,positive,ST-状态迁移：休眠态到唤醒态迁移验证
-TC-SC-01,9c11892b-1ecf-456e-9e37-2065d6063a12,REQ-012,SC,RPN1,positive,边界测试：2次快速循环不触发卡死
-TC-SC-02,9c11892b-1ecf-456e-9e37-2065d6063a12,REQ-012,SC,RPN1,negative,边界测试：3次快速循环触发卡死及DTC上报
-TC-SC-03,9c11892b-1ecf-456e-9e37-2065d6063a12,REQ-012,SC,RPN1,negative,边界测试：4次快速循环触发卡死
-TC-SC-04,9c11892b-1ecf-456e-9e37-2065d6063a12,REQ-012,SC,RPN1,positive,边界测试：3次循环但间隔等于1.0s不触发卡死
-TC-SC-05,9c11892b-1ecf-456e-9e37-2065d6063a12,REQ-012,SC,RPN1,positive,边界测试：3次循环但间隔大于1.0s不触发卡死
+﻿Test Case ID,Design Case UUID,Coverage Item ID,Requirement ID,Technique,RPN,Polarity,Result,Title(design case)
+TC-EP-01,f9b1ff34-e035-42bc-91e7-a932873111a3,4d57bf11-c28f-4d04-a9f4-cafd4636c72d,REQ-001,EP,2,positive,PASS,EP_正常唤醒_vehicle_state_eq_11
+TC-EP-02,96efed00-fb6d-44c8-89c3-fee9dc144519,4d57bf11-c28f-4d04-a9f4-cafd4636c72d,REQ-001,EP,2,negative,PASS,EP_未满足唤醒条件_vehicle_state_eq_9
+TC-EP-03,93e1c973-5da5-44a3-859e-53eda9b584e9,81cc0697-eb34-49b8-9ba0-c55ba8e02d38,REQ-001,EP,2,positive,PASS,EP_硬线唤醒_pdcu_wake_reason_eq_1
+TC-EP-04,68011a5e-6278-4037-ab44-98b4501cd085,81cc0697-eb34-49b8-9ba0-c55ba8e02d38,REQ-001,EP,2,positive,PASS,EP_无唤醒_pdcu_wake_reason_eq_0
+TC-EP-05,bcb9c9d8-dec6-44cc-a4e1-94bd061b0e4f,5dd2cbe4-280d-4087-881f-a704e622b0b4,REQ-001,EP,2,positive,PASS,EP_SIL环境基线验证_正常唤醒
+TC-EP-06,b26ff8b5-3ec7-4ad0-9930-858c3e2fd355,327e5c6a-5140-4be2-9ca8-eb2981a05416,REQ-008,EP,2,positive,PASS,EP-VCUIdle_flg为1时满足休眠条件
+TC-EP-07,0d9216bf-1d37-4363-8dbb-fdeab383d21f,327e5c6a-5140-4be2-9ca8-eb2981a05416,REQ-008,EP,2,negative,PASS,EP-VCUIdle_flg为0时不满足休眠条件
+TC-EP-08,415392c6-07bf-4666-aab5-4bba498f05f3,be20e236-471d-4194-83db-3053ee80d698,REQ-009,EP,2,positive,PASS,EP-AuthComplete_flg为1时满足休眠条件h2
+TC-EP-09,ac4b8699-0a3e-4122-96ea-63c23b72c94f,9e6be4d2-a149-4701-9e6f-26df8c8bee39,REQ-010,EP,2,positive,PASS,EP-休眠条件h3满足(CAN总线空闲)
+TC-EP-10,2cba1c5d-078c-421e-a4a8-ef0f910f0de8,9e6be4d2-a149-4701-9e6f-26df8c8bee39,REQ-010,EP,2,negative,PASS,EP-休眠条件h3不满足(CAN总线非空闲)
+TC-EP-11,003eea21-1e6f-4c47-9c9a-d04a39661103,,REQ-003,EP,4,positive,PASS,EP_CP信号有效电压12.0V触发唤醒
+TC-EP-12,046f4995-3fe0-4bdc-9109-292b49705ecb,,REQ-003,EP,4,negative,PASS,EP_CP信号无效电压5.0V不唤醒
+TC-EP-13,16517744-16c7-4476-919f-a0830671002f,EP-REQ-002,REQ-002,EP,6,positive,PASS,EP: 有效等价类(范围内中间值0x440)成功唤醒
+TC-EP-14,c7d71344-e830-4cfa-94ec-3f28b799550b,EP-REQ-002,REQ-002,EP,6,negative,PASS,EP: 无效等价类(小于0x400的0x200)不唤醒
+TC-EP-15,aec8ac6e-3168-4c3e-9f3c-54def8243338,EP-REQ-002,REQ-002,EP,6,negative,PASS,EP: 无效等价类(大于0x47F的0x600)不唤醒
+TC-EP-16,3fc01f56-10dc-43aa-b076-9026912f6a3b,1945c7d8-4d43-4779-b914-749c75a882c3,REQ-004,EP,6,positive,PASS,EP_CC电压有效等价类唤醒测试
+TC-EP-17,80095a4f-737b-4c47-9a5f-76405a02b599,1945c7d8-4d43-4779-b914-749c75a882c3,REQ-004,EP,6,negative,PASS,EP_CC电压无效等价类不唤醒测试
+TC-EP-18,9358d3f5-e999-4e4c-bbef-4f0d013aa3ff,EP-REQ-005,REQ-005,EP,6,positive,PASS,EP_CC2电压有效等价类唤醒测试
+TC-EP-19,feeff67e-560a-4c1c-acfa-891fcb51e8f7,EP-REQ-005,REQ-005,EP,6,negative,PASS,EP_CC2电压无效等价类不唤醒测试
+TC-EP-20,b783cc48-224f-4059-a899-a1c60687093f,67935ead-0a81-4290-933a-30caa666c4d4,REQ-007,EP,6,positive,PASS,EP: 门板电压与时间均在有效等价类触发唤醒
+TC-EP-21,41705132-0232-47b5-94ca-7ab532be0867,67935ead-0a81-4290-933a-30caa666c4d4,REQ-007,EP,6,negative,PASS,EP: 门板电压在无效等价类不触发唤醒
+TC-EP-22,513fbf5f-dc12-4371-abc3-c53ffd23afd8,67935ead-0a81-4290-933a-30caa666c4d4,REQ-007,EP,6,negative,PASS,EP: 门板时间在无效等价类不触发唤醒
+TC-EP-23,966ce13d-9047-46d0-8d9a-a16b937e9a0b,31c9b11d-f39c-468b-b501-1cf5742bab0b,REQ-013,EP,8,positive,PASS,EP-有效等价类-vehicle_state为11
+TC-EP-24,4dac6c7e-1d45-4942-95aa-8ce0b2e3d67f,31c9b11d-f39c-468b-b501-1cf5742bab0b,REQ-013,EP,8,positive,PASS,EP-有效等价类-vehicle_state为9
+TC-EP-25,b6a3f6f6-fb9d-4a7e-8455-7aefa3e37bfb,N/A,REQ-006,EP,9,positive,PASS,EP-有效等价类：电压和时间均满足唤醒条件
+TC-EP-26,b7b68d68-4271-42ed-a73e-b8c6fb4146ba,N/A,REQ-006,EP,9,negative,PASS,EP-无效等价类：电压不满足唤醒条件
+TC-EP-27,c496b5ac-7a79-4947-9f5b-15a276de914c,N/A,REQ-006,EP,9,negative,PASS,EP-无效等价类：持续时间不满足唤醒条件
+TC-BVA-01,aed53778-f0ff-476a-99df-9c8c561d0f80,9505f9e7-bea9-450d-b8f8-7c468ccc8b8b,REQ-001,BVA,2,positive,PASS,BVA_有效边界_电压9.1V_持续11ms
+TC-BVA-02,867cfe89-3604-418d-b9f6-ff2c153115d6,9505f9e7-bea9-450d-b8f8-7c468ccc8b8b,REQ-001,BVA,2,negative,PASS,BVA_无效边界_电压9.0V_持续10ms
+TC-BVA-03,06483b58-494f-49a5-842e-059302abb3d1,9505f9e7-bea9-450d-b8f8-7c468ccc8b8b,REQ-001,BVA,2,negative,PASS,BVA_无效边界_电压9.1V_持续9ms
+TC-BVA-04,ed33fefd-df50-4c13-a738-8276e0a10699,9505f9e7-bea9-450d-b8f8-7c468ccc8b8b,REQ-001,BVA,2,negative,PASS,BVA: 电压8.9V (invalid-too-low 无效过低) 不触发唤醒
+TC-BVA-05,ae1c553c-2f93-491e-95cf-d429ec31d404,9e6be4d2-a149-4701-9e6f-26df8c8bee39,REQ-010,BVA,2,negative,PASS,BVA-休眠条件h3时间窗口下边界(不满足)
+TC-BVA-06,7aacb8c9-a8df-4880-9f4d-bdf9b4ad6057,9e6be4d2-a149-4701-9e6f-26df8c8bee39,REQ-010,BVA,2,positive,PASS,BVA-休眠条件h3时间窗口标称值(满足)
+TC-BVA-07,2d16734e-cc60-4ada-aa2a-4e8f377707b6,a762e3cd-3444-41fa-9715-e9c0f5c80e70,REQ-003,BVA,4,negative,PASS,BVA_CP信号电压8.9V不唤醒
+TC-BVA-08,08398f11-0889-4e8a-8351-da74a0daacf7,a762e3cd-3444-41fa-9715-e9c0f5c80e70,REQ-003,BVA,4,negative,PASS,BVA_CP信号电压9.0V不唤醒
+TC-BVA-09,3db545bb-c36b-4bb8-b962-5f8944115d54,a762e3cd-3444-41fa-9715-e9c0f5c80e70,REQ-003,BVA,4,positive,PASS,BVA_CP信号电压9.1V触发唤醒
+TC-BVA-10,7c884e48-d585-45c2-8436-ac8f3d4b12d8,2bf2066a-3894-4772-ac4e-d2cabe17a06c,REQ-002,BVA,6,negative,PASS,BVA: CAN报文ID下边界外(0x3FF)不唤醒
+TC-BVA-11,866ea05a-a8f0-408c-84a8-b4ffcf8bada3,2bf2066a-3894-4772-ac4e-d2cabe17a06c,REQ-002,BVA,6,positive,PASS,BVA: CAN报文ID下边界(0x400)成功唤醒
+TC-BVA-12,a80270da-4f28-40f1-be25-8f8d93715bab,2bf2066a-3894-4772-ac4e-d2cabe17a06c,REQ-002,BVA,6,positive,PASS,BVA: CAN报文ID上边界(0x47F)成功唤醒
+TC-BVA-13,47c3e760-7752-4508-a9f6-8eb4e5d54c8f,2bf2066a-3894-4772-ac4e-d2cabe17a06c,REQ-002,BVA,6,negative,PASS,BVA: CAN报文ID上边界外(0x480)不唤醒
+TC-BVA-14,e3b2dea4-a040-48c9-a1a9-ff174cf4def2,1945c7d8-4d43-4779-b914-749c75a882c3,REQ-004,BVA,6,positive,PASS,BVA_CC电压4.3V唤醒测试
+TC-BVA-15,cde914db-73e0-4b98-9dd1-f2565695bdda,1945c7d8-4d43-4779-b914-749c75a882c3,REQ-004,BVA,6,negative,PASS,BVA_CC电压4.4V不唤醒测试
+TC-BVA-16,addb86e7-d431-453d-b575-4bb15e44e841,1945c7d8-4d43-4779-b914-749c75a882c3,REQ-004,BVA,6,negative,PASS,BVA_CC电压4.5V不唤醒测试
+TC-BVA-17,5897c745-f18e-4120-aa5f-ea67bdaf401d,3e28fc83-b2f7-4083-87f0-d03ae67c00b5,REQ-005,BVA,6,positive,PASS,BVA_CC2电压4.3V边界唤醒测试
+TC-BVA-18,c73c1bff-473f-4c7d-bbeb-36001e444e49,3e28fc83-b2f7-4083-87f0-d03ae67c00b5,REQ-005,BVA,6,negative,PASS,BVA_CC2电压4.4V边界不唤醒测试
+TC-BVA-19,8adc3c01-d079-44c7-bda6-3810fc94def9,3e28fc83-b2f7-4083-87f0-d03ae67c00b5,REQ-005,BVA,6,negative,PASS,BVA_CC2电压4.5V边界不唤醒测试
+TC-BVA-20,9f9986b7-af42-4c4a-ab18-bee017d8a71c,67935ead-0a81-4290-933a-30caa666c4d4,REQ-007,BVA,6,positive,PASS,BVA: 门板电压下边界有效且时间下边界有效触发唤醒
+TC-BVA-21,cf712a11-7ae7-4714-99bb-a554e432bb0d,67935ead-0a81-4290-933a-30caa666c4d4,REQ-007,BVA,6,negative,PASS,BVA: 门板电压上边界无效且时间下边界有效不触发唤醒
+TC-BVA-22,b910cdb6-5b83-4e73-a769-09327576aef9,67935ead-0a81-4290-933a-30caa666c4d4,REQ-007,BVA,6,negative,PASS,BVA: 门板电压下边界有效且时间上边界无效不触发唤醒
+TC-BVA-23,62a5c989-54e7-4cd1-88aa-9cb39c0ea4eb,3c90f016-557b-4eb5-8898-af31363e0c9e,REQ-014,BVA,6,positive,PASS,type1单信号唤醒时序边界19.9s合规测试
+TC-BVA-24,124fba9a-73aa-43d2-bca4-2c78a3090c96,3c90f016-557b-4eb5-8898-af31363e0c9e,REQ-014,BVA,6,positive,PASS,type1单信号唤醒时序边界20.0s合规测试
+TC-BVA-25,901926bf-467f-44f2-830f-f4e4e349d1d9,57068d42-3014-4257-b689-1752f85f7d82,REQ-014,BVA,6,negative,PASS,type1单信号唤醒时序边界20.1s不合规测试
+TC-BVA-26,30970747-568e-4769-a0d8-0a912bb1a3d3,3c90f016-557b-4eb5-8898-af31363e0c9e,REQ-014,BVA,6,positive,PASS,type2多信号休眠时序边界59.9s合规测试
+TC-BVA-27,886b8539-4e1c-4305-8be3-af84d40ff518,3c90f016-557b-4eb5-8898-af31363e0c9e,REQ-014,BVA,6,positive,PASS,type2多信号休眠时序边界60.0s合规测试
+TC-BVA-28,6d2ee7ab-2bea-42ac-8eb3-6a3a8056b809,d1b4e183-9fcc-4cfd-92c0-b3163050356a,REQ-006,BVA,9,negative,PASS,BVA-电压下边界外：3.9V
+TC-BVA-29,ee54d9c7-5982-4922-9d08-64d204f26f52,d1b4e183-9fcc-4cfd-92c0-b3163050356a,REQ-006,BVA,9,negative,PASS,BVA-电压下边界：4.0V
+TC-BVA-30,8069a480-2fec-49de-bf10-a4431eeb6ce8,d1b4e183-9fcc-4cfd-92c0-b3163050356a,REQ-006,BVA,9,positive,PASS,BVA-电压刚过边界：4.1V
+TC-BVA-31,f4e1868c-1f0f-4af3-a665-d36f593afef8,d1b4e183-9fcc-4cfd-92c0-b3163050356a,REQ-006,BVA,9,negative,PASS,BVA-时间下边界外：9ms
+TC-BVA-32,d2a3afdf-6cb5-4c2d-93cd-5b245200c5ef,d1b4e183-9fcc-4cfd-92c0-b3163050356a,REQ-006,BVA,9,positive,PASS,BVA-时间下边界：10ms
+TC-BVA-33,6a41e68e-60d6-47b9-83c8-e3200d21a4a3,d1b4e183-9fcc-4cfd-92c0-b3163050356a,REQ-006,BVA,9,positive,PASS,BVA-时间刚过边界：11ms
+TC-DT-01,2e316a80-9cd5-4ba2-9398-3d8bd6cce07f,327e5c6a-5140-4be2-9ca8-eb2981a05416,REQ-008,DT,2,positive,PASS,DT-决策表规则1_VCUIdle_flg为1
+TC-DT-02,ce1fd6b1-d46d-45a0-84f2-06b805fdf11d,327e5c6a-5140-4be2-9ca8-eb2981a05416,REQ-008,DT,2,negative,PASS,DT-决策表规则2_VCUIdle_flg为0
+TC-DT-03,3bfb2b0d-630b-4146-a917-579c28ced848,be20e236-471d-4194-83db-3053ee80d698,REQ-009,DT,2,negative,PASS,DT-AuthComplete_flg为0时不满足休眠条件h2
+TC-DT-04,a46e563d-ea69-4b0e-81ca-c95d9f1a9a27,9e6be4d2-a149-4701-9e6f-26df8c8bee39,REQ-010,DT,2,positive,PASS,DT-休眠条件h3决策表(条件全满足)
+TC-DT-05,817b4757-275d-42d9-bc18-243c63cba70c,d15917bd-b314-458d-bf67-a8b50695add9,REQ-011,DT,2,positive,PASS,"DT-h1=1,h2=1,h3=1全满足进入休眠"
+TC-DT-06,2d7a85f0-a358-4289-82f3-382b3e0b4a40,d15917bd-b314-458d-bf67-a8b50695add9,REQ-011,DT,2,negative,PASS,"DT-h1=1,h2=1,h3=0不满足休眠"
+TC-DT-07,30931751-8675-4ddd-bfb7-7ce0ef85cf2e,d15917bd-b314-458d-bf67-a8b50695add9,REQ-011,DT,2,negative,PASS,"DT-h1=1,h2=0,h3=1不满足休眠"
+TC-DT-08,3a706d0a-a76e-4fe9-abf8-5d2a9ed11184,d15917bd-b314-458d-bf67-a8b50695add9,REQ-011,DT,2,negative,PASS,"DT-h1=1,h2=0,h3=0不满足休眠"
+TC-DT-09,0133eb83-e406-4232-b4d0-16b64d704a71,d15917bd-b314-458d-bf67-a8b50695add9,REQ-011,DT,2,negative,PASS,"DT-h1=0,h2=1,h3=1不满足休眠"
+TC-DT-10,2576b370-b8cf-4e87-ba4a-0c307fb9fea5,d15917bd-b314-458d-bf67-a8b50695add9,REQ-011,DT,2,negative,PASS,"DT-h1=0,h2=1,h3=0不满足休眠"
+TC-DT-11,a9ba303d-995a-4b7e-a9ef-493f35f86ee9,d15917bd-b314-458d-bf67-a8b50695add9,REQ-011,DT,2,negative,PASS,"DT-h1=0,h2=0,h3=1不满足休眠"
+TC-DT-12,be4785f4-c65c-4b53-b101-cba626aa3968,d15917bd-b314-458d-bf67-a8b50695add9,REQ-011,DT,2,negative,PASS,"DT-h1=0,h2=0,h3=0不满足休眠"
+TC-DT-13,02298f93-1544-4aa9-b897-b1987933e8a5,31c9b11d-f39c-468b-b501-1cf5742bab0b,REQ-013,DT,8,positive,PASS,DT-决策表-state11时bus_message_flag为1
+TC-ST-01,778cc8ad-5007-4399-808d-d8c30235b93e,75158fa6-747d-4dac-a3f0-d4685d8f03d3,REQ-012,ST,1,negative,PASS,状态迁移测试：连续快速循环触发state10卡死序列
+TC-ST-02,bcfde974-b0ac-4824-b03c-f2b78d605882,4637dc4b-8ab5-42fa-9008-9d61ea0bb489,REQ-001,ST,2,positive,PASS,ST_正常唤醒序列_state09_to_state11
+TC-ST-03,168e5e15-432e-45f8-a210-aa98bc7efe2f,327e5c6a-5140-4be2-9ca8-eb2981a05416,REQ-008,ST,2,positive,PASS,ST-状态迁移_唤醒态到休眠态
+TC-ST-04,cfda9952-c082-4c51-8da3-5424276ddbd8,be20e236-471d-4194-83db-3053ee80d698,REQ-009,ST,2,positive,PASS,ST-唤醒状态下AuthComplete_flg置1触发休眠迁移
+TC-ST-05,dba3b73d-8294-4eee-a96a-9ef7599ab540,9e6be4d2-a149-4701-9e6f-26df8c8bee39,REQ-010,ST,2,positive,PASS,ST-状态迁移(唤醒态到休眠态)
+TC-ST-06,4f195107-957c-41de-8568-1573d61571c0,d15917bd-b314-458d-bf67-a8b50695add9,REQ-011,ST,2,positive,PASS,ST-唤醒态至休眠态迁移
+TC-ST-07,39a7294c-fee6-4e33-b0c7-4b93e3996176,d15917bd-b314-458d-bf67-a8b50695add9,REQ-011,ST,2,negative,PASS,ST-唤醒态维持非休眠态
+TC-ST-08,744feca2-285d-404b-aad3-1bf8f4d097e0,,REQ-003,ST,4,positive,PASS,ST_休眠状态下CP信号10.0V迁移至唤醒
+TC-ST-09,e846f095-40a3-4216-a1a7-928004bc094e,,REQ-003,ST,4,negative,PASS,ST_休眠状态下CP信号8.0V维持休眠
+TC-ST-10,5e0a6a1b-5cdd-4af7-af5f-e8221663255d,ST-REQ-002,REQ-002,ST,6,positive,PASS,ST: 休眠状态接收有效CAN报文迁移至唤醒状态
+TC-ST-11,1ba60e64-2fef-4979-8df5-e3ba48775aef,1945c7d8-4d43-4779-b914-749c75a882c3,REQ-004,ST,6,positive,PASS,ST_CC信号触发休眠到唤醒状态迁移
+TC-ST-12,a91942fd-748b-48a0-ab02-5ddee8ad40ca,1945c7d8-4d43-4779-b914-749c75a882c3,REQ-004,ST,6,negative,PASS,ST_CC信号不满足条件维持休眠状态
+TC-ST-13,4b96b9f5-0abb-48f2-a7d9-6c743858a1ab,ST-REQ-005,REQ-005,ST,6,positive,PASS,ST_休眠状态接收有效CC2信号迁移至唤醒
+TC-ST-14,1090b464-466e-4281-ae1d-2717f67f374f,ST-REQ-005,REQ-005,ST,6,negative,PASS,ST_休眠状态接收无效CC2信号维持休眠
+TC-ST-15,497f7cd0-0681-4953-855e-1989f6067059,67935ead-0a81-4290-933a-30caa666c4d4,REQ-007,ST,6,positive,PASS,ST: 休眠状态接收有效门板信号迁移至唤醒状态
+TC-ST-16,6e248f61-a0f0-4710-8515-a168acd0ad24,67935ead-0a81-4290-933a-30caa666c4d4,REQ-007,ST,6,negative,PASS,ST: 休眠状态接收无效门板信号维持休眠状态
+TC-ST-17,163b2ca6-7142-4284-abe9-b562e62f449b,9c2f51bd-9c1b-44b7-8a40-f1cd3a53f6b9,REQ-013,ST,8,positive,PASS,ST-状态转换-转换至state11时bus_message_flag更新
+TC-ST-18,d8faf85f-f554-4681-b56f-305387f2d3a0,N/A,REQ-006,ST,9,positive,PASS,ST-状态迁移：休眠态到唤醒态迁移验证
+TC-SC-01,b696660e-3af3-42b6-aa93-363510588854,9c11892b-1ecf-456e-9e37-2065d6063a12,REQ-012,SC,1,positive,PASS,边界测试：2次快速循环不触发卡死
+TC-SC-02,0cfe2431-40ab-481c-b9f5-1692bf945df7,9c11892b-1ecf-456e-9e37-2065d6063a12,REQ-012,SC,1,negative,PASS,边界测试：3次快速循环触发卡死及DTC上报
+TC-SC-03,a4c9c942-d8d9-40a8-9161-ed171637016b,9c11892b-1ecf-456e-9e37-2065d6063a12,REQ-012,SC,1,negative,PASS,边界测试：4次快速循环触发卡死
+TC-SC-04,6448e10b-55e8-41d1-81c1-9504d3e46862,9c11892b-1ecf-456e-9e37-2065d6063a12,REQ-012,SC,1,positive,PASS,边界测试：3次循环但间隔等于1.0s不触发卡死
+TC-SC-05,c315d930-5f4b-4f8f-8ba6-57381aded239,9c11892b-1ecf-456e-9e37-2065d6063a12,REQ-012,SC,1,positive,PASS,边界测试：3次循环但间隔大于1.0s不触发卡死

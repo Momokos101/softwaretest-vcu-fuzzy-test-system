@@ -23,6 +23,7 @@ from api.models.schemas import (
 from api.services import (
     coverage_service,
     improve_service,
+    optimize_service,
     performance_service,
     prompt_service,
     simulator_client,
@@ -194,6 +195,18 @@ async def improve(request: ImproveRequest):
         return await improve_service.generate_improvements(request)
     except ValueError as exc:
         raise HTTPException(status_code=502, detail=str(exc)) from exc
+
+
+@router.get("/optimize/prioritize")
+async def optimize_prioritize():
+    """FR 7.0 — 按风险(RPN)对测试套件优先级排序。"""
+    return optimize_service.prioritize_suite()
+
+
+@router.get("/optimize/minimize")
+async def optimize_minimize():
+    """FR 7.0 — 基于覆盖效率最小化测试套件。"""
+    return optimize_service.minimize_suite()
 
 
 @router.get("/performance", response_model=List[PerformanceMetric])

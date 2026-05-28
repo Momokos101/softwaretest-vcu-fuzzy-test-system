@@ -28,6 +28,7 @@ two h-conditions so the test isolates the condition under test (matching the
 reviewed oracle vehicle_state eq 9 / ne 9).
 """
 import json
+import os
 import sys
 import time
 from pathlib import Path
@@ -41,6 +42,11 @@ from simulator import VCUSimulator  # noqa: E402
 
 _CASES = json.loads((ROOT / "docs/test_evidence/09_test_cases_reviewed.json").read_text(encoding="utf-8"))
 _RISK = json.loads((ROOT / "docs/test_evidence/_state_snapshot/risk_analysis.json").read_text(encoding="utf-8"))
+
+# Optional subset filter (FR 7.0 minimization validation): if SUITE_CASE_IDS is set
+# to a JSON file containing a list of case ids, only run those cases. Default = all 96.
+_FILTER_FILE = os.environ.get("SUITE_CASE_IDS")
+_FILTER_IDS = set(json.loads(Path(_FILTER_FILE).read_text(encoding="utf-8"))) if _FILTER_FILE else None
 
 
 def _rpn(req: str) -> int:
@@ -195,7 +201,7 @@ def _check_oracle(resp: dict, case: dict):
 
 
 def _params(technique):
-    cases = [c for c in _CASES if c["technique"] == technique]
+    cases = [c for c in _CASES if c["technique"] == technique and (_FILTER_IDS is None or c["id"] in _FILTER_IDS)]
     cases.sort(key=lambda c: (_rpn(c["requirement_id"]), c["requirement_id"]))
     return [
         pytest.param(
