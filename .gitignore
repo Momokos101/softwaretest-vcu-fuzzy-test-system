@@ -84,6 +84,8 @@ Thumbs.db
 !frontend/src/assets/**/*.png
 !frontend/src/assets/**/*.jpg
 !frontend/src/assets/**/*.jpeg
+# Artifact 4 evidence screenshots (referenced by the deliverable doc, must be in repo)
+!docs/test_evidence/screenshots/**
 
 # Coverage reports
 htmlcov/
