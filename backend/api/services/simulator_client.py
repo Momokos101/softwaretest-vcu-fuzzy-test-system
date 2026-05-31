@@ -92,7 +92,7 @@ async def execute_single(test_case: TestCase) -> TestCase:
             "match_expected": False,
             "executed_at": datetime.now().isoformat(),
         }
-        return test_case
+        return test_design_service.persist_test_case(test_case)
 
 
 async def execute_batch(test_cases: List[TestCase], reset_before_run: bool = True) -> List[TestCase]:
@@ -100,10 +100,20 @@ async def execute_batch(test_cases: List[TestCase], reset_before_run: bool = Tru
         try:
             await simulator_client.reset(clear_dtc=False)
         except Exception as exc:
-            raise Exception(
-                f"VCU 仿真器连接失败 ({simulator_client.base_url})。"
-                f"请先启动仿真器: cd vcu_simulator && python main.py。错误: {exc}"
-            ) from exc
+            now = datetime.now().isoformat()
+            for case in test_cases:
+                case.status = TestCaseStatus.ERROR
+                case.execution_result = {
+                    "error": str(exc),
+                    "detail": (
+                        f"VCU 仿真器连接失败 ({simulator_client.base_url})。"
+                        "请先启动仿真器: cd vcu_simulator && python main.py。"
+                    ),
+                    "match_expected": False,
+                    "executed_at": now,
+                }
+                test_design_service.persist_test_case(case)
+            return test_cases
     results = []
     for case in test_cases:
         results.append(await execute_single(case))
@@ -113,12 +123,11 @@ async def execute_batch(test_cases: List[TestCase], reset_before_run: bool = Tru
 def _apply_result(test_case: TestCase, result: ExecutionResult) -> TestCase:
     test_case.execution_result = result.model_dump(mode="json")
     test_case.status = TestCaseStatus.PASS if result.match_expected else TestCaseStatus.FAIL
-    test_case.updated_at = datetime.now()
-    return test_case
+    return test_design_service.persist_test_case(test_case)
 
 
 def _case_to_payload(test_case: TestCase) -> dict[str, Any]:
-    return {
+    payload = {
         "type": test_case.type,
         "in_data": [item.model_dump(mode="json", exclude_none=True) for item in test_case.in_data],
         "expected_results": [item.model_dump(mode="json") for item in test_case.expected_results],
@@ -127,6 +136,47 @@ def _case_to_payload(test_case: TestCase) -> dict[str, Any]:
         "requirement_id": test_case.requirement_id,
         "test_case_id": test_case.id,
     }
+    payload.update(_flat_simulator_inputs(test_case))
+    return payload
+
+
+def _flat_simulator_inputs(test_case: TestCase) -> dict[str, Any]:
+    aliases = {
+        "voltage": "supply_voltage",
+        "supply": "supply_voltage",
+        "supply_voltage": "supply_voltage",
+        "duration": "duration_ms",
+        "duration_ms": "duration_ms",
+        "can_id": "can_msg_id",
+        "can_msg_id": "can_msg_id",
+        "cp": "cp_voltage",
+        "cp_voltage": "cp_voltage",
+        "cc": "cc_voltage",
+        "cc_voltage": "cc_voltage",
+        "cc2": "cc2_voltage",
+        "cc2_voltage": "cc2_voltage",
+        "hood": "hood_voltage",
+        "hood_voltage": "hood_voltage",
+        "door": "door_voltage",
+        "door_voltage": "door_voltage",
+        "vcuidle_flg": "VCUO_bDIAG_VCUIdle_flg",
+        "vcuo_bdiag_vcuidle_flg": "VCUO_bDIAG_VCUIdle_flg",
+        "authcomplete_flg": "VCUO_bDIAG_AuthComplete_flg",
+        "vcuo_bdiag_authcomplete_flg": "VCUO_bDIAG_AuthComplete_flg",
+        "can_stopped": "can_stopped",
+        "power_current": "power_current",
+        "can_error_count": "can_error_count",
+    }
+    out: dict[str, Any] = {}
+    for item in test_case.in_data:
+        key = aliases.get(item.name.strip().lower())
+        if key:
+            out[key] = item.value
+        if key == "duration_ms" and item.value is not None:
+            out[key] = int(item.value)
+        elif item.duration is not None and "duration_ms" not in out:
+            out["duration_ms"] = int(item.duration)
+    return out
 
 
 def _compare_expected(actual: dict[str, Any], test_case: TestCase) -> tuple[bool, list[str]]:

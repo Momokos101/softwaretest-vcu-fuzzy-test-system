@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { ChevronDown, ChevronRight, Play } from 'lucide-react';
+import { ChevronDown, ChevronRight, Download, Play } from 'lucide-react';
 import { autoTestAPI } from '../services/api';
 
 type TechniqueChoice = 'EP' | 'BVA' | 'DT' | 'ST' | 'SC' | 'ALL';
@@ -78,9 +78,37 @@ export function TestCaseDesign() {
   const passCount = testCases.filter((tc) => tc.status === 'pass').length;
   const failCount = testCases.filter((tc) => tc.status === 'fail' || tc.status === 'error').length;
 
+  const exportExcel = async () => {
+    const blob = await autoTestAPI.export({
+      format: 'excel',
+      scope: {
+        include_requirements: false,
+        include_parsed_requirements: false,
+        include_risk_analysis: false,
+        include_coverage_items: false,
+        include_strategies: false,
+        include_test_cases: true,
+        include_execution_results: true,
+        include_traceability_matrix: false,
+        include_bq_new_cases: false,
+      },
+    }) as unknown as Blob;
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'autotestdesign_v2_test_cases.xlsx';
+    link.click();
+    URL.revokeObjectURL(url);
+  };
+
   return (
     <div className="p-8">
-      <h1 className="text-2xl font-bold mb-6">测试设计</h1>
+      <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
+        <h1 className="text-2xl font-bold">测试设计</h1>
+        <button onClick={() => void exportExcel()} className="px-3 py-2 bg-slate-800 text-white rounded inline-flex items-center gap-2">
+          <Download className="w-4 h-4" />Excel
+        </button>
+      </div>
 
       <section className="bg-white rounded-lg shadow p-6 mb-6">
         <h2 className="text-lg font-semibold mb-4">生成测试用例</h2>
@@ -136,6 +164,7 @@ export function TestCaseDesign() {
         <div className="flex justify-between items-center mb-4">
           <div>
             <h2 className="text-lg font-semibold">测试用例列表</h2>
+            <div className="text-sm text-slate-500 mt-1">共 {testCases.length} 条测试用例</div>
             {executedCases.length > 0 && (
               <div className="flex flex-wrap gap-2 mt-1 text-xs">
                 <SummaryBadge label="通过" value={passCount} className="bg-green-100 text-green-800" />
@@ -151,7 +180,7 @@ export function TestCaseDesign() {
         </div>
 
         <div className="space-y-2">
-          {testCases.map((tc) => {
+          {testCases.map((tc, index) => {
             const actual = tc.execution_result?.actual_output;
             const resultType = actual?.result_type;
             const open = expanded[tc.id];
@@ -161,6 +190,7 @@ export function TestCaseDesign() {
                   <button onClick={() => toggleExpanded(tc.id)} className="p-1 rounded hover:bg-slate-100">
                     {open ? <ChevronDown className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}
                   </button>
+                  <span className="w-8 text-xs text-slate-500 text-right">{index + 1}</span>
                   <span className="text-xs font-mono bg-slate-100 px-1.5 py-0.5 rounded">{tc.technique}</span>
                   <span className="text-sm flex-1 truncate">{tc.title}</span>
                   <span className="text-xs text-slate-500">{tc.requirement_id}</span>

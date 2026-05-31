@@ -9,10 +9,58 @@ const steps = [
   { id: 'cases', label: 'Test Cases', icon: Sparkles },
   { id: 'prompts', label: 'Prompts', icon: Save },
   { id: 'results', label: 'Results', icon: Play },
-  { id: 'improve', label: 'Optimize (FR7.0)', icon: Gauge },
+  { id: 'improve', label: 'Optimize', icon: Gauge },
 ] as const;
 
 type StepId = typeof steps[number]['id'];
+
+const emptyExportScope = {
+  include_requirements: false,
+  include_parsed_requirements: false,
+  include_risk_analysis: false,
+  include_coverage_items: false,
+  include_strategies: false,
+  include_test_cases: false,
+  include_execution_results: false,
+  include_traceability_matrix: false,
+  include_bq_new_cases: false,
+  include_ep_cases: true,
+  include_bva_cases: true,
+  include_dt_cases: true,
+  include_st_cases: true,
+  include_scenario_cases: true,
+};
+
+const exportPresets: Record<StepId, { name: string; scope: typeof emptyExportScope }> = {
+  concept: {
+    name: 'requirements',
+    scope: { ...emptyExportScope, include_requirements: true, include_parsed_requirements: true },
+  },
+  coverage: {
+    name: 'coverage_items',
+    scope: { ...emptyExportScope, include_coverage_items: true },
+  },
+  strategy: {
+    name: 'strategies',
+    scope: { ...emptyExportScope, include_strategies: true, include_coverage_items: true },
+  },
+  cases: {
+    name: 'test_cases',
+    scope: { ...emptyExportScope, include_test_cases: true },
+  },
+  prompts: {
+    name: 'prompts',
+    scope: { ...emptyExportScope },
+  },
+  results: {
+    name: 'test_results',
+    scope: { ...emptyExportScope, include_test_cases: true, include_execution_results: true },
+  },
+  improve: {
+    name: 'risk_analysis',
+    scope: { ...emptyExportScope, include_risk_analysis: true },
+  },
+};
 
 export function AutoTestDesignV2() {
   const [activeStep, setActiveStep] = useState<StepId>('concept');
@@ -40,6 +88,7 @@ export function AutoTestDesignV2() {
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
   const csvInputRef = useRef<HTMLInputElement>(null);
+  const coverageFormRef = useRef<HTMLDivElement>(null);
 
   // Coverage Items CRUD form state
   const [showCoverageForm, setShowCoverageForm] = useState(false);
@@ -160,6 +209,7 @@ export function AutoTestDesignV2() {
     setEditingCoverageId(null);
     setCoverageForm({ ...emptyCoverageForm, requirement_id: selectedReqId || (requirements[0]?.id ?? '') });
     setShowCoverageForm(true);
+    requestAnimationFrame(() => coverageFormRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }));
   };
 
   const openEditCoverageForm = (item: any) => {
@@ -173,6 +223,7 @@ export function AutoTestDesignV2() {
       priority: item.priority || 'Medium',
     });
     setShowCoverageForm(true);
+    requestAnimationFrame(() => coverageFormRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }));
   };
 
   const closeCoverageForm = () => {
@@ -227,11 +278,12 @@ export function AutoTestDesignV2() {
   };
 
   const exportFile = async (format: string) => {
-    const blob = await autoTestAPI.exportByFormat(format) as unknown as Blob;
+    const preset = exportPresets[activeStep];
+    const blob = await autoTestAPI.export({ format, scope: preset.scope }) as unknown as Blob;
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
-    link.download = `autotestdesign_v2.${format === 'excel' ? 'xlsx' : format}`;
+    link.download = `autotestdesign_v2_${preset.name}.${format === 'excel' ? 'xlsx' : format}`;
     link.click();
     URL.revokeObjectURL(url);
   };
@@ -329,7 +381,7 @@ export function AutoTestDesignV2() {
           </div>
 
           {showCoverageForm && (
-            <div className="mb-4 border rounded p-4 bg-slate-50">
+            <div ref={coverageFormRef} className="mb-4 border border-blue-200 rounded p-4 bg-blue-50/40 scroll-mt-24">
               <div className="flex justify-between items-center mb-3">
                 <h3 className="font-semibold">{editingCoverageId ? '编辑 Coverage Item' : '新增 Coverage Item'}</h3>
                 <button onClick={closeCoverageForm} className="p-1 hover:bg-slate-200 rounded"><X className="w-4 h-4" /></button>
@@ -379,6 +431,7 @@ export function AutoTestDesignV2() {
             <table className="w-full text-sm">
               <thead className="bg-slate-50">
                 <tr>
+                  <th className="p-2 text-left font-medium w-16">序号</th>
                   <th className="p-2 text-left font-medium">requirement_id</th>
                   <th className="p-2 text-left font-medium">title</th>
                   <th className="p-2 text-left font-medium">priority</th>
@@ -390,6 +443,7 @@ export function AutoTestDesignV2() {
               <tbody>
                 {coverage.map((item, index) => (
                   <tr key={item.id || `${item.requirement_id}-${index}`} className="border-t hover:bg-slate-50">
+                    <td className="p-2 align-top text-slate-500">{index + 1}</td>
                     <td className="p-2 align-top font-mono text-xs">{item.requirement_id || '-'}</td>
                     <td className="p-2 align-top max-w-[260px]">{item.title || '-'}</td>
                     <td className="p-2 align-top">{item.priority || '-'}</td>
@@ -406,7 +460,7 @@ export function AutoTestDesignV2() {
                   </tr>
                 ))}
                 {coverage.length === 0 && (
-                  <tr><td colSpan={6} className="p-6 text-center text-slate-500">暂无 Coverage Items，点上方"添加"或"生成覆盖项"创建</td></tr>
+                  <tr><td colSpan={7} className="p-6 text-center text-slate-500">暂无 Coverage Items，点上方"添加"或"生成覆盖项"创建</td></tr>
                 )}
               </tbody>
             </table>
@@ -429,6 +483,7 @@ export function AutoTestDesignV2() {
             <DataTable
               rows={[...coverage].sort((a, b) => (a.requirement_id || '').localeCompare(b.requirement_id || '') || (a.technique || '').localeCompare(b.technique || ''))}
               columns={['requirement_id', 'title', 'technique', 'priority', 'iso9126_characteristic']}
+              showIndex
             />
           </div>
 
@@ -450,11 +505,17 @@ export function AutoTestDesignV2() {
 
       {activeStep === 'cases' && (
         <section className="bg-white border rounded-lg p-6">
-          <div className="flex flex-wrap gap-2 mb-4">
-            <button disabled={loading || !selectedReqId} onClick={() => run(() => autoTestAPI.regenerateStrategy(selectedReqId), '指定需求用例已重新生成')} className="px-3 py-2 bg-blue-600 text-white rounded disabled:bg-slate-400">生成当前需求</button>
-            <button disabled={loading} onClick={() => run(() => autoTestAPI.generateAllTestCases({ regenerate: true }), '全部用例已生成')} className="px-3 py-2 bg-green-600 text-white rounded disabled:bg-slate-400">生成全部</button>
+          <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
+            <div>
+              <h2 className="text-lg font-semibold">测试用例</h2>
+              <div className="text-sm text-slate-500">共生成 {cases.length} 条测试用例</div>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              <button disabled={loading || !selectedReqId} onClick={() => run(() => autoTestAPI.regenerateStrategy(selectedReqId), '指定需求用例已重新生成')} className="px-3 py-2 bg-blue-600 text-white rounded disabled:bg-slate-400">生成当前需求</button>
+              <button disabled={loading} onClick={() => run(() => autoTestAPI.generateAllTestCases({ regenerate: true }), '全部用例已生成')} className="px-3 py-2 bg-green-600 text-white rounded disabled:bg-slate-400">生成全部</button>
+            </div>
           </div>
-          <DataTable rows={cases} columns={['requirement_id', 'title', 'technique', 'type', 'status', 'oracle_reasoning']} />
+          <DataTable rows={cases} columns={['requirement_id', 'title', 'technique', 'type', 'status', 'oracle_reasoning']} showIndex />
         </section>
       )}
 
@@ -550,7 +611,7 @@ export function AutoTestDesignV2() {
           {/* 第二轮 LLM 用例增广建议（Assignment 2 "Mainly" 迭代改进）*/}
           <div className="mt-8 border-t pt-6">
             <h3 className="text-base font-semibold mb-1">第二轮 LLM 用例增广建议</h3>
-            <p className="text-sm text-slate-500 mb-3">基于执行结果调用 LLM（improve prompt）提出第二轮覆盖项/用例增广建议，补充遗漏的边界、状态与场景——属 Assignment 2 “Mainly” 段的迭代改进（区别于 FR7.0 纯算法优化）。</p>
+            <p className="text-sm text-slate-500 mb-3">基于执行结果调用 LLM（improve prompt）提出第二轮覆盖项/用例增广建议，补充遗漏的边界、状态与场景。</p>
             <div className="flex items-center gap-3 mb-4">
               <button disabled={loading} onClick={runImprove} className="px-3 py-2 bg-indigo-600 text-white rounded disabled:bg-slate-400 inline-flex items-center gap-2">
                 <Sparkles className="w-4 h-4" />生成改进建议
@@ -599,7 +660,7 @@ export function AutoTestDesignV2() {
       {activeStep === 'improve' && (
         <section className="bg-white border rounded-lg p-6 space-y-8">
           <div>
-            <h2 className="text-lg font-semibold">测试套件优化（FR 7.0 Test Suite Optimization）</h2>
+            <h2 className="text-lg font-semibold">测试套件优化</h2>
             <p className="text-sm text-slate-500 mt-1">基于<strong>风险</strong>对套件优先级排序，并基于<strong>覆盖效率</strong>最小化套件——覆盖不降。</p>
           </div>
 
@@ -713,21 +774,25 @@ function Metric({ label, value }: { label: string; value: any }) {
   );
 }
 
-function DataTable({ rows, columns }: { rows: any[]; columns: string[] }) {
+function DataTable({ rows, columns, showIndex = false }: { rows: any[]; columns: string[]; showIndex?: boolean }) {
   return (
     <div className="overflow-x-auto border rounded">
       <table className="w-full text-sm">
         <thead className="bg-slate-50">
-          <tr>{columns.map((col) => <th key={col} className="p-2 text-left font-medium">{col}</th>)}</tr>
+          <tr>
+            {showIndex && <th className="p-2 text-left font-medium w-16">序号</th>}
+            {columns.map((col) => <th key={col} className="p-2 text-left font-medium">{col}</th>)}
+          </tr>
         </thead>
         <tbody>
           {rows.map((row, index) => (
             <tr key={row.id || `${row.requirement_id}-${index}`} className="border-t">
+              {showIndex && <td className="p-2 align-top text-slate-500">{index + 1}</td>}
               {columns.map((col) => <td key={col} className="p-2 align-top max-w-[360px] truncate">{formatCell(row[col])}</td>)}
             </tr>
           ))}
           {rows.length === 0 && (
-            <tr><td colSpan={columns.length} className="p-6 text-center text-slate-500">暂无数据</td></tr>
+            <tr><td colSpan={columns.length + (showIndex ? 1 : 0)} className="p-6 text-center text-slate-500">暂无数据</td></tr>
           )}
         </tbody>
       </table>

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import type { ReactNode } from 'react';
-import { ChevronDown, ChevronRight, FileText, PlayCircle, Plus, Save, Upload } from 'lucide-react';
+import { ChevronDown, ChevronRight, Download, FileText, PlayCircle, Plus, Save, Upload } from 'lucide-react';
 import { autoTestAPI } from '../services/api';
 
 type Tab = 'csv' | 'text' | 'form';
@@ -15,6 +15,7 @@ export function RequirementInput() {
   const [textInput, setTextInput] = useState('');
   const [formInput, setFormInput] = useState('');
   const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState('');
 
   useEffect(() => {
     loadRequirements();
@@ -82,13 +83,22 @@ export function RequirementInput() {
   };
 
   const saveRequirement = async (id: string) => {
-    await autoTestAPI.updateRequirement(id, { raw_text: editingRaw[id] || '' });
-    setParsedById((current) => {
-      const next = { ...current };
-      delete next[id];
-      return next;
-    });
-    await loadRequirements();
+    setLoading(true);
+    setMessage('');
+    try {
+      await autoTestAPI.updateRequirement(id, { raw_text: editingRaw[id] || '' });
+      setParsedById((current) => {
+        const next = { ...current };
+        delete next[id];
+        return next;
+      });
+      await loadRequirements();
+      setMessage(`需求 ${id} 已保存`);
+    } catch (error: any) {
+      setMessage(error?.message || `需求 ${id} 保存失败`);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const parseRequirement = async (id: string) => {
@@ -150,9 +160,43 @@ export function RequirementInput() {
     }));
   };
 
+  const exportExcel = async () => {
+    const blob = await autoTestAPI.export({
+      format: 'excel',
+      scope: {
+        include_requirements: true,
+        include_parsed_requirements: true,
+        include_risk_analysis: false,
+        include_coverage_items: false,
+        include_strategies: false,
+        include_test_cases: false,
+        include_execution_results: false,
+        include_traceability_matrix: false,
+        include_bq_new_cases: false,
+      },
+    }) as unknown as Blob;
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'autotestdesign_v2_requirements.xlsx';
+    link.click();
+    URL.revokeObjectURL(url);
+  };
+
   return (
     <div className="p-8">
-      <h1 className="text-2xl font-bold mb-6">需求管理</h1>
+      <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
+        <h1 className="text-2xl font-bold">需求管理</h1>
+        <button onClick={() => void exportExcel()} className="px-3 py-2 bg-slate-800 text-white rounded inline-flex items-center gap-2">
+          <Download className="w-4 h-4" />Excel
+        </button>
+      </div>
+
+      {message && (
+        <div className="mb-4 px-4 py-3 rounded border bg-slate-50 text-sm text-slate-700">
+          {message}
+        </div>
+      )}
 
       <section className="bg-white rounded-lg shadow p-6 mb-6">
         <div className="flex gap-2 mb-6">
@@ -220,8 +264,8 @@ export function RequirementInput() {
                     className="w-full min-h-[72px] p-2 border rounded"
                   />
                   <div className="flex gap-2 mt-3">
-                    <button onClick={() => saveRequirement(req.id)} className="px-3 py-1.5 bg-slate-700 text-white rounded text-sm inline-flex items-center gap-1">
-                      <Save className="w-4 h-4" />保存需求
+                    <button disabled={loading} onClick={() => saveRequirement(req.id)} className="px-3 py-1.5 bg-slate-700 text-white rounded text-sm inline-flex items-center gap-1 disabled:bg-slate-400">
+                      <Save className="w-4 h-4" />{loading ? '保存中...' : '保存需求'}
                     </button>
                     <button onClick={() => parseRequirement(req.id)} className="px-3 py-1.5 bg-green-600 text-white rounded text-sm">解析</button>
                     <span className={`px-2 py-1.5 text-xs rounded ${req.parsed ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'}`}>

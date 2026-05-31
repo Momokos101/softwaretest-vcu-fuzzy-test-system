@@ -2,13 +2,13 @@
   "9505f9e7-bea9-450d-b8f8-7c468ccc8b8b": {
     "id": "9505f9e7-bea9-450d-b8f8-7c468ccc8b8b",
     "requirement_id": "REQ-001",
-    "title": "硬线供电唤醒边界值测试",
-    "description": "验证供电电压在9.0V边界（8.9V, 9.0V, 9.1V）及持续时间在10ms边界（9ms, 10ms, 11ms）时的VCU唤醒行为。",
+    "title": "硬线供电唤醒边界值测试-",
+    "description": "验证供电电压在9.0V边界（8.9V, 9.0V, 9.1V）及持续时间在10ms边界（9ms, 10ms, 11ms）时的VCU唤醒行为",
     "technique": "BVA",
     "iso9126_characteristic": "Functionality",
     "priority": "High",
     "created_at": "2026-05-24T23:47:36.416560",
-    "updated_at": "2026-05-24T23:47:36.416560"
+    "updated_at": "2026-05-29T21:58:38.101037"
   },
   "2bf2066a-3894-4772-ac4e-d2cabe17a06c": {
     "id": "2bf2066a-3894-4772-ac4e-d2cabe17a06c",
@@ -240,5 +240,16 @@
     "priority": "Low",
     "created_at": "2026-05-24T23:47:36.450411",
     "updated_at": "2026-05-24T23:47:36.450411"
+  },
+  "9a38c32d-b0a4-4e79-976b-972116fd0c3d": {
+    "id": "9a38c32d-b0a4-4e79-976b-972116fd0c3d",
+    "requirement_id": "REQ-001",
+    "title": "test 22",
+    "description": "11",
+    "technique": "EP",
+    "iso9126_characteristic": "Functionality",
+    "priority": "Medium",
+    "created_at": "2026-05-29T21:55:36.676185",
+    "updated_at": "2026-05-29T21:58:58.881298"
   }
 }

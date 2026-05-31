@@ -5,10 +5,9 @@ FastAPI backend providing all AutoTestDesign tool logic and REST API endpoints.
 ## Setup
 
 ```bash
-conda activate ST
 pip install -r requirements.txt
 cp .env.example .env
-python3 run_server.py
+python run_server.py
 ```
 
 - API base: http://localhost:8000
@@ -39,22 +38,19 @@ python3 run_server.py
 |--------|------|---------|
 | `/api/requirements` | `routers/requirements.py` | FR 1.0/1.1 — requirement import and parsing |
 | `/api/risk-analysis` | `routers/risk_analysis.py` | FR 2.0 — risk scoring and prioritization |
+| `/api/test-cases` | `routers/test_design.py` | FR 3.0 — EP, BVA, Decision Table generation |
+| `/api/test-cases/{case_id}/execute` | `routers/test_design.py` | Single-case simulator execution |
+| `/api/test-cases/execute/batch` | `routers/test_design.py` | Batch simulator execution |
 | `/api/coverage-items` | `routers/autotest_review.py` | Interactive Review step 2 coverage management |
 | `/api/strategies` | `routers/autotest_review.py` | Interactive Review step 3 strategy management |
-| `/api/test-design` | `routers/test_design.py` | FR 3.0 — EP, BVA, Decision Table generation |
 | `/api/prompts` | `routers/autotest_review.py` | Interactive Review prompt editing |
 | `/api/execute` | `routers/autotest_review.py` | V2 simulator execution |
+| `/api/results/summary` | `routers/autotest_review.py` | Result summary statistics |
 | `/api/improve` | `routers/autotest_review.py` | Second-round LLM test-augmentation suggestions |
 | `/api/optimize/prioritize`, `/api/optimize/minimize` | `routers/autotest_review.py` | FR 7.0 — risk prioritization + coverage minimization |
 | `/api/performance` | `routers/autotest_review.py` | Tool NFR timing metrics |
 | `/api/export` | `routers/export.py` | FR 6.0 — JSON, CSV, Excel export |
-| `/api/test-plans` | `routers/test_plans.py` | Test plan CRUD |
-| `/api/test-tasks` | `routers/test_tasks.py` | Test task execution |
-| `/api/reports` | `routers/reports.py` | Report generation |
-| `/api/constraints` | `routers/constraints.py` | Constraint management |
-| `/api/monitoring` | `routers/monitoring.py` | Real-time metrics |
-| `/api/gan` | `routers/gan.py` | GAN model inference |
-| `/ws/test-tasks/{id}` | `main.py` | WebSocket real-time push |
+| `/api/health` | `main.py` | Health check |
 
 ## Key Files
 
@@ -70,17 +66,18 @@ python3 run_server.py
 
 ```
 data/
-├── vcu/                  VCU test data (NumPy arrays)
-│   ├── train_voltages.npy
-│   ├── train_labels.npy
-│   ├── test_voltages.npy
-│   ├── test_labels.npy
-│   └── metadata.json
-├── test_plans/           Saved test plan JSON files
 ├── reports/              Generated report files
-├── requirements/         Imported requirement JSON files  (created at runtime)
-├── risk_analysis/        Risk analysis result files       (created at runtime)
-└── test_cases/           Generated test case files        (created at runtime)
+├── test_plans/           Saved test plan JSON files
+├── v2_state/             Current editable V2 state mirrored by the UI
+│   ├── requirements.json
+│   ├── parsed_requirements.json
+│   ├── risk_results.json
+│   ├── coverage_items.json
+│   ├── strategies.json
+│   ├── prompts.json
+│   ├── performance.json
+│   └── test_cases.json
+└── vcu/                  VCU test data and generated sequence artifacts
 ```
 
 ## VCU Model Configuration

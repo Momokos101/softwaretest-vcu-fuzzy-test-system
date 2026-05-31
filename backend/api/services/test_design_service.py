@@ -148,6 +148,13 @@ def mark_execution(case_id: str, execution_result: dict, passed: bool) -> Option
     return case
 
 
+def persist_test_case(case: TestCase) -> TestCase:
+    """Persist an in-memory test case after service-level mutation."""
+    case.updated_at = datetime.now()
+    _save()
+    return case
+
+
 async def _generate_from_context(context: dict) -> List[TestCase]:
     prompt = require_prompt("testcase")
     payload, _, _ = await llm_client.generate_json(

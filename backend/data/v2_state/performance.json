@@ -574,5 +574,6205 @@
     "model": "qwen3.7-max",
     "created_at": "2026-05-28T14:25:43.728186",
     "detail": {}
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 46.39,
+    "model": null,
+    "created_at": "2026-05-29T22:19:30.020640",
+    "detail": {
+      "test_case_id": "aed53778-f0ff-476a-99df-9c8c561d0f80",
+      "requirement_id": "REQ-001"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 40.25,
+    "model": null,
+    "created_at": "2026-05-29T22:21:16.172946",
+    "detail": {
+      "test_case_id": "aed53778-f0ff-476a-99df-9c8c561d0f80",
+      "requirement_id": "REQ-001"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.83,
+    "model": null,
+    "created_at": "2026-05-29T22:21:29.849747",
+    "detail": {
+      "test_case_id": "aed53778-f0ff-476a-99df-9c8c561d0f80",
+      "requirement_id": "REQ-001"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 31.55,
+    "model": null,
+    "created_at": "2026-05-29T22:22:08.629202",
+    "detail": {
+      "test_case_id": "aed53778-f0ff-476a-99df-9c8c561d0f80",
+      "requirement_id": "REQ-001"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 16.78,
+    "model": null,
+    "created_at": "2026-05-29T22:22:09.564816",
+    "detail": {
+      "test_case_id": "aed53778-f0ff-476a-99df-9c8c561d0f80",
+      "requirement_id": "REQ-001"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 16.94,
+    "model": null,
+    "created_at": "2026-05-29T22:22:10.063725",
+    "detail": {
+      "test_case_id": "aed53778-f0ff-476a-99df-9c8c561d0f80",
+      "requirement_id": "REQ-001"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 16.9,
+    "model": null,
+    "created_at": "2026-05-29T22:22:10.562099",
+    "detail": {
+      "test_case_id": "867cfe89-3604-418d-b9f6-ff2c153115d6",
+      "requirement_id": "REQ-001"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 16.88,
+    "model": null,
+    "created_at": "2026-05-29T22:22:10.960998",
+    "detail": {
+      "test_case_id": "867cfe89-3604-418d-b9f6-ff2c153115d6",
+      "requirement_id": "REQ-001"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 17.57,
+    "model": null,
+    "created_at": "2026-05-29T22:22:11.845333",
+    "detail": {
+      "test_case_id": "06483b58-494f-49a5-842e-059302abb3d1",
+      "requirement_id": "REQ-001"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 15.15,
+    "model": null,
+    "created_at": "2026-05-29T22:22:13.125628",
+    "detail": {
+      "test_case_id": "aed53778-f0ff-476a-99df-9c8c561d0f80",
+      "requirement_id": "REQ-001"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 16.57,
+    "model": null,
+    "created_at": "2026-05-29T22:22:15.328819",
+    "detail": {
+      "test_case_id": "aed53778-f0ff-476a-99df-9c8c561d0f80",
+      "requirement_id": "REQ-001"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 9.79,
+    "model": null,
+    "created_at": "2026-05-29T22:22:16.103264",
+    "detail": {
+      "test_case_id": "aed53778-f0ff-476a-99df-9c8c561d0f80",
+      "requirement_id": "REQ-001"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 8.06,
+    "model": null,
+    "created_at": "2026-05-29T22:22:16.116811",
+    "detail": {
+      "test_case_id": "867cfe89-3604-418d-b9f6-ff2c153115d6",
+      "requirement_id": "REQ-001"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.48,
+    "model": null,
+    "created_at": "2026-05-29T22:22:16.128613",
+    "detail": {
+      "test_case_id": "06483b58-494f-49a5-842e-059302abb3d1",
+      "requirement_id": "REQ-001"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.08,
+    "model": null,
+    "created_at": "2026-05-29T22:22:16.140074",
+    "detail": {
+      "test_case_id": "f9b1ff34-e035-42bc-91e7-a932873111a3",
+      "requirement_id": "REQ-001"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.49,
+    "model": null,
+    "created_at": "2026-05-29T22:22:16.152145",
+    "detail": {
+      "test_case_id": "96efed00-fb6d-44c8-89c3-fee9dc144519",
+      "requirement_id": "REQ-001"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.09,
+    "model": null,
+    "created_at": "2026-05-29T22:22:16.163538",
+    "detail": {
+      "test_case_id": "93e1c973-5da5-44a3-859e-53eda9b584e9",
+      "requirement_id": "REQ-001"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.0,
+    "model": null,
+    "created_at": "2026-05-29T22:22:16.174933",
+    "detail": {
+      "test_case_id": "68011a5e-6278-4037-ab44-98b4501cd085",
+      "requirement_id": "REQ-001"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.96,
+    "model": null,
+    "created_at": "2026-05-29T22:22:16.186599",
+    "detail": {
+      "test_case_id": "bcfde974-b0ac-4824-b03c-f2b78d605882",
+      "requirement_id": "REQ-001"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.96,
+    "model": null,
+    "created_at": "2026-05-29T22:22:16.198136",
+    "detail": {
+      "test_case_id": "bcb9c9d8-dec6-44cc-a4e1-94bd061b0e4f",
+      "requirement_id": "REQ-001"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.18,
+    "model": null,
+    "created_at": "2026-05-29T22:22:16.210284",
+    "detail": {
+      "test_case_id": "7c884e48-d585-45c2-8436-ac8f3d4b12d8",
+      "requirement_id": "REQ-002"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.75,
+    "model": null,
+    "created_at": "2026-05-29T22:22:16.221457",
+    "detail": {
+      "test_case_id": "866ea05a-a8f0-408c-84a8-b4ffcf8bada3",
+      "requirement_id": "REQ-002"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.64,
+    "model": null,
+    "created_at": "2026-05-29T22:22:16.232621",
+    "detail": {
+      "test_case_id": "a80270da-4f28-40f1-be25-8f8d93715bab",
+      "requirement_id": "REQ-002"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.74,
+    "model": null,
+    "created_at": "2026-05-29T22:22:16.243818",
+    "detail": {
+      "test_case_id": "47c3e760-7752-4508-a9f6-8eb4e5d54c8f",
+      "requirement_id": "REQ-002"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.59,
+    "model": null,
+    "created_at": "2026-05-29T22:22:16.254895",
+    "detail": {
+      "test_case_id": "16517744-16c7-4476-919f-a0830671002f",
+      "requirement_id": "REQ-002"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.78,
+    "model": null,
+    "created_at": "2026-05-29T22:22:16.266250",
+    "detail": {
+      "test_case_id": "c7d71344-e830-4cfa-94ec-3f28b799550b",
+      "requirement_id": "REQ-002"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.72,
+    "model": null,
+    "created_at": "2026-05-29T22:22:16.277385",
+    "detail": {
+      "test_case_id": "aec8ac6e-3168-4c3e-9f3c-54def8243338",
+      "requirement_id": "REQ-002"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.89,
+    "model": null,
+    "created_at": "2026-05-29T22:22:16.289418",
+    "detail": {
+      "test_case_id": "5e0a6a1b-5cdd-4af7-af5f-e8221663255d",
+      "requirement_id": "REQ-002"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.02,
+    "model": null,
+    "created_at": "2026-05-29T22:22:16.301188",
+    "detail": {
+      "test_case_id": "2d16734e-cc60-4ada-aa2a-4e8f377707b6",
+      "requirement_id": "REQ-003"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.68,
+    "model": null,
+    "created_at": "2026-05-29T22:22:16.312834",
+    "detail": {
+      "test_case_id": "08398f11-0889-4e8a-8351-da74a0daacf7",
+      "requirement_id": "REQ-003"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.87,
+    "model": null,
+    "created_at": "2026-05-29T22:22:16.324223",
+    "detail": {
+      "test_case_id": "3db545bb-c36b-4bb8-b962-5f8944115d54",
+      "requirement_id": "REQ-003"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.96,
+    "model": null,
+    "created_at": "2026-05-29T22:22:16.336068",
+    "detail": {
+      "test_case_id": "003eea21-1e6f-4c47-9c9a-d04a39661103",
+      "requirement_id": "REQ-003"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.15,
+    "model": null,
+    "created_at": "2026-05-29T22:22:16.347799",
+    "detail": {
+      "test_case_id": "046f4995-3fe0-4bdc-9109-292b49705ecb",
+      "requirement_id": "REQ-003"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.83,
+    "model": null,
+    "created_at": "2026-05-29T22:22:16.359447",
+    "detail": {
+      "test_case_id": "744feca2-285d-404b-aad3-1bf8f4d097e0",
+      "requirement_id": "REQ-003"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.01,
+    "model": null,
+    "created_at": "2026-05-29T22:22:16.371068",
+    "detail": {
+      "test_case_id": "e846f095-40a3-4216-a1a7-928004bc094e",
+      "requirement_id": "REQ-003"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.34,
+    "model": null,
+    "created_at": "2026-05-29T22:22:16.383359",
+    "detail": {
+      "test_case_id": "e3b2dea4-a040-48c9-a1a9-ff174cf4def2",
+      "requirement_id": "REQ-004"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.27,
+    "model": null,
+    "created_at": "2026-05-29T22:22:16.395869",
+    "detail": {
+      "test_case_id": "cde914db-73e0-4b98-9dd1-f2565695bdda",
+      "requirement_id": "REQ-004"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.02,
+    "model": null,
+    "created_at": "2026-05-29T22:22:16.408099",
+    "detail": {
+      "test_case_id": "addb86e7-d431-453d-b575-4bb15e44e841",
+      "requirement_id": "REQ-004"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.67,
+    "model": null,
+    "created_at": "2026-05-29T22:22:16.419787",
+    "detail": {
+      "test_case_id": "3fc01f56-10dc-43aa-b076-9026912f6a3b",
+      "requirement_id": "REQ-004"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.08,
+    "model": null,
+    "created_at": "2026-05-29T22:22:16.431587",
+    "detail": {
+      "test_case_id": "80095a4f-737b-4c47-9a5f-76405a02b599",
+      "requirement_id": "REQ-004"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.93,
+    "model": null,
+    "created_at": "2026-05-29T22:22:16.443498",
+    "detail": {
+      "test_case_id": "1ba60e64-2fef-4979-8df5-e3ba48775aef",
+      "requirement_id": "REQ-004"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.66,
+    "model": null,
+    "created_at": "2026-05-29T22:22:16.454900",
+    "detail": {
+      "test_case_id": "a91942fd-748b-48a0-ab02-5ddee8ad40ca",
+      "requirement_id": "REQ-004"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.68,
+    "model": null,
+    "created_at": "2026-05-29T22:22:16.466748",
+    "detail": {
+      "test_case_id": "5897c745-f18e-4120-aa5f-ea67bdaf401d",
+      "requirement_id": "REQ-005"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.57,
+    "model": null,
+    "created_at": "2026-05-29T22:22:16.478113",
+    "detail": {
+      "test_case_id": "c73c1bff-473f-4c7d-bbeb-36001e444e49",
+      "requirement_id": "REQ-005"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.07,
+    "model": null,
+    "created_at": "2026-05-29T22:22:16.490861",
+    "detail": {
+      "test_case_id": "8adc3c01-d079-44c7-bda6-3810fc94def9",
+      "requirement_id": "REQ-005"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.14,
+    "model": null,
+    "created_at": "2026-05-29T22:22:16.503334",
+    "detail": {
+      "test_case_id": "9358d3f5-e999-4e4c-bbef-4f0d013aa3ff",
+      "requirement_id": "REQ-005"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.33,
+    "model": null,
+    "created_at": "2026-05-29T22:22:16.516160",
+    "detail": {
+      "test_case_id": "feeff67e-560a-4c1c-acfa-891fcb51e8f7",
+      "requirement_id": "REQ-005"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 8.26,
+    "model": null,
+    "created_at": "2026-05-29T22:22:16.553788",
+    "detail": {
+      "test_case_id": "4b96b9f5-0abb-48f2-a7d9-6c743858a1ab",
+      "requirement_id": "REQ-005"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.56,
+    "model": null,
+    "created_at": "2026-05-29T22:22:16.566723",
+    "detail": {
+      "test_case_id": "1090b464-466e-4281-ae1d-2717f67f374f",
+      "requirement_id": "REQ-005"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.86,
+    "model": null,
+    "created_at": "2026-05-29T22:22:16.579897",
+    "detail": {
+      "test_case_id": "b6a3f6f6-fb9d-4a7e-8455-7aefa3e37bfb",
+      "requirement_id": "REQ-006"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 8.36,
+    "model": null,
+    "created_at": "2026-05-29T22:22:16.594095",
+    "detail": {
+      "test_case_id": "b7b68d68-4271-42ed-a73e-b8c6fb4146ba",
+      "requirement_id": "REQ-006"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 8.5,
+    "model": null,
+    "created_at": "2026-05-29T22:22:16.608703",
+    "detail": {
+      "test_case_id": "c496b5ac-7a79-4947-9f5b-15a276de914c",
+      "requirement_id": "REQ-006"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 8.56,
+    "model": null,
+    "created_at": "2026-05-29T22:22:16.623471",
+    "detail": {
+      "test_case_id": "6d2ee7ab-2bea-42ac-8eb3-6a3a8056b809",
+      "requirement_id": "REQ-006"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.5,
+    "model": null,
+    "created_at": "2026-05-29T22:22:16.637434",
+    "detail": {
+      "test_case_id": "ee54d9c7-5982-4922-9d08-64d204f26f52",
+      "requirement_id": "REQ-006"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.7,
+    "model": null,
+    "created_at": "2026-05-29T22:22:16.651133",
+    "detail": {
+      "test_case_id": "8069a480-2fec-49de-bf10-a4431eeb6ce8",
+      "requirement_id": "REQ-006"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.44,
+    "model": null,
+    "created_at": "2026-05-29T22:22:16.667155",
+    "detail": {
+      "test_case_id": "f4e1868c-1f0f-4af3-a665-d36f593afef8",
+      "requirement_id": "REQ-006"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.71,
+    "model": null,
+    "created_at": "2026-05-29T22:22:16.681260",
+    "detail": {
+      "test_case_id": "d2a3afdf-6cb5-4c2d-93cd-5b245200c5ef",
+      "requirement_id": "REQ-006"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.27,
+    "model": null,
+    "created_at": "2026-05-29T22:22:16.695141",
+    "detail": {
+      "test_case_id": "6a41e68e-60d6-47b9-83c8-e3200d21a4a3",
+      "requirement_id": "REQ-006"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.83,
+    "model": null,
+    "created_at": "2026-05-29T22:22:16.707815",
+    "detail": {
+      "test_case_id": "d8faf85f-f554-4681-b56f-305387f2d3a0",
+      "requirement_id": "REQ-006"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.2,
+    "model": null,
+    "created_at": "2026-05-29T22:22:16.722041",
+    "detail": {
+      "test_case_id": "9f9986b7-af42-4c4a-ab18-bee017d8a71c",
+      "requirement_id": "REQ-007"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.39,
+    "model": null,
+    "created_at": "2026-05-29T22:22:16.745498",
+    "detail": {
+      "test_case_id": "cf712a11-7ae7-4714-99bb-a554e432bb0d",
+      "requirement_id": "REQ-007"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.16,
+    "model": null,
+    "created_at": "2026-05-29T22:22:16.758052",
+    "detail": {
+      "test_case_id": "b910cdb6-5b83-4e73-a769-09327576aef9",
+      "requirement_id": "REQ-007"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.18,
+    "model": null,
+    "created_at": "2026-05-29T22:22:16.770493",
+    "detail": {
+      "test_case_id": "b783cc48-224f-4059-a899-a1c60687093f",
+      "requirement_id": "REQ-007"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.84,
+    "model": null,
+    "created_at": "2026-05-29T22:22:16.782655",
+    "detail": {
+      "test_case_id": "41705132-0232-47b5-94ca-7ab532be0867",
+      "requirement_id": "REQ-007"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.7,
+    "model": null,
+    "created_at": "2026-05-29T22:22:16.795040",
+    "detail": {
+      "test_case_id": "513fbf5f-dc12-4371-abc3-c53ffd23afd8",
+      "requirement_id": "REQ-007"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.84,
+    "model": null,
+    "created_at": "2026-05-29T22:22:16.807316",
+    "detail": {
+      "test_case_id": "497f7cd0-0681-4953-855e-1989f6067059",
+      "requirement_id": "REQ-007"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.26,
+    "model": null,
+    "created_at": "2026-05-29T22:22:16.819976",
+    "detail": {
+      "test_case_id": "6e248f61-a0f0-4710-8515-a168acd0ad24",
+      "requirement_id": "REQ-007"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.82,
+    "model": null,
+    "created_at": "2026-05-29T22:22:16.832129",
+    "detail": {
+      "test_case_id": "b26ff8b5-3ec7-4ad0-9930-858c3e2fd355",
+      "requirement_id": "REQ-008"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.74,
+    "model": null,
+    "created_at": "2026-05-29T22:22:16.844208",
+    "detail": {
+      "test_case_id": "0d9216bf-1d37-4363-8dbb-fdeab383d21f",
+      "requirement_id": "REQ-008"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.85,
+    "model": null,
+    "created_at": "2026-05-29T22:22:16.856356",
+    "detail": {
+      "test_case_id": "2e316a80-9cd5-4ba2-9398-3d8bd6cce07f",
+      "requirement_id": "REQ-008"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.87,
+    "model": null,
+    "created_at": "2026-05-29T22:22:16.868658",
+    "detail": {
+      "test_case_id": "ce1fd6b1-d46d-45a0-84f2-06b805fdf11d",
+      "requirement_id": "REQ-008"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.72,
+    "model": null,
+    "created_at": "2026-05-29T22:22:16.880763",
+    "detail": {
+      "test_case_id": "168e5e15-432e-45f8-a210-aa98bc7efe2f",
+      "requirement_id": "REQ-008"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.91,
+    "model": null,
+    "created_at": "2026-05-29T22:22:16.893010",
+    "detail": {
+      "test_case_id": "415392c6-07bf-4666-aab5-4bba498f05f3",
+      "requirement_id": "REQ-009"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.76,
+    "model": null,
+    "created_at": "2026-05-29T22:22:16.905230",
+    "detail": {
+      "test_case_id": "3bfb2b0d-630b-4146-a917-579c28ced848",
+      "requirement_id": "REQ-009"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.93,
+    "model": null,
+    "created_at": "2026-05-29T22:22:16.917957",
+    "detail": {
+      "test_case_id": "cfda9952-c082-4c51-8da3-5424276ddbd8",
+      "requirement_id": "REQ-009"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.83,
+    "model": null,
+    "created_at": "2026-05-29T22:22:16.930083",
+    "detail": {
+      "test_case_id": "ac4b8699-0a3e-4122-96ea-63c23b72c94f",
+      "requirement_id": "REQ-010"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.86,
+    "model": null,
+    "created_at": "2026-05-29T22:22:16.942322",
+    "detail": {
+      "test_case_id": "2cba1c5d-078c-421e-a4a8-ef0f910f0de8",
+      "requirement_id": "REQ-010"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.76,
+    "model": null,
+    "created_at": "2026-05-29T22:22:16.954441",
+    "detail": {
+      "test_case_id": "ae1c553c-2f93-491e-95cf-d429ec31d404",
+      "requirement_id": "REQ-010"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.12,
+    "model": null,
+    "created_at": "2026-05-29T22:22:16.967004",
+    "detail": {
+      "test_case_id": "7aacb8c9-a8df-4880-9f4d-bdf9b4ad6057",
+      "requirement_id": "REQ-010"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.72,
+    "model": null,
+    "created_at": "2026-05-29T22:22:16.980293",
+    "detail": {
+      "test_case_id": "a46e563d-ea69-4b0e-81ca-c95d9f1a9a27",
+      "requirement_id": "REQ-010"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.48,
+    "model": null,
+    "created_at": "2026-05-29T22:22:16.994169",
+    "detail": {
+      "test_case_id": "dba3b73d-8294-4eee-a96a-9ef7599ab540",
+      "requirement_id": "REQ-010"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.12,
+    "model": null,
+    "created_at": "2026-05-29T22:22:17.007179",
+    "detail": {
+      "test_case_id": "817b4757-275d-42d9-bc18-243c63cba70c",
+      "requirement_id": "REQ-011"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.76,
+    "model": null,
+    "created_at": "2026-05-29T22:22:17.019474",
+    "detail": {
+      "test_case_id": "2d7a85f0-a358-4289-82f3-382b3e0b4a40",
+      "requirement_id": "REQ-011"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.93,
+    "model": null,
+    "created_at": "2026-05-29T22:22:17.031958",
+    "detail": {
+      "test_case_id": "30931751-8675-4ddd-bfb7-7ce0ef85cf2e",
+      "requirement_id": "REQ-011"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.83,
+    "model": null,
+    "created_at": "2026-05-29T22:22:17.044369",
+    "detail": {
+      "test_case_id": "3a706d0a-a76e-4fe9-abf8-5d2a9ed11184",
+      "requirement_id": "REQ-011"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.86,
+    "model": null,
+    "created_at": "2026-05-29T22:22:17.057056",
+    "detail": {
+      "test_case_id": "0133eb83-e406-4232-b4d0-16b64d704a71",
+      "requirement_id": "REQ-011"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.21,
+    "model": null,
+    "created_at": "2026-05-29T22:22:17.070120",
+    "detail": {
+      "test_case_id": "2576b370-b8cf-4e87-ba4a-0c307fb9fea5",
+      "requirement_id": "REQ-011"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.26,
+    "model": null,
+    "created_at": "2026-05-29T22:22:17.083167",
+    "detail": {
+      "test_case_id": "a9ba303d-995a-4b7e-a9ef-493f35f86ee9",
+      "requirement_id": "REQ-011"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.81,
+    "model": null,
+    "created_at": "2026-05-29T22:22:17.095959",
+    "detail": {
+      "test_case_id": "be4785f4-c65c-4b53-b101-cba626aa3968",
+      "requirement_id": "REQ-011"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.75,
+    "model": null,
+    "created_at": "2026-05-29T22:22:17.108669",
+    "detail": {
+      "test_case_id": "4f195107-957c-41de-8568-1573d61571c0",
+      "requirement_id": "REQ-011"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.28,
+    "model": null,
+    "created_at": "2026-05-29T22:22:17.121976",
+    "detail": {
+      "test_case_id": "39a7294c-fee6-4e33-b0c7-4b93e3996176",
+      "requirement_id": "REQ-011"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.86,
+    "model": null,
+    "created_at": "2026-05-29T22:22:17.134875",
+    "detail": {
+      "test_case_id": "b696660e-3af3-42b6-aa93-363510588854",
+      "requirement_id": "REQ-012"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.72,
+    "model": null,
+    "created_at": "2026-05-29T22:22:17.147491",
+    "detail": {
+      "test_case_id": "0cfe2431-40ab-481c-b9f5-1692bf945df7",
+      "requirement_id": "REQ-012"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.83,
+    "model": null,
+    "created_at": "2026-05-29T22:22:17.160060",
+    "detail": {
+      "test_case_id": "a4c9c942-d8d9-40a8-9161-ed171637016b",
+      "requirement_id": "REQ-012"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.77,
+    "model": null,
+    "created_at": "2026-05-29T22:22:17.172767",
+    "detail": {
+      "test_case_id": "6448e10b-55e8-41d1-81c1-9504d3e46862",
+      "requirement_id": "REQ-012"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.88,
+    "model": null,
+    "created_at": "2026-05-29T22:22:17.185593",
+    "detail": {
+      "test_case_id": "c315d930-5f4b-4f8f-8ba6-57381aded239",
+      "requirement_id": "REQ-012"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.59,
+    "model": null,
+    "created_at": "2026-05-29T22:22:17.197858",
+    "detail": {
+      "test_case_id": "778cc8ad-5007-4399-808d-d8c30235b93e",
+      "requirement_id": "REQ-012"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.77,
+    "model": null,
+    "created_at": "2026-05-29T22:22:17.210282",
+    "detail": {
+      "test_case_id": "966ce13d-9047-46d0-8d9a-a16b937e9a0b",
+      "requirement_id": "REQ-013"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.72,
+    "model": null,
+    "created_at": "2026-05-29T22:22:17.223011",
+    "detail": {
+      "test_case_id": "4dac6c7e-1d45-4942-95aa-8ce0b2e3d67f",
+      "requirement_id": "REQ-013"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.67,
+    "model": null,
+    "created_at": "2026-05-29T22:22:17.235468",
+    "detail": {
+      "test_case_id": "02298f93-1544-4aa9-b897-b1987933e8a5",
+      "requirement_id": "REQ-013"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.57,
+    "model": null,
+    "created_at": "2026-05-29T22:22:17.247816",
+    "detail": {
+      "test_case_id": "163b2ca6-7142-4284-abe9-b562e62f449b",
+      "requirement_id": "REQ-013"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.12,
+    "model": null,
+    "created_at": "2026-05-29T22:22:17.260893",
+    "detail": {
+      "test_case_id": "62a5c989-54e7-4cd1-88aa-9cb39c0ea4eb",
+      "requirement_id": "REQ-014"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.96,
+    "model": null,
+    "created_at": "2026-05-29T22:22:17.273823",
+    "detail": {
+      "test_case_id": "124fba9a-73aa-43d2-bca4-2c78a3090c96",
+      "requirement_id": "REQ-014"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.11,
+    "model": null,
+    "created_at": "2026-05-29T22:22:17.287159",
+    "detail": {
+      "test_case_id": "901926bf-467f-44f2-830f-f4e4e349d1d9",
+      "requirement_id": "REQ-014"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.8,
+    "model": null,
+    "created_at": "2026-05-29T22:22:17.300122",
+    "detail": {
+      "test_case_id": "30970747-568e-4769-a0d8-0a912bb1a3d3",
+      "requirement_id": "REQ-014"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.72,
+    "model": null,
+    "created_at": "2026-05-29T22:22:17.312853",
+    "detail": {
+      "test_case_id": "886b8539-4e1c-4305-8be3-af84d40ff518",
+      "requirement_id": "REQ-014"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.81,
+    "model": null,
+    "created_at": "2026-05-29T22:22:17.325597",
+    "detail": {
+      "test_case_id": "ed33fefd-df50-4c13-a738-8276e0a10699",
+      "requirement_id": "REQ-001"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 11.05,
+    "model": null,
+    "created_at": "2026-05-29T22:22:23.972069",
+    "detail": {
+      "test_case_id": "aed53778-f0ff-476a-99df-9c8c561d0f80",
+      "requirement_id": "REQ-001"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 9.15,
+    "model": null,
+    "created_at": "2026-05-29T22:22:23.990284",
+    "detail": {
+      "test_case_id": "867cfe89-3604-418d-b9f6-ff2c153115d6",
+      "requirement_id": "REQ-001"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.54,
+    "model": null,
+    "created_at": "2026-05-29T22:22:24.004485",
+    "detail": {
+      "test_case_id": "06483b58-494f-49a5-842e-059302abb3d1",
+      "requirement_id": "REQ-001"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.4,
+    "model": null,
+    "created_at": "2026-05-29T22:22:24.018101",
+    "detail": {
+      "test_case_id": "f9b1ff34-e035-42bc-91e7-a932873111a3",
+      "requirement_id": "REQ-001"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.55,
+    "model": null,
+    "created_at": "2026-05-29T22:22:24.032202",
+    "detail": {
+      "test_case_id": "96efed00-fb6d-44c8-89c3-fee9dc144519",
+      "requirement_id": "REQ-001"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.89,
+    "model": null,
+    "created_at": "2026-05-29T22:22:24.045117",
+    "detail": {
+      "test_case_id": "93e1c973-5da5-44a3-859e-53eda9b584e9",
+      "requirement_id": "REQ-001"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.23,
+    "model": null,
+    "created_at": "2026-05-29T22:22:24.058427",
+    "detail": {
+      "test_case_id": "68011a5e-6278-4037-ab44-98b4501cd085",
+      "requirement_id": "REQ-001"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.91,
+    "model": null,
+    "created_at": "2026-05-29T22:22:24.071335",
+    "detail": {
+      "test_case_id": "bcfde974-b0ac-4824-b03c-f2b78d605882",
+      "requirement_id": "REQ-001"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.24,
+    "model": null,
+    "created_at": "2026-05-29T22:22:24.084862",
+    "detail": {
+      "test_case_id": "bcb9c9d8-dec6-44cc-a4e1-94bd061b0e4f",
+      "requirement_id": "REQ-001"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.17,
+    "model": null,
+    "created_at": "2026-05-29T22:22:24.098241",
+    "detail": {
+      "test_case_id": "7c884e48-d585-45c2-8436-ac8f3d4b12d8",
+      "requirement_id": "REQ-002"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.22,
+    "model": null,
+    "created_at": "2026-05-29T22:22:24.111744",
+    "detail": {
+      "test_case_id": "866ea05a-a8f0-408c-84a8-b4ffcf8bada3",
+      "requirement_id": "REQ-002"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.11,
+    "model": null,
+    "created_at": "2026-05-29T22:22:24.124983",
+    "detail": {
+      "test_case_id": "a80270da-4f28-40f1-be25-8f8d93715bab",
+      "requirement_id": "REQ-002"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.03,
+    "model": null,
+    "created_at": "2026-05-29T22:22:24.138129",
+    "detail": {
+      "test_case_id": "47c3e760-7752-4508-a9f6-8eb4e5d54c8f",
+      "requirement_id": "REQ-002"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.91,
+    "model": null,
+    "created_at": "2026-05-29T22:22:24.151087",
+    "detail": {
+      "test_case_id": "16517744-16c7-4476-919f-a0830671002f",
+      "requirement_id": "REQ-002"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.87,
+    "model": null,
+    "created_at": "2026-05-29T22:22:24.163900",
+    "detail": {
+      "test_case_id": "c7d71344-e830-4cfa-94ec-3f28b799550b",
+      "requirement_id": "REQ-002"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.27,
+    "model": null,
+    "created_at": "2026-05-29T22:22:24.203354",
+    "detail": {
+      "test_case_id": "aec8ac6e-3168-4c3e-9f3c-54def8243338",
+      "requirement_id": "REQ-002"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.94,
+    "model": null,
+    "created_at": "2026-05-29T22:22:24.216427",
+    "detail": {
+      "test_case_id": "5e0a6a1b-5cdd-4af7-af5f-e8221663255d",
+      "requirement_id": "REQ-002"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.93,
+    "model": null,
+    "created_at": "2026-05-29T22:22:24.229527",
+    "detail": {
+      "test_case_id": "2d16734e-cc60-4ada-aa2a-4e8f377707b6",
+      "requirement_id": "REQ-003"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.58,
+    "model": null,
+    "created_at": "2026-05-29T22:22:24.243224",
+    "detail": {
+      "test_case_id": "08398f11-0889-4e8a-8351-da74a0daacf7",
+      "requirement_id": "REQ-003"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.49,
+    "model": null,
+    "created_at": "2026-05-29T22:22:24.256229",
+    "detail": {
+      "test_case_id": "3db545bb-c36b-4bb8-b962-5f8944115d54",
+      "requirement_id": "REQ-003"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.48,
+    "model": null,
+    "created_at": "2026-05-29T22:22:24.269231",
+    "detail": {
+      "test_case_id": "003eea21-1e6f-4c47-9c9a-d04a39661103",
+      "requirement_id": "REQ-003"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.44,
+    "model": null,
+    "created_at": "2026-05-29T22:22:24.282225",
+    "detail": {
+      "test_case_id": "046f4995-3fe0-4bdc-9109-292b49705ecb",
+      "requirement_id": "REQ-003"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.74,
+    "model": null,
+    "created_at": "2026-05-29T22:22:24.295512",
+    "detail": {
+      "test_case_id": "744feca2-285d-404b-aad3-1bf8f4d097e0",
+      "requirement_id": "REQ-003"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.62,
+    "model": null,
+    "created_at": "2026-05-29T22:22:24.308895",
+    "detail": {
+      "test_case_id": "e846f095-40a3-4216-a1a7-928004bc094e",
+      "requirement_id": "REQ-003"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.77,
+    "model": null,
+    "created_at": "2026-05-29T22:22:24.322773",
+    "detail": {
+      "test_case_id": "e3b2dea4-a040-48c9-a1a9-ff174cf4def2",
+      "requirement_id": "REQ-004"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.21,
+    "model": null,
+    "created_at": "2026-05-29T22:22:24.344001",
+    "detail": {
+      "test_case_id": "cde914db-73e0-4b98-9dd1-f2565695bdda",
+      "requirement_id": "REQ-004"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.72,
+    "model": null,
+    "created_at": "2026-05-29T22:22:24.356839",
+    "detail": {
+      "test_case_id": "addb86e7-d431-453d-b575-4bb15e44e841",
+      "requirement_id": "REQ-004"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.06,
+    "model": null,
+    "created_at": "2026-05-29T22:22:24.370207",
+    "detail": {
+      "test_case_id": "3fc01f56-10dc-43aa-b076-9026912f6a3b",
+      "requirement_id": "REQ-004"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.76,
+    "model": null,
+    "created_at": "2026-05-29T22:22:24.383092",
+    "detail": {
+      "test_case_id": "80095a4f-737b-4c47-9a5f-76405a02b599",
+      "requirement_id": "REQ-004"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.95,
+    "model": null,
+    "created_at": "2026-05-29T22:22:24.396087",
+    "detail": {
+      "test_case_id": "1ba60e64-2fef-4979-8df5-e3ba48775aef",
+      "requirement_id": "REQ-004"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.71,
+    "model": null,
+    "created_at": "2026-05-29T22:22:24.408975",
+    "detail": {
+      "test_case_id": "a91942fd-748b-48a0-ab02-5ddee8ad40ca",
+      "requirement_id": "REQ-004"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.72,
+    "model": null,
+    "created_at": "2026-05-29T22:22:24.421687",
+    "detail": {
+      "test_case_id": "5897c745-f18e-4120-aa5f-ea67bdaf401d",
+      "requirement_id": "REQ-005"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.88,
+    "model": null,
+    "created_at": "2026-05-29T22:22:24.434709",
+    "detail": {
+      "test_case_id": "c73c1bff-473f-4c7d-bbeb-36001e444e49",
+      "requirement_id": "REQ-005"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.68,
+    "model": null,
+    "created_at": "2026-05-29T22:22:24.447473",
+    "detail": {
+      "test_case_id": "8adc3c01-d079-44c7-bda6-3810fc94def9",
+      "requirement_id": "REQ-005"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.51,
+    "model": null,
+    "created_at": "2026-05-29T22:22:24.460084",
+    "detail": {
+      "test_case_id": "9358d3f5-e999-4e4c-bbef-4f0d013aa3ff",
+      "requirement_id": "REQ-005"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.56,
+    "model": null,
+    "created_at": "2026-05-29T22:22:24.472640",
+    "detail": {
+      "test_case_id": "feeff67e-560a-4c1c-acfa-891fcb51e8f7",
+      "requirement_id": "REQ-005"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.63,
+    "model": null,
+    "created_at": "2026-05-29T22:22:24.485249",
+    "detail": {
+      "test_case_id": "4b96b9f5-0abb-48f2-a7d9-6c743858a1ab",
+      "requirement_id": "REQ-005"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.85,
+    "model": null,
+    "created_at": "2026-05-29T22:22:24.498094",
+    "detail": {
+      "test_case_id": "1090b464-466e-4281-ae1d-2717f67f374f",
+      "requirement_id": "REQ-005"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.81,
+    "model": null,
+    "created_at": "2026-05-29T22:22:24.511117",
+    "detail": {
+      "test_case_id": "b6a3f6f6-fb9d-4a7e-8455-7aefa3e37bfb",
+      "requirement_id": "REQ-006"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.74,
+    "model": null,
+    "created_at": "2026-05-29T22:22:24.523991",
+    "detail": {
+      "test_case_id": "b7b68d68-4271-42ed-a73e-b8c6fb4146ba",
+      "requirement_id": "REQ-006"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.85,
+    "model": null,
+    "created_at": "2026-05-29T22:22:24.536974",
+    "detail": {
+      "test_case_id": "c496b5ac-7a79-4947-9f5b-15a276de914c",
+      "requirement_id": "REQ-006"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.69,
+    "model": null,
+    "created_at": "2026-05-29T22:22:24.549704",
+    "detail": {
+      "test_case_id": "6d2ee7ab-2bea-42ac-8eb3-6a3a8056b809",
+      "requirement_id": "REQ-006"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.72,
+    "model": null,
+    "created_at": "2026-05-29T22:22:24.562536",
+    "detail": {
+      "test_case_id": "ee54d9c7-5982-4922-9d08-64d204f26f52",
+      "requirement_id": "REQ-006"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.9,
+    "model": null,
+    "created_at": "2026-05-29T22:22:24.575749",
+    "detail": {
+      "test_case_id": "8069a480-2fec-49de-bf10-a4431eeb6ce8",
+      "requirement_id": "REQ-006"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.79,
+    "model": null,
+    "created_at": "2026-05-29T22:22:24.588732",
+    "detail": {
+      "test_case_id": "f4e1868c-1f0f-4af3-a665-d36f593afef8",
+      "requirement_id": "REQ-006"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.8,
+    "model": null,
+    "created_at": "2026-05-29T22:22:24.601652",
+    "detail": {
+      "test_case_id": "d2a3afdf-6cb5-4c2d-93cd-5b245200c5ef",
+      "requirement_id": "REQ-006"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.94,
+    "model": null,
+    "created_at": "2026-05-29T22:22:24.614699",
+    "detail": {
+      "test_case_id": "6a41e68e-60d6-47b9-83c8-e3200d21a4a3",
+      "requirement_id": "REQ-006"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.88,
+    "model": null,
+    "created_at": "2026-05-29T22:22:24.627705",
+    "detail": {
+      "test_case_id": "d8faf85f-f554-4681-b56f-305387f2d3a0",
+      "requirement_id": "REQ-006"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.95,
+    "model": null,
+    "created_at": "2026-05-29T22:22:24.640969",
+    "detail": {
+      "test_case_id": "9f9986b7-af42-4c4a-ab18-bee017d8a71c",
+      "requirement_id": "REQ-007"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.78,
+    "model": null,
+    "created_at": "2026-05-29T22:22:24.653886",
+    "detail": {
+      "test_case_id": "cf712a11-7ae7-4714-99bb-a554e432bb0d",
+      "requirement_id": "REQ-007"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.63,
+    "model": null,
+    "created_at": "2026-05-29T22:22:24.666673",
+    "detail": {
+      "test_case_id": "b910cdb6-5b83-4e73-a769-09327576aef9",
+      "requirement_id": "REQ-007"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.76,
+    "model": null,
+    "created_at": "2026-05-29T22:22:24.679671",
+    "detail": {
+      "test_case_id": "b783cc48-224f-4059-a899-a1c60687093f",
+      "requirement_id": "REQ-007"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.8,
+    "model": null,
+    "created_at": "2026-05-29T22:22:24.692669",
+    "detail": {
+      "test_case_id": "41705132-0232-47b5-94ca-7ab532be0867",
+      "requirement_id": "REQ-007"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.2,
+    "model": null,
+    "created_at": "2026-05-29T22:22:24.706278",
+    "detail": {
+      "test_case_id": "513fbf5f-dc12-4371-abc3-c53ffd23afd8",
+      "requirement_id": "REQ-007"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.8,
+    "model": null,
+    "created_at": "2026-05-29T22:22:24.719235",
+    "detail": {
+      "test_case_id": "497f7cd0-0681-4953-855e-1989f6067059",
+      "requirement_id": "REQ-007"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.73,
+    "model": null,
+    "created_at": "2026-05-29T22:22:24.732083",
+    "detail": {
+      "test_case_id": "6e248f61-a0f0-4710-8515-a168acd0ad24",
+      "requirement_id": "REQ-007"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.64,
+    "model": null,
+    "created_at": "2026-05-29T22:22:24.744837",
+    "detail": {
+      "test_case_id": "b26ff8b5-3ec7-4ad0-9930-858c3e2fd355",
+      "requirement_id": "REQ-008"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.58,
+    "model": null,
+    "created_at": "2026-05-29T22:22:24.757690",
+    "detail": {
+      "test_case_id": "0d9216bf-1d37-4363-8dbb-fdeab383d21f",
+      "requirement_id": "REQ-008"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.52,
+    "model": null,
+    "created_at": "2026-05-29T22:22:24.770226",
+    "detail": {
+      "test_case_id": "2e316a80-9cd5-4ba2-9398-3d8bd6cce07f",
+      "requirement_id": "REQ-008"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.83,
+    "model": null,
+    "created_at": "2026-05-29T22:22:24.783205",
+    "detail": {
+      "test_case_id": "ce1fd6b1-d46d-45a0-84f2-06b805fdf11d",
+      "requirement_id": "REQ-008"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.21,
+    "model": null,
+    "created_at": "2026-05-29T22:22:24.796798",
+    "detail": {
+      "test_case_id": "168e5e15-432e-45f8-a210-aa98bc7efe2f",
+      "requirement_id": "REQ-008"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.19,
+    "model": null,
+    "created_at": "2026-05-29T22:22:24.810360",
+    "detail": {
+      "test_case_id": "415392c6-07bf-4666-aab5-4bba498f05f3",
+      "requirement_id": "REQ-009"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.86,
+    "model": null,
+    "created_at": "2026-05-29T22:22:24.823649",
+    "detail": {
+      "test_case_id": "3bfb2b0d-630b-4146-a917-579c28ced848",
+      "requirement_id": "REQ-009"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.68,
+    "model": null,
+    "created_at": "2026-05-29T22:22:24.836494",
+    "detail": {
+      "test_case_id": "cfda9952-c082-4c51-8da3-5424276ddbd8",
+      "requirement_id": "REQ-009"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.64,
+    "model": null,
+    "created_at": "2026-05-29T22:22:24.849238",
+    "detail": {
+      "test_case_id": "ac4b8699-0a3e-4122-96ea-63c23b72c94f",
+      "requirement_id": "REQ-010"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.75,
+    "model": null,
+    "created_at": "2026-05-29T22:22:24.862239",
+    "detail": {
+      "test_case_id": "2cba1c5d-078c-421e-a4a8-ef0f910f0de8",
+      "requirement_id": "REQ-010"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.5,
+    "model": null,
+    "created_at": "2026-05-29T22:22:24.874916",
+    "detail": {
+      "test_case_id": "ae1c553c-2f93-491e-95cf-d429ec31d404",
+      "requirement_id": "REQ-010"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.81,
+    "model": null,
+    "created_at": "2026-05-29T22:22:24.887929",
+    "detail": {
+      "test_case_id": "7aacb8c9-a8df-4880-9f4d-bdf9b4ad6057",
+      "requirement_id": "REQ-010"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.88,
+    "model": null,
+    "created_at": "2026-05-29T22:22:24.900923",
+    "detail": {
+      "test_case_id": "a46e563d-ea69-4b0e-81ca-c95d9f1a9a27",
+      "requirement_id": "REQ-010"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.79,
+    "model": null,
+    "created_at": "2026-05-29T22:22:24.914072",
+    "detail": {
+      "test_case_id": "dba3b73d-8294-4eee-a96a-9ef7599ab540",
+      "requirement_id": "REQ-010"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.53,
+    "model": null,
+    "created_at": "2026-05-29T22:22:24.926761",
+    "detail": {
+      "test_case_id": "817b4757-275d-42d9-bc18-243c63cba70c",
+      "requirement_id": "REQ-011"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.62,
+    "model": null,
+    "created_at": "2026-05-29T22:22:24.939490",
+    "detail": {
+      "test_case_id": "2d7a85f0-a358-4289-82f3-382b3e0b4a40",
+      "requirement_id": "REQ-011"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.59,
+    "model": null,
+    "created_at": "2026-05-29T22:22:24.952220",
+    "detail": {
+      "test_case_id": "30931751-8675-4ddd-bfb7-7ce0ef85cf2e",
+      "requirement_id": "REQ-011"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.64,
+    "model": null,
+    "created_at": "2026-05-29T22:22:24.965014",
+    "detail": {
+      "test_case_id": "3a706d0a-a76e-4fe9-abf8-5d2a9ed11184",
+      "requirement_id": "REQ-011"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.6,
+    "model": null,
+    "created_at": "2026-05-29T22:22:24.977707",
+    "detail": {
+      "test_case_id": "0133eb83-e406-4232-b4d0-16b64d704a71",
+      "requirement_id": "REQ-011"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.63,
+    "model": null,
+    "created_at": "2026-05-29T22:22:24.990498",
+    "detail": {
+      "test_case_id": "2576b370-b8cf-4e87-ba4a-0c307fb9fea5",
+      "requirement_id": "REQ-011"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.83,
+    "model": null,
+    "created_at": "2026-05-29T22:22:25.003386",
+    "detail": {
+      "test_case_id": "a9ba303d-995a-4b7e-a9ef-493f35f86ee9",
+      "requirement_id": "REQ-011"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.67,
+    "model": null,
+    "created_at": "2026-05-29T22:22:25.016401",
+    "detail": {
+      "test_case_id": "be4785f4-c65c-4b53-b101-cba626aa3968",
+      "requirement_id": "REQ-011"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.59,
+    "model": null,
+    "created_at": "2026-05-29T22:22:25.029140",
+    "detail": {
+      "test_case_id": "4f195107-957c-41de-8568-1573d61571c0",
+      "requirement_id": "REQ-011"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.6,
+    "model": null,
+    "created_at": "2026-05-29T22:22:25.041931",
+    "detail": {
+      "test_case_id": "39a7294c-fee6-4e33-b0c7-4b93e3996176",
+      "requirement_id": "REQ-011"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.48,
+    "model": null,
+    "created_at": "2026-05-29T22:22:25.054587",
+    "detail": {
+      "test_case_id": "b696660e-3af3-42b6-aa93-363510588854",
+      "requirement_id": "REQ-012"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.4,
+    "model": null,
+    "created_at": "2026-05-29T22:22:25.067508",
+    "detail": {
+      "test_case_id": "0cfe2431-40ab-481c-b9f5-1692bf945df7",
+      "requirement_id": "REQ-012"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.59,
+    "model": null,
+    "created_at": "2026-05-29T22:22:25.080266",
+    "detail": {
+      "test_case_id": "a4c9c942-d8d9-40a8-9161-ed171637016b",
+      "requirement_id": "REQ-012"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.69,
+    "model": null,
+    "created_at": "2026-05-29T22:22:25.093229",
+    "detail": {
+      "test_case_id": "6448e10b-55e8-41d1-81c1-9504d3e46862",
+      "requirement_id": "REQ-012"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.65,
+    "model": null,
+    "created_at": "2026-05-29T22:22:25.106207",
+    "detail": {
+      "test_case_id": "c315d930-5f4b-4f8f-8ba6-57381aded239",
+      "requirement_id": "REQ-012"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.63,
+    "model": null,
+    "created_at": "2026-05-29T22:22:25.119031",
+    "detail": {
+      "test_case_id": "778cc8ad-5007-4399-808d-d8c30235b93e",
+      "requirement_id": "REQ-012"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.6,
+    "model": null,
+    "created_at": "2026-05-29T22:22:25.131848",
+    "detail": {
+      "test_case_id": "966ce13d-9047-46d0-8d9a-a16b937e9a0b",
+      "requirement_id": "REQ-013"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.47,
+    "model": null,
+    "created_at": "2026-05-29T22:22:25.144491",
+    "detail": {
+      "test_case_id": "4dac6c7e-1d45-4942-95aa-8ce0b2e3d67f",
+      "requirement_id": "REQ-013"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.37,
+    "model": null,
+    "created_at": "2026-05-29T22:22:25.181584",
+    "detail": {
+      "test_case_id": "02298f93-1544-4aa9-b897-b1987933e8a5",
+      "requirement_id": "REQ-013"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.28,
+    "model": null,
+    "created_at": "2026-05-29T22:22:25.195565",
+    "detail": {
+      "test_case_id": "163b2ca6-7142-4284-abe9-b562e62f449b",
+      "requirement_id": "REQ-013"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.68,
+    "model": null,
+    "created_at": "2026-05-29T22:22:25.209722",
+    "detail": {
+      "test_case_id": "62a5c989-54e7-4cd1-88aa-9cb39c0ea4eb",
+      "requirement_id": "REQ-014"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.56,
+    "model": null,
+    "created_at": "2026-05-29T22:22:25.223309",
+    "detail": {
+      "test_case_id": "124fba9a-73aa-43d2-bca4-2c78a3090c96",
+      "requirement_id": "REQ-014"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.45,
+    "model": null,
+    "created_at": "2026-05-29T22:22:25.236642",
+    "detail": {
+      "test_case_id": "901926bf-467f-44f2-830f-f4e4e349d1d9",
+      "requirement_id": "REQ-014"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.45,
+    "model": null,
+    "created_at": "2026-05-29T22:22:25.250049",
+    "detail": {
+      "test_case_id": "30970747-568e-4769-a0d8-0a912bb1a3d3",
+      "requirement_id": "REQ-014"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.45,
+    "model": null,
+    "created_at": "2026-05-29T22:22:25.263268",
+    "detail": {
+      "test_case_id": "886b8539-4e1c-4305-8be3-af84d40ff518",
+      "requirement_id": "REQ-014"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.5,
+    "model": null,
+    "created_at": "2026-05-29T22:22:25.276655",
+    "detail": {
+      "test_case_id": "ed33fefd-df50-4c13-a738-8276e0a10699",
+      "requirement_id": "REQ-001"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.27,
+    "model": null,
+    "created_at": "2026-05-29T22:22:35.196719",
+    "detail": {
+      "test_case_id": "aed53778-f0ff-476a-99df-9c8c561d0f80",
+      "requirement_id": "REQ-001"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.4,
+    "model": null,
+    "created_at": "2026-05-29T22:22:35.217750",
+    "detail": {
+      "test_case_id": "867cfe89-3604-418d-b9f6-ff2c153115d6",
+      "requirement_id": "REQ-001"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.22,
+    "model": null,
+    "created_at": "2026-05-29T22:22:35.231591",
+    "detail": {
+      "test_case_id": "06483b58-494f-49a5-842e-059302abb3d1",
+      "requirement_id": "REQ-001"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.91,
+    "model": null,
+    "created_at": "2026-05-29T22:22:35.244874",
+    "detail": {
+      "test_case_id": "f9b1ff34-e035-42bc-91e7-a932873111a3",
+      "requirement_id": "REQ-001"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.91,
+    "model": null,
+    "created_at": "2026-05-29T22:22:35.258254",
+    "detail": {
+      "test_case_id": "96efed00-fb6d-44c8-89c3-fee9dc144519",
+      "requirement_id": "REQ-001"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.93,
+    "model": null,
+    "created_at": "2026-05-29T22:22:35.271644",
+    "detail": {
+      "test_case_id": "93e1c973-5da5-44a3-859e-53eda9b584e9",
+      "requirement_id": "REQ-001"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.81,
+    "model": null,
+    "created_at": "2026-05-29T22:22:35.284837",
+    "detail": {
+      "test_case_id": "68011a5e-6278-4037-ab44-98b4501cd085",
+      "requirement_id": "REQ-001"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.82,
+    "model": null,
+    "created_at": "2026-05-29T22:22:35.297936",
+    "detail": {
+      "test_case_id": "bcfde974-b0ac-4824-b03c-f2b78d605882",
+      "requirement_id": "REQ-001"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.75,
+    "model": null,
+    "created_at": "2026-05-29T22:22:35.310979",
+    "detail": {
+      "test_case_id": "bcb9c9d8-dec6-44cc-a4e1-94bd061b0e4f",
+      "requirement_id": "REQ-001"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.95,
+    "model": null,
+    "created_at": "2026-05-29T22:22:35.324326",
+    "detail": {
+      "test_case_id": "7c884e48-d585-45c2-8436-ac8f3d4b12d8",
+      "requirement_id": "REQ-002"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.73,
+    "model": null,
+    "created_at": "2026-05-29T22:22:35.337312",
+    "detail": {
+      "test_case_id": "866ea05a-a8f0-408c-84a8-b4ffcf8bada3",
+      "requirement_id": "REQ-002"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.76,
+    "model": null,
+    "created_at": "2026-05-29T22:22:35.350320",
+    "detail": {
+      "test_case_id": "a80270da-4f28-40f1-be25-8f8d93715bab",
+      "requirement_id": "REQ-002"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.6,
+    "model": null,
+    "created_at": "2026-05-29T22:22:35.363153",
+    "detail": {
+      "test_case_id": "47c3e760-7752-4508-a9f6-8eb4e5d54c8f",
+      "requirement_id": "REQ-002"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.53,
+    "model": null,
+    "created_at": "2026-05-29T22:22:35.375965",
+    "detail": {
+      "test_case_id": "16517744-16c7-4476-919f-a0830671002f",
+      "requirement_id": "REQ-002"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.71,
+    "model": null,
+    "created_at": "2026-05-29T22:22:35.388976",
+    "detail": {
+      "test_case_id": "c7d71344-e830-4cfa-94ec-3f28b799550b",
+      "requirement_id": "REQ-002"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.99,
+    "model": null,
+    "created_at": "2026-05-29T22:22:35.402765",
+    "detail": {
+      "test_case_id": "aec8ac6e-3168-4c3e-9f3c-54def8243338",
+      "requirement_id": "REQ-002"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.89,
+    "model": null,
+    "created_at": "2026-05-29T22:22:35.415903",
+    "detail": {
+      "test_case_id": "5e0a6a1b-5cdd-4af7-af5f-e8221663255d",
+      "requirement_id": "REQ-002"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.06,
+    "model": null,
+    "created_at": "2026-05-29T22:22:35.429648",
+    "detail": {
+      "test_case_id": "2d16734e-cc60-4ada-aa2a-4e8f377707b6",
+      "requirement_id": "REQ-003"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.64,
+    "model": null,
+    "created_at": "2026-05-29T22:22:35.442667",
+    "detail": {
+      "test_case_id": "08398f11-0889-4e8a-8351-da74a0daacf7",
+      "requirement_id": "REQ-003"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.84,
+    "model": null,
+    "created_at": "2026-05-29T22:22:35.456050",
+    "detail": {
+      "test_case_id": "3db545bb-c36b-4bb8-b962-5f8944115d54",
+      "requirement_id": "REQ-003"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.74,
+    "model": null,
+    "created_at": "2026-05-29T22:22:35.469213",
+    "detail": {
+      "test_case_id": "003eea21-1e6f-4c47-9c9a-d04a39661103",
+      "requirement_id": "REQ-003"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.63,
+    "model": null,
+    "created_at": "2026-05-29T22:22:35.482159",
+    "detail": {
+      "test_case_id": "046f4995-3fe0-4bdc-9109-292b49705ecb",
+      "requirement_id": "REQ-003"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.06,
+    "model": null,
+    "created_at": "2026-05-29T22:22:35.495791",
+    "detail": {
+      "test_case_id": "744feca2-285d-404b-aad3-1bf8f4d097e0",
+      "requirement_id": "REQ-003"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.81,
+    "model": null,
+    "created_at": "2026-05-29T22:22:35.509041",
+    "detail": {
+      "test_case_id": "e846f095-40a3-4216-a1a7-928004bc094e",
+      "requirement_id": "REQ-003"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.99,
+    "model": null,
+    "created_at": "2026-05-29T22:22:35.522437",
+    "detail": {
+      "test_case_id": "e3b2dea4-a040-48c9-a1a9-ff174cf4def2",
+      "requirement_id": "REQ-004"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.93,
+    "model": null,
+    "created_at": "2026-05-29T22:22:35.535773",
+    "detail": {
+      "test_case_id": "cde914db-73e0-4b98-9dd1-f2565695bdda",
+      "requirement_id": "REQ-004"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.06,
+    "model": null,
+    "created_at": "2026-05-29T22:22:35.549546",
+    "detail": {
+      "test_case_id": "addb86e7-d431-453d-b575-4bb15e44e841",
+      "requirement_id": "REQ-004"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.82,
+    "model": null,
+    "created_at": "2026-05-29T22:22:35.562909",
+    "detail": {
+      "test_case_id": "3fc01f56-10dc-43aa-b076-9026912f6a3b",
+      "requirement_id": "REQ-004"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.7,
+    "model": null,
+    "created_at": "2026-05-29T22:22:35.576040",
+    "detail": {
+      "test_case_id": "80095a4f-737b-4c47-9a5f-76405a02b599",
+      "requirement_id": "REQ-004"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.76,
+    "model": null,
+    "created_at": "2026-05-29T22:22:35.589272",
+    "detail": {
+      "test_case_id": "1ba60e64-2fef-4979-8df5-e3ba48775aef",
+      "requirement_id": "REQ-004"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.81,
+    "model": null,
+    "created_at": "2026-05-29T22:22:35.602790",
+    "detail": {
+      "test_case_id": "a91942fd-748b-48a0-ab02-5ddee8ad40ca",
+      "requirement_id": "REQ-004"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.87,
+    "model": null,
+    "created_at": "2026-05-29T22:22:35.616019",
+    "detail": {
+      "test_case_id": "5897c745-f18e-4120-aa5f-ea67bdaf401d",
+      "requirement_id": "REQ-005"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.08,
+    "model": null,
+    "created_at": "2026-05-29T22:22:35.629778",
+    "detail": {
+      "test_case_id": "c73c1bff-473f-4c7d-bbeb-36001e444e49",
+      "requirement_id": "REQ-005"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.6,
+    "model": null,
+    "created_at": "2026-05-29T22:22:35.642913",
+    "detail": {
+      "test_case_id": "8adc3c01-d079-44c7-bda6-3810fc94def9",
+      "requirement_id": "REQ-005"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.69,
+    "model": null,
+    "created_at": "2026-05-29T22:22:35.656039",
+    "detail": {
+      "test_case_id": "9358d3f5-e999-4e4c-bbef-4f0d013aa3ff",
+      "requirement_id": "REQ-005"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.63,
+    "model": null,
+    "created_at": "2026-05-29T22:22:35.669017",
+    "detail": {
+      "test_case_id": "feeff67e-560a-4c1c-acfa-891fcb51e8f7",
+      "requirement_id": "REQ-005"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.69,
+    "model": null,
+    "created_at": "2026-05-29T22:22:35.682074",
+    "detail": {
+      "test_case_id": "4b96b9f5-0abb-48f2-a7d9-6c743858a1ab",
+      "requirement_id": "REQ-005"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.1,
+    "model": null,
+    "created_at": "2026-05-29T22:22:35.695961",
+    "detail": {
+      "test_case_id": "1090b464-466e-4281-ae1d-2717f67f374f",
+      "requirement_id": "REQ-005"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.72,
+    "model": null,
+    "created_at": "2026-05-29T22:22:35.709440",
+    "detail": {
+      "test_case_id": "b6a3f6f6-fb9d-4a7e-8455-7aefa3e37bfb",
+      "requirement_id": "REQ-006"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.08,
+    "model": null,
+    "created_at": "2026-05-29T22:22:35.723132",
+    "detail": {
+      "test_case_id": "b7b68d68-4271-42ed-a73e-b8c6fb4146ba",
+      "requirement_id": "REQ-006"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.87,
+    "model": null,
+    "created_at": "2026-05-29T22:22:35.736685",
+    "detail": {
+      "test_case_id": "c496b5ac-7a79-4947-9f5b-15a276de914c",
+      "requirement_id": "REQ-006"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.87,
+    "model": null,
+    "created_at": "2026-05-29T22:22:35.750000",
+    "detail": {
+      "test_case_id": "6d2ee7ab-2bea-42ac-8eb3-6a3a8056b809",
+      "requirement_id": "REQ-006"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.93,
+    "model": null,
+    "created_at": "2026-05-29T22:22:35.763389",
+    "detail": {
+      "test_case_id": "ee54d9c7-5982-4922-9d08-64d204f26f52",
+      "requirement_id": "REQ-006"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.62,
+    "model": null,
+    "created_at": "2026-05-29T22:22:35.776471",
+    "detail": {
+      "test_case_id": "8069a480-2fec-49de-bf10-a4431eeb6ce8",
+      "requirement_id": "REQ-006"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.65,
+    "model": null,
+    "created_at": "2026-05-29T22:22:35.789682",
+    "detail": {
+      "test_case_id": "f4e1868c-1f0f-4af3-a665-d36f593afef8",
+      "requirement_id": "REQ-006"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.79,
+    "model": null,
+    "created_at": "2026-05-29T22:22:35.802967",
+    "detail": {
+      "test_case_id": "d2a3afdf-6cb5-4c2d-93cd-5b245200c5ef",
+      "requirement_id": "REQ-006"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.03,
+    "model": null,
+    "created_at": "2026-05-29T22:22:35.816623",
+    "detail": {
+      "test_case_id": "6a41e68e-60d6-47b9-83c8-e3200d21a4a3",
+      "requirement_id": "REQ-006"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.85,
+    "model": null,
+    "created_at": "2026-05-29T22:22:35.829995",
+    "detail": {
+      "test_case_id": "d8faf85f-f554-4681-b56f-305387f2d3a0",
+      "requirement_id": "REQ-006"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.72,
+    "model": null,
+    "created_at": "2026-05-29T22:22:35.843351",
+    "detail": {
+      "test_case_id": "9f9986b7-af42-4c4a-ab18-bee017d8a71c",
+      "requirement_id": "REQ-007"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.74,
+    "model": null,
+    "created_at": "2026-05-29T22:22:35.857316",
+    "detail": {
+      "test_case_id": "cf712a11-7ae7-4714-99bb-a554e432bb0d",
+      "requirement_id": "REQ-007"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.55,
+    "model": null,
+    "created_at": "2026-05-29T22:22:35.870223",
+    "detail": {
+      "test_case_id": "b910cdb6-5b83-4e73-a769-09327576aef9",
+      "requirement_id": "REQ-007"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.7,
+    "model": null,
+    "created_at": "2026-05-29T22:22:35.883323",
+    "detail": {
+      "test_case_id": "b783cc48-224f-4059-a899-a1c60687093f",
+      "requirement_id": "REQ-007"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.98,
+    "model": null,
+    "created_at": "2026-05-29T22:22:35.896825",
+    "detail": {
+      "test_case_id": "41705132-0232-47b5-94ca-7ab532be0867",
+      "requirement_id": "REQ-007"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.93,
+    "model": null,
+    "created_at": "2026-05-29T22:22:35.910566",
+    "detail": {
+      "test_case_id": "513fbf5f-dc12-4371-abc3-c53ffd23afd8",
+      "requirement_id": "REQ-007"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.8,
+    "model": null,
+    "created_at": "2026-05-29T22:22:35.923984",
+    "detail": {
+      "test_case_id": "497f7cd0-0681-4953-855e-1989f6067059",
+      "requirement_id": "REQ-007"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.93,
+    "model": null,
+    "created_at": "2026-05-29T22:22:35.937509",
+    "detail": {
+      "test_case_id": "6e248f61-a0f0-4710-8515-a168acd0ad24",
+      "requirement_id": "REQ-007"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.97,
+    "model": null,
+    "created_at": "2026-05-29T22:22:35.951070",
+    "detail": {
+      "test_case_id": "b26ff8b5-3ec7-4ad0-9930-858c3e2fd355",
+      "requirement_id": "REQ-008"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.0,
+    "model": null,
+    "created_at": "2026-05-29T22:22:35.964594",
+    "detail": {
+      "test_case_id": "0d9216bf-1d37-4363-8dbb-fdeab383d21f",
+      "requirement_id": "REQ-008"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.57,
+    "model": null,
+    "created_at": "2026-05-29T22:22:35.977715",
+    "detail": {
+      "test_case_id": "2e316a80-9cd5-4ba2-9398-3d8bd6cce07f",
+      "requirement_id": "REQ-008"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.64,
+    "model": null,
+    "created_at": "2026-05-29T22:22:35.990789",
+    "detail": {
+      "test_case_id": "ce1fd6b1-d46d-45a0-84f2-06b805fdf11d",
+      "requirement_id": "REQ-008"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.97,
+    "model": null,
+    "created_at": "2026-05-29T22:22:36.004500",
+    "detail": {
+      "test_case_id": "168e5e15-432e-45f8-a210-aa98bc7efe2f",
+      "requirement_id": "REQ-008"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.76,
+    "model": null,
+    "created_at": "2026-05-29T22:22:36.017801",
+    "detail": {
+      "test_case_id": "415392c6-07bf-4666-aab5-4bba498f05f3",
+      "requirement_id": "REQ-009"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.89,
+    "model": null,
+    "created_at": "2026-05-29T22:22:36.031275",
+    "detail": {
+      "test_case_id": "3bfb2b0d-630b-4146-a917-579c28ced848",
+      "requirement_id": "REQ-009"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.74,
+    "model": null,
+    "created_at": "2026-05-29T22:22:36.044607",
+    "detail": {
+      "test_case_id": "cfda9952-c082-4c51-8da3-5424276ddbd8",
+      "requirement_id": "REQ-009"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.23,
+    "model": null,
+    "created_at": "2026-05-29T22:22:36.081783",
+    "detail": {
+      "test_case_id": "ac4b8699-0a3e-4122-96ea-63c23b72c94f",
+      "requirement_id": "REQ-010"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.03,
+    "model": null,
+    "created_at": "2026-05-29T22:22:36.095594",
+    "detail": {
+      "test_case_id": "2cba1c5d-078c-421e-a4a8-ef0f910f0de8",
+      "requirement_id": "REQ-010"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.58,
+    "model": null,
+    "created_at": "2026-05-29T22:22:36.109630",
+    "detail": {
+      "test_case_id": "ae1c553c-2f93-491e-95cf-d429ec31d404",
+      "requirement_id": "REQ-010"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.84,
+    "model": null,
+    "created_at": "2026-05-29T22:22:36.123819",
+    "detail": {
+      "test_case_id": "7aacb8c9-a8df-4880-9f4d-bdf9b4ad6057",
+      "requirement_id": "REQ-010"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.76,
+    "model": null,
+    "created_at": "2026-05-29T22:22:36.137848",
+    "detail": {
+      "test_case_id": "a46e563d-ea69-4b0e-81ca-c95d9f1a9a27",
+      "requirement_id": "REQ-010"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.86,
+    "model": null,
+    "created_at": "2026-05-29T22:22:36.152015",
+    "detail": {
+      "test_case_id": "dba3b73d-8294-4eee-a96a-9ef7599ab540",
+      "requirement_id": "REQ-010"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.63,
+    "model": null,
+    "created_at": "2026-05-29T22:22:36.165865",
+    "detail": {
+      "test_case_id": "817b4757-275d-42d9-bc18-243c63cba70c",
+      "requirement_id": "REQ-011"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.66,
+    "model": null,
+    "created_at": "2026-05-29T22:22:36.179693",
+    "detail": {
+      "test_case_id": "2d7a85f0-a358-4289-82f3-382b3e0b4a40",
+      "requirement_id": "REQ-011"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.31,
+    "model": null,
+    "created_at": "2026-05-29T22:22:36.195069",
+    "detail": {
+      "test_case_id": "30931751-8675-4ddd-bfb7-7ce0ef85cf2e",
+      "requirement_id": "REQ-011"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.36,
+    "model": null,
+    "created_at": "2026-05-29T22:22:36.220859",
+    "detail": {
+      "test_case_id": "3a706d0a-a76e-4fe9-abf8-5d2a9ed11184",
+      "requirement_id": "REQ-011"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.8,
+    "model": null,
+    "created_at": "2026-05-29T22:22:36.234353",
+    "detail": {
+      "test_case_id": "0133eb83-e406-4232-b4d0-16b64d704a71",
+      "requirement_id": "REQ-011"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.87,
+    "model": null,
+    "created_at": "2026-05-29T22:22:36.247895",
+    "detail": {
+      "test_case_id": "2576b370-b8cf-4e87-ba4a-0c307fb9fea5",
+      "requirement_id": "REQ-011"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.63,
+    "model": null,
+    "created_at": "2026-05-29T22:22:36.261250",
+    "detail": {
+      "test_case_id": "a9ba303d-995a-4b7e-a9ef-493f35f86ee9",
+      "requirement_id": "REQ-011"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.78,
+    "model": null,
+    "created_at": "2026-05-29T22:22:36.274856",
+    "detail": {
+      "test_case_id": "be4785f4-c65c-4b53-b101-cba626aa3968",
+      "requirement_id": "REQ-011"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.71,
+    "model": null,
+    "created_at": "2026-05-29T22:22:36.288192",
+    "detail": {
+      "test_case_id": "4f195107-957c-41de-8568-1573d61571c0",
+      "requirement_id": "REQ-011"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.96,
+    "model": null,
+    "created_at": "2026-05-29T22:22:36.301745",
+    "detail": {
+      "test_case_id": "39a7294c-fee6-4e33-b0c7-4b93e3996176",
+      "requirement_id": "REQ-011"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.62,
+    "model": null,
+    "created_at": "2026-05-29T22:22:36.315054",
+    "detail": {
+      "test_case_id": "b696660e-3af3-42b6-aa93-363510588854",
+      "requirement_id": "REQ-012"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.91,
+    "model": null,
+    "created_at": "2026-05-29T22:22:36.328504",
+    "detail": {
+      "test_case_id": "0cfe2431-40ab-481c-b9f5-1692bf945df7",
+      "requirement_id": "REQ-012"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.37,
+    "model": null,
+    "created_at": "2026-05-29T22:22:36.341736",
+    "detail": {
+      "test_case_id": "a4c9c942-d8d9-40a8-9161-ed171637016b",
+      "requirement_id": "REQ-012"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.54,
+    "model": null,
+    "created_at": "2026-05-29T22:22:36.354832",
+    "detail": {
+      "test_case_id": "6448e10b-55e8-41d1-81c1-9504d3e46862",
+      "requirement_id": "REQ-012"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.65,
+    "model": null,
+    "created_at": "2026-05-29T22:22:36.368071",
+    "detail": {
+      "test_case_id": "c315d930-5f4b-4f8f-8ba6-57381aded239",
+      "requirement_id": "REQ-012"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.87,
+    "model": null,
+    "created_at": "2026-05-29T22:22:36.381612",
+    "detail": {
+      "test_case_id": "778cc8ad-5007-4399-808d-d8c30235b93e",
+      "requirement_id": "REQ-012"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.62,
+    "model": null,
+    "created_at": "2026-05-29T22:22:36.394804",
+    "detail": {
+      "test_case_id": "966ce13d-9047-46d0-8d9a-a16b937e9a0b",
+      "requirement_id": "REQ-013"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.78,
+    "model": null,
+    "created_at": "2026-05-29T22:22:36.408276",
+    "detail": {
+      "test_case_id": "4dac6c7e-1d45-4942-95aa-8ce0b2e3d67f",
+      "requirement_id": "REQ-013"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.46,
+    "model": null,
+    "created_at": "2026-05-29T22:22:36.421343",
+    "detail": {
+      "test_case_id": "02298f93-1544-4aa9-b897-b1987933e8a5",
+      "requirement_id": "REQ-013"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.66,
+    "model": null,
+    "created_at": "2026-05-29T22:22:36.434569",
+    "detail": {
+      "test_case_id": "163b2ca6-7142-4284-abe9-b562e62f449b",
+      "requirement_id": "REQ-013"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.59,
+    "model": null,
+    "created_at": "2026-05-29T22:22:36.447800",
+    "detail": {
+      "test_case_id": "62a5c989-54e7-4cd1-88aa-9cb39c0ea4eb",
+      "requirement_id": "REQ-014"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.56,
+    "model": null,
+    "created_at": "2026-05-29T22:22:36.460884",
+    "detail": {
+      "test_case_id": "124fba9a-73aa-43d2-bca4-2c78a3090c96",
+      "requirement_id": "REQ-014"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.49,
+    "model": null,
+    "created_at": "2026-05-29T22:22:36.473963",
+    "detail": {
+      "test_case_id": "901926bf-467f-44f2-830f-f4e4e349d1d9",
+      "requirement_id": "REQ-014"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.71,
+    "model": null,
+    "created_at": "2026-05-29T22:22:36.487416",
+    "detail": {
+      "test_case_id": "30970747-568e-4769-a0d8-0a912bb1a3d3",
+      "requirement_id": "REQ-014"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.71,
+    "model": null,
+    "created_at": "2026-05-29T22:22:36.500727",
+    "detail": {
+      "test_case_id": "886b8539-4e1c-4305-8be3-af84d40ff518",
+      "requirement_id": "REQ-014"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.52,
+    "model": null,
+    "created_at": "2026-05-29T22:22:36.513902",
+    "detail": {
+      "test_case_id": "ed33fefd-df50-4c13-a738-8276e0a10699",
+      "requirement_id": "REQ-001"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 16.05,
+    "model": null,
+    "created_at": "2026-05-29T22:22:38.244234",
+    "detail": {
+      "test_case_id": "aed53778-f0ff-476a-99df-9c8c561d0f80",
+      "requirement_id": "REQ-001"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 16.12,
+    "model": null,
+    "created_at": "2026-05-29T22:22:39.579279",
+    "detail": {
+      "test_case_id": "867cfe89-3604-418d-b9f6-ff2c153115d6",
+      "requirement_id": "REQ-001"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 13.01,
+    "model": null,
+    "created_at": "2026-05-29T22:22:40.489857",
+    "detail": {
+      "test_case_id": "06483b58-494f-49a5-842e-059302abb3d1",
+      "requirement_id": "REQ-001"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 14.79,
+    "model": null,
+    "created_at": "2026-05-29T22:22:41.589131",
+    "detail": {
+      "test_case_id": "f9b1ff34-e035-42bc-91e7-a932873111a3",
+      "requirement_id": "REQ-001"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 15.36,
+    "model": null,
+    "created_at": "2026-05-29T22:22:42.928721",
+    "detail": {
+      "test_case_id": "f9b1ff34-e035-42bc-91e7-a932873111a3",
+      "requirement_id": "REQ-001"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 15.81,
+    "model": null,
+    "created_at": "2026-05-29T22:22:43.462452",
+    "detail": {
+      "test_case_id": "f9b1ff34-e035-42bc-91e7-a932873111a3",
+      "requirement_id": "REQ-001"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 15.02,
+    "model": null,
+    "created_at": "2026-05-29T22:22:43.909263",
+    "detail": {
+      "test_case_id": "f9b1ff34-e035-42bc-91e7-a932873111a3",
+      "requirement_id": "REQ-001"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 12.62,
+    "model": null,
+    "created_at": "2026-05-29T22:22:44.577622",
+    "detail": {
+      "test_case_id": "96efed00-fb6d-44c8-89c3-fee9dc144519",
+      "requirement_id": "REQ-001"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 16.43,
+    "model": null,
+    "created_at": "2026-05-29T22:22:45.327284",
+    "detail": {
+      "test_case_id": "96efed00-fb6d-44c8-89c3-fee9dc144519",
+      "requirement_id": "REQ-001"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 15.56,
+    "model": null,
+    "created_at": "2026-05-29T22:22:45.809039",
+    "detail": {
+      "test_case_id": "96efed00-fb6d-44c8-89c3-fee9dc144519",
+      "requirement_id": "REQ-001"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 15.77,
+    "model": null,
+    "created_at": "2026-05-29T22:22:46.343966",
+    "detail": {
+      "test_case_id": "96efed00-fb6d-44c8-89c3-fee9dc144519",
+      "requirement_id": "REQ-001"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 12.15,
+    "model": null,
+    "created_at": "2026-05-29T22:22:47.073187",
+    "detail": {
+      "test_case_id": "06483b58-494f-49a5-842e-059302abb3d1",
+      "requirement_id": "REQ-001"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 15.74,
+    "model": null,
+    "created_at": "2026-05-29T22:22:48.276954",
+    "detail": {
+      "test_case_id": "93e1c973-5da5-44a3-859e-53eda9b584e9",
+      "requirement_id": "REQ-001"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 15.18,
+    "model": null,
+    "created_at": "2026-05-29T22:22:49.060016",
+    "detail": {
+      "test_case_id": "68011a5e-6278-4037-ab44-98b4501cd085",
+      "requirement_id": "REQ-001"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 13.95,
+    "model": null,
+    "created_at": "2026-05-29T22:22:49.775141",
+    "detail": {
+      "test_case_id": "bcfde974-b0ac-4824-b03c-f2b78d605882",
+      "requirement_id": "REQ-001"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 13.36,
+    "model": null,
+    "created_at": "2026-05-29T22:22:50.941082",
+    "detail": {
+      "test_case_id": "bcb9c9d8-dec6-44cc-a4e1-94bd061b0e4f",
+      "requirement_id": "REQ-001"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 14.93,
+    "model": null,
+    "created_at": "2026-05-29T22:22:51.940299",
+    "detail": {
+      "test_case_id": "7c884e48-d585-45c2-8436-ac8f3d4b12d8",
+      "requirement_id": "REQ-002"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 12.75,
+    "model": null,
+    "created_at": "2026-05-29T22:22:52.924882",
+    "detail": {
+      "test_case_id": "866ea05a-a8f0-408c-84a8-b4ffcf8bada3",
+      "requirement_id": "REQ-002"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 17.22,
+    "model": null,
+    "created_at": "2026-05-29T22:22:53.410735",
+    "detail": {
+      "test_case_id": "a80270da-4f28-40f1-be25-8f8d93715bab",
+      "requirement_id": "REQ-002"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 16.75,
+    "model": null,
+    "created_at": "2026-05-29T22:22:54.144043",
+    "detail": {
+      "test_case_id": "47c3e760-7752-4508-a9f6-8eb4e5d54c8f",
+      "requirement_id": "REQ-002"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 12.88,
+    "model": null,
+    "created_at": "2026-05-29T22:22:54.746537",
+    "detail": {
+      "test_case_id": "16517744-16c7-4476-919f-a0830671002f",
+      "requirement_id": "REQ-002"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 15.26,
+    "model": null,
+    "created_at": "2026-05-29T22:22:55.426201",
+    "detail": {
+      "test_case_id": "c7d71344-e830-4cfa-94ec-3f28b799550b",
+      "requirement_id": "REQ-002"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 16.0,
+    "model": null,
+    "created_at": "2026-05-29T22:22:55.875901",
+    "detail": {
+      "test_case_id": "aec8ac6e-3168-4c3e-9f3c-54def8243338",
+      "requirement_id": "REQ-002"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 17.12,
+    "model": null,
+    "created_at": "2026-05-29T22:22:56.344356",
+    "detail": {
+      "test_case_id": "5e0a6a1b-5cdd-4af7-af5f-e8221663255d",
+      "requirement_id": "REQ-002"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 15.12,
+    "model": null,
+    "created_at": "2026-05-29T22:22:57.774754",
+    "detail": {
+      "test_case_id": "9f9986b7-af42-4c4a-ab18-bee017d8a71c",
+      "requirement_id": "REQ-007"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 9.88,
+    "model": null,
+    "created_at": "2026-05-29T22:22:59.419210",
+    "detail": {
+      "test_case_id": "aed53778-f0ff-476a-99df-9c8c561d0f80",
+      "requirement_id": "REQ-001"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.94,
+    "model": null,
+    "created_at": "2026-05-29T22:22:59.436768",
+    "detail": {
+      "test_case_id": "867cfe89-3604-418d-b9f6-ff2c153115d6",
+      "requirement_id": "REQ-001"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.15,
+    "model": null,
+    "created_at": "2026-05-29T22:22:59.450772",
+    "detail": {
+      "test_case_id": "06483b58-494f-49a5-842e-059302abb3d1",
+      "requirement_id": "REQ-001"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.08,
+    "model": null,
+    "created_at": "2026-05-29T22:22:59.464650",
+    "detail": {
+      "test_case_id": "f9b1ff34-e035-42bc-91e7-a932873111a3",
+      "requirement_id": "REQ-001"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.82,
+    "model": null,
+    "created_at": "2026-05-29T22:22:59.478141",
+    "detail": {
+      "test_case_id": "96efed00-fb6d-44c8-89c3-fee9dc144519",
+      "requirement_id": "REQ-001"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.03,
+    "model": null,
+    "created_at": "2026-05-29T22:22:59.492191",
+    "detail": {
+      "test_case_id": "93e1c973-5da5-44a3-859e-53eda9b584e9",
+      "requirement_id": "REQ-001"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.9,
+    "model": null,
+    "created_at": "2026-05-29T22:22:59.506027",
+    "detail": {
+      "test_case_id": "68011a5e-6278-4037-ab44-98b4501cd085",
+      "requirement_id": "REQ-001"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.82,
+    "model": null,
+    "created_at": "2026-05-29T22:22:59.519512",
+    "detail": {
+      "test_case_id": "bcfde974-b0ac-4824-b03c-f2b78d605882",
+      "requirement_id": "REQ-001"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.97,
+    "model": null,
+    "created_at": "2026-05-29T22:22:59.533289",
+    "detail": {
+      "test_case_id": "bcb9c9d8-dec6-44cc-a4e1-94bd061b0e4f",
+      "requirement_id": "REQ-001"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.8,
+    "model": null,
+    "created_at": "2026-05-29T22:22:59.546916",
+    "detail": {
+      "test_case_id": "7c884e48-d585-45c2-8436-ac8f3d4b12d8",
+      "requirement_id": "REQ-002"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.73,
+    "model": null,
+    "created_at": "2026-05-29T22:22:59.560319",
+    "detail": {
+      "test_case_id": "866ea05a-a8f0-408c-84a8-b4ffcf8bada3",
+      "requirement_id": "REQ-002"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.85,
+    "model": null,
+    "created_at": "2026-05-29T22:22:59.574109",
+    "detail": {
+      "test_case_id": "a80270da-4f28-40f1-be25-8f8d93715bab",
+      "requirement_id": "REQ-002"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.79,
+    "model": null,
+    "created_at": "2026-05-29T22:22:59.587626",
+    "detail": {
+      "test_case_id": "47c3e760-7752-4508-a9f6-8eb4e5d54c8f",
+      "requirement_id": "REQ-002"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.93,
+    "model": null,
+    "created_at": "2026-05-29T22:22:59.601313",
+    "detail": {
+      "test_case_id": "16517744-16c7-4476-919f-a0830671002f",
+      "requirement_id": "REQ-002"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.02,
+    "model": null,
+    "created_at": "2026-05-29T22:22:59.615340",
+    "detail": {
+      "test_case_id": "c7d71344-e830-4cfa-94ec-3f28b799550b",
+      "requirement_id": "REQ-002"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.54,
+    "model": null,
+    "created_at": "2026-05-29T22:22:59.653073",
+    "detail": {
+      "test_case_id": "aec8ac6e-3168-4c3e-9f3c-54def8243338",
+      "requirement_id": "REQ-002"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.87,
+    "model": null,
+    "created_at": "2026-05-29T22:22:59.666909",
+    "detail": {
+      "test_case_id": "5e0a6a1b-5cdd-4af7-af5f-e8221663255d",
+      "requirement_id": "REQ-002"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.88,
+    "model": null,
+    "created_at": "2026-05-29T22:22:59.681535",
+    "detail": {
+      "test_case_id": "2d16734e-cc60-4ada-aa2a-4e8f377707b6",
+      "requirement_id": "REQ-003"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.78,
+    "model": null,
+    "created_at": "2026-05-29T22:22:59.695700",
+    "detail": {
+      "test_case_id": "08398f11-0889-4e8a-8351-da74a0daacf7",
+      "requirement_id": "REQ-003"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.88,
+    "model": null,
+    "created_at": "2026-05-29T22:22:59.710239",
+    "detail": {
+      "test_case_id": "3db545bb-c36b-4bb8-b962-5f8944115d54",
+      "requirement_id": "REQ-003"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.51,
+    "model": null,
+    "created_at": "2026-05-29T22:22:59.724243",
+    "detail": {
+      "test_case_id": "003eea21-1e6f-4c47-9c9a-d04a39661103",
+      "requirement_id": "REQ-003"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.61,
+    "model": null,
+    "created_at": "2026-05-29T22:22:59.738240",
+    "detail": {
+      "test_case_id": "046f4995-3fe0-4bdc-9109-292b49705ecb",
+      "requirement_id": "REQ-003"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.69,
+    "model": null,
+    "created_at": "2026-05-29T22:22:59.752418",
+    "detail": {
+      "test_case_id": "744feca2-285d-404b-aad3-1bf8f4d097e0",
+      "requirement_id": "REQ-003"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.55,
+    "model": null,
+    "created_at": "2026-05-29T22:22:59.766329",
+    "detail": {
+      "test_case_id": "e846f095-40a3-4216-a1a7-928004bc094e",
+      "requirement_id": "REQ-003"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.28,
+    "model": null,
+    "created_at": "2026-05-29T22:22:59.781640",
+    "detail": {
+      "test_case_id": "e3b2dea4-a040-48c9-a1a9-ff174cf4def2",
+      "requirement_id": "REQ-004"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.52,
+    "model": null,
+    "created_at": "2026-05-29T22:22:59.804282",
+    "detail": {
+      "test_case_id": "cde914db-73e0-4b98-9dd1-f2565695bdda",
+      "requirement_id": "REQ-004"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.19,
+    "model": null,
+    "created_at": "2026-05-29T22:22:59.818576",
+    "detail": {
+      "test_case_id": "addb86e7-d431-453d-b575-4bb15e44e841",
+      "requirement_id": "REQ-004"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.83,
+    "model": null,
+    "created_at": "2026-05-29T22:22:59.832405",
+    "detail": {
+      "test_case_id": "3fc01f56-10dc-43aa-b076-9026912f6a3b",
+      "requirement_id": "REQ-004"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.69,
+    "model": null,
+    "created_at": "2026-05-29T22:22:59.845857",
+    "detail": {
+      "test_case_id": "80095a4f-737b-4c47-9a5f-76405a02b599",
+      "requirement_id": "REQ-004"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.63,
+    "model": null,
+    "created_at": "2026-05-29T22:22:59.859352",
+    "detail": {
+      "test_case_id": "1ba60e64-2fef-4979-8df5-e3ba48775aef",
+      "requirement_id": "REQ-004"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.88,
+    "model": null,
+    "created_at": "2026-05-29T22:22:59.872995",
+    "detail": {
+      "test_case_id": "a91942fd-748b-48a0-ab02-5ddee8ad40ca",
+      "requirement_id": "REQ-004"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.76,
+    "model": null,
+    "created_at": "2026-05-29T22:22:59.886656",
+    "detail": {
+      "test_case_id": "5897c745-f18e-4120-aa5f-ea67bdaf401d",
+      "requirement_id": "REQ-005"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.02,
+    "model": null,
+    "created_at": "2026-05-29T22:22:59.900406",
+    "detail": {
+      "test_case_id": "c73c1bff-473f-4c7d-bbeb-36001e444e49",
+      "requirement_id": "REQ-005"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.0,
+    "model": null,
+    "created_at": "2026-05-29T22:22:59.914400",
+    "detail": {
+      "test_case_id": "8adc3c01-d079-44c7-bda6-3810fc94def9",
+      "requirement_id": "REQ-005"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.66,
+    "model": null,
+    "created_at": "2026-05-29T22:22:59.927894",
+    "detail": {
+      "test_case_id": "9358d3f5-e999-4e4c-bbef-4f0d013aa3ff",
+      "requirement_id": "REQ-005"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.66,
+    "model": null,
+    "created_at": "2026-05-29T22:22:59.941522",
+    "detail": {
+      "test_case_id": "feeff67e-560a-4c1c-acfa-891fcb51e8f7",
+      "requirement_id": "REQ-005"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.57,
+    "model": null,
+    "created_at": "2026-05-29T22:22:59.954898",
+    "detail": {
+      "test_case_id": "4b96b9f5-0abb-48f2-a7d9-6c743858a1ab",
+      "requirement_id": "REQ-005"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.53,
+    "model": null,
+    "created_at": "2026-05-29T22:22:59.968261",
+    "detail": {
+      "test_case_id": "1090b464-466e-4281-ae1d-2717f67f374f",
+      "requirement_id": "REQ-005"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.58,
+    "model": null,
+    "created_at": "2026-05-29T22:22:59.981827",
+    "detail": {
+      "test_case_id": "b6a3f6f6-fb9d-4a7e-8455-7aefa3e37bfb",
+      "requirement_id": "REQ-006"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.89,
+    "model": null,
+    "created_at": "2026-05-29T22:22:59.995591",
+    "detail": {
+      "test_case_id": "b7b68d68-4271-42ed-a73e-b8c6fb4146ba",
+      "requirement_id": "REQ-006"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.17,
+    "model": null,
+    "created_at": "2026-05-29T22:23:00.009869",
+    "detail": {
+      "test_case_id": "c496b5ac-7a79-4947-9f5b-15a276de914c",
+      "requirement_id": "REQ-006"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.66,
+    "model": null,
+    "created_at": "2026-05-29T22:23:00.023640",
+    "detail": {
+      "test_case_id": "6d2ee7ab-2bea-42ac-8eb3-6a3a8056b809",
+      "requirement_id": "REQ-006"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.78,
+    "model": null,
+    "created_at": "2026-05-29T22:23:00.037304",
+    "detail": {
+      "test_case_id": "ee54d9c7-5982-4922-9d08-64d204f26f52",
+      "requirement_id": "REQ-006"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.53,
+    "model": null,
+    "created_at": "2026-05-29T22:23:00.050722",
+    "detail": {
+      "test_case_id": "8069a480-2fec-49de-bf10-a4431eeb6ce8",
+      "requirement_id": "REQ-006"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.67,
+    "model": null,
+    "created_at": "2026-05-29T22:23:00.064178",
+    "detail": {
+      "test_case_id": "f4e1868c-1f0f-4af3-a665-d36f593afef8",
+      "requirement_id": "REQ-006"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.13,
+    "model": null,
+    "created_at": "2026-05-29T22:23:00.078246",
+    "detail": {
+      "test_case_id": "d2a3afdf-6cb5-4c2d-93cd-5b245200c5ef",
+      "requirement_id": "REQ-006"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.61,
+    "model": null,
+    "created_at": "2026-05-29T22:23:00.091952",
+    "detail": {
+      "test_case_id": "6a41e68e-60d6-47b9-83c8-e3200d21a4a3",
+      "requirement_id": "REQ-006"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.72,
+    "model": null,
+    "created_at": "2026-05-29T22:23:00.105748",
+    "detail": {
+      "test_case_id": "d8faf85f-f554-4681-b56f-305387f2d3a0",
+      "requirement_id": "REQ-006"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.78,
+    "model": null,
+    "created_at": "2026-05-29T22:23:00.119524",
+    "detail": {
+      "test_case_id": "9f9986b7-af42-4c4a-ab18-bee017d8a71c",
+      "requirement_id": "REQ-007"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.72,
+    "model": null,
+    "created_at": "2026-05-29T22:23:00.133054",
+    "detail": {
+      "test_case_id": "cf712a11-7ae7-4714-99bb-a554e432bb0d",
+      "requirement_id": "REQ-007"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.47,
+    "model": null,
+    "created_at": "2026-05-29T22:23:00.146330",
+    "detail": {
+      "test_case_id": "b910cdb6-5b83-4e73-a769-09327576aef9",
+      "requirement_id": "REQ-007"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.42,
+    "model": null,
+    "created_at": "2026-05-29T22:23:00.159513",
+    "detail": {
+      "test_case_id": "b783cc48-224f-4059-a899-a1c60687093f",
+      "requirement_id": "REQ-007"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.61,
+    "model": null,
+    "created_at": "2026-05-29T22:23:00.172889",
+    "detail": {
+      "test_case_id": "41705132-0232-47b5-94ca-7ab532be0867",
+      "requirement_id": "REQ-007"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.75,
+    "model": null,
+    "created_at": "2026-05-29T22:23:00.186612",
+    "detail": {
+      "test_case_id": "513fbf5f-dc12-4371-abc3-c53ffd23afd8",
+      "requirement_id": "REQ-007"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.82,
+    "model": null,
+    "created_at": "2026-05-29T22:23:00.200209",
+    "detail": {
+      "test_case_id": "497f7cd0-0681-4953-855e-1989f6067059",
+      "requirement_id": "REQ-007"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.66,
+    "model": null,
+    "created_at": "2026-05-29T22:23:00.213677",
+    "detail": {
+      "test_case_id": "6e248f61-a0f0-4710-8515-a168acd0ad24",
+      "requirement_id": "REQ-007"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.51,
+    "model": null,
+    "created_at": "2026-05-29T22:23:00.227046",
+    "detail": {
+      "test_case_id": "b26ff8b5-3ec7-4ad0-9930-858c3e2fd355",
+      "requirement_id": "REQ-008"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.12,
+    "model": null,
+    "created_at": "2026-05-29T22:23:00.241088",
+    "detail": {
+      "test_case_id": "0d9216bf-1d37-4363-8dbb-fdeab383d21f",
+      "requirement_id": "REQ-008"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.64,
+    "model": null,
+    "created_at": "2026-05-29T22:23:00.254664",
+    "detail": {
+      "test_case_id": "2e316a80-9cd5-4ba2-9398-3d8bd6cce07f",
+      "requirement_id": "REQ-008"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.77,
+    "model": null,
+    "created_at": "2026-05-29T22:23:00.268260",
+    "detail": {
+      "test_case_id": "ce1fd6b1-d46d-45a0-84f2-06b805fdf11d",
+      "requirement_id": "REQ-008"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.52,
+    "model": null,
+    "created_at": "2026-05-29T22:23:00.281574",
+    "detail": {
+      "test_case_id": "168e5e15-432e-45f8-a210-aa98bc7efe2f",
+      "requirement_id": "REQ-008"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.03,
+    "model": null,
+    "created_at": "2026-05-29T22:23:00.295482",
+    "detail": {
+      "test_case_id": "415392c6-07bf-4666-aab5-4bba498f05f3",
+      "requirement_id": "REQ-009"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.76,
+    "model": null,
+    "created_at": "2026-05-29T22:23:00.309558",
+    "detail": {
+      "test_case_id": "3bfb2b0d-630b-4146-a917-579c28ced848",
+      "requirement_id": "REQ-009"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.79,
+    "model": null,
+    "created_at": "2026-05-29T22:23:00.323430",
+    "detail": {
+      "test_case_id": "cfda9952-c082-4c51-8da3-5424276ddbd8",
+      "requirement_id": "REQ-009"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.61,
+    "model": null,
+    "created_at": "2026-05-29T22:23:00.337064",
+    "detail": {
+      "test_case_id": "ac4b8699-0a3e-4122-96ea-63c23b72c94f",
+      "requirement_id": "REQ-010"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.41,
+    "model": null,
+    "created_at": "2026-05-29T22:23:00.350368",
+    "detail": {
+      "test_case_id": "2cba1c5d-078c-421e-a4a8-ef0f910f0de8",
+      "requirement_id": "REQ-010"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.38,
+    "model": null,
+    "created_at": "2026-05-29T22:23:00.363603",
+    "detail": {
+      "test_case_id": "ae1c553c-2f93-491e-95cf-d429ec31d404",
+      "requirement_id": "REQ-010"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.39,
+    "model": null,
+    "created_at": "2026-05-29T22:23:00.376777",
+    "detail": {
+      "test_case_id": "7aacb8c9-a8df-4880-9f4d-bdf9b4ad6057",
+      "requirement_id": "REQ-010"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.69,
+    "model": null,
+    "created_at": "2026-05-29T22:23:00.390375",
+    "detail": {
+      "test_case_id": "a46e563d-ea69-4b0e-81ca-c95d9f1a9a27",
+      "requirement_id": "REQ-010"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.93,
+    "model": null,
+    "created_at": "2026-05-29T22:23:00.404571",
+    "detail": {
+      "test_case_id": "dba3b73d-8294-4eee-a96a-9ef7599ab540",
+      "requirement_id": "REQ-010"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.1,
+    "model": null,
+    "created_at": "2026-05-29T22:23:00.418750",
+    "detail": {
+      "test_case_id": "817b4757-275d-42d9-bc18-243c63cba70c",
+      "requirement_id": "REQ-011"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.95,
+    "model": null,
+    "created_at": "2026-05-29T22:23:00.432831",
+    "detail": {
+      "test_case_id": "2d7a85f0-a358-4289-82f3-382b3e0b4a40",
+      "requirement_id": "REQ-011"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.69,
+    "model": null,
+    "created_at": "2026-05-29T22:23:00.446479",
+    "detail": {
+      "test_case_id": "30931751-8675-4ddd-bfb7-7ce0ef85cf2e",
+      "requirement_id": "REQ-011"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.48,
+    "model": null,
+    "created_at": "2026-05-29T22:23:00.459909",
+    "detail": {
+      "test_case_id": "3a706d0a-a76e-4fe9-abf8-5d2a9ed11184",
+      "requirement_id": "REQ-011"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.73,
+    "model": null,
+    "created_at": "2026-05-29T22:23:00.473634",
+    "detail": {
+      "test_case_id": "0133eb83-e406-4232-b4d0-16b64d704a71",
+      "requirement_id": "REQ-011"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.66,
+    "model": null,
+    "created_at": "2026-05-29T22:23:00.487421",
+    "detail": {
+      "test_case_id": "2576b370-b8cf-4e87-ba4a-0c307fb9fea5",
+      "requirement_id": "REQ-011"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.72,
+    "model": null,
+    "created_at": "2026-05-29T22:23:00.501197",
+    "detail": {
+      "test_case_id": "a9ba303d-995a-4b7e-a9ef-493f35f86ee9",
+      "requirement_id": "REQ-011"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.7,
+    "model": null,
+    "created_at": "2026-05-29T22:23:00.514874",
+    "detail": {
+      "test_case_id": "be4785f4-c65c-4b53-b101-cba626aa3968",
+      "requirement_id": "REQ-011"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.07,
+    "model": null,
+    "created_at": "2026-05-29T22:23:00.528939",
+    "detail": {
+      "test_case_id": "4f195107-957c-41de-8568-1573d61571c0",
+      "requirement_id": "REQ-011"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.6,
+    "model": null,
+    "created_at": "2026-05-29T22:23:00.542591",
+    "detail": {
+      "test_case_id": "39a7294c-fee6-4e33-b0c7-4b93e3996176",
+      "requirement_id": "REQ-011"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.59,
+    "model": null,
+    "created_at": "2026-05-29T22:23:00.556168",
+    "detail": {
+      "test_case_id": "b696660e-3af3-42b6-aa93-363510588854",
+      "requirement_id": "REQ-012"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.6,
+    "model": null,
+    "created_at": "2026-05-29T22:23:00.569773",
+    "detail": {
+      "test_case_id": "0cfe2431-40ab-481c-b9f5-1692bf945df7",
+      "requirement_id": "REQ-012"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.61,
+    "model": null,
+    "created_at": "2026-05-29T22:23:00.583262",
+    "detail": {
+      "test_case_id": "a4c9c942-d8d9-40a8-9161-ed171637016b",
+      "requirement_id": "REQ-012"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.91,
+    "model": null,
+    "created_at": "2026-05-29T22:23:00.597453",
+    "detail": {
+      "test_case_id": "6448e10b-55e8-41d1-81c1-9504d3e46862",
+      "requirement_id": "REQ-012"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.77,
+    "model": null,
+    "created_at": "2026-05-29T22:23:00.611124",
+    "detail": {
+      "test_case_id": "c315d930-5f4b-4f8f-8ba6-57381aded239",
+      "requirement_id": "REQ-012"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.8,
+    "model": null,
+    "created_at": "2026-05-29T22:23:00.624946",
+    "detail": {
+      "test_case_id": "778cc8ad-5007-4399-808d-d8c30235b93e",
+      "requirement_id": "REQ-012"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.63,
+    "model": null,
+    "created_at": "2026-05-29T22:23:00.638635",
+    "detail": {
+      "test_case_id": "966ce13d-9047-46d0-8d9a-a16b937e9a0b",
+      "requirement_id": "REQ-013"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.72,
+    "model": null,
+    "created_at": "2026-05-29T22:23:00.652227",
+    "detail": {
+      "test_case_id": "4dac6c7e-1d45-4942-95aa-8ce0b2e3d67f",
+      "requirement_id": "REQ-013"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 8.13,
+    "model": null,
+    "created_at": "2026-05-29T22:23:00.692715",
+    "detail": {
+      "test_case_id": "02298f93-1544-4aa9-b897-b1987933e8a5",
+      "requirement_id": "REQ-013"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.33,
+    "model": null,
+    "created_at": "2026-05-29T22:23:00.707864",
+    "detail": {
+      "test_case_id": "163b2ca6-7142-4284-abe9-b562e62f449b",
+      "requirement_id": "REQ-013"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.05,
+    "model": null,
+    "created_at": "2026-05-29T22:23:00.723141",
+    "detail": {
+      "test_case_id": "62a5c989-54e7-4cd1-88aa-9cb39c0ea4eb",
+      "requirement_id": "REQ-014"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.27,
+    "model": null,
+    "created_at": "2026-05-29T22:23:00.738124",
+    "detail": {
+      "test_case_id": "124fba9a-73aa-43d2-bca4-2c78a3090c96",
+      "requirement_id": "REQ-014"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.63,
+    "model": null,
+    "created_at": "2026-05-29T22:23:00.753926",
+    "detail": {
+      "test_case_id": "901926bf-467f-44f2-830f-f4e4e349d1d9",
+      "requirement_id": "REQ-014"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.24,
+    "model": null,
+    "created_at": "2026-05-29T22:23:00.769254",
+    "detail": {
+      "test_case_id": "30970747-568e-4769-a0d8-0a912bb1a3d3",
+      "requirement_id": "REQ-014"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.98,
+    "model": null,
+    "created_at": "2026-05-29T22:23:00.784563",
+    "detail": {
+      "test_case_id": "886b8539-4e1c-4305-8be3-af84d40ff518",
+      "requirement_id": "REQ-014"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.98,
+    "model": null,
+    "created_at": "2026-05-29T22:23:00.799327",
+    "detail": {
+      "test_case_id": "ed33fefd-df50-4c13-a738-8276e0a10699",
+      "requirement_id": "REQ-001"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 14.22,
+    "model": null,
+    "created_at": "2026-05-29T22:23:02.291470",
+    "detail": {
+      "test_case_id": "aed53778-f0ff-476a-99df-9c8c561d0f80",
+      "requirement_id": "REQ-001"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 13.0,
+    "model": null,
+    "created_at": "2026-05-29T22:23:03.103428",
+    "detail": {
+      "test_case_id": "aed53778-f0ff-476a-99df-9c8c561d0f80",
+      "requirement_id": "REQ-001"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 14.37,
+    "model": null,
+    "created_at": "2026-05-29T22:23:03.824121",
+    "detail": {
+      "test_case_id": "aed53778-f0ff-476a-99df-9c8c561d0f80",
+      "requirement_id": "REQ-001"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 16.98,
+    "model": null,
+    "created_at": "2026-05-29T22:23:04.343619",
+    "detail": {
+      "test_case_id": "aed53778-f0ff-476a-99df-9c8c561d0f80",
+      "requirement_id": "REQ-001"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 10.3,
+    "model": null,
+    "created_at": "2026-05-29T22:23:05.636610",
+    "detail": {
+      "test_case_id": "aed53778-f0ff-476a-99df-9c8c561d0f80",
+      "requirement_id": "REQ-001"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 8.43,
+    "model": null,
+    "created_at": "2026-05-29T22:23:05.655443",
+    "detail": {
+      "test_case_id": "867cfe89-3604-418d-b9f6-ff2c153115d6",
+      "requirement_id": "REQ-001"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.56,
+    "model": null,
+    "created_at": "2026-05-29T22:23:05.670731",
+    "detail": {
+      "test_case_id": "06483b58-494f-49a5-842e-059302abb3d1",
+      "requirement_id": "REQ-001"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.11,
+    "model": null,
+    "created_at": "2026-05-29T22:23:05.685131",
+    "detail": {
+      "test_case_id": "f9b1ff34-e035-42bc-91e7-a932873111a3",
+      "requirement_id": "REQ-001"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.85,
+    "model": null,
+    "created_at": "2026-05-29T22:23:05.699607",
+    "detail": {
+      "test_case_id": "96efed00-fb6d-44c8-89c3-fee9dc144519",
+      "requirement_id": "REQ-001"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.73,
+    "model": null,
+    "created_at": "2026-05-29T22:23:05.713408",
+    "detail": {
+      "test_case_id": "93e1c973-5da5-44a3-859e-53eda9b584e9",
+      "requirement_id": "REQ-001"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.71,
+    "model": null,
+    "created_at": "2026-05-29T22:23:05.727136",
+    "detail": {
+      "test_case_id": "68011a5e-6278-4037-ab44-98b4501cd085",
+      "requirement_id": "REQ-001"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.72,
+    "model": null,
+    "created_at": "2026-05-29T22:23:05.740853",
+    "detail": {
+      "test_case_id": "bcfde974-b0ac-4824-b03c-f2b78d605882",
+      "requirement_id": "REQ-001"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.0,
+    "model": null,
+    "created_at": "2026-05-29T22:23:05.755219",
+    "detail": {
+      "test_case_id": "bcb9c9d8-dec6-44cc-a4e1-94bd061b0e4f",
+      "requirement_id": "REQ-001"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.87,
+    "model": null,
+    "created_at": "2026-05-29T22:23:05.769390",
+    "detail": {
+      "test_case_id": "7c884e48-d585-45c2-8436-ac8f3d4b12d8",
+      "requirement_id": "REQ-002"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.1,
+    "model": null,
+    "created_at": "2026-05-29T22:23:05.783841",
+    "detail": {
+      "test_case_id": "866ea05a-a8f0-408c-84a8-b4ffcf8bada3",
+      "requirement_id": "REQ-002"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.86,
+    "model": null,
+    "created_at": "2026-05-29T22:23:05.798074",
+    "detail": {
+      "test_case_id": "a80270da-4f28-40f1-be25-8f8d93715bab",
+      "requirement_id": "REQ-002"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.4,
+    "model": null,
+    "created_at": "2026-05-29T22:23:05.812822",
+    "detail": {
+      "test_case_id": "47c3e760-7752-4508-a9f6-8eb4e5d54c8f",
+      "requirement_id": "REQ-002"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.77,
+    "model": null,
+    "created_at": "2026-05-29T22:23:05.827064",
+    "detail": {
+      "test_case_id": "16517744-16c7-4476-919f-a0830671002f",
+      "requirement_id": "REQ-002"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.88,
+    "model": null,
+    "created_at": "2026-05-29T22:23:05.841131",
+    "detail": {
+      "test_case_id": "c7d71344-e830-4cfa-94ec-3f28b799550b",
+      "requirement_id": "REQ-002"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.87,
+    "model": null,
+    "created_at": "2026-05-29T22:23:05.855237",
+    "detail": {
+      "test_case_id": "aec8ac6e-3168-4c3e-9f3c-54def8243338",
+      "requirement_id": "REQ-002"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.13,
+    "model": null,
+    "created_at": "2026-05-29T22:23:05.869582",
+    "detail": {
+      "test_case_id": "5e0a6a1b-5cdd-4af7-af5f-e8221663255d",
+      "requirement_id": "REQ-002"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.82,
+    "model": null,
+    "created_at": "2026-05-29T22:23:05.883636",
+    "detail": {
+      "test_case_id": "2d16734e-cc60-4ada-aa2a-4e8f377707b6",
+      "requirement_id": "REQ-003"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.88,
+    "model": null,
+    "created_at": "2026-05-29T22:23:05.897701",
+    "detail": {
+      "test_case_id": "08398f11-0889-4e8a-8351-da74a0daacf7",
+      "requirement_id": "REQ-003"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.13,
+    "model": null,
+    "created_at": "2026-05-29T22:23:05.911991",
+    "detail": {
+      "test_case_id": "3db545bb-c36b-4bb8-b962-5f8944115d54",
+      "requirement_id": "REQ-003"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.78,
+    "model": null,
+    "created_at": "2026-05-29T22:23:05.926062",
+    "detail": {
+      "test_case_id": "003eea21-1e6f-4c47-9c9a-d04a39661103",
+      "requirement_id": "REQ-003"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.73,
+    "model": null,
+    "created_at": "2026-05-29T22:23:05.939894",
+    "detail": {
+      "test_case_id": "046f4995-3fe0-4bdc-9109-292b49705ecb",
+      "requirement_id": "REQ-003"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.72,
+    "model": null,
+    "created_at": "2026-05-29T22:23:05.953736",
+    "detail": {
+      "test_case_id": "744feca2-285d-404b-aad3-1bf8f4d097e0",
+      "requirement_id": "REQ-003"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.84,
+    "model": null,
+    "created_at": "2026-05-29T22:23:05.967886",
+    "detail": {
+      "test_case_id": "e846f095-40a3-4216-a1a7-928004bc094e",
+      "requirement_id": "REQ-003"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.87,
+    "model": null,
+    "created_at": "2026-05-29T22:23:05.982150",
+    "detail": {
+      "test_case_id": "e3b2dea4-a040-48c9-a1a9-ff174cf4def2",
+      "requirement_id": "REQ-004"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.75,
+    "model": null,
+    "created_at": "2026-05-29T22:23:05.996124",
+    "detail": {
+      "test_case_id": "cde914db-73e0-4b98-9dd1-f2565695bdda",
+      "requirement_id": "REQ-004"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.73,
+    "model": null,
+    "created_at": "2026-05-29T22:23:06.010112",
+    "detail": {
+      "test_case_id": "addb86e7-d431-453d-b575-4bb15e44e841",
+      "requirement_id": "REQ-004"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.72,
+    "model": null,
+    "created_at": "2026-05-29T22:23:06.024134",
+    "detail": {
+      "test_case_id": "3fc01f56-10dc-43aa-b076-9026912f6a3b",
+      "requirement_id": "REQ-004"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.89,
+    "model": null,
+    "created_at": "2026-05-29T22:23:06.038282",
+    "detail": {
+      "test_case_id": "80095a4f-737b-4c47-9a5f-76405a02b599",
+      "requirement_id": "REQ-004"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.78,
+    "model": null,
+    "created_at": "2026-05-29T22:23:06.052360",
+    "detail": {
+      "test_case_id": "1ba60e64-2fef-4979-8df5-e3ba48775aef",
+      "requirement_id": "REQ-004"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.99,
+    "model": null,
+    "created_at": "2026-05-29T22:23:06.066709",
+    "detail": {
+      "test_case_id": "a91942fd-748b-48a0-ab02-5ddee8ad40ca",
+      "requirement_id": "REQ-004"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.09,
+    "model": null,
+    "created_at": "2026-05-29T22:23:06.081280",
+    "detail": {
+      "test_case_id": "5897c745-f18e-4120-aa5f-ea67bdaf401d",
+      "requirement_id": "REQ-005"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.18,
+    "model": null,
+    "created_at": "2026-05-29T22:23:06.095892",
+    "detail": {
+      "test_case_id": "c73c1bff-473f-4c7d-bbeb-36001e444e49",
+      "requirement_id": "REQ-005"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.19,
+    "model": null,
+    "created_at": "2026-05-29T22:23:06.110487",
+    "detail": {
+      "test_case_id": "8adc3c01-d079-44c7-bda6-3810fc94def9",
+      "requirement_id": "REQ-005"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.96,
+    "model": null,
+    "created_at": "2026-05-29T22:23:06.125044",
+    "detail": {
+      "test_case_id": "9358d3f5-e999-4e4c-bbef-4f0d013aa3ff",
+      "requirement_id": "REQ-005"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.94,
+    "model": null,
+    "created_at": "2026-05-29T22:23:06.139407",
+    "detail": {
+      "test_case_id": "feeff67e-560a-4c1c-acfa-891fcb51e8f7",
+      "requirement_id": "REQ-005"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.89,
+    "model": null,
+    "created_at": "2026-05-29T22:23:06.153627",
+    "detail": {
+      "test_case_id": "4b96b9f5-0abb-48f2-a7d9-6c743858a1ab",
+      "requirement_id": "REQ-005"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.17,
+    "model": null,
+    "created_at": "2026-05-29T22:23:06.168025",
+    "detail": {
+      "test_case_id": "1090b464-466e-4281-ae1d-2717f67f374f",
+      "requirement_id": "REQ-005"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.01,
+    "model": null,
+    "created_at": "2026-05-29T22:23:06.182751",
+    "detail": {
+      "test_case_id": "b6a3f6f6-fb9d-4a7e-8455-7aefa3e37bfb",
+      "requirement_id": "REQ-006"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.1,
+    "model": null,
+    "created_at": "2026-05-29T22:23:06.197435",
+    "detail": {
+      "test_case_id": "b7b68d68-4271-42ed-a73e-b8c6fb4146ba",
+      "requirement_id": "REQ-006"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.02,
+    "model": null,
+    "created_at": "2026-05-29T22:23:06.211876",
+    "detail": {
+      "test_case_id": "c496b5ac-7a79-4947-9f5b-15a276de914c",
+      "requirement_id": "REQ-006"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.55,
+    "model": null,
+    "created_at": "2026-05-29T22:23:06.225576",
+    "detail": {
+      "test_case_id": "6d2ee7ab-2bea-42ac-8eb3-6a3a8056b809",
+      "requirement_id": "REQ-006"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.77,
+    "model": null,
+    "created_at": "2026-05-29T22:23:06.239624",
+    "detail": {
+      "test_case_id": "ee54d9c7-5982-4922-9d08-64d204f26f52",
+      "requirement_id": "REQ-006"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.9,
+    "model": null,
+    "created_at": "2026-05-29T22:23:06.253683",
+    "detail": {
+      "test_case_id": "8069a480-2fec-49de-bf10-a4431eeb6ce8",
+      "requirement_id": "REQ-006"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.69,
+    "model": null,
+    "created_at": "2026-05-29T22:23:06.267604",
+    "detail": {
+      "test_case_id": "f4e1868c-1f0f-4af3-a665-d36f593afef8",
+      "requirement_id": "REQ-006"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.76,
+    "model": null,
+    "created_at": "2026-05-29T22:23:06.281529",
+    "detail": {
+      "test_case_id": "d2a3afdf-6cb5-4c2d-93cd-5b245200c5ef",
+      "requirement_id": "REQ-006"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.0,
+    "model": null,
+    "created_at": "2026-05-29T22:23:06.296000",
+    "detail": {
+      "test_case_id": "6a41e68e-60d6-47b9-83c8-e3200d21a4a3",
+      "requirement_id": "REQ-006"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.66,
+    "model": null,
+    "created_at": "2026-05-29T22:23:06.309939",
+    "detail": {
+      "test_case_id": "d8faf85f-f554-4681-b56f-305387f2d3a0",
+      "requirement_id": "REQ-006"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.67,
+    "model": null,
+    "created_at": "2026-05-29T22:23:06.323917",
+    "detail": {
+      "test_case_id": "9f9986b7-af42-4c4a-ab18-bee017d8a71c",
+      "requirement_id": "REQ-007"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.59,
+    "model": null,
+    "created_at": "2026-05-29T22:23:06.337626",
+    "detail": {
+      "test_case_id": "cf712a11-7ae7-4714-99bb-a554e432bb0d",
+      "requirement_id": "REQ-007"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.49,
+    "model": null,
+    "created_at": "2026-05-29T22:23:06.351254",
+    "detail": {
+      "test_case_id": "b910cdb6-5b83-4e73-a769-09327576aef9",
+      "requirement_id": "REQ-007"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.46,
+    "model": null,
+    "created_at": "2026-05-29T22:23:06.365958",
+    "detail": {
+      "test_case_id": "b783cc48-224f-4059-a899-a1c60687093f",
+      "requirement_id": "REQ-007"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.01,
+    "model": null,
+    "created_at": "2026-05-29T22:23:06.380389",
+    "detail": {
+      "test_case_id": "41705132-0232-47b5-94ca-7ab532be0867",
+      "requirement_id": "REQ-007"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.88,
+    "model": null,
+    "created_at": "2026-05-29T22:23:06.394556",
+    "detail": {
+      "test_case_id": "513fbf5f-dc12-4371-abc3-c53ffd23afd8",
+      "requirement_id": "REQ-007"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.94,
+    "model": null,
+    "created_at": "2026-05-29T22:23:06.408834",
+    "detail": {
+      "test_case_id": "497f7cd0-0681-4953-855e-1989f6067059",
+      "requirement_id": "REQ-007"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.78,
+    "model": null,
+    "created_at": "2026-05-29T22:23:06.423104",
+    "detail": {
+      "test_case_id": "6e248f61-a0f0-4710-8515-a168acd0ad24",
+      "requirement_id": "REQ-007"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.66,
+    "model": null,
+    "created_at": "2026-05-29T22:23:06.437098",
+    "detail": {
+      "test_case_id": "b26ff8b5-3ec7-4ad0-9930-858c3e2fd355",
+      "requirement_id": "REQ-008"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.46,
+    "model": null,
+    "created_at": "2026-05-29T22:23:06.450782",
+    "detail": {
+      "test_case_id": "0d9216bf-1d37-4363-8dbb-fdeab383d21f",
+      "requirement_id": "REQ-008"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.56,
+    "model": null,
+    "created_at": "2026-05-29T22:23:06.464571",
+    "detail": {
+      "test_case_id": "2e316a80-9cd5-4ba2-9398-3d8bd6cce07f",
+      "requirement_id": "REQ-008"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.77,
+    "model": null,
+    "created_at": "2026-05-29T22:23:06.478581",
+    "detail": {
+      "test_case_id": "ce1fd6b1-d46d-45a0-84f2-06b805fdf11d",
+      "requirement_id": "REQ-008"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.64,
+    "model": null,
+    "created_at": "2026-05-29T22:23:06.492465",
+    "detail": {
+      "test_case_id": "168e5e15-432e-45f8-a210-aa98bc7efe2f",
+      "requirement_id": "REQ-008"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.22,
+    "model": null,
+    "created_at": "2026-05-29T22:23:06.530513",
+    "detail": {
+      "test_case_id": "415392c6-07bf-4666-aab5-4bba498f05f3",
+      "requirement_id": "REQ-009"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.56,
+    "model": null,
+    "created_at": "2026-05-29T22:23:06.544523",
+    "detail": {
+      "test_case_id": "3bfb2b0d-630b-4146-a917-579c28ced848",
+      "requirement_id": "REQ-009"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.54,
+    "model": null,
+    "created_at": "2026-05-29T22:23:06.559255",
+    "detail": {
+      "test_case_id": "cfda9952-c082-4c51-8da3-5424276ddbd8",
+      "requirement_id": "REQ-009"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.6,
+    "model": null,
+    "created_at": "2026-05-29T22:23:06.573466",
+    "detail": {
+      "test_case_id": "ac4b8699-0a3e-4122-96ea-63c23b72c94f",
+      "requirement_id": "REQ-010"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.11,
+    "model": null,
+    "created_at": "2026-05-29T22:23:06.588738",
+    "detail": {
+      "test_case_id": "2cba1c5d-078c-421e-a4a8-ef0f910f0de8",
+      "requirement_id": "REQ-010"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.8,
+    "model": null,
+    "created_at": "2026-05-29T22:23:06.603616",
+    "detail": {
+      "test_case_id": "ae1c553c-2f93-491e-95cf-d429ec31d404",
+      "requirement_id": "REQ-010"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.09,
+    "model": null,
+    "created_at": "2026-05-29T22:23:06.618759",
+    "detail": {
+      "test_case_id": "7aacb8c9-a8df-4880-9f4d-bdf9b4ad6057",
+      "requirement_id": "REQ-010"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.24,
+    "model": null,
+    "created_at": "2026-05-29T22:23:06.634054",
+    "detail": {
+      "test_case_id": "a46e563d-ea69-4b0e-81ca-c95d9f1a9a27",
+      "requirement_id": "REQ-010"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.18,
+    "model": null,
+    "created_at": "2026-05-29T22:23:06.649290",
+    "detail": {
+      "test_case_id": "dba3b73d-8294-4eee-a96a-9ef7599ab540",
+      "requirement_id": "REQ-010"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.96,
+    "model": null,
+    "created_at": "2026-05-29T22:23:06.665569",
+    "detail": {
+      "test_case_id": "817b4757-275d-42d9-bc18-243c63cba70c",
+      "requirement_id": "REQ-011"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.92,
+    "model": null,
+    "created_at": "2026-05-29T22:23:06.680477",
+    "detail": {
+      "test_case_id": "2d7a85f0-a358-4289-82f3-382b3e0b4a40",
+      "requirement_id": "REQ-011"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 8.09,
+    "model": null,
+    "created_at": "2026-05-29T22:23:06.708631",
+    "detail": {
+      "test_case_id": "30931751-8675-4ddd-bfb7-7ce0ef85cf2e",
+      "requirement_id": "REQ-011"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.97,
+    "model": null,
+    "created_at": "2026-05-29T22:23:06.723656",
+    "detail": {
+      "test_case_id": "3a706d0a-a76e-4fe9-abf8-5d2a9ed11184",
+      "requirement_id": "REQ-011"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.7,
+    "model": null,
+    "created_at": "2026-05-29T22:23:06.737755",
+    "detail": {
+      "test_case_id": "0133eb83-e406-4232-b4d0-16b64d704a71",
+      "requirement_id": "REQ-011"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.07,
+    "model": null,
+    "created_at": "2026-05-29T22:23:06.752170",
+    "detail": {
+      "test_case_id": "2576b370-b8cf-4e87-ba4a-0c307fb9fea5",
+      "requirement_id": "REQ-011"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.84,
+    "model": null,
+    "created_at": "2026-05-29T22:23:06.766416",
+    "detail": {
+      "test_case_id": "a9ba303d-995a-4b7e-a9ef-493f35f86ee9",
+      "requirement_id": "REQ-011"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.84,
+    "model": null,
+    "created_at": "2026-05-29T22:23:06.781039",
+    "detail": {
+      "test_case_id": "be4785f4-c65c-4b53-b101-cba626aa3968",
+      "requirement_id": "REQ-011"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.43,
+    "model": null,
+    "created_at": "2026-05-29T22:23:06.796278",
+    "detail": {
+      "test_case_id": "4f195107-957c-41de-8568-1573d61571c0",
+      "requirement_id": "REQ-011"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.18,
+    "model": null,
+    "created_at": "2026-05-29T22:23:06.811020",
+    "detail": {
+      "test_case_id": "39a7294c-fee6-4e33-b0c7-4b93e3996176",
+      "requirement_id": "REQ-011"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.09,
+    "model": null,
+    "created_at": "2026-05-29T22:23:06.825672",
+    "detail": {
+      "test_case_id": "b696660e-3af3-42b6-aa93-363510588854",
+      "requirement_id": "REQ-012"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.77,
+    "model": null,
+    "created_at": "2026-05-29T22:23:06.840026",
+    "detail": {
+      "test_case_id": "0cfe2431-40ab-481c-b9f5-1692bf945df7",
+      "requirement_id": "REQ-012"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.98,
+    "model": null,
+    "created_at": "2026-05-29T22:23:06.854587",
+    "detail": {
+      "test_case_id": "a4c9c942-d8d9-40a8-9161-ed171637016b",
+      "requirement_id": "REQ-012"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.66,
+    "model": null,
+    "created_at": "2026-05-29T22:23:06.868719",
+    "detail": {
+      "test_case_id": "6448e10b-55e8-41d1-81c1-9504d3e46862",
+      "requirement_id": "REQ-012"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.01,
+    "model": null,
+    "created_at": "2026-05-29T22:23:06.883166",
+    "detail": {
+      "test_case_id": "c315d930-5f4b-4f8f-8ba6-57381aded239",
+      "requirement_id": "REQ-012"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.34,
+    "model": null,
+    "created_at": "2026-05-29T22:23:06.898414",
+    "detail": {
+      "test_case_id": "778cc8ad-5007-4399-808d-d8c30235b93e",
+      "requirement_id": "REQ-012"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.06,
+    "model": null,
+    "created_at": "2026-05-29T22:23:06.913223",
+    "detail": {
+      "test_case_id": "966ce13d-9047-46d0-8d9a-a16b937e9a0b",
+      "requirement_id": "REQ-013"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.97,
+    "model": null,
+    "created_at": "2026-05-29T22:23:06.927624",
+    "detail": {
+      "test_case_id": "4dac6c7e-1d45-4942-95aa-8ce0b2e3d67f",
+      "requirement_id": "REQ-013"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.95,
+    "model": null,
+    "created_at": "2026-05-29T22:23:06.942122",
+    "detail": {
+      "test_case_id": "02298f93-1544-4aa9-b897-b1987933e8a5",
+      "requirement_id": "REQ-013"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.82,
+    "model": null,
+    "created_at": "2026-05-29T22:23:06.956346",
+    "detail": {
+      "test_case_id": "163b2ca6-7142-4284-abe9-b562e62f449b",
+      "requirement_id": "REQ-013"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.79,
+    "model": null,
+    "created_at": "2026-05-29T22:23:06.970470",
+    "detail": {
+      "test_case_id": "62a5c989-54e7-4cd1-88aa-9cb39c0ea4eb",
+      "requirement_id": "REQ-014"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.8,
+    "model": null,
+    "created_at": "2026-05-29T22:23:06.984937",
+    "detail": {
+      "test_case_id": "124fba9a-73aa-43d2-bca4-2c78a3090c96",
+      "requirement_id": "REQ-014"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.31,
+    "model": null,
+    "created_at": "2026-05-29T22:23:06.999812",
+    "detail": {
+      "test_case_id": "901926bf-467f-44f2-830f-f4e4e349d1d9",
+      "requirement_id": "REQ-014"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.9,
+    "model": null,
+    "created_at": "2026-05-29T22:23:07.014260",
+    "detail": {
+      "test_case_id": "30970747-568e-4769-a0d8-0a912bb1a3d3",
+      "requirement_id": "REQ-014"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.76,
+    "model": null,
+    "created_at": "2026-05-29T22:23:07.028454",
+    "detail": {
+      "test_case_id": "886b8539-4e1c-4305-8be3-af84d40ff518",
+      "requirement_id": "REQ-014"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.61,
+    "model": null,
+    "created_at": "2026-05-29T22:23:07.042364",
+    "detail": {
+      "test_case_id": "ed33fefd-df50-4c13-a738-8276e0a10699",
+      "requirement_id": "REQ-001"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 9.57,
+    "model": null,
+    "created_at": "2026-05-29T22:23:12.090942",
+    "detail": {
+      "test_case_id": "aed53778-f0ff-476a-99df-9c8c561d0f80",
+      "requirement_id": "REQ-001"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 8.55,
+    "model": null,
+    "created_at": "2026-05-29T22:23:12.110072",
+    "detail": {
+      "test_case_id": "867cfe89-3604-418d-b9f6-ff2c153115d6",
+      "requirement_id": "REQ-001"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.62,
+    "model": null,
+    "created_at": "2026-05-29T22:23:12.126232",
+    "detail": {
+      "test_case_id": "06483b58-494f-49a5-842e-059302abb3d1",
+      "requirement_id": "REQ-001"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.21,
+    "model": null,
+    "created_at": "2026-05-29T22:23:12.141366",
+    "detail": {
+      "test_case_id": "f9b1ff34-e035-42bc-91e7-a932873111a3",
+      "requirement_id": "REQ-001"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.94,
+    "model": null,
+    "created_at": "2026-05-29T22:23:12.155896",
+    "detail": {
+      "test_case_id": "96efed00-fb6d-44c8-89c3-fee9dc144519",
+      "requirement_id": "REQ-001"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.79,
+    "model": null,
+    "created_at": "2026-05-29T22:23:12.170283",
+    "detail": {
+      "test_case_id": "93e1c973-5da5-44a3-859e-53eda9b584e9",
+      "requirement_id": "REQ-001"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.72,
+    "model": null,
+    "created_at": "2026-05-29T22:23:12.184549",
+    "detail": {
+      "test_case_id": "68011a5e-6278-4037-ab44-98b4501cd085",
+      "requirement_id": "REQ-001"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.08,
+    "model": null,
+    "created_at": "2026-05-29T22:23:12.199192",
+    "detail": {
+      "test_case_id": "bcfde974-b0ac-4824-b03c-f2b78d605882",
+      "requirement_id": "REQ-001"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.05,
+    "model": null,
+    "created_at": "2026-05-29T22:23:12.213837",
+    "detail": {
+      "test_case_id": "bcb9c9d8-dec6-44cc-a4e1-94bd061b0e4f",
+      "requirement_id": "REQ-001"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.66,
+    "model": null,
+    "created_at": "2026-05-29T22:23:12.227898",
+    "detail": {
+      "test_case_id": "7c884e48-d585-45c2-8436-ac8f3d4b12d8",
+      "requirement_id": "REQ-002"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.58,
+    "model": null,
+    "created_at": "2026-05-29T22:23:12.241805",
+    "detail": {
+      "test_case_id": "866ea05a-a8f0-408c-84a8-b4ffcf8bada3",
+      "requirement_id": "REQ-002"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.73,
+    "model": null,
+    "created_at": "2026-05-29T22:23:12.256200",
+    "detail": {
+      "test_case_id": "a80270da-4f28-40f1-be25-8f8d93715bab",
+      "requirement_id": "REQ-002"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.18,
+    "model": null,
+    "created_at": "2026-05-29T22:23:12.270703",
+    "detail": {
+      "test_case_id": "47c3e760-7752-4508-a9f6-8eb4e5d54c8f",
+      "requirement_id": "REQ-002"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.0,
+    "model": null,
+    "created_at": "2026-05-29T22:23:12.285572",
+    "detail": {
+      "test_case_id": "16517744-16c7-4476-919f-a0830671002f",
+      "requirement_id": "REQ-002"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.91,
+    "model": null,
+    "created_at": "2026-05-29T22:23:12.299950",
+    "detail": {
+      "test_case_id": "c7d71344-e830-4cfa-94ec-3f28b799550b",
+      "requirement_id": "REQ-002"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.54,
+    "model": null,
+    "created_at": "2026-05-29T22:23:12.313908",
+    "detail": {
+      "test_case_id": "aec8ac6e-3168-4c3e-9f3c-54def8243338",
+      "requirement_id": "REQ-002"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.72,
+    "model": null,
+    "created_at": "2026-05-29T22:23:12.327994",
+    "detail": {
+      "test_case_id": "5e0a6a1b-5cdd-4af7-af5f-e8221663255d",
+      "requirement_id": "REQ-002"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.07,
+    "model": null,
+    "created_at": "2026-05-29T22:23:12.342506",
+    "detail": {
+      "test_case_id": "2d16734e-cc60-4ada-aa2a-4e8f377707b6",
+      "requirement_id": "REQ-003"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.29,
+    "model": null,
+    "created_at": "2026-05-29T22:23:12.357592",
+    "detail": {
+      "test_case_id": "08398f11-0889-4e8a-8351-da74a0daacf7",
+      "requirement_id": "REQ-003"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.83,
+    "model": null,
+    "created_at": "2026-05-29T22:23:12.373430",
+    "detail": {
+      "test_case_id": "3db545bb-c36b-4bb8-b962-5f8944115d54",
+      "requirement_id": "REQ-003"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.42,
+    "model": null,
+    "created_at": "2026-05-29T22:23:12.389442",
+    "detail": {
+      "test_case_id": "003eea21-1e6f-4c47-9c9a-d04a39661103",
+      "requirement_id": "REQ-003"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.2,
+    "model": null,
+    "created_at": "2026-05-29T22:23:12.404539",
+    "detail": {
+      "test_case_id": "046f4995-3fe0-4bdc-9109-292b49705ecb",
+      "requirement_id": "REQ-003"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.07,
+    "model": null,
+    "created_at": "2026-05-29T22:23:12.419503",
+    "detail": {
+      "test_case_id": "744feca2-285d-404b-aad3-1bf8f4d097e0",
+      "requirement_id": "REQ-003"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.09,
+    "model": null,
+    "created_at": "2026-05-29T22:23:12.434325",
+    "detail": {
+      "test_case_id": "e846f095-40a3-4216-a1a7-928004bc094e",
+      "requirement_id": "REQ-003"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.12,
+    "model": null,
+    "created_at": "2026-05-29T22:23:12.449371",
+    "detail": {
+      "test_case_id": "e3b2dea4-a040-48c9-a1a9-ff174cf4def2",
+      "requirement_id": "REQ-004"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.85,
+    "model": null,
+    "created_at": "2026-05-29T22:23:12.463915",
+    "detail": {
+      "test_case_id": "cde914db-73e0-4b98-9dd1-f2565695bdda",
+      "requirement_id": "REQ-004"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.87,
+    "model": null,
+    "created_at": "2026-05-29T22:23:12.478513",
+    "detail": {
+      "test_case_id": "addb86e7-d431-453d-b575-4bb15e44e841",
+      "requirement_id": "REQ-004"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.89,
+    "model": null,
+    "created_at": "2026-05-29T22:23:12.493102",
+    "detail": {
+      "test_case_id": "3fc01f56-10dc-43aa-b076-9026912f6a3b",
+      "requirement_id": "REQ-004"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.73,
+    "model": null,
+    "created_at": "2026-05-29T22:23:12.507411",
+    "detail": {
+      "test_case_id": "80095a4f-737b-4c47-9a5f-76405a02b599",
+      "requirement_id": "REQ-004"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.03,
+    "model": null,
+    "created_at": "2026-05-29T22:23:12.522054",
+    "detail": {
+      "test_case_id": "1ba60e64-2fef-4979-8df5-e3ba48775aef",
+      "requirement_id": "REQ-004"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.06,
+    "model": null,
+    "created_at": "2026-05-29T22:23:12.536837",
+    "detail": {
+      "test_case_id": "a91942fd-748b-48a0-ab02-5ddee8ad40ca",
+      "requirement_id": "REQ-004"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.71,
+    "model": null,
+    "created_at": "2026-05-29T22:23:12.551117",
+    "detail": {
+      "test_case_id": "5897c745-f18e-4120-aa5f-ea67bdaf401d",
+      "requirement_id": "REQ-005"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.64,
+    "model": null,
+    "created_at": "2026-05-29T22:23:12.565200",
+    "detail": {
+      "test_case_id": "c73c1bff-473f-4c7d-bbeb-36001e444e49",
+      "requirement_id": "REQ-005"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.76,
+    "model": null,
+    "created_at": "2026-05-29T22:23:12.579492",
+    "detail": {
+      "test_case_id": "8adc3c01-d079-44c7-bda6-3810fc94def9",
+      "requirement_id": "REQ-005"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.16,
+    "model": null,
+    "created_at": "2026-05-29T22:23:12.594229",
+    "detail": {
+      "test_case_id": "9358d3f5-e999-4e4c-bbef-4f0d013aa3ff",
+      "requirement_id": "REQ-005"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.84,
+    "model": null,
+    "created_at": "2026-05-29T22:23:12.608664",
+    "detail": {
+      "test_case_id": "feeff67e-560a-4c1c-acfa-891fcb51e8f7",
+      "requirement_id": "REQ-005"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.69,
+    "model": null,
+    "created_at": "2026-05-29T22:23:12.622820",
+    "detail": {
+      "test_case_id": "4b96b9f5-0abb-48f2-a7d9-6c743858a1ab",
+      "requirement_id": "REQ-005"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.21,
+    "model": null,
+    "created_at": "2026-05-29T22:23:12.637736",
+    "detail": {
+      "test_case_id": "1090b464-466e-4281-ae1d-2717f67f374f",
+      "requirement_id": "REQ-005"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.74,
+    "model": null,
+    "created_at": "2026-05-29T22:23:12.653062",
+    "detail": {
+      "test_case_id": "b6a3f6f6-fb9d-4a7e-8455-7aefa3e37bfb",
+      "requirement_id": "REQ-006"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 8.75,
+    "model": null,
+    "created_at": "2026-05-29T22:23:12.692417",
+    "detail": {
+      "test_case_id": "b7b68d68-4271-42ed-a73e-b8c6fb4146ba",
+      "requirement_id": "REQ-006"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 8.51,
+    "model": null,
+    "created_at": "2026-05-29T22:23:12.710222",
+    "detail": {
+      "test_case_id": "c496b5ac-7a79-4947-9f5b-15a276de914c",
+      "requirement_id": "REQ-006"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 9.11,
+    "model": null,
+    "created_at": "2026-05-29T22:23:12.728639",
+    "detail": {
+      "test_case_id": "6d2ee7ab-2bea-42ac-8eb3-6a3a8056b809",
+      "requirement_id": "REQ-006"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 8.2,
+    "model": null,
+    "created_at": "2026-05-29T22:23:12.747259",
+    "detail": {
+      "test_case_id": "ee54d9c7-5982-4922-9d08-64d204f26f52",
+      "requirement_id": "REQ-006"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.82,
+    "model": null,
+    "created_at": "2026-05-29T22:23:12.764858",
+    "detail": {
+      "test_case_id": "8069a480-2fec-49de-bf10-a4431eeb6ce8",
+      "requirement_id": "REQ-006"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 8.41,
+    "model": null,
+    "created_at": "2026-05-29T22:23:12.783652",
+    "detail": {
+      "test_case_id": "f4e1868c-1f0f-4af3-a665-d36f593afef8",
+      "requirement_id": "REQ-006"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 8.83,
+    "model": null,
+    "created_at": "2026-05-29T22:23:12.804581",
+    "detail": {
+      "test_case_id": "d2a3afdf-6cb5-4c2d-93cd-5b245200c5ef",
+      "requirement_id": "REQ-006"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 8.51,
+    "model": null,
+    "created_at": "2026-05-29T22:23:12.824214",
+    "detail": {
+      "test_case_id": "6a41e68e-60d6-47b9-83c8-e3200d21a4a3",
+      "requirement_id": "REQ-006"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 8.15,
+    "model": null,
+    "created_at": "2026-05-29T22:23:12.842992",
+    "detail": {
+      "test_case_id": "d8faf85f-f554-4681-b56f-305387f2d3a0",
+      "requirement_id": "REQ-006"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 8.12,
+    "model": null,
+    "created_at": "2026-05-29T22:23:12.868335",
+    "detail": {
+      "test_case_id": "9f9986b7-af42-4c4a-ab18-bee017d8a71c",
+      "requirement_id": "REQ-007"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.74,
+    "model": null,
+    "created_at": "2026-05-29T22:23:12.885040",
+    "detail": {
+      "test_case_id": "cf712a11-7ae7-4714-99bb-a554e432bb0d",
+      "requirement_id": "REQ-007"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.81,
+    "model": null,
+    "created_at": "2026-05-29T22:23:12.901924",
+    "detail": {
+      "test_case_id": "b910cdb6-5b83-4e73-a769-09327576aef9",
+      "requirement_id": "REQ-007"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.04,
+    "model": null,
+    "created_at": "2026-05-29T22:23:12.917858",
+    "detail": {
+      "test_case_id": "b783cc48-224f-4059-a899-a1c60687093f",
+      "requirement_id": "REQ-007"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.88,
+    "model": null,
+    "created_at": "2026-05-29T22:23:12.932388",
+    "detail": {
+      "test_case_id": "41705132-0232-47b5-94ca-7ab532be0867",
+      "requirement_id": "REQ-007"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.06,
+    "model": null,
+    "created_at": "2026-05-29T22:23:12.947170",
+    "detail": {
+      "test_case_id": "513fbf5f-dc12-4371-abc3-c53ffd23afd8",
+      "requirement_id": "REQ-007"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.82,
+    "model": null,
+    "created_at": "2026-05-29T22:23:12.961547",
+    "detail": {
+      "test_case_id": "497f7cd0-0681-4953-855e-1989f6067059",
+      "requirement_id": "REQ-007"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.99,
+    "model": null,
+    "created_at": "2026-05-29T22:23:12.976306",
+    "detail": {
+      "test_case_id": "6e248f61-a0f0-4710-8515-a168acd0ad24",
+      "requirement_id": "REQ-007"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.82,
+    "model": null,
+    "created_at": "2026-05-29T22:23:12.990974",
+    "detail": {
+      "test_case_id": "b26ff8b5-3ec7-4ad0-9930-858c3e2fd355",
+      "requirement_id": "REQ-008"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.07,
+    "model": null,
+    "created_at": "2026-05-29T22:23:13.005882",
+    "detail": {
+      "test_case_id": "0d9216bf-1d37-4363-8dbb-fdeab383d21f",
+      "requirement_id": "REQ-008"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.1,
+    "model": null,
+    "created_at": "2026-05-29T22:23:13.020713",
+    "detail": {
+      "test_case_id": "2e316a80-9cd5-4ba2-9398-3d8bd6cce07f",
+      "requirement_id": "REQ-008"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.84,
+    "model": null,
+    "created_at": "2026-05-29T22:23:13.035181",
+    "detail": {
+      "test_case_id": "ce1fd6b1-d46d-45a0-84f2-06b805fdf11d",
+      "requirement_id": "REQ-008"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.0,
+    "model": null,
+    "created_at": "2026-05-29T22:23:13.049800",
+    "detail": {
+      "test_case_id": "168e5e15-432e-45f8-a210-aa98bc7efe2f",
+      "requirement_id": "REQ-008"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.6,
+    "model": null,
+    "created_at": "2026-05-29T22:23:13.064028",
+    "detail": {
+      "test_case_id": "415392c6-07bf-4666-aab5-4bba498f05f3",
+      "requirement_id": "REQ-009"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.6,
+    "model": null,
+    "created_at": "2026-05-29T22:23:13.078158",
+    "detail": {
+      "test_case_id": "3bfb2b0d-630b-4146-a917-579c28ced848",
+      "requirement_id": "REQ-009"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.56,
+    "model": null,
+    "created_at": "2026-05-29T22:23:13.092371",
+    "detail": {
+      "test_case_id": "cfda9952-c082-4c51-8da3-5424276ddbd8",
+      "requirement_id": "REQ-009"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.52,
+    "model": null,
+    "created_at": "2026-05-29T22:23:13.106469",
+    "detail": {
+      "test_case_id": "ac4b8699-0a3e-4122-96ea-63c23b72c94f",
+      "requirement_id": "REQ-010"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.76,
+    "model": null,
+    "created_at": "2026-05-29T22:23:13.120759",
+    "detail": {
+      "test_case_id": "2cba1c5d-078c-421e-a4a8-ef0f910f0de8",
+      "requirement_id": "REQ-010"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.76,
+    "model": null,
+    "created_at": "2026-05-29T22:23:13.135141",
+    "detail": {
+      "test_case_id": "ae1c553c-2f93-491e-95cf-d429ec31d404",
+      "requirement_id": "REQ-010"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.54,
+    "model": null,
+    "created_at": "2026-05-29T22:23:13.149191",
+    "detail": {
+      "test_case_id": "7aacb8c9-a8df-4880-9f4d-bdf9b4ad6057",
+      "requirement_id": "REQ-010"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.57,
+    "model": null,
+    "created_at": "2026-05-29T22:23:13.163223",
+    "detail": {
+      "test_case_id": "a46e563d-ea69-4b0e-81ca-c95d9f1a9a27",
+      "requirement_id": "REQ-010"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.59,
+    "model": null,
+    "created_at": "2026-05-29T22:23:13.177395",
+    "detail": {
+      "test_case_id": "dba3b73d-8294-4eee-a96a-9ef7599ab540",
+      "requirement_id": "REQ-010"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.72,
+    "model": null,
+    "created_at": "2026-05-29T22:23:13.191616",
+    "detail": {
+      "test_case_id": "817b4757-275d-42d9-bc18-243c63cba70c",
+      "requirement_id": "REQ-011"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.87,
+    "model": null,
+    "created_at": "2026-05-29T22:23:13.206102",
+    "detail": {
+      "test_case_id": "2d7a85f0-a358-4289-82f3-382b3e0b4a40",
+      "requirement_id": "REQ-011"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.95,
+    "model": null,
+    "created_at": "2026-05-29T22:23:13.220980",
+    "detail": {
+      "test_case_id": "30931751-8675-4ddd-bfb7-7ce0ef85cf2e",
+      "requirement_id": "REQ-011"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.73,
+    "model": null,
+    "created_at": "2026-05-29T22:23:13.235489",
+    "detail": {
+      "test_case_id": "3a706d0a-a76e-4fe9-abf8-5d2a9ed11184",
+      "requirement_id": "REQ-011"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.65,
+    "model": null,
+    "created_at": "2026-05-29T22:23:13.249761",
+    "detail": {
+      "test_case_id": "0133eb83-e406-4232-b4d0-16b64d704a71",
+      "requirement_id": "REQ-011"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.76,
+    "model": null,
+    "created_at": "2026-05-29T22:23:13.264319",
+    "detail": {
+      "test_case_id": "2576b370-b8cf-4e87-ba4a-0c307fb9fea5",
+      "requirement_id": "REQ-011"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.38,
+    "model": null,
+    "created_at": "2026-05-29T22:23:13.279693",
+    "detail": {
+      "test_case_id": "a9ba303d-995a-4b7e-a9ef-493f35f86ee9",
+      "requirement_id": "REQ-011"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.0,
+    "model": null,
+    "created_at": "2026-05-29T22:23:13.294628",
+    "detail": {
+      "test_case_id": "be4785f4-c65c-4b53-b101-cba626aa3968",
+      "requirement_id": "REQ-011"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.8,
+    "model": null,
+    "created_at": "2026-05-29T22:23:13.309244",
+    "detail": {
+      "test_case_id": "4f195107-957c-41de-8568-1573d61571c0",
+      "requirement_id": "REQ-011"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.26,
+    "model": null,
+    "created_at": "2026-05-29T22:23:13.324424",
+    "detail": {
+      "test_case_id": "39a7294c-fee6-4e33-b0c7-4b93e3996176",
+      "requirement_id": "REQ-011"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.96,
+    "model": null,
+    "created_at": "2026-05-29T22:23:13.339394",
+    "detail": {
+      "test_case_id": "b696660e-3af3-42b6-aa93-363510588854",
+      "requirement_id": "REQ-012"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.8,
+    "model": null,
+    "created_at": "2026-05-29T22:23:13.354010",
+    "detail": {
+      "test_case_id": "0cfe2431-40ab-481c-b9f5-1692bf945df7",
+      "requirement_id": "REQ-012"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.65,
+    "model": null,
+    "created_at": "2026-05-29T22:23:13.368441",
+    "detail": {
+      "test_case_id": "a4c9c942-d8d9-40a8-9161-ed171637016b",
+      "requirement_id": "REQ-012"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.71,
+    "model": null,
+    "created_at": "2026-05-29T22:23:13.382770",
+    "detail": {
+      "test_case_id": "6448e10b-55e8-41d1-81c1-9504d3e46862",
+      "requirement_id": "REQ-012"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.63,
+    "model": null,
+    "created_at": "2026-05-29T22:23:13.397071",
+    "detail": {
+      "test_case_id": "c315d930-5f4b-4f8f-8ba6-57381aded239",
+      "requirement_id": "REQ-012"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.83,
+    "model": null,
+    "created_at": "2026-05-29T22:23:13.411660",
+    "detail": {
+      "test_case_id": "778cc8ad-5007-4399-808d-d8c30235b93e",
+      "requirement_id": "REQ-012"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.43,
+    "model": null,
+    "created_at": "2026-05-29T22:23:13.425759",
+    "detail": {
+      "test_case_id": "966ce13d-9047-46d0-8d9a-a16b937e9a0b",
+      "requirement_id": "REQ-013"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.62,
+    "model": null,
+    "created_at": "2026-05-29T22:23:13.440031",
+    "detail": {
+      "test_case_id": "4dac6c7e-1d45-4942-95aa-8ce0b2e3d67f",
+      "requirement_id": "REQ-013"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.48,
+    "model": null,
+    "created_at": "2026-05-29T22:23:13.454274",
+    "detail": {
+      "test_case_id": "02298f93-1544-4aa9-b897-b1987933e8a5",
+      "requirement_id": "REQ-013"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.56,
+    "model": null,
+    "created_at": "2026-05-29T22:23:13.468560",
+    "detail": {
+      "test_case_id": "163b2ca6-7142-4284-abe9-b562e62f449b",
+      "requirement_id": "REQ-013"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.63,
+    "model": null,
+    "created_at": "2026-05-29T22:23:13.482897",
+    "detail": {
+      "test_case_id": "62a5c989-54e7-4cd1-88aa-9cb39c0ea4eb",
+      "requirement_id": "REQ-014"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.98,
+    "model": null,
+    "created_at": "2026-05-29T22:23:13.497727",
+    "detail": {
+      "test_case_id": "124fba9a-73aa-43d2-bca4-2c78a3090c96",
+      "requirement_id": "REQ-014"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.93,
+    "model": null,
+    "created_at": "2026-05-29T22:23:13.512643",
+    "detail": {
+      "test_case_id": "901926bf-467f-44f2-830f-f4e4e349d1d9",
+      "requirement_id": "REQ-014"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 7.08,
+    "model": null,
+    "created_at": "2026-05-29T22:23:13.527553",
+    "detail": {
+      "test_case_id": "30970747-568e-4769-a0d8-0a912bb1a3d3",
+      "requirement_id": "REQ-014"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.76,
+    "model": null,
+    "created_at": "2026-05-29T22:23:13.542202",
+    "detail": {
+      "test_case_id": "886b8539-4e1c-4305-8be3-af84d40ff518",
+      "requirement_id": "REQ-014"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 6.8,
+    "model": null,
+    "created_at": "2026-05-29T22:23:13.556895",
+    "detail": {
+      "test_case_id": "ed33fefd-df50-4c13-a738-8276e0a10699",
+      "requirement_id": "REQ-001"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 17.83,
+    "model": null,
+    "created_at": "2026-05-29T22:23:15.197810",
+    "detail": {
+      "test_case_id": "aed53778-f0ff-476a-99df-9c8c561d0f80",
+      "requirement_id": "REQ-001"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 14.58,
+    "model": null,
+    "created_at": "2026-05-29T22:23:17.096870",
+    "detail": {
+      "test_case_id": "aed53778-f0ff-476a-99df-9c8c561d0f80",
+      "requirement_id": "REQ-001"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 14.15,
+    "model": null,
+    "created_at": "2026-05-29T22:23:18.327707",
+    "detail": {
+      "test_case_id": "867cfe89-3604-418d-b9f6-ff2c153115d6",
+      "requirement_id": "REQ-001"
+    }
+  },
+  {
+    "operation": "simulator.execute",
+    "elapsed_ms": 11.07,
+    "model": null,
+    "created_at": "2026-05-29T22:23:18.787978",
+    "detail": {
+      "test_case_id": "06483b58-494f-49a5-842e-059302abb3d1",
+      "requirement_id": "REQ-001"
+    }
   }
 ]
