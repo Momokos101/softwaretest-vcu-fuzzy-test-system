@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import { Scatter, ScatterChart, CartesianGrid, XAxis, YAxis, Tooltip, ResponsiveContainer, ReferenceLine } from 'recharts';
-import { SlidersHorizontal } from 'lucide-react';
+import { Scatter, ScatterChart, CartesianGrid, XAxis, YAxis, Tooltip, ResponsiveContainer, ReferenceLine, LabelList } from 'recharts';
+import { Download, SlidersHorizontal } from 'lucide-react';
 import { autoTestAPI } from '../services/api';
 
 const ISO9126_OPTIONS = ['Functionality', 'Reliability', 'Efficiency', 'Maintainability', 'Usability', 'Portability'];
@@ -63,25 +63,72 @@ export function RiskAnalysis() {
 
   const resultByReq = Object.fromEntries(riskResults.map((r) => [r.requirement_id, r]));
 
-  // Scatter: x = tech_risk (1=高风险 左), y = business_risk (1=高风险 下)
-  const matrixData = riskResults.map((r) => ({
-    x: r.tech_risk ?? 3,
-    y: r.business_risk ?? 3,
-    rpn: r.rpn ?? 0,
-    name: r.requirement_id ?? '',
-    extent: r.extent ?? '',
-  }));
+  // Scatter: x = tech_risk (1=高风险 左), y = business_risk (1=高风险 下).
+  // Multiple requirements often share the same coordinate, so aggregate them
+  // into one plotted point and label the point with all matching REQ IDs.
+  const matrixData = Object.values(
+    riskResults.reduce((groups: Record<string, any>, r) => {
+      const x = r.tech_risk ?? 3;
+      const y = r.business_risk ?? 3;
+      const key = `${x}-${y}`;
+      const reqId = r.requirement_id ?? '';
+      if (!groups[key]) {
+        groups[key] = {
+          x,
+          y,
+          rpn: r.rpn ?? x * y,
+          extent: r.extent ?? '',
+          reqIds: [],
+          risks: [],
+        };
+      }
+      groups[key].reqIds.push(reqId);
+      groups[key].risks.push(r);
+      groups[key].name = groups[key].reqIds.join(', ');
+      groups[key].label = formatMatrixLabel(groups[key].reqIds);
+      groups[key].count = groups[key].reqIds.length;
+      return groups;
+    }, {}),
+  );
+
+  const exportExcel = async () => {
+    const blob = await autoTestAPI.export({
+      format: 'excel',
+      scope: {
+        include_requirements: false,
+        include_parsed_requirements: false,
+        include_risk_analysis: true,
+        include_coverage_items: false,
+        include_strategies: false,
+        include_test_cases: false,
+        include_execution_results: false,
+        include_traceability_matrix: false,
+        include_bq_new_cases: false,
+      },
+    }) as unknown as Blob;
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'autotestdesign_v2_risk_analysis.xlsx';
+    link.click();
+    URL.revokeObjectURL(url);
+  };
 
   return (
     <div className="p-8">
-      <h1 className="text-2xl font-bold mb-6">风险分析</h1>
+      <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
+        <h1 className="text-2xl font-bold">风险分析</h1>
+        <button onClick={() => void exportExcel()} className="px-3 py-2 bg-slate-800 text-white rounded inline-flex items-center gap-2">
+          <Download className="w-4 h-4" />Excel
+        </button>
+      </div>
 
       <section className="bg-white rounded-lg shadow p-6 mb-6">
         <h2 className="text-lg font-semibold mb-1">Tech × Business Risk 矩阵</h2>
         <p className="text-xs text-slate-500 mb-4">坐标值 1 = Very High Risk，5 = Very Low Risk；左下角（RPN 最小）优先测试</p>
         <div className="h-72">
           <ResponsiveContainer width="100%" height="100%">
-            <ScatterChart margin={{ top: 16, right: 24, bottom: 16, left: 8 }}>
+            <ScatterChart margin={{ top: 24, right: 80, bottom: 20, left: 12 }}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis type="number" dataKey="x" domain={[1, 5]} name="Tech Risk" label={{ value: 'Tech Risk', position: 'insideBottom', offset: -4 }} />
               <YAxis type="number" dataKey="y" domain={[1, 5]} name="Business Risk" label={{ value: 'Business Risk', angle: -90, position: 'insideLeft' }} />
@@ -93,15 +140,18 @@ export function RiskAnalysis() {
                   if (!payload?.length) return null;
                   const d = payload[0].payload;
                   return (
-                    <div className="bg-white border rounded p-2 text-xs shadow">
-                      <div className="font-medium">{d.name}</div>
+                    <div className="bg-white border rounded p-3 text-xs shadow max-w-[360px]">
+                      <div className="font-medium mb-1">{d.count} 条需求</div>
+                      <div className="font-mono whitespace-normal break-words">{d.name}</div>
                       <div>Tech Risk: {d.x} | Business Risk: {d.y}</div>
                       <div>RPN: {d.rpn} — {d.extent}</div>
                     </div>
                   );
                 }}
               />
-              <Scatter data={matrixData} fill="#2563eb" />
+              <Scatter data={matrixData} fill="#2563eb">
+                <LabelList dataKey="label" content={<RiskPointLabel />} />
+              </Scatter>
             </ScatterChart>
           </ResponsiveContainer>
         </div>
@@ -212,6 +262,28 @@ export function RiskAnalysis() {
         </div>
       )}
     </div>
+  );
+}
+
+function formatMatrixLabel(reqIds: string[]) {
+  if (reqIds.length <= 3) return reqIds.join(', ');
+  return `${reqIds.slice(0, 3).join(', ')} +${reqIds.length - 3}`;
+}
+
+function RiskPointLabel(props: any) {
+  const { x, y, value } = props;
+  if (x == null || y == null || !value) return null;
+  return (
+    <text
+      x={x + 10}
+      y={y - 10}
+      fill="#1e293b"
+      fontSize={11}
+      fontFamily="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace"
+      pointerEvents="none"
+    >
+      {value}
+    </text>
   );
 }
 

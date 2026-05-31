@@ -21,7 +21,7 @@ The tool implements:
 | FR 4.0 | White-Box Test Modeling — State Transition Diagram and test sequence generation | Future extension |
 | FR 5.0 | Test Oracle Generation — synthesize Expected Result from requirement + test data | Partially implemented |
 | FR 6.0 | Output & Export — JSON, CSV, Excel with traceability matrix | Implemented |
-| FR 7.0 | Test Suite Optimization — risk-based prioritization and coverage minimization | Future extension |
+| FR 7.0 | Test Suite Optimization — risk-based prioritization and coverage minimization | Implemented |
 
 ---
 
@@ -42,11 +42,11 @@ The demo uses three local services:
 
 | Service | Directory | Command | URL |
 |---------|-----------|---------|-----|
-| VCU Simulator | `vcu_simulator/` | `conda run -n ST uvicorn main:app --host 127.0.0.1 --port 8001` | http://localhost:8001 |
-| AutoTestDesign Backend | `backend/` | `conda run -n ST python run_server.py` | http://localhost:8000 |
+| VCU Simulator | `vcu_simulator/` | `python -m uvicorn main:app --host 127.0.0.1 --port 8001` | http://localhost:8001 |
+| AutoTestDesign Backend | `backend/` | `python run_server.py` | http://localhost:8000 |
 | AutoTestDesign Frontend | `frontend/` | `npm run dev` | http://localhost:3000 |
 
-The backend calls the simulator over HTTP. `VCU_SIMULATOR_URL` can override the default simulator URL (`http://localhost:8001`).
+The backend calls the simulator over HTTP. `VCU_SIMULATOR_URL` can override the default simulator URL (`http://localhost:8001`). LLM-backed steps require `LLM_API_KEY` or `DASHSCOPE_API_KEY`.
 
 **FR API Endpoints**
 
@@ -58,15 +58,16 @@ The backend calls the simulator over HTTP. `VCU_SIMULATOR_URL` can override the 
 | FR 3.0 | EP / BVA / Decision Table generation | `POST /api/test-cases/generate`, `GET /api/test-cases`, `PUT /api/test-cases/{id}` |
 | FR 3.0 / FR 5.0 | Test execution and oracle comparison | `POST /api/test-cases/{id}/execute`, `POST /api/test-cases/execute/batch` |
 | FR 6.0 | JSON / CSV / Excel export | `POST /api/export` |
+| FR 7.0 | Test suite prioritization and minimization | `GET /api/optimize/prioritize`, `GET /api/optimize/minimize` |
 
 **Feature Coverage**
 
 - FR 1.0 / 1.1 imports requirements from CSV, free text, and direct form input, then extracts input fields, data ranges, conditions, and actions through deterministic regex rules.
-- FR 2.0 uses the specified weighted risk formula on a 0-10 scale: Criticality 35%, Boundary Sensitivity 25%, Complexity 20%, State Impact 15%, Testability 5%.
+- FR 2.0 is driven by the current risk-analysis workflow: the backend generates risk values from parsed requirements and LLM-assisted analysis, and the UI supports manual review and score adjustment.
 - FR 3.0 generates EP, BVA, and Decision Table cases for the five VCU simulator signals. CC2 BVA uses the required seven points: `4.7 / 4.8 / 4.9 / 6.3 / 7.7 / 7.8 / 7.9`.
-- Test execution calls the VCU simulator `/simulate`, `/simulate/sleep`, and `/simulate/batch` endpoints and compares `result_type`, `test_status`, and V2 `vehicle_state` (`9/10/11`) against the generated oracle.
+- Test execution calls the VCU simulator through the backend adapter, maps the test-case inputs to simulator fields, and compares `result_type`, `test_status`, and V2 `vehicle_state` (`9/10/11`) against the generated oracle.
 - Interactive Review is implemented at every stage: requirement text editing, parsed structure editing, risk score adjustment, and test case editing.
-- FR 6.0 exports requirements, risk results, test cases, execution results, and the traceability matrix to JSON, CSV, or Excel.
+- FR 6.0 exports requirements, risk results, test cases, execution results, and the traceability matrix to JSON, CSV, or Excel. CSV export uses the Python standard library; Excel export uses `openpyxl`.
 
 **Demo and Submission Materials**
 
@@ -85,7 +86,7 @@ The backend calls the simulator over HTTP. `VCU_SIMULATOR_URL` can override the 
 | Frontend | React 18, TypeScript, Tailwind CSS, Vite |
 | AI Component | PyTorch GAN model (Conv1D conditional GAN) |
 | Test Execution | pytest, pytest-parametrize |
-| Export | pandas, openpyxl |
+| Export | openpyxl, Python standard library `csv` |
 
 ---
 
@@ -101,14 +102,14 @@ The backend calls the simulator over HTTP. `VCU_SIMULATOR_URL` can override the 
 
 ```bash
 git clone <repository-url>
-cd softwaretest-vcu-fuzzy-test-system
+cd <repo-folder>
 ```
 
 ### 2. Backend Setup
 
 ```bash
 cd backend
-conda run -n ST python run_server.py
+python run_server.py
 ```
 
 Backend runs at: http://localhost:8000  
@@ -128,7 +129,7 @@ Frontend runs at: http://localhost:3000
 
 ```bash
 cd vcu_simulator
-conda run -n ST uvicorn main:app --host 127.0.0.1 --port 8001
+python -m uvicorn main:app --host 127.0.0.1 --port 8001
 ```
 
 Simulator API docs: http://localhost:8001/docs
@@ -150,6 +151,11 @@ Create a `.env` file in the `backend/` directory:
 API_HOST=0.0.0.0
 API_PORT=8000
 API_RELOAD=true
+VCU_SIMULATOR_URL=http://localhost:8001
+LLM_API_KEY=your-key-here
+# or DASHSCOPE_API_KEY=your-key-here
+LLM_BASE_URL=https://dashscope.aliyuncs.com/compatible-mode/v1
+LLM_MODEL=qwen3.7-max
 ```
 
 Create a `.env` file in the `frontend/` directory:
@@ -163,7 +169,7 @@ VITE_API_BASE_URL=http://localhost:8000
 ## Project Structure
 
 ```
-softwaretest-vcu-fuzzy-test-system/
+<repo-folder>/
 ├── backend/
 │   ├── api/
 │   │   ├── main.py                   FastAPI app entry point
@@ -172,32 +178,26 @@ softwaretest-vcu-fuzzy-test-system/
 │   │   │   ├── risk_analysis.py      FR 2.0
 │   │   │   ├── test_design.py        FR 3.0
 │   │   │   ├── export.py             FR 6.0
-│   │   │   ├── test_plans.py         Test plan management
-│   │   │   ├── test_tasks.py         Test task execution
-│   │   │   ├── reports.py            Report generation
-│   │   │   ├── constraints.py        Constraint management
-│   │   │   ├── monitoring.py         Real-time monitoring
-│   │   │   └── gan.py                GAN model inference
+│   │   │   └── autotest_review.py    Interactive Review + FR 7.0
 │   │   ├── services/                 Business logic
 │   │   ├── models/                   Pydantic schemas
 │   │   └── database/                 SQLite access layer
 │   ├── configs/                      VCU model configuration
 │   ├── nn/                           GAN neural network (Conv1D)
-│   ├── data/                         VCU test data (.npy files)
+│   ├── data/                         VCU data, V2 state, reports, exports
 │   ├── requirements.txt
 │   └── run_server.py
 ├── frontend/
 │   ├── src/
 │   │   ├── components/               UI components
-│   │   ├── pages/                    Page-level components
 │   │   ├── services/api.ts           Axios API client
 │   │   └── App.tsx                   Root component + routing
 │   ├── package.json
 │   └── vite.config.ts
 ├── tests/
-│   ├── test_e2e.py                   End-to-end tests
-│   ├── test_api_routes.py            API route tests
-│   └── test_baic_integration.py      VCU integration tests
+│   ├── test_integration_http.py      HTTP integration tests
+│   ├── test_suite_from_design.py     Design-to-execution checks
+│   └── test_vcu_simulator_v2.py      Simulator behavior checks
 ├── docs/
 │   └── DESIGN_PLAN.md               Full implementation design plan
 ├── setup.sh                         One-command setup script
@@ -226,7 +226,7 @@ pip install pytest pytest-asyncio httpx
 pytest tests/
 
 # Run only VCU integration tests
-pytest tests/test_baic_integration.py -v
+pytest tests/test_integration_http.py -v
 
 # Run with coverage report
 pytest tests/ --cov=backend/api --cov-report=html

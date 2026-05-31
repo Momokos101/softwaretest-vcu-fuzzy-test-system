@@ -3,9 +3,9 @@ from __future__ import annotations
 
 import io
 import json
+import csv
 from typing import Any
 
-import pandas as pd
 from openpyxl import Workbook
 from openpyxl.styles import Font, PatternFill
 
@@ -120,7 +120,13 @@ def _export_json(data: dict[str, Any]) -> tuple[bytes, str, str]:
 def _export_csv(data: dict[str, Any]) -> tuple[bytes, str, str]:
     output = io.StringIO()
     target = "traceability_matrix" if data.get("traceability_matrix") else "test_cases"
-    pd.DataFrame(data.get(target) or []).to_csv(output, index=False)
+    rows = data.get(target) or []
+    if rows:
+        headers = list(rows[0].keys())
+        writer = csv.DictWriter(output, fieldnames=headers)
+        writer.writeheader()
+        for row in rows:
+            writer.writerow({header: _stringify(row.get(header)) for header in headers})
     return output.getvalue().encode("utf-8-sig"), "text/csv", "autotestdesign_v2_export.csv"
 
 

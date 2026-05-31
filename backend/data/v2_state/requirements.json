@@ -2,14 +2,14 @@
   {
     "id": "REQ-001",
     "source": "demo",
-    "raw_text": "供电电压 > 9V 持续 >= 10ms 时 VCU 应从 state09 唤醒到 state11，pdcu_wake_reason=1。",
+    "raw_text": "供电电压 > 9V 持续 >= 10ms 时 VCU 应从 state09 唤醒到 state11，pdcu_wake_reason=1.。。",
     "title": "硬线供电唤醒 w1",
     "module": "A",
     "category": null,
     "priority": "High",
     "created_at": "2026-05-24T23:47:36.381612",
-    "updated_at": "2026-05-24T23:47:36.381612",
-    "parsed": true
+    "updated_at": "2026-05-29T22:28:13.180867",
+    "parsed": false
   },
   {
     "id": "REQ-002",
@@ -20,7 +20,7 @@
     "category": null,
     "priority": "High",
     "created_at": "2026-05-24T23:47:36.381669",
-    "updated_at": "2026-05-24T23:47:36.381669",
+    "updated_at": "2026-05-29T22:26:09.027556",
     "parsed": true
   },
   {
